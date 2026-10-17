@@ -7,7 +7,7 @@
   const query=document.createElement('input');query.type='search';query.placeholder='Search the database…';query.setAttribute('aria-label','Quick database search');bar.append(query);
   query.addEventListener('input',()=>{search.value=query.value;search.dispatchEvent(new Event('input',{bubbles:true}));});
   const controls=[];
-  for(const [id,label]of [['category-filter','Category'],['subcategory-filter','Item type'],['breed-filter','Breed'],['area-filter','Area'],['shop-filter','Site / shop'],['.sort-field','Sort by'],['.sort-dir','Direction']]){
+  for(const [id,label]of [['category-filter','Category'],['subcategory-filter','Item type'],['breed-filter','Breed'],['generation-filter','Generation'],['area-filter','Area'],['shop-filter','Site / shop'],['.sort-field','Sort by'],['.sort-dir','Direction']]){
     const select=document.createElement('select');select.setAttribute('aria-label','Quick '+label);bar.append(select);controls.push({id,select});
     select.addEventListener('change',()=>{const source=id.startsWith('.')?document.querySelector(id):document.getElementById(id);if(source){source.value=select.value;source.dispatchEvent(new Event('change',{bubbles:true}));}});
   }

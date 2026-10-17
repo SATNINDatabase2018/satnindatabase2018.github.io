@@ -36,7 +36,13 @@
     const values=fields.slice(3).map(([field])=>number(item[field])).filter(value=>value!==null);
     return values.length ? values.reduce((sum,value)=>sum+value,0) : null;
   }
+  function generationNumber(value){
+    const v=String(value??'').trim().toLowerCase();if(!v)return null;
+    if(v==='first')return 1;if(v==='second')return 2;if(v==='third')return 3;
+    const n=Number(v.replace(/^gen(?:eration)?\s*/i,''));return Number.isFinite(n)?n:null;
+  }
   function sortValue(item, field) {
+    if (field === 'generation') return generationNumber(item.generation);
     if (field === 'title') return item.title;
     if (field === 'shop') return String(item.shop || '').trim() || null;
     if (field === 'overall') return overallStats(item);
@@ -106,6 +112,8 @@
     const visual=text('div','','catalog-card-visual');visual.append(image(item));
     if(!horse){const badge=view==='database'?button(item.section||item.category,()=>browseType(item)):text('span',item.section||item.category);badge.className='item-type-bubble';if(view==='database')badge.title='Show all '+(item.section||item.category);visual.append(badge);}
     card.append(visual,text('h3',horse?(item.breed||item.title):item.title,'card-title'));
+    if(horse&&generationNumber(item.generation)!==null)card.append(text('p','Generation '+generationNumber(item.generation),'horse-generation'));
+    if(horse&&item.speciality)card.append(text('p',item.speciality,'horse-speciality'));
     if(!horse && item.description)card.append(text('p',item.description,'card-description'));
     const place=view==='database'&&item.shop?button(item.shop,()=>browseShop(item.shop)):text('p',item.shop||'Site / shop not verified');place.className='card-location';card.append(place);
     if(item.level!==undefined && item.level!==null && String(item.level).trim()!=='' && String(item.level)!=='0')card.append(text('p',`Level / requirement: ${item.level}`,'card-requirement'));
@@ -132,11 +140,11 @@
   function render(reset=true){
     if(!$('database-grid'))return;
     if(reset!==false)visibleLimit=60;
-    if(view==='database')updateDBShops();
+    if(view==='database'||view==='collection'){updateDBSubcategories();updateDBShops();}
     const q=($('search')?.value||'').trim().toLowerCase(),category=$('category-filter')?.value||'',shop=$('shop-filter')?.value||'',breed=$('breed-filter')?.value||'',subtype=$('subcategory-filter')?.value||'';
     const flags=[...document.querySelectorAll('#state-filters input:checked')].map(n=>n.value);
     const rules=[...document.querySelectorAll('.sort-rule')].map(n=>({field:n.querySelector('.sort-field').value,dir:n.querySelector('.sort-dir').value}));
-    const filtered=items.filter(i=>(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && (view==='database'?(!category||i.category===category)&&(!subtype||i.section===subtype):(!category||i.section===category)) && (!breed || i.kind==='horse' && i.section===breed) && (!($('area-filter')?.value) || areaForShop(i.shop)===$('area-filter').value) && (!shop || i.shop===shop) && (!flags.length || (i.kind!=='horse' && flags.every(f=>state(i)[f]))) && `${i.title} ${i.description||''} ${i.shop||''} ${i.section||''} ${(i.aliases||[]).join(' ')}`.toLowerCase().includes(q)).sort((a,b)=>compare(a,b,rules));
+    const filtered=items.filter(i=>(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && ((!category||i.category===category)&&(!subtype||i.section===subtype)) && (!breed || i.kind==='horse' && i.section===breed) && (!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value)) && (!($('area-filter')?.value) || areaForShop(i.shop)===$('area-filter').value) && (!shop || i.shop===shop) && (!flags.length || (i.kind!=='horse' && flags.every(f=>state(i)[f]))) && `${i.title} ${i.description||''} ${i.shop||''} ${i.section||''} ${(i.aliases||[]).join(' ')}`.toLowerCase().includes(q)).sort((a,b)=>compare(a,b,rules));
     $('database-grid').replaceChildren(...filtered.slice(0,visibleLimit).map(card));
     $('catalog-load-more')?.remove();
     if(filtered.length>visibleLimit){const more=button(`Load 60 more (${filtered.length-visibleLimit} remaining)`,()=>{visibleLimit+=60;render(false);});more.id='catalog-load-more';$('database-grid').after(more);}
@@ -144,33 +152,28 @@
     if(!filtered.length)$('database-grid').append(text('p','No items match these filters.'));
   }
   function options(select,values,first){if(!select)return;select.replaceChildren(new Option(first,''),...values.map(v=>new Option(v,v)));}
-  function updateOptions(){
-    if(view==='database'){setupDBCascade();return;}
-    const pool=items.filter(i=>view==='collection' || !active || i.category===active);
-    const inHorses=view==='database' && active==='Horses';
-    const types=[...new Set(pool.filter(i=>inHorses || i.kind!=='horse').map(i=>i.section).filter(Boolean))].sort();
-    options($('category-filter'),types,inHorses?'All breeds':'All item types');
-    if(!inHorses && pool.some(i=>i.kind==='horse'))$('category-filter')?.add(new Option('Horse','__horse__'));
-    options($('breed-filter'),[...new Set(pool.filter(i=>i.kind==='horse').map(i=>i.section))].sort(),'All breeds');
-    updateBreedFilter();
-    options($('shop-filter'),[...new Set(pool.map(i=>i.shop).filter(Boolean))].sort(),'All sites / shops');
-  }
-  const mainCategories=[['Horses','Horses'],['Horse Decorations','Horse decoration'],['Equipment','Equipment'],['Clothes','Clothes'],['Player Accessories','Player accessories']];
+  function updateOptions(){setupDBCascade();}
+  function categoryPool(){return items.filter(i=>view==='collection'?i.kind!=='horse'&&state(i)[active]:!active||i.category===active);}
+  const mainCategories=[['Horses','Horses'],['Horse Decorations','Horse decoration'],['Equipment','Equipment'],['Clothes','Clothes'],['Player Accessories','Player accessories'],['Pets','Pets']];
   function updateDBSubcategories(){
     const main=$('category-filter')?.value||'';
-    const pool=items.filter(i=>(!active||i.category===active)&&(!main||i.category===main));
+    const pool=categoryPool().filter(i=>!main||i.category===main);
+    const previous=$('subcategory-filter')?.value||'';
     options($('subcategory-filter'),[...new Set(pool.map(i=>i.section).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),'All item types');
+    if(main&&main!=='Horses'&&$('subcategory-filter')&&[...$('subcategory-filter').options].some(o=>o.value===previous))$('subcategory-filter').value=previous;
     if($('subcategory-wrap'))$('subcategory-wrap').hidden=!main||main==='Horses';
   }
   function setupDBCascade(){
     const select=$('category-filter');if(!select)return;
-    select.replaceChildren(new Option('All categories',''),...mainCategories.map(([v,label])=>new Option(label,v)));
-    select.value=mainCategories.some(([v])=>v===active)?active:'';
-    const special=active==='Pets';
+    select.replaceChildren(new Option('All categories',''),...mainCategories.filter(([v])=>view!=='collection'||v!=='Horses').map(([v,label])=>new Option(label,v)));
+    select.value=view==='database'&&mainCategories.some(([v])=>v===active)?active:'';
+    const special=false;
     if($('main-category-wrap')){$('main-category-wrap').hidden=special;$('main-category-wrap').parentElement.hidden=special;}
     updateDBSubcategories();
     options($('breed-filter'),[...new Set(items.filter(i=>i.kind==='horse').map(i=>i.section))].sort(),'All breeds');
-    if($('breed-filter-wrap'))$('breed-filter-wrap').hidden=active!=='Horses';
+    if($('breed-filter-wrap'))$('breed-filter-wrap').hidden=view!=='database'||active!=='Horses';
+    const generation=$('generation-filter');
+    if(generation){options(generation,[...new Set(items.filter(i=>i.kind==='horse').map(i=>generationNumber(i.generation)).filter(v=>v!==null))].sort((a,b)=>a-b),'All generations');$('generation-filter-wrap').hidden=active!=='Horses';}
     updateDBShops();
   }
   function areaForShop(value){
@@ -197,7 +200,7 @@
   function updateDBShops(){
     const main=$('category-filter')?.value||'',sub=$('subcategory-filter')?.value||'',breed=$('breed-filter')?.value||'',search=($('search')?.value||'').trim().toLowerCase();
     const flags=[...document.querySelectorAll('#state-filters input:checked')].map(n=>n.value);
-    const matching=items.filter(i=>(!active||i.category===active)&&(!main||i.category===main)&&(!sub||i.section===sub)&&(!breed||i.section===breed)&&(!flags.length||i.kind!=='horse'&&flags.every(f=>state(i)[f]))&&`${i.title} ${i.description||''} ${i.shop||''} ${i.section||''} ${(i.aliases||[]).join(' ')}`.toLowerCase().includes(search));
+    const matching=categoryPool().filter(i=>(!main||i.category===main)&&(!sub||i.section===sub)&&(!breed||i.section===breed)&&(!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value))&&(!flags.length||i.kind!=='horse'&&flags.every(f=>state(i)[f]))&&`${i.title} ${i.description||''} ${i.shop||''} ${i.section||''} ${(i.aliases||[]).join(' ')}`.toLowerCase().includes(search));
     const area=$('area-filter');const previousArea=area?.value||'';const areas=[...new Set(matching.map(i=>areaForShop(i.shop)).filter(Boolean))].sort((a,b)=>a.localeCompare(b));options(area,areas,'All areas');if(area&&areas.includes(previousArea))area.value=previousArea;
     const shop=$('shop-filter');if(!shop)return;const previous=shop.value;
     const shops=[...new Set(matching.filter(i=>!area?.value||areaForShop(i.shop)===area.value).map(i=>i.shop).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
@@ -218,7 +221,7 @@
   }
   function addSort(field='title',dir='asc'){
     const row=text('div','','sort-rule'),f=document.createElement('select'),d=document.createElement('select');
-    f.className='sort-field'; f.setAttribute('aria-label','Sort by'); [...fields.slice(0,3),['overall','Overall stats (combined)'],['shop','Location (site/shop)'],...fields.slice(3)].forEach(([v,l])=>f.add(new Option(l,v)));f.value=field;
+    f.className='sort-field'; f.setAttribute('aria-label','Sort by'); [...fields.slice(0,3),['overall','Overall stats (combined)'],['shop','Location (site/shop)'],['generation','Generation'],...fields.slice(3)].forEach(([v,l])=>f.add(new Option(l,v)));f.value=field;
     d.className='sort-dir'; d.setAttribute('aria-label','Sort direction'); d.add(new Option('Ascending / A–Z','asc'));d.add(new Option('Descending / Z–A','desc'));d.value=dir;
     f.addEventListener('change',()=>{if(f.value==='overall'){d.value='desc';render();}});
     [f,d].forEach(n=>n.addEventListener('change',render));
@@ -240,9 +243,9 @@
         const main=$('category-filter').value;
         if((active && main!==active)||main==='Horses'&&active!=='Horses'){history.replaceState(null,'','#'+encodeURIComponent(main));activate(main);return;}
         updateDBSubcategories();render();
-      }else{updateBreedFilter();render();}
+      }else{updateDBSubcategories();render();}
     });
-    ['subcategory-filter','breed-filter','area-filter','shop-filter','state-filters'].forEach(id=>$(id)?.addEventListener('change',render));
+    ['subcategory-filter','breed-filter','generation-filter','area-filter','shop-filter','state-filters'].forEach(id=>$(id)?.addEventListener('change',render));
     $('state-filters')?.addEventListener('click',e=>{if(!user && e.target.closest('label,input')){e.preventDefault();e.stopImmediatePropagation();requireAccount();}},true);
     $('add-sort')?.addEventListener('click',()=>{addSort('sc','asc');render();});addSort();
     $('reset-filters')?.addEventListener('click',()=>{$('search').value='';if($('area-filter'))$('area-filter').value='';if($('shop-filter'))$('shop-filter').value='';updateOptions();document.querySelectorAll('#state-filters input').forEach(n=>n.checked=false);$('sort-rules').replaceChildren();addSort();render();});
