@@ -1,23 +1,23 @@
 (() => {
   const $=id=>document.getElementById(id),text=(tag,value,cls)=>{const n=document.createElement(tag);n.textContent=value;if(cls)n.className=cls;return n;};
-  const fields=[['title','Title'],['category','Category'],['section','Item type'],['breed','Horse breed'],['coat','Coat'],['generation','Generation'],['speciality','Speciality'],['description','Description'],['image','Picture URL (HTTPS)'],['shop','Site / shop'],['level','Level / requirement'],['sc','SC'],['js','JS'],['ride','Riding'],['jump','Jumping'],['command','Command'],['care','Care'],['speed','Speed'],['strength','Strength'],['agility','Agility'],['discipline','Discipline'],['endurance','Endurance'],['availability','Availability / status'],['price_note','Price note']];
+  const fields=[['title','Title'],['category','Category'],['section','Item type'],['breed','Horse breed'],['coat','Coat'],['generation','Generation'],['speciality','Speciality'],['description','Description'],['image','Picture URL (HTTPS)'],['shop','Site / shop'],['level','Level / requirement'],['sc','SC'],['js','JS'],['ride','Riding'],['jump','Jumping'],['command','Command'],['care','Care'],['speed','Speed'],['strength','Strength'],['agility','Agility'],['discipline','Discipline'],['endurance','Endurance'],['availability','Availability / status'],['price_note','Price note'],['is_companion','Runs beside you (pets)']];
   let kind='item',records=[],current=null,dirty=false,busy=false,limit=60;
   const message=value=>{$('admin-message').textContent=value;};
   const name=row=>row.title||[row.breed,row.coat].filter(Boolean).join(' ')||'Untitled';
   function allowDiscard(){return !dirty||confirm('Discard your unsaved changes?');}
   function configure(){
     const horse=kind==='horse';
-    for(const [key] of fields){const wrapper=$('edit-'+key).parentElement;wrapper.hidden=horse?['category','section','ride','jump','command','care'].includes(key):['breed','coat','generation','speciality'].includes(key);}
+    for(const [key] of fields){const wrapper=$('edit-'+key).parentElement;wrapper.hidden=key==='is_companion'?(horse||$('edit-category').value!=='Pets'):horse?['category','section','ride','jump','command','care'].includes(key):['breed','coat','generation','speciality'].includes(key);}
     $('edit-title').required=!horse;$('edit-breed').required=horse;$('edit-section').required=!horse;
   }
   function open(row=null){
     if(busy||!allowDiscard())return;
     current=row?structuredClone(row):null;dirty=false;configure();
-    for(const [key]of fields)$('edit-'+key).value=row?.[key]??(key==='category'?'Clothes':'');
+    for(const [key]of fields)$('edit-'+key).value=row?.[key]??(key==='category'?'Clothes':key==='is_companion'?'false':'');
     $('admin-editor-title').textContent=row?'Edit '+name(row):'Add '+(kind==='horse'?'horse':'item');
     $('admin-entry-id').textContent=row?'Record ID: '+row.id:'A new ID will be assigned when you save.';
     $('admin-remove').hidden=!row||!!row._deleted;$('admin-save').textContent=row?row._deleted?'Restore and save':'Save changes':'Add to database';
-    $('admin-form').hidden=false;updateTypes();
+    $('admin-form').hidden=false;configure();updateTypes();
   }
   function updateTypes(){
     const values=new Set(records.filter(r=>r.category===$('edit-category').value).map(r=>r.section).filter(Boolean));
@@ -40,7 +40,7 @@
   async function reload(){await HMCatalogData.changes(true);records=await HMCatalogData.records(kind,true);renderList();}
   function payload(){
     const row={...(current||{})};delete row._deleted;delete row._revision;
-    for(const [key]of fields){const input=$('edit-'+key);if(input.parentElement.hidden)continue;const value=input.value.trim();row[key]=['sc','js','ride','jump','command','care','speed','strength','agility','discipline','endurance'].includes(key)&&value!==''&&Number.isFinite(Number(value))?Number(value):value;}
+    for(const [key]of fields){const input=$('edit-'+key);if(input.parentElement.hidden)continue;const value=input.value.trim();row[key]=key==='is_companion'?value==='true':['sc','js','ride','jump','command','care','speed','strength','agility','discipline','endurance'].includes(key)&&value!==''&&Number.isFinite(Number(value))?Number(value):value;}
     if(kind==='horse'){row.location=row.shop;row.category='Horses';row.section=row.breed;}
     return row;
   }
@@ -69,11 +69,12 @@
       $('admin-access').hidden=true;$('admin-workspace').hidden=false;
       for(const [key,label]of fields){
         const wrapper=text('label',label);let input;
-        if(key==='category'){input=document.createElement('select');for(const value of ['Clothes','Player Accessories','Equipment','Horse Decorations','Pets'])input.add(new Option(value,value));}
+        if(key==='is_companion'){input=document.createElement('select');input.add(new Option('No — stays in the saddle bag','false'));input.add(new Option('Yes — companion','true'));}
+        else if(key==='category'){input=document.createElement('select');for(const value of ['Clothes','Player Accessories','Equipment','Horse Decorations','Pets'])input.add(new Option(value,value));}
         else if(key==='description')input=document.createElement('textarea');else{input=document.createElement('input');input.type=key==='image'?'url':'text';if(key==='image')input.pattern='https://.*';}
         input.id='edit-'+key;if(key==='section')input.setAttribute('list','admin-item-types');if(['description','image'].includes(key))wrapper.className='admin-field-wide';input.maxLength=key==='description'?10000:2000;wrapper.append(input);$('admin-fields').append(wrapper);
       }
-      $('admin-form').addEventListener('input',()=>{dirty=true;});$('edit-category').addEventListener('change',updateTypes);
+      $('admin-form').addEventListener('input',()=>{dirty=true;});$('edit-category').addEventListener('change',()=>{configure();updateTypes();});
       $('admin-form').addEventListener('submit',e=>{e.preventDefault();save();});$('admin-remove').addEventListener('click',()=>save(true));
       $('admin-add').addEventListener('click',()=>open());$('admin-kind').addEventListener('change',async()=>{
         if(!allowDiscard()){$('admin-kind').value=kind;return;}kind=$('admin-kind').value;current=null;dirty=false;limit=60;$('admin-form').hidden=true;

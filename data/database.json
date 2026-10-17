@@ -126403,10 +126403,11 @@
     "sc": 200,
     "id": 1864,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Fjord Horse",
     "source_speciality": "Cold tolerant",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126432,10 +126433,11 @@
     "sc": 50,
     "id": 1870,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Fjord Horse",
     "source_speciality": "Cold tolerant",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126461,10 +126463,11 @@
     "sc": 199,
     "id": 6419,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Fjord Horse",
     "source_speciality": "Cold tolerant",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126493,7 +126496,8 @@
     "speciality": "Companion",
     "source_breed": "Fjord Horse",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -126519,10 +126523,11 @@
     "sc": 49,
     "id": 7773,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Fjord Horse",
     "source_speciality": "Cold tolerant",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126550,10 +126555,11 @@
     "sc": 11,
     "id": 2015,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Fjord Horse",
     "source_speciality": "Cold tolerant",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126579,10 +126585,11 @@
     "sc": 299,
     "id": 3345,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "North Swedish Horse",
     "source_speciality": "Cold tolerant",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126608,10 +126615,11 @@
     "sc": 110,
     "id": 1860,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "North Swedish Horse",
     "source_speciality": "Cold tolerant",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126639,10 +126647,11 @@
     "sc": 29,
     "id": 7375,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "North Swedish Horse",
     "source_speciality": "Cold tolerant",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126668,10 +126677,11 @@
     "sc": 19,
     "id": 4381,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "North Swedish Horse",
     "source_speciality": "Cold tolerant",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126697,10 +126707,11 @@
     "sc": 50,
     "id": 1830,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "North Swedish Horse",
     "source_speciality": "Cold tolerant",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126726,10 +126737,11 @@
     "sc": 40,
     "id": 1857,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "North Swedish Horse",
     "source_speciality": "Cold tolerant",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126758,7 +126770,8 @@
     "speciality": "Companion",
     "source_breed": "Tinker Horse",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -126783,10 +126796,11 @@
     "sc": 50,
     "id": 1831,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Tinker Horse",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126811,10 +126825,11 @@
     "sc": 110,
     "id": 1835,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Tinker Horse",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126839,10 +126854,11 @@
     "sc": 25,
     "id": 1856,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Tinker Horse",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126867,10 +126883,11 @@
     "sc": 99,
     "id": 4380,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Tinker Horse",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126895,10 +126912,11 @@
     "sc": 40,
     "id": 3344,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Tinker Horse",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -126927,7 +126945,8 @@
     "speciality": "Companion",
     "source_breed": "Arabian Thoroughbred",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -126956,7 +126975,8 @@
     "speciality": "Companion",
     "source_breed": "Arabian Thoroughbred",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -126981,10 +127001,11 @@
     "sc": 29,
     "id": 6417,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Arabian Thoroughbred",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127009,10 +127030,11 @@
     "sc": 35,
     "id": 1866,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Arabian Thoroughbred",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127037,10 +127059,11 @@
     "sc": 399,
     "id": 6422,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Arabian Thoroughbred",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127065,10 +127088,11 @@
     "sc": 50,
     "id": 1859,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Arabian Thoroughbred",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127093,10 +127117,11 @@
     "sc": 70,
     "id": 1863,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Arabian Thoroughbred",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127121,10 +127146,11 @@
     "sc": 149,
     "id": 6186,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Arabian Thoroughbred",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127149,10 +127175,11 @@
     "sc": 39,
     "id": 7940,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Arabian Thoroughbred",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127177,10 +127204,11 @@
     "sc": 200,
     "id": 1836,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Friesian Sport Horse",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127205,10 +127233,11 @@
     "sc": 35,
     "id": 6183,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Friesian Sport Horse",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127235,10 +127264,11 @@
     "sc": 29,
     "id": 7772,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Friesian Sport Horse",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127263,10 +127293,11 @@
     "sc": 55,
     "id": 1867,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Andalusian",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127291,10 +127322,11 @@
     "sc": 35,
     "id": 1862,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Andalusian",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127323,7 +127355,8 @@
     "speciality": "Companion",
     "source_breed": "Andalusian",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -127348,10 +127381,11 @@
     "sc": 299,
     "id": 7484,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Andalusian",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127376,10 +127410,11 @@
     "sc": 40,
     "id": 1833,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Andalusian",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127404,10 +127439,11 @@
     "sc": 249,
     "id": 6264,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Andalusian",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127436,7 +127472,8 @@
     "speciality": "Companion",
     "source_breed": "Chincoteague Pony",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -127462,10 +127499,11 @@
     "sc": 19,
     "id": 6315,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Chincoteague Pony",
     "source_speciality": "Cold tolerant",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127494,7 +127532,8 @@
     "speciality": "Companion",
     "source_breed": "Chincoteague Pony",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -127520,10 +127559,11 @@
     "sc": 50,
     "id": 1963,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Jorvik Pony",
     "source_speciality": "Pony",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127549,10 +127589,11 @@
     "sc": 79,
     "id": 7483,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Jorvik Pony",
     "source_speciality": "Pony",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127578,10 +127619,11 @@
     "sc": 79,
     "id": 6185,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Jorvik Pony",
     "source_speciality": "Pony",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127610,7 +127652,8 @@
     "speciality": "Companion",
     "source_breed": "Jorvik Pony",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -127639,7 +127682,8 @@
     "speciality": "Companion",
     "source_breed": "Jorvik Pony",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -127665,10 +127709,11 @@
     "sc": 40,
     "id": 1869,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Jorvik Pony",
     "source_speciality": "Pony",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127694,10 +127739,11 @@
     "sc": 300,
     "id": 1837,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Jorvik Pony",
     "source_speciality": "Pony",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127723,10 +127769,11 @@
     "sc": 29,
     "id": 6411,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Jorvik Pony",
     "source_speciality": "Pony",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127755,7 +127802,8 @@
     "speciality": "Companion",
     "source_breed": "Jorvik Pony",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -127781,10 +127829,11 @@
     "sc": 199,
     "id": 6413,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Jorvik Pony",
     "source_speciality": "Pony",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127810,10 +127859,11 @@
     "sc": 49,
     "id": 6420,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Jorvik Pony",
     "source_speciality": "Pony",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127839,10 +127889,11 @@
     "sc": 99,
     "id": 6415,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Jorvik Pony",
     "source_speciality": "Pony",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127867,10 +127918,11 @@
     "sc": 49,
     "id": 6414,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Friesian",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127895,10 +127947,11 @@
     "sc": 50,
     "id": 3753,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Friesian",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127923,10 +127976,11 @@
     "sc": 50,
     "id": 3754,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Friesian",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127951,10 +128005,11 @@
     "sc": 50,
     "id": 3755,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "American Paint Horse",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -127979,10 +128034,11 @@
     "sc": 50,
     "id": 5444,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "American Paint Horse",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128007,10 +128063,11 @@
     "sc": 50,
     "id": 5445,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "American Paint Horse",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128035,10 +128092,11 @@
     "sc": 50,
     "id": 5446,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "American Paint Horse",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128063,10 +128121,11 @@
     "sc": 50,
     "id": 5447,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "American Paint Horse",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128091,10 +128150,11 @@
     "sc": 49,
     "id": 8407,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Appaloosa",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128119,10 +128179,11 @@
     "sc": 49,
     "id": 4384,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Appaloosa",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128147,10 +128208,11 @@
     "sc": 25,
     "id": 1865,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Selle Français",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128175,10 +128237,11 @@
     "sc": 25,
     "id": 6184,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Selle Français",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128203,10 +128266,11 @@
     "sc": 149,
     "id": 6317,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Selle Français",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128233,10 +128297,11 @@
     "sc": 19,
     "id": 7374,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Westphalian",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128261,10 +128326,11 @@
     "sc": 45,
     "id": 1834,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Morab",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128293,7 +128359,8 @@
     "speciality": "Companion",
     "source_breed": "Morab",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -128318,10 +128385,11 @@
     "sc": 19,
     "id": 4382,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Morab",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128346,10 +128414,11 @@
     "sc": 35,
     "id": 1858,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Morab",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128374,10 +128443,11 @@
     "sc": 99,
     "id": 6421,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Akhal-Teke",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128402,10 +128472,11 @@
     "sc": 50,
     "id": 3750,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Akhal-Teke",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128430,10 +128501,11 @@
     "sc": 40,
     "id": 1861,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Danish Warmblood",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128462,7 +128534,8 @@
     "speciality": "Companion",
     "source_breed": "Danish Warmblood",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -128487,10 +128560,11 @@
     "sc": 159,
     "id": 3343,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Danish Warmblood",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128515,10 +128589,11 @@
     "sc": 69,
     "id": 6412,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "English Thoroughbred",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128543,10 +128618,11 @@
     "sc": 60,
     "id": 1868,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "English Thoroughbred",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128571,10 +128647,11 @@
     "sc": 69,
     "id": 6418,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "English Thoroughbred",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128599,10 +128676,11 @@
     "sc": 79,
     "id": 7808,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Morgan",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128631,7 +128709,8 @@
     "speciality": "Companion",
     "source_breed": "Morgan",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -128660,7 +128739,8 @@
     "speciality": "Companion",
     "source_breed": "Morgan",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -128685,10 +128765,11 @@
     "sc": 39,
     "id": 7485,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Morgan",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128713,10 +128794,11 @@
     "sc": 399,
     "id": 6416,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Dutch Warmblood",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128745,7 +128827,8 @@
     "speciality": "Companion",
     "source_breed": "Dutch Warmblood",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -128774,7 +128857,8 @@
     "speciality": "Companion",
     "source_breed": "Dutch Warmblood",
     "source_speciality": "Companion",
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": true
   },
   {
     "category": "Pets",
@@ -128799,10 +128883,11 @@
     "sc": 89,
     "id": 3342,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Oldenburg",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128829,10 +128914,11 @@
     "sc": 10,
     "id": 7376,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Oldenburg",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128857,10 +128943,11 @@
     "sc": 70,
     "id": 1832,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Oldenburg",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128885,10 +128972,11 @@
     "sc": 249,
     "id": 4385,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Pintabian",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   },
   {
     "category": "Pets",
@@ -128913,9 +129001,10 @@
     "sc": 29,
     "id": 4383,
     "id_source": "Source image filename",
-    "speciality": "Companion",
+    "speciality": "",
     "source_breed": "Pintabian",
     "source_speciality": null,
-    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed."
+    "import_notes": "Source pet row also contains horse metadata; horse attributes and unverified level are excluded from the pet card. Original values retained in source_stats/source_breed.",
+    "is_companion": false
   }
 ]
