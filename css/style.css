@@ -1,0 +1,29 @@
+section {
+    background: white;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+}
+
+input,
+select,
+textarea {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+
+    padding: 12px;
+    margin: 10px 0;
+
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+button {
+    padding: 11px 18px;
+
+    border: none;
+    border-radius: 7px;
+
+    cursor: pointer;
+}
