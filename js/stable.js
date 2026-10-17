@@ -29,13 +29,13 @@
     const box=el('div','','stable-outfit-preview');
     box.append(el('h4',outfit.name));
     const thumbs=el('div','','stable-outfit-items');let missing=false;
-    const statFields=[['speed','Speed'],['strength','Strength'],['agility','Agility'],['discipline','Discipline']];
+    const statFields=[['speed','Speed'],['strength','Strength'],['agility','Agility'],['discipline','Discipline'],['endurance','Endurance']];
     const values=Object.fromEntries(statFields.map(([f])=>[f,0]));const unknown=new Set();let count=0;
     for(const [s,k] of Object.entries(outfit.slots||{})){
       const i=getItem(k);if(!i){missing=true;continue;}if(!horseSide(i))continue;
       count++;const chip=el('div','','stable-gear-chip');chip.append(photo(i,i.title),el('span',s+': '+i.title));thumbs.append(chip);
       if(i.category==='Pets')continue;
-      for(const [f] of statFields){const v=i[f]??(f==='agility'?i.agil:f==='discipline'?i.disc:undefined);const n=v===null||v===undefined||String(v).trim()===''?NaN:Number(v);if(Number.isFinite(n))values[f]+=n;else unknown.add(f);}
+      for(const [f] of statFields){const v=i[f]??(f==='agility'?i.agil:f==='discipline'?i.disc:f==='endurance'?i.endu:undefined);const n=v===null||v===undefined||String(v).trim()===''?NaN:Number(v);if(Number.isFinite(n))values[f]+=n;else unknown.add(f);}
     }
     box.append(thumbs);if(!count)box.append(el('p','No horse equipment selected in this outfit.'));
     box.append(el('p',statFields.map(([f,l])=>`${l} ${values[f]}${missing||unknown.has(f)?' + unknown':''}`).join(' · '),'stats'));

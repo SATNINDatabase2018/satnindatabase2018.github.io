@@ -4,9 +4,10 @@
   const $ = id => document.getElementById(id);
   const view = document.body.dataset.view;
   const categories = [['','Everything'],['Clothes','Player Clothes'],['Player Accessories','Player Accessories'],['Equipment','Horse Equipment'],['Horses','Horses'],['Horse Decorations','Horse Decorations'],['Pets','Pets']];
-  const fields = [['title','Name'],['sc','SC'],['js','JS'],['ride','Riding'],['jump','Jumping'],['command','Command'],['care','Care'],['speed','Speed'],['strength','Strength'],['agility','Agility'],['discipline','Discipline']];
+  const fields = [['title','Name'],['sc','SC'],['js','JS'],['ride','Riding'],['jump','Jumping'],['command','Command'],['care','Care'],['speed','Speed'],['strength','Strength'],['agility','Agility'],['discipline','Discipline'],['endurance','Endurance']];
   let items=[], user=null, states=new Map(), active='', workspace=null, ready=false;
   const pending = new Set();
+  let visibleLimit=60;
   const key = item => `${item.kind}:${item.id}`;
   const draftKey = () => `hm2018:outfit:${user?.id || 'guest'}`;
   const text = (tag, value, cls) => {const n=document.createElement(tag); n.textContent=value; if(cls)n.className=cls; return n;};
@@ -94,6 +95,8 @@
   function card(item){
     const card=text('article','', 'item-card'); card.dataset.itemKey=key(item); card.append(image(item),text('h3',item.title),text('p',item.section || item.category));
     if(item.description)card.append(text('p',item.description));
+    if(item.price_note)card.append(text('p',item.price_note));
+    if(item.speciality)card.append(text('p',item.speciality));
     card.append(text('p',`SC ${item.sc ?? '—'} · JS ${item.js ?? '—'}`),text('p',item.shop || 'Site / shop not verified'));
     const stats=fields.slice(3).filter(([f])=>number(item[f])!==null).map(([f,label])=>`${label} ${item[f]}`).join(' · ');
     if(stats)card.append(text('p',stats,'stats'));
@@ -111,14 +114,17 @@
     if(s){const count=workspace?.count(item)||0; const b=button(count?`✓ In ${count} outfit${count===1?'':'s'}`:'+ Add to outfit',e=>{if(requireAccount())workspace.openMenu(item,e.currentTarget);});b.className='outfit-menu-trigger';b.setAttribute('aria-expanded','false');b.setAttribute('aria-haspopup','dialog');actions.append(b);}
     card.append(actions); return card;
   }
-  function render(){
+  function render(reset=true){
     if(!$('database-grid'))return;
+    if(reset!==false)visibleLimit=60;
     const q=($('search')?.value||'').trim().toLowerCase(),category=$('category-filter')?.value||'',shop=$('shop-filter')?.value||'',breed=$('breed-filter')?.value||'';
     const flags=[...document.querySelectorAll('#state-filters input:checked')].map(n=>n.value);
     const rules=[...document.querySelectorAll('.sort-rule')].map(n=>({field:n.querySelector('.sort-field').value,dir:n.querySelector('.sort-dir').value}));
-    const filtered=items.filter(i=>(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && (!category || (active==='Horses'?i.section===category:category==='__horse__'?i.kind==='horse':i.kind!=='horse' && i.section===category)) && (!breed || i.kind==='horse' && i.section===breed) && (!shop || i.shop===shop) && (!flags.length || (i.kind!=='horse' && flags.every(f=>state(i)[f]))) && `${i.title} ${i.description||''} ${i.shop||''} ${i.section||''}`.toLowerCase().includes(q)).sort((a,b)=>compare(a,b,rules));
-    $('database-grid').replaceChildren(...filtered.map(card));
-    $('result-count').textContent=`${filtered.length} result${filtered.length===1?'':'s'}`;
+    const filtered=items.filter(i=>(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && (!category || (active==='Horses'?i.section===category:category==='__horse__'?i.kind==='horse':i.kind!=='horse' && i.section===category)) && (!breed || i.kind==='horse' && i.section===breed) && (!shop || i.shop===shop) && (!flags.length || (i.kind!=='horse' && flags.every(f=>state(i)[f]))) && `${i.title} ${i.description||''} ${i.shop||''} ${i.section||''} ${(i.aliases||[]).join(' ')}`.toLowerCase().includes(q)).sort((a,b)=>compare(a,b,rules));
+    $('database-grid').replaceChildren(...filtered.slice(0,visibleLimit).map(card));
+    $('catalog-load-more')?.remove();
+    if(filtered.length>visibleLimit){const more=button(`Load 60 more (${filtered.length-visibleLimit} remaining)`,()=>{visibleLimit+=60;render(false);});more.id='catalog-load-more';$('database-grid').after(more);}
+    $('result-count').textContent=`${filtered.length} result${filtered.length===1?'':'s'}${filtered.length>visibleLimit?' · Showing '+visibleLimit:''}`;
     if(!filtered.length)$('database-grid').append(text('p','No items match these filters.'));
   }
   function options(select,values,first){if(!select)return;select.replaceChildren(new Option(first,''),...values.map(v=>new Option(v,v)));}
@@ -176,7 +182,7 @@
     try{
       const {data,error}=await supabaseClient.auth.getUser(); if(error && error.name!=='AuthSessionMissingError')throw error;user=data.user;
       const [catalog,horses]=await Promise.all([json('data/database.json'),json('data/horses.json')]);
-      items=catalog.map(i=>({...i,kind:'item',title:String(i.title||'Untitled item'),agility:i.agility??i.agil,discipline:i.discipline??i.disc})).concat(horses.map(h=>({...h,kind:'horse',category:'Horses',section:h.breed,title:`${h.breed} ${h.coat||''}`.trim(),shop:h.location})));
+      items=catalog.map(i=>({...i,kind:'item',title:String(i.title||'Untitled item'),agility:i.agility??i.agil,discipline:i.discipline??i.disc})).concat(horses.map(h=>({...h,kind:'horse',category:'Horses',section:h.breed,title:h.title||`${h.breed} ${h.coat||''}`.trim(),shop:h.location})));
       workspace=await HMOutfitWorkspace.create({items,user,key,slot,image,text,button,number,fields,onChange:render,requireAccount,getOwnedIds:()=>ready?new Set([...states.entries()].filter(([,v])=>v.owned).map(([id])=>id)):null});
       supabaseClient.auth.onAuthStateChange((event,session)=>{if((session?.user?.id||null)!==(user?.id||null))setTimeout(()=>location.reload(),0);});
       if(view==='outfits')return;
