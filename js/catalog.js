@@ -30,7 +30,7 @@
     dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
     document.body.append(dialog);dialog.showModal();return false;
   }
-  async function json(path) {const r=await fetch(path,{cache:'no-cache'}); if(!r.ok)throw Error(`Could not load ${path} (${r.status}).`); const a=await r.json(); if(!Array.isArray(a))throw Error(`Invalid data in ${path}.`); return a;}
+  async function json(path) {if(window.HMCatalogData)return window.HMCatalogData.load(path);const r=await fetch(path,{cache:'no-cache'}); if(!r.ok)throw Error(`Could not load ${path} (${r.status}).`); const a=await r.json(); if(!Array.isArray(a))throw Error(`Invalid data in ${path}.`); return a;}
   function number(v) {if(v===null || v===undefined || String(v).trim()==='')return null; const n=Number(v); return Number.isFinite(n)?n:null;}
   function overallStats(item) {
     const values=fields.slice(3).map(([field])=>number(item[field])).filter(value=>value!==null);

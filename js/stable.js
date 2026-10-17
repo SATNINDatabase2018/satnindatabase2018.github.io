@@ -6,7 +6,7 @@
   const button=(label,action)=>{const b=el('button',label);b.type='button';b.addEventListener('click',action);return b;};
   let user=null, catalog=[], horseCatalog=[], horses=[], outfits=[], outfitsReady=false;
   function message(s){$('stable-message').textContent=s;}
-  async function json(path){const r=await fetch(path);if(!r.ok)throw Error('Could not load '+path);return r.json();}
+  async function json(path){if(window.HMCatalogData)return window.HMCatalogData.load(path);const r=await fetch(path);if(!r.ok)throw Error('Could not load '+path);return r.json();}
   const getItem=k=>catalog.find(i=>`item:${i.id}`===k);
   const horseSide=i=>i && !['Clothes','Player Accessories'].includes(i.category);
   function photo(item,title){

@@ -1,0 +1,21 @@
+.admin-toolbar{display:flex;gap:12px;align-items:end;flex-wrap:wrap;margin:20px 0;}
+.admin-toolbar label{margin:0;}.admin-toolbar select{margin:8px 0 0;}
+.admin-layout{display:grid;grid-template-columns:minmax(230px,.8fr) minmax(0,1.3fr);gap:24px;align-items:start;}
+.admin-list-panel,.admin-editor{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px;min-width:0;}
+.admin-list-panel input[type=search]{max-width:none;}
+.admin-results{display:flex;flex-direction:column;gap:8px;max-height:65vh;overflow:auto;margin:16px 0;}
+.admin-entry{display:flex;flex-direction:column;align-items:start;text-align:left;gap:5px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--card-2);color:var(--text);box-shadow:none;}
+.admin-entry small{font-size:11px;line-height:1.5;font-weight:400;overflow-wrap:anywhere;}
+.admin-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px;}
+.admin-fields label{margin:0;font-size:12px;}.admin-fields input,.admin-fields select,.admin-fields textarea{max-width:none;margin:6px 0 0;}.admin-fields textarea{min-height:100px;}
+.admin-field-wide{grid-column:1/-1;}.admin-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;}
+.admin-checkbox{display:flex;gap:8px;align-items:center;font-size:12px;}
+.delete-account-panel{margin-top:28px;padding-top:22px;border-top:1px solid var(--border);}
+.delete-account-panel p{font-size:13px;max-width:650px;}
+.delete-account-dialog{width:min(520px,calc(100vw - 28px));border:1px solid var(--border);border-radius:18px;padding:26px;background:var(--card);color:var(--text);}
+.delete-account-dialog::backdrop{background:#10132299;}
+.delete-account-dialog .account-gate-actions{flex-wrap:wrap;}
+#admin-message{position:sticky;top:100px;z-index:3;background:var(--card);border-radius:10px;padding:10px;font-size:13px;}
+#admin-message:empty{display:none;}
+@media(max-width:850px){.admin-layout{grid-template-columns:1fr;}.admin-results{max-height:320px;}}
+@media(max-width:500px){.admin-fields{grid-template-columns:1fr;}}
