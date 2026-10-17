@@ -138,3 +138,134 @@ document
 
 
 loadDatabase();
+
+
+
+async function getCurrentUser() {
+
+    const {
+        data: { user }
+    } = await supabaseClient.auth.getUser();
+
+    return user;
+}
+
+
+async function setOwned(itemId) {
+
+    const user =
+        await getCurrentUser();
+
+    if (!user) {
+
+        alert("Please log in first.");
+
+        window.location.href =
+            "login.html";
+
+        return;
+    }
+
+    const { error } =
+        await supabaseClient
+        .from("user_items")
+        .upsert(
+            {
+                user_id: user.id,
+                item_id: itemId,
+                owned: true
+            },
+            {
+                onConflict:
+                    "user_id,item_id"
+            }
+        );
+
+    if (error) {
+        console.error(error);
+        alert("Could not save item.");
+        return;
+    }
+
+    alert("Added to your collection!");
+}
+
+
+async function setWishlist(itemId) {
+
+    const user =
+        await getCurrentUser();
+
+    if (!user) {
+
+        alert("Please log in first.");
+
+        window.location.href =
+            "login.html";
+
+        return;
+    }
+
+    const { error } =
+        await supabaseClient
+        .from("user_items")
+        .upsert(
+            {
+                user_id: user.id,
+                item_id: itemId,
+                wishlist: true
+            },
+            {
+                onConflict:
+                    "user_id,item_id"
+            }
+        );
+
+    if (error) {
+        console.error(error);
+        alert("Could not save wishlist item.");
+        return;
+    }
+
+    alert("Added to wishlist!");
+}
+
+
+async function setFavorite(itemId) {
+
+    const user =
+        await getCurrentUser();
+
+    if (!user) {
+
+        alert("Please log in first.");
+
+        window.location.href =
+            "login.html";
+
+        return;
+    }
+
+    const { error } =
+        await supabaseClient
+        .from("user_items")
+        .upsert(
+            {
+                user_id: user.id,
+                item_id: itemId,
+                favorite: true
+            },
+            {
+                onConflict:
+                    "user_id,item_id"
+            }
+        );
+
+    if (error) {
+        console.error(error);
+        alert("Could not save favorite.");
+        return;
+    }
+
+    alert("Added to favorites!");
+}
