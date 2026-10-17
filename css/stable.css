@@ -1,0 +1,7 @@
+.stable-sort-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin:22px 0;padding:18px;border:1px solid var(--border);border-radius:14px;background:var(--card);}
+.stable-sort-controls label{margin:0;font-size:13px;}
+.stable-sort-controls select{width:100%;max-width:none;margin:8px 0 0;}
+.stable-horse-card .remove-horse-button{align-self:flex-start;margin-top:18px;background:var(--card-2);color:var(--text);border:1px solid var(--border);box-shadow:none;font-size:12px;}
+.stable-horse-card .remove-horse-button:hover{background:var(--green-light);}
+.horse-remove-status{font-size:12px;}
+@media(max-width:600px){.stable-sort-controls{grid-template-columns:1fr;}}

@@ -53,6 +53,7 @@
       try{const {error}=await supabaseClient.from('user_horses').update({level:value}).eq('id',own.id).eq('user_id',user.id);if(error)throw error;own.level=value;levelStatus.textContent='Level saved.';}
       catch(e){level.value=previous==null?'':String(previous);levelStatus.textContent='Could not save level: '+e.message;}
       finally{level.disabled=false;}
+      if(own.level===value && $('stable-sort')?.value==='level')render();
     });levelLabel.append(level);card.append(levelLabel,levelStatus);
     const assigned=new Set((Array.isArray(own.outfit_ids)?own.outfit_ids:[]).map(String));
     const details=document.createElement('details');details.className='horse-outfit-picker';details.append(el('summary','Choose outfits'));
@@ -82,9 +83,34 @@
       else for(const outfit of available)previews.append(outfitPreview(outfit));
       if([...assigned].some(id=>!outfits.some(o=>String(o.id)===id)))previews.append(el('p','An assigned outfit is unavailable or has been deleted.','stat-note'));
     }
-    refreshPreview();return card;
+    refreshPreview();
+    if(user){
+      const removeStatus=el('p','','horse-remove-status');removeStatus.setAttribute('role','status');
+      const remove=button('Remove horse',async()=>{
+        const name=own.name||h?.breed||'this horse';
+        if(!confirm(`Remove ${name} from your stable? This removes this horse and its outfit assignments from your stable. Your saved outfits and the database horse will remain.`))return;
+        remove.disabled=true;removeStatus.textContent='Removing horse…';
+        try{
+          const {data,error}=await supabaseClient.from('user_horses').delete().eq('id',own.id).eq('user_id',user.id).select('id');
+          if(error)throw error;if(!data?.length)throw Error('No horse was removed. Refresh your stable and try again.');
+          horses=horses.filter(row=>String(row.id)!==String(own.id));render();message(name+' removed from your stable.');
+        }catch(e){removeStatus.textContent='Could not remove horse: '+e.message;remove.disabled=false;}
+      });remove.className='remove-horse-button';card.append(remove,removeStatus);
+    }
+    return card;
   }
-  function render(){const grid=$('stable-grid');grid.replaceChildren(...horses.map(horseCard));if(!horses.length)grid.append(el('p','Your stable is empty. Add your first horse above or from the database.'));}
+  function sortedHorses(){
+    const field=$('stable-sort')?.value||'name',direction=$('stable-sort-direction')?.value==='desc'?-1:1;
+    const source=own=>horseCatalog.find(h=>String(h.id)===String(own.horse_id));
+    const value=own=>field==='breed'?(source(own)?.breed||''):field==='level'?(own.level==null||own.level===''?null:Number(own.level)):(own.name||source(own)?.breed||'');
+    return horses.slice().sort((a,b)=>{
+      const av=value(a),bv=value(b),empty=v=>v===null||v===undefined||v===''||typeof v==='number'&&!Number.isFinite(v);
+      if(empty(av)!==empty(bv))return empty(av)?1:-1;
+      const result=empty(av)?0:field==='level'?av-bv:String(av).localeCompare(String(bv),undefined,{numeric:true,sensitivity:'base'});
+      return direction*result||String(a.name||'').localeCompare(String(b.name||''),undefined,{numeric:true,sensitivity:'base'})||String(a.id).localeCompare(String(b.id));
+    });
+  }
+  function render(){const grid=$('stable-grid');grid.replaceChildren(...sortedHorses().map(horseCard));if(!horses.length)grid.append(el('p','Your stable is empty. Add your first horse above or from the database.'));}
   function picker(){
     $('horse-options').replaceChildren(...horseCatalog.slice().sort((a,b)=>(window.HMItemStatus?.compare(a,b)||0)||a.breed.localeCompare(b.breed)).map(h=>{
       const c=el('article','','item-card');c.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(h));c.append(photo(h,h.breed),el('h3',h.breed),el('p',h.coat||''),button('Add to Stable',async e=>{
@@ -95,6 +121,7 @@
     }));
   }
   async function start(){
+    ['stable-sort','stable-sort-direction'].forEach(id=>$(id)?.addEventListener('change',render));
     if(window.HMFeatureAccess)await window.HMFeatureAccess;
     try{
       const {data,error}=await supabaseClient.auth.getUser();if(error && error.name!=='AuthSessionMissingError')throw error;user=data.user;

@@ -11,7 +11,7 @@
 <style>[hidden]{display:none!important}</style><link rel="stylesheet" href="css/footer.css?v=stable-filters-contact-13">
 <link rel="icon" type="image/png" href="assets/cloud-horseshoe-logo.png?v=1">
 <link rel="apple-touch-icon" href="assets/cloud-horseshoe-logo.png">
-<link rel="stylesheet" href="css/header.css?v=stable-no-underline-14"></head>
+<link rel="stylesheet" href="css/header.css?v=horse-management-16"><link rel="stylesheet" href="css/stable.css?v=horse-management-16"></head>
 
 <body>
 
@@ -37,6 +37,10 @@
         + Add Horse
     </button>
 
+    <div class="stable-sort-controls" role="group" aria-label="Sort your horses">
+      <label for="stable-sort">Sort horses<select id="stable-sort"><option value="name">Name</option><option value="breed">Breed</option><option value="level">Level</option></select></label>
+      <label for="stable-sort-direction">Order<select id="stable-sort-direction"><option value="asc">Ascending / A–Z / lowest level first</option><option value="desc">Descending / Z–A / highest level first</option></select></label>
+    </div>
     <section id="horse-picker" hidden>
 
         <h2>Choose Horse</h2>
@@ -57,7 +61,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase.js"></script><script src="js/item-status.js?v=credit-rewards-6"></script><script src="js/feature-access.js?v=account-gate-blur-2"></script>
-<script src="js/stable.js?v=horse-level-status-1"></script>
+<script src="js/stable.js?v=horse-management-16"></script>
 <script src="js/auth-status.js?v=guest-account-8"></script>
 
 <script src="js/footer.js?v=stable-filters-contact-13"></script></body>
