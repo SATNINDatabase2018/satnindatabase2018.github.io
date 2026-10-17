@@ -107,7 +107,7 @@
     const sc=number(item.sc),js=number(item.js),money=[];
     if(sc!==null)money.push(`SC ${sc}`);if(js!==null)money.push(`JS ${js}`);
     if(money.length)card.append(text('p',money.join(' · '),'card-price'));
-    else if(!horse)card.append(text('p','SC -- · JS --','card-price'));
+    else if(!horse)card.append(text('p','SC～ ✧ JS～','card-price'));
     if(item.price_note)card.append(text('p',item.price_note,'card-price-note'));
     const stats=fields.slice(3).filter(([f])=>number(item[f])!==null).map(([f,label])=>`${label} ${item[f]}`).join(' · ');
     if(stats)card.append(text('p',stats,'stats card-stats'));
