@@ -78,6 +78,7 @@ window.HMOutfitWorkspace = {
       newDraft(old||undefined);
     }
     if(!drafts[current])current=Object.keys(drafts)[0];
+    if(isStudio){const requested=new URLSearchParams(location.search).get('outfit');if(requested && drafts[requested])current=requested;}
     function horseInfo(id){
       const own=horses.find(h=>String(h.id)===String(id));
       if(!own)return null;

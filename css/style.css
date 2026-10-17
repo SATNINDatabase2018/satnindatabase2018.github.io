@@ -861,3 +861,20 @@ button:focus-visible,a:focus-visible,summary:focus-visible {outline:3px solid va
 .outfit-assign-menu>button{width:100%;margin:4px 0;}
 .assign-status{font-size:12px;line-height:1.4;color:var(--green-dark);}
 .assign-footnote{display:block;font-size:11px;line-height:1.5;color:var(--muted);margin-top:10px;}
+
+/* Each owned horse can keep several saved outfit assignments. */
+#stable-grid {grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));align-items:start;}
+.horse-outfit-picker{margin:18px 0;padding:14px;background:var(--green-light);border:1px solid var(--border);border-radius:12px;}
+.horse-outfit-options{display:flex;flex-direction:column;gap:8px;margin:14px 0;max-height:280px;overflow:auto;}
+.horse-outfit-option{display:grid;grid-template-columns:18px 1fr;align-items:center;column-gap:8px;row-gap:3px;margin:0;padding:10px;background:var(--card);border-radius:9px;cursor:pointer;}
+.horse-outfit-option small{grid-column:2;font-size:10px;color:var(--muted);font-weight:400;}
+.horse-outfit-picker>a{display:block;margin-top:12px;font-size:12px;color:var(--green-dark);}
+.horse-outfit-status{font-size:12px;}
+.stable-outfit-preview{margin-top:14px;padding:14px;border:1px solid var(--border);border-radius:12px;background:#f8f9f2;}
+.stable-outfit-preview h4{margin:0 0 12px;color:var(--green-dark);font-size:15px;}
+.stable-outfit-items{display:flex;flex-wrap:wrap;gap:8px;}
+.stable-gear-chip{display:flex;align-items:center;gap:6px;font-size:11px;line-height:1.4;}
+.stable-gear-chip .catalog-image{min-height:40px;flex-shrink:0;}
+.stable-gear-chip .catalog-image img{width:36px;height:36px;padding:0;margin:0;}
+.stable-outfit-preview small{font-size:10px;color:var(--muted);}
+.stable-outfit-link{display:block;font-size:12px;margin-top:10px;color:var(--green-dark);}
