@@ -5,7 +5,7 @@
   const view = document.body.dataset.view;
   const categories = [['','Everything'],['Clothes','Player Clothes'],['Player Accessories','Player Accessories'],['Equipment','Horse Equipment'],['Horses','Horses'],['Horse Decorations','Horse Decorations'],['Pets','Pets']];
   const fields = [['title','Name'],['sc','SC'],['js','JS'],['ride','Riding'],['jump','Jumping'],['command','Command'],['care','Care'],['speed','Speed'],['strength','Strength'],['agility','Agility'],['discipline','Discipline']];
-  let items=[], user=null, states=new Map(), active='', draft={}, ready=false;
+  let items=[], user=null, states=new Map(), active='', workspace=null, ready=false;
   const pending = new Set();
   const key = item => `${item.kind}:${item.id}`;
   const draftKey = () => `hm2018:outfit:${user?.id || 'guest'}`;
@@ -15,26 +15,13 @@
   async function json(path) {const r=await fetch(path); if(!r.ok)throw Error(`Could not load ${path} (${r.status}).`); const a=await r.json(); if(!Array.isArray(a))throw Error(`Invalid data in ${path}.`); return a;}
   function number(v) {if(v===null || v===undefined || String(v).trim()==='')return null; const n=Number(v); return Number.isFinite(n)?n:null;}
   function overallStats(item) {
-    const values = fields
-        .slice(3)
-        .map(([field]) => number(item[field]))
-        .filter(value => value !== null);
-
-    return values.length
-        ? values.reduce((sum, value) => sum + value, 0)
-        : null;
-}
-
-function sortValue(item, field) {
-    if (field === "title") return item.title;
-    if (field === "overall") return overallStats(item);
-
-    return number(item[field]);
-}
+    const values=fields.slice(3).map(([field])=>number(item[field])).filter(value=>value!==null);
+    return values.length ? values.reduce((sum,value)=>sum+value,0) : null;
+  }
+  function sortValue(item,field) {return field==='title'?item.title:field==='overall'?overallStats(item):number(item[field]);}
   function compare(a,b,rules) {
     for(const {field,dir} of rules){
-      const av = sortValue(a, field);
-const bv = sortValue(b, field);
+      const av=sortValue(a,field), bv=sortValue(b,field);
       // Unknown values stay last in either direction. Zero is a known value.
       if(av==null && bv!=null)return 1; if(bv==null && av!=null)return -1;
       const c=av==null?0:field==='title'?av.localeCompare(bv,undefined,{numeric:true,sensitivity:'base'}):av-bv;
@@ -43,7 +30,7 @@ const bv = sortValue(b, field);
     return a.title.localeCompare(b.title) || key(a).localeCompare(key(b));
   }
   // Exposed for small regression checks; no network or writes.
-  window.HMCatalog={compare,number};
+  window.HMCatalog={compare,number,overallStats};
   function state(item){return states.get(String(item.id)) || {};}
   async function loadStates(){
     states=new Map(); if(!user)return;
@@ -76,17 +63,6 @@ const bv = sortValue(b, field);
     const aliases=[['Mane Decoration',/mane/],['Tail Decoration',/tail/],['Leg Wraps',/leg wrap|socks/],['Saddle Bag',/saddle ?bag/],['Horseshoes',/horseshoe|horse shoe/],['Bridle',/bridle/],['Blanket',/blanket|saddle pad/],['Saddle',/saddle/],['Hat',/hat|helmet/],['Top',/top|shirt|jacket|sweater|coat/],['Gloves',/glove/],['Pants',/pant|breech|trouser/],['Shoes',/shoe|boot/]];
     return aliases.find(([,re])=>re.test(s))?.[0] || (['Clothes','Player Accessories','Equipment','Horse Decorations'].includes(item.category) && item.section ? String(item.section) : null);
   }
-  function saveDraft(){try{localStorage.setItem(draftKey(),JSON.stringify({name:$('outfit-name').value,slots:draft}));}catch{outfitMessage('This browser could not keep the draft. You can still save it to your account.');}}
-  function outfitMessage(s){$('outfit-message').textContent=s;}
-  function renderTray(){
-    const tray=$('outfit-tray'); if(!tray)return; tray.replaceChildren();
-    $('tray-count').textContent=`(${Object.keys(draft).length})`;
-    for(const [s,k] of Object.entries(draft)){
-      const item=items.find(i=>key(i)===k); if(!item)continue;
-      const row=text('div','', 'tray-row'); row.append(image(item),text('span',`${s}: ${item.title}`),button('Remove',()=>{delete draft[s];saveDraft();renderTray();render();})); tray.append(row);
-    }
-    $('save-outfit').disabled=!Object.keys(draft).length;
-  }
   function card(item){
     const card=text('article','', 'item-card'); card.dataset.itemKey=key(item); card.append(image(item),text('h3',item.title),text('p',item.section || item.category));
     if(item.description)card.append(text('p',item.description));
@@ -104,7 +80,7 @@ const bv = sortValue(b, field);
       }
     }
     const s=slot(item);
-    if(s){const selected=draft[s]===key(item); actions.append(button(selected?'✓ In outfit':'+ Add to outfit',()=>{draft[s]=key(item);saveDraft();renderTray();render();outfitMessage(`${item.title} added to ${s}.`);}));}
+    if(s){const selected=workspace?.slots[s]===key(item); actions.append(button(selected?'✓ In outfit':'+ Add to outfit',()=>workspace.add(item)));}
     card.append(actions); return card;
   }
   function render(){
@@ -112,7 +88,7 @@ const bv = sortValue(b, field);
     const q=$('search').value.trim().toLowerCase(), category=$('category-filter').value,shop=$('shop-filter').value;
     const flags=[...document.querySelectorAll('#state-filters input:checked')].map(n=>n.value);
     const rules=[...document.querySelectorAll('.sort-rule')].map(n=>({field:n.querySelector('.sort-field').value,dir:n.querySelector('.sort-dir').value}));
-    const filtered=items.filter(i=>(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && (!category || i.section===category) && (!shop || i.shop===shop) && (!flags.length || (i.kind!=='horse' && flags.every(f=>state(i)[f]))) && `${i.title} ${i.description||''} ${i.shop||''} ${i.section||''}`.toLowerCase().includes(q)).sort((a,b)=>compare(a,b,rules));
+    const filtered=items.filter(i=>(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && (!category || (active==='Horses'?i.section===category:category==='__horse__'?i.kind==='horse':i.kind!=='horse' && i.section===category)) && (!$('breed-filter').value || i.kind==='horse' && i.section===$('breed-filter').value) && (!shop || i.shop===shop) && (!flags.length || (i.kind!=='horse' && flags.every(f=>state(i)[f]))) && `${i.title} ${i.description||''} ${i.shop||''} ${i.section||''}`.toLowerCase().includes(q)).sort((a,b)=>compare(a,b,rules));
     $('database-grid').replaceChildren(...filtered.map(card));
     $('result-count').textContent=`${filtered.length} result${filtered.length===1?'':'s'}`;
     if(!filtered.length)$('database-grid').append(text('p','No items match these filters.'));
@@ -120,8 +96,18 @@ const bv = sortValue(b, field);
   function options(select,values,first){select.replaceChildren(new Option(first,''),...values.map(v=>new Option(v,v)));}
   function updateOptions(){
     const pool=items.filter(i=>view==='collection' || !active || i.category===active);
-    options($('category-filter'),[...new Set(pool.map(i=>i.section).filter(Boolean))].sort(),'All item types');
+    const inHorses=view==='database' && active==='Horses';
+    const types=[...new Set(pool.filter(i=>inHorses || i.kind!=='horse').map(i=>i.section).filter(Boolean))].sort();
+    options($('category-filter'),types,inHorses?'All breeds':'All item types');
+    if(!inHorses && pool.some(i=>i.kind==='horse'))$('category-filter').add(new Option('Horse','__horse__'));
+    options($('breed-filter'),[...new Set(pool.filter(i=>i.kind==='horse').map(i=>i.section))].sort(),'All breeds');
+    updateBreedFilter();
     options($('shop-filter'),[...new Set(pool.map(i=>i.shop).filter(Boolean))].sort(),'All sites / shops');
+  }
+  function updateBreedFilter(){
+    const show=active!=='Horses' && $('category-filter').value==='__horse__';
+    $('breed-filter-wrap').hidden=!show;
+    if(!show)$('breed-filter').value='';
   }
   function activate(value){
     active=value;
@@ -131,80 +117,13 @@ const bv = sortValue(b, field);
     $('catalog-panel').setAttribute('aria-labelledby',tab.id);
     updateOptions(); render();
   }
-  function addSort(field = "title", dir = "asc") {
-    const row = text("div", "", "sort-rule");
-    const fieldSelect = document.createElement("select");
-    const directionSelect = document.createElement("select");
-
-    fieldSelect.className = "sort-field";
-    fieldSelect.setAttribute("aria-label", "Sort by");
-
-    const sortOptions = [
-        ...fields,
-        ["overall", "Overall stats (best first)"]
-    ];
-
-    sortOptions.forEach(([value, label]) => {
-        fieldSelect.add(new Option(label, value));
-    });
-
-    fieldSelect.value = field;
-
-    directionSelect.className = "sort-dir";
-    directionSelect.setAttribute("aria-label", "Sort direction");
-
-    directionSelect.add(
-        new Option("Lowest first / A–Z", "asc")
-    );
-
-    directionSelect.add(
-        new Option("Highest first / Z–A", "desc")
-    );
-
-    directionSelect.value = dir;
-
-    fieldSelect.addEventListener("change", () => {
-        if (fieldSelect.value === "overall") {
-            directionSelect.value = "desc";
-        }
-
-        render();
-    });
-
-    directionSelect.addEventListener("change", render);
-
-    row.append(
-        fieldSelect,
-        directionSelect,
-        button("Remove rule", () => {
-            row.remove();
-            render();
-        })
-    );
-
-    $("sort-rules").append(row);
-  }
-  async function saveOutfit(){
-    if(!user){outfitMessage('Log in to save this outfit. Your guest draft stays in this browser.');return;}
-    const name=$('outfit-name').value.trim(); if(!name){outfitMessage('Give your outfit a name first.');$('outfit-name').focus();return;}
-    $('save-outfit').disabled=true;
-    const {error}=await supabaseClient.from('hm_saved_outfits').insert({user_id:user.id,name,slots:draft});
-    $('save-outfit').disabled=false;outfitMessage(error?'Could not save outfit: '+error.message:'Outfit saved! Find it under My Outfits.');
-  }
-  async function showOutfits(){
-    const host=$('saved-outfits');host.replaceChildren();
-    if(!user){message('Log in to see your saved outfits.');return;}
-    const {data,error}=await supabaseClient.from('hm_saved_outfits').select('id,name,slots').eq('user_id',user.id).order('created_at',{ascending:false});
-    if(error){message('Could not load outfits. Make sure the supplied setup SQL has been run. '+error.message);return;}
-    message(data.length?`${data.length} saved outfits`:'No saved outfits yet.');
-    for(const outfit of data){
-      const card=text('article','','item-card');card.append(text('h2',outfit.name));
-      for(const [s,k] of Object.entries(outfit.slots||{})){
-        const item=items.find(i=>key(i)===k); const row=text('div','','tray-row'); if(item)row.append(image(item));row.append(text('span',`${s}: ${item?.title || 'Item no longer in catalog'}`));card.append(row);
-      }
-      card.append(button('Use as a starting point',()=>{try{localStorage.setItem(draftKey(),JSON.stringify({name:outfit.name+' (copy)',slots:outfit.slots}));location.href='database.html';}catch{message('This browser cannot open the outfit draft.');}}));
-      card.append(button('Delete outfit',async e=>{if(!confirm(`Delete “${outfit.name}”?`))return;e.currentTarget.disabled=true;const {error}=await supabaseClient.from('hm_saved_outfits').delete().eq('id',outfit.id).eq('user_id',user.id);if(error){message(error.message);e.currentTarget.disabled=false;}else await showOutfits();}));host.append(card);
-    }
+  function addSort(field='title',dir='asc'){
+    const row=text('div','','sort-rule'),f=document.createElement('select'),d=document.createElement('select');
+    f.className='sort-field'; f.setAttribute('aria-label','Sort by'); [...fields,['overall','Overall stats (combined)']].forEach(([v,l])=>f.add(new Option(l,v)));f.value=field;
+    d.className='sort-dir'; d.setAttribute('aria-label','Sort direction'); d.add(new Option('Ascending / A–Z','asc'));d.add(new Option('Descending / Z–A','desc'));d.value=dir;
+    f.addEventListener('change',()=>{if(f.value==='overall'){d.value='desc';render();}});
+    [f,d].forEach(n=>n.addEventListener('change',render));
+    row.append(f,d,button('Remove rule',()=>{row.remove();render();})); $('sort-rules').append(row);
   }
   function setup(){
     const choices=view==='collection'?[['owned','Owned'],['wishlist','Wishlist'],['favorite','Favorites']]:categories;
@@ -217,26 +136,25 @@ const bv = sortValue(b, field);
     });
     window.addEventListener('hashchange',()=>{let v;try{v=decodeURIComponent(location.hash.slice(1));}catch{return;}if(choices.some(([x])=>x===v))activate(v);});
     $('search').addEventListener('input',render);
-    ['category-filter','shop-filter','state-filters'].forEach(id=>$(id).addEventListener('change',render));
+    $('category-filter').addEventListener('change',()=>{updateBreedFilter();render();});
+    ['category-filter','breed-filter','shop-filter','state-filters'].forEach(id=>$(id).addEventListener('change',render));
     if(!user){document.querySelectorAll('#state-filters input').forEach(n=>n.disabled=true);$('state-filters').append(text('small','Log in to filter your saved items.'));}
     $('add-sort').addEventListener('click',()=>{addSort('sc','asc');render();});addSort();
     $('reset-filters').addEventListener('click',()=>{$('search').value='';updateOptions();document.querySelectorAll('#state-filters input').forEach(n=>n.checked=false);$('sort-rules').replaceChildren();addSort();render();});
-    try{const saved=JSON.parse(localStorage.getItem(draftKey())||localStorage.getItem('hm2018:outfit:guest')||'null');if(saved && typeof saved.slots==='object' && saved.slots){draft=Object.fromEntries(Object.entries(saved.slots).filter(([s,k])=>items.some(i=>key(i)===k && slot(i)===s)));$('outfit-name').value=String(saved.name||'');}}catch{}
-    $('outfit-name').addEventListener('input',saveDraft);
-    $('clear-outfit').addEventListener('click',()=>{draft={};$('outfit-name').value='';saveDraft();renderTray();render();});
-    $('save-outfit').addEventListener('click',saveOutfit);renderTray();activate(active);
+    activate(active);
   }
   async function start(){
     try{
       const {data,error}=await supabaseClient.auth.getUser(); if(error && error.name!=='AuthSessionMissingError')throw error;user=data.user;
       const [catalog,horses]=await Promise.all([json('data/database.json'),json('data/horses.json')]);
       items=catalog.map(i=>({...i,kind:'item',title:String(i.title||'Untitled item'),agility:i.agility??i.agil,discipline:i.discipline??i.disc})).concat(horses.map(h=>({...h,kind:'horse',category:'Horses',section:h.breed,title:`${h.breed} ${h.coat||''}`.trim(),shop:h.location})));
-      if(view==='outfits'){await showOutfits();return;}
+      workspace=await HMOutfitWorkspace.create({items,user,key,slot,image,text,button,number,fields,onChange:render});
+      supabaseClient.auth.onAuthStateChange((event,session)=>{if((session?.user?.id||null)!==(user?.id||null))setTimeout(()=>location.reload(),0);});
+      if(view==='outfits')return;
       try{await loadStates();ready=true;}catch(e){message(e.message);}
       setup();
       if(view==='collection' && !user)message('Log in to see your collection, wishlist and favorites.');
-      // Reload after a session change so account-specific drafts and flags never carry over.
-      supabaseClient.auth.onAuthStateChange((event,session)=>{if((session?.user?.id||null)!==(user?.id||null))setTimeout(()=>location.reload(),0);});
+
     }catch(e){message(e.message || 'Could not load the database.');}
   }
   start();
