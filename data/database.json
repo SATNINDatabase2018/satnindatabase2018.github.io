@@ -1,0 +1,31 @@
+[
+    {
+        "id": 8309,
+        "category": "Horse Decorations",
+        "section": "Mane Decoration",
+        "title": "Halloween Bow",
+        "description": "",
+        "image": "https://raw.githubusercontent.com/velausc/sso-items-list/main/100x100sem/8309.jpg",
+        "js": null,
+        "sc": 79,
+        "level": "",
+        "shop": "In Progress Shop"
+    },
+
+    {
+        "id": 2201,
+        "category": "Clothes",
+        "section": "Hat",
+        "title": "Example Riding Helmet",
+        "description": "A riding helmet.",
+        "image": "IMAGE URL",
+        "js": 2500,
+        "sc": 25,
+        "level": "9",
+        "ride": 2,
+        "jump": 1,
+        "command": 0,
+        "care": 0,
+        "shop": "Fort Pinta"
+    }
+]
