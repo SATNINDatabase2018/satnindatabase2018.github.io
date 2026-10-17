@@ -96,3 +96,8 @@ button.item-type-bubble{box-shadow:none;cursor:pointer;}
 button.item-type-bubble:hover{background:var(--green-dark);color:var(--card);transform:none;box-shadow:none;}
 .item-card button.card-location{display:block;align-self:flex-start;max-width:100%;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;text-align:left;font-weight:500;line-height:1.5;white-space:normal;}
 .item-card button.card-location:hover{text-decoration:underline;transform:none;background:transparent;box-shadow:none;}
+
+/* Align the two levels of category and location filters. */
+.category-filter-stack,.location-filter-stack{display:grid;grid-template-rows:auto auto;align-content:start;gap:16px;min-width:0;}
+.filter-grid .category-filter-stack label,.filter-grid .location-filter-stack label{display:block;margin:0;min-width:0;}
+.category-filter-stack select,.location-filter-stack select{width:100%;max-width:none;margin:8px 0 0;}
