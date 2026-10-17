@@ -81,3 +81,7 @@ option{background:var(--card);color:var(--text);}
 .item-card .card-price-note{font-size:11px;}
 .item-card .card-stats{border-top:1px solid var(--border);padding-top:10px;margin-top:10px;font-size:12px;}
 .is-uncertain .item-type-bubble{background:var(--neutral-bg);color:var(--neutral-text);border-color:var(--neutral-border);}
+
+.category-filter-stack{display:flex;flex-direction:column;min-width:0;}
+.category-filter-stack label{margin-top:14px;}
+.category-filter-stack select{max-width:none;}
