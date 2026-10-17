@@ -943,3 +943,8 @@ button:focus-visible,a:focus-visible,summary:focus-visible {outline:3px solid va
 .feature-shell>.account-gate{position:absolute;top:35px;left:50%;transform:translateX(-50%);z-index:30;width:min(620px,calc(100% - 24px));margin:0;background:rgba(255,253,248,.97);box-shadow:0 16px 50px #20332222;}
 .feature-blurred .outfit-builder{position:static!important;width:auto;max-height:none;}
 @media(min-width:1000px){body[data-view="collection"] main:has(.feature-blurred){padding-right:0;}}
+
+.database-login-dialog{width:min(540px,calc(100vw - 32px));padding:32px;border:1px solid var(--border);border-radius:20px;background:var(--card);color:var(--text);text-align:center;box-shadow:0 20px 70px #17281933;}
+.database-login-dialog::backdrop{background:#17251988;backdrop-filter:blur(4px);}
+.database-login-dialog h2{font-family:Georgia,serif;color:var(--green-dark);font-size:29px;}
+.database-login-dialog p{margin-bottom:24px;}

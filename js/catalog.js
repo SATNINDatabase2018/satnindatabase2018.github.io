@@ -12,6 +12,21 @@
   const text = (tag, value, cls) => {const n=document.createElement(tag); n.textContent=value; if(cls)n.className=cls; return n;};
   const button = (label, action) => {const n=text('button',label); n.type='button'; n.addEventListener('click',action); return n;};
   function message(value) {$('catalog-message').textContent=value;}
+  function requireAccount(){
+    if(user)return true;
+    const existing=$('database-login-dialog');if(existing?.open)return false;
+    const dialog=document.createElement('dialog');dialog.id='database-login-dialog';dialog.className='database-login-dialog';dialog.setAttribute('aria-labelledby','database-login-title');
+    const heading=text('h2','Account required');heading.id='database-login-title';
+    const prompt=text('p','To use this feature, please log in or create an account');
+    const actions=text('div','','account-gate-actions');
+    const signup=text('a','Create account','button');signup.href='login.html#signup';
+    const login=text('a','Log in');login.href='login.html';
+    actions.append(signup,login,button('Close',()=>dialog.close()));dialog.append(heading,prompt,actions);
+    const previous=document.activeElement;
+    dialog.addEventListener('close',()=>{dialog.remove();if(previous?.isConnected)previous.focus();});
+    dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
+    document.body.append(dialog);dialog.showModal();return false;
+  }
   async function json(path) {const r=await fetch(path); if(!r.ok)throw Error(`Could not load ${path} (${r.status}).`); const a=await r.json(); if(!Array.isArray(a))throw Error(`Invalid data in ${path}.`); return a;}
   function number(v) {if(v===null || v===undefined || String(v).trim()==='')return null; const n=Number(v); return Number.isFinite(n)?n:null;}
   function overallStats(item) {
@@ -39,7 +54,7 @@
     for(const row of data)states.set(String(row.item_id),row);
   }
   async function toggle(item,field,control){
-    if(!user){location.href='login.html'; return;}
+    if(!requireAccount())return;
     if(pending.has(key(item)))return;
     pending.add(key(item));
     document.querySelectorAll('[data-item-key]').forEach(n=>{if(n.dataset.itemKey===key(item))n.querySelectorAll('button').forEach(b=>b.disabled=true);});
@@ -65,7 +80,7 @@
     return aliases.find(([,re])=>re.test(s))?.[0] || (['Clothes','Player Accessories','Equipment','Horse Decorations'].includes(item.category) && item.section ? String(item.section) : null);
   }
   async function addHorseHere(horse,control){
-    if(!user){message('Please log in to add horses to your stable.');return;}
+    if(!requireAccount())return;
     const entered=prompt(`Name your ${horse.breed||horse.title}:`);
     if(entered===null)return;const name=entered.trim();if(!name){message('Enter a horse name to add it.');return;}
     control.disabled=true;const old=control.textContent;control.textContent='Adding…';
@@ -93,7 +108,7 @@
       }
     }
     const s=slot(item);
-    if(s){const count=workspace?.count(item)||0; const b=button(count?`✓ In ${count} outfit${count===1?'':'s'}`:'+ Add to outfit',e=>workspace.openMenu(item,e.currentTarget));b.className='outfit-menu-trigger';b.setAttribute('aria-expanded','false');b.setAttribute('aria-haspopup','dialog');actions.append(b);}
+    if(s){const count=workspace?.count(item)||0; const b=button(count?`✓ In ${count} outfit${count===1?'':'s'}`:'+ Add to outfit',e=>{if(requireAccount())workspace.openMenu(item,e.currentTarget);});b.className='outfit-menu-trigger';b.setAttribute('aria-expanded','false');b.setAttribute('aria-haspopup','dialog');actions.append(b);}
     card.append(actions); return card;
   }
   function render(){
@@ -151,7 +166,7 @@
     $('search')?.addEventListener('input',render);
     $('category-filter')?.addEventListener('change',()=>{updateBreedFilter();render();});
     ['category-filter','breed-filter','shop-filter','state-filters'].forEach(id=>$(id)?.addEventListener('change',render));
-    if(!user){document.querySelectorAll('#state-filters input').forEach(n=>n.disabled=true);$('state-filters')?.append(text('small','Log in to filter your saved items.'));}
+    if(!user){$('state-filters')?.addEventListener('click',e=>{if(e.target.closest('label,input')){e.preventDefault();e.stopImmediatePropagation();requireAccount();}},true);}
     $('add-sort')?.addEventListener('click',()=>{addSort('sc','asc');render();});addSort();
     $('reset-filters')?.addEventListener('click',()=>{$('search').value='';updateOptions();document.querySelectorAll('#state-filters input').forEach(n=>n.checked=false);$('sort-rules').replaceChildren();addSort();render();});
     activate(active);
@@ -162,7 +177,7 @@
       const {data,error}=await supabaseClient.auth.getUser(); if(error && error.name!=='AuthSessionMissingError')throw error;user=data.user;
       const [catalog,horses]=await Promise.all([json('data/database.json'),json('data/horses.json')]);
       items=catalog.map(i=>({...i,kind:'item',title:String(i.title||'Untitled item'),agility:i.agility??i.agil,discipline:i.discipline??i.disc})).concat(horses.map(h=>({...h,kind:'horse',category:'Horses',section:h.breed,title:`${h.breed} ${h.coat||''}`.trim(),shop:h.location})));
-      workspace=await HMOutfitWorkspace.create({items,user,key,slot,image,text,button,number,fields,onChange:render,getOwnedIds:()=>ready?new Set([...states.entries()].filter(([,v])=>v.owned).map(([id])=>id)):null});
+      workspace=await HMOutfitWorkspace.create({items,user,key,slot,image,text,button,number,fields,onChange:render,requireAccount,getOwnedIds:()=>ready?new Set([...states.entries()].filter(([,v])=>v.owned).map(([id])=>id)):null});
       supabaseClient.auth.onAuthStateChange((event,session)=>{if((session?.user?.id||null)!==(user?.id||null))setTimeout(()=>location.reload(),0);});
       if(view==='outfits')return;
       try{await loadStates();ready=true;}catch(e){message(e.message);}

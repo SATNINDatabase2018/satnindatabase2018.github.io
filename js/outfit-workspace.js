@@ -1,8 +1,14 @@
 /* Multiple account-scoped outfit drafts, cloud saves, stats and character-sheet layout. */
 window.HMOutfitWorkspace = {
-  async create({items,user,key,slot,image,text,button,number,fields,onChange,getOwnedIds}) {
+  async create({items,user,key,slot,image,text,button,number,fields,onChange,getOwnedIds,requireAccount}) {
     const root=document.getElementById('outfit-workspace');
     const isStudio=document.body.dataset.view==='outfits';
+    if(!user && requireAccount){
+      const protect=e=>{if(e.target.closest('button,input,select,a,label')){e.preventDefault();e.stopImmediatePropagation();requireAccount();}};
+      root.addEventListener('click',protect,true);
+      root.addEventListener('pointerdown',e=>{if(e.target.closest('input,select'))protect(e);},true);
+      root.addEventListener('keydown',e=>{if(e.key!=='Tab' && e.key!=='Escape')protect(e);},true);
+    }
     const statFields=fields.slice(3);
     const catalog=new Map(items.map(i=>[key(i),i]));
     const storeKey=`hm2018:outfits:v2:${user?.id||'guest'}`;
@@ -225,7 +231,7 @@ window.HMOutfitWorkspace = {
       if(extras.length){const extra=text('div','','extra-slots');extra.append(...extras.map(slotButton));panel.append(extra);}return panel;
     }
     async function save(){
-      if(busy)return;if(!user){tell('Log in to save. Your drafts remain in this browser.');return;}
+      if(busy)return;if(!user){requireAccount?.();return;}
       const d=clone(selected());d.name=d.name.trim();if(!d.name){tell('Give this outfit a name first.');return;}
       busy=true;draw();
       try{
