@@ -97,7 +97,9 @@ signupButton.addEventListener(
 
 
         message.textContent =
-            "Account created. Check your email to confirm your account.";
+            data.session
+                ? "Account created. You are logged in."
+                : "Account created. Check your email for a message from Supabase Auth to confirm your email address. If you don’t see it, check your spam or junk folder.";
 
     }
 );
