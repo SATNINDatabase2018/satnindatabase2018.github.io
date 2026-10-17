@@ -85,3 +85,17 @@ option{background:var(--card);color:var(--text);}
 .category-filter-stack{display:flex;flex-direction:column;min-width:0;}
 .category-filter-stack label{margin-top:14px;}
 .category-filter-stack select{max-width:none;}
+
+/* Softer grey tint while keeping picture colours visible */
+.item-card.is-uncertain {
+    filter: none;
+}
+
+.item-card.is-uncertain .catalog-image {
+    opacity: 1;
+}
+
+.item-card.is-uncertain .catalog-image img {
+    filter: grayscale(35%) saturate(80%);
+    opacity: 0.9;
+}
