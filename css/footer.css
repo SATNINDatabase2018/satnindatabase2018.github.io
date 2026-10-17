@@ -55,3 +55,13 @@ body>header nav{gap:6px;}
 body>header nav a{font-size:12px;padding:7px 10px;}
 body>header nav a[aria-current="page"]{background:var(--green-light);color:var(--green-dark);box-shadow:inset 0 0 0 1px var(--green);font-weight:800;}
 body>header nav #theme-toggle{font-size:12px;padding:7px 10px;}
+
+/* Hidden-in-plain-sight Contact Easter egg, compatible with both themes. */
+body.contact-page main{position:relative;}
+.kachow-egg{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:4px;padding:3px 5px;border:0;box-shadow:none;background:transparent;color:var(--muted);font-size:15px;opacity:.45;border-radius:7px;}
+.kachow-egg:hover,.kachow-egg:focus-visible,.kachow-egg.is-revealed{opacity:1;background:var(--green-light);color:var(--text);box-shadow:none;transform:none;}
+.kachow-words{display:none;font-size:11px;font-weight:700;white-space:nowrap;}
+.kachow-egg:hover .kachow-words,.kachow-egg:focus-visible .kachow-words,.kachow-egg.is-revealed .kachow-words{display:inline;}
+.kachow-left{left:0;top:9px;}
+.kachow-right{right:0;top:9px;}
+.kachow-bottom{right:4px;bottom:8px;}
