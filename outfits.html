@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Outfits | HM 2018</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+</head>
+
+<body>
+
+<header>
+
+    <a href="index.html"
+       class="logo">
+        HM 2018
+    </a>
+
+    <nav>
+
+        <a href="database.html">
+            Database
+        </a>
+
+        <a href="stable.html">
+            My Stable
+        </a>
+
+        <a href="collection.html">
+            My Collection
+        </a>
+
+        <a href="outfits.html">
+            My Outfits
+        </a>
+
+        <a href="login.html"
+           id="account-link">
+            Login
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <h1>My Outfits</h1>
+
+
+    <section>
+
+        <h2>Create Outfit</h2>
+
+
+        <label for="outfit-name">
+            Outfit name
+        </label>
+
+        <input
+            id="outfit-name"
+            type="text"
+            placeholder="Example: Autumn Dressage"
+        >
+
+
+        <label for="hat-select">
+            Hat
+        </label>
+
+        <select id="hat-select">
+            <option value="">
+                None
+            </option>
+        </select>
+
+
+        <label for="top-select">
+            Top
+        </label>
+
+        <select id="top-select">
+            <option value="">
+                None
+            </option>
+        </select>
+
+
+        <label for="gloves-select">
+            Gloves
+        </label>
+
+        <select id="gloves-select">
+            <option value="">
+                None
+            </option>
+        </select>
+
+
+        <label for="pants-select">
+            Pants
+        </label>
+
+        <select id="pants-select">
+            <option value="">
+                None
+            </option>
+        </select>
+
+
+        <label for="shoes-select">
+            Shoes
+        </label>
+
+        <select id="shoes-select">
+            <option value="">
+                None
+            </option>
+        </select>
+
+
+        <hr>
+
+
+        <h3>Horse Equipment</h3>
+
+
+        <label for="bridle-select">
+            Bridle
+        </label>
+
+        <select id="bridle-select">
+            <option value="">
+                None
+            </option>
+        </select>
+
+
+        <label for="saddle-select">
+            Saddle
+        </label>
+
+        <select id="saddle-select">
+            <option value="">
+                None
+            </option>
+        </select>
+
+
+        <label for="blanket-select">
+            Blanket
+        </label>
+
+        <select id="blanket-select">
+            <option value="">
+                None
+            </option>
+        </select>
+
+
+        <label for="horseshoes-select">
+            Horseshoes
+        </label>
+
+        <select id="horseshoes-select">
+            <option value="">
+                None
+            </option>
+        </select>
+
+
+        <label for="mane-select">
+            Mane Decoration
+        </label>
+
+        <select id="mane-select">
+            <option value="">
+                None
+            </option>
+        </select>
+
+
+        <label for="tail-select">
+            Tail Decoration
+        </label>
+
+        <select id="tail-select">
+            <option value="">
+                None
+            </option>
+        </select>
+
+
+        <label for="leg-wraps-select">
+            Leg Wraps
+        </label>
+
+        <select id="leg-wraps-select">
+            <option value="">
+                None
+            </option>
+        </select>
+
+
+        <label for="saddle-bag-select">
+            Saddle Bag
+        </label>
+
+        <select id="saddle-bag-select">
+            <option value="">
+                None
+            </option>
+        </select>
+
+
+        <br>
+
+        <button id="save-outfit-button">
+            Save Outfit
+        </button>
+
+        <p id="outfit-message"></p>
+
+    </section>
+
+
+    <section>
+
+        <h2>Saved Outfits</h2>
+
+        <div id="saved-outfits">
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+<script src="js/outfits.js"></script>
+
+<script src="js/auth-status.js"></script>
+
+
+</body>
+
+</html>
