@@ -1,46 +1,10 @@
 async function updateNavbar() {
-
-    const {
-        data: { user }
-    } = await supabaseClient.auth.getUser();
-
-
-    const accountLink =
-        document.getElementById(
-            "account-link"
-        );
-
-
-    if (!accountLink) {
-        return;
-    }
-
-
-    if (user) {
-
-        const username =
-            user.user_metadata?.username;
-
-        accountLink.textContent =
-            username || "My Account";
-
-    } else {
-
-        accountLink.textContent =
-            "Login";
-
-    }
-
+    let user=null;
+    try {const result=await supabaseClient.auth.getUser();user=result.data?.user||null;} catch {return;}
+    const accountLink=document.getElementById('account-link');
+    const signupLink=document.getElementById('signup-nav-link');
+    if(accountLink)accountLink.textContent=user?(user.user_metadata?.username||'My Account'):'Log in';
+    if(signupLink)signupLink.hidden=!!user;
 }
-
-
 updateNavbar();
-
-
-supabaseClient.auth.onAuthStateChange(
-    () => {
-
-        updateNavbar();
-
-    }
-);
+supabaseClient.auth.onAuthStateChange(()=>{updateNavbar();});

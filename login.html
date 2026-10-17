@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/themes.css?v=universal-header-toolbar-7">
 
-<link rel="stylesheet" href="css/footer.css?v=universal-header-toolbar-7">
+<link rel="stylesheet" href="css/footer.css?v=guest-account-8">
 <link rel="icon" type="image/png" href="assets/cloud-horseshoe-logo.png?v=1">
 <link rel="apple-touch-icon" href="assets/cloud-horseshoe-logo.png">
 </head>
@@ -41,7 +41,7 @@
             My Outfits
         </a>
 
-    </nav>
+    <span class="account-nav-actions"><a href="login.html" id="account-link">Log in</a><a href="login.html#signup" id="signup-nav-link" hidden>Create account</a></span></nav>
 
 </header>
 
@@ -51,7 +51,7 @@
     <h1>Account</h1>
 
 
-    <section id="signup" data-guest-only hidden>
+    <div class="guest-account-forms"><section id="signup" data-guest-only hidden>
 
         <h2>Create account</h2>
 
@@ -82,7 +82,7 @@
     </section>
 
 
-    <hr>
+    
 
 
     <section data-guest-only hidden>
@@ -110,7 +110,7 @@
     </section>
 
 
-    <section id="logged-in-section" hidden>
+    </div><section id="logged-in-section" hidden>
 
         <h2>You are logged in</h2>
 
@@ -130,6 +130,7 @@
 <script src="js/supabase.js"></script>
 
 <script src="js/auth.js"></script>
+<script src="js/auth-status.js?v=guest-account-8"></script>
 
 <script src="js/footer.js?v=universal-header-toolbar-7"></script></body>
 
