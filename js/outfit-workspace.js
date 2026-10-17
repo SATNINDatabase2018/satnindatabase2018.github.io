@@ -314,6 +314,16 @@ window.HMOutfitWorkspace = {
       }
       delete drafts[id];if(!Object.keys(drafts).length)newDraft();if(!drafts[current])current=Object.keys(drafts)[0];update();browse();
     }
+    function shareOutfit(d){
+      if(!user){requireAccount?.();return;}
+      if(!window.HMOutfitShare){notice='Sharing could not load. Please refresh.';draw();return;}
+      const horse=d.outfit_type==='player'?null:horseInfo(d.horse_instance_id);
+      const table=statTable(scopedSlots(d),d.outfit_type);
+      const snapshot={name:d.name||'New outfit',type:d.outfit_type,horse:horse?{title:horse.title,breed:horse.breed,image:horse.image}:null,
+        slots:Object.entries(scopedSlots(d)).map(([s,k])=>{const item=resolve(k);return{slot:s,side:side(s,k),title:item?.title||'Item unavailable',image:item?.image||''};}),
+        stats:[...table.querySelectorAll('.stat-group')].map(group=>({title:group.querySelector('h3')?.textContent||'',values:[...group.querySelectorAll('dt')].map(dt=>[dt.textContent,dt.nextElementSibling?.textContent||''])}))};
+      HMOutfitShare.open(snapshot);
+    }
     function draw(){
       root.replaceChildren();const d=selected();
       const target=document.createElement('select');target.id='outfit-target';target.setAttribute('aria-label','Choose outfit to edit or add items to');
@@ -351,7 +361,7 @@ window.HMOutfitWorkspace = {
       }
       root.append(statTable(scopedSlots(d),d.outfit_type));
       const saveButton=button(busy?'Saving…':'Save outfit',save);saveButton.id='save-outfit';saveButton.disabled=busy;
-      const actions=text('div','','outfit-controls');actions.append(saveButton,button('Delete outfit',()=>remove(d.id)));root.append(actions);
+      const actions=text('div','','outfit-controls');actions.append(saveButton,button('Share outfit',()=>shareOutfit(d)),button('Delete outfit',()=>remove(d.id)));root.append(actions);
       const status=text('p',notice);status.dataset.notice='';status.id='outfit-message';status.setAttribute('role','status');root.append(status);
       if(!isStudio){const a=text('a','Open outfit studio');a.href='outfits.html';root.append(a);}
     }
@@ -363,7 +373,7 @@ window.HMOutfitWorkspace = {
         const card=text('article','','outfit-overview');card.append(text('h3',d.name),text('p',d.dirty?'Unsaved changes':'Saved to your account'));
         card.append(text('p',outfitTypes[d.outfit_type]));const h=d.outfit_type==='player'?null:horseInfo(d.horse_instance_id);if(h)card.append(image(h),text('p',h.title));
         const thumbs=text('div','','outfit-thumbnails');for(const k of Object.values(scopedSlots(d))){const i=resolve(k);if(i)thumbs.append(image(i));}card.append(thumbs,statTable(scopedSlots(d),d.outfit_type));
-        card.append(button('Open outfit',()=>{current=d.id;update();root.scrollIntoView?.({behavior:'smooth',block:'start'});}),button('Delete',()=>remove(d.id)));host.append(card);
+        card.append(button('Share outfit',()=>shareOutfit(d)),button('Open outfit',()=>{current=d.id;update();root.scrollIntoView?.({behavior:'smooth',block:'start'});}),button('Delete',()=>remove(d.id)));host.append(card);
       }
       if(!all.length)host.append(text('p','No outfits match your search.'));
     }
