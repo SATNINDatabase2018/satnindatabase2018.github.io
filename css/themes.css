@@ -85,3 +85,14 @@ option{background:var(--card);color:var(--text);}
 .category-filter-stack{display:flex;flex-direction:column;min-width:0;}
 .category-filter-stack label{margin-top:14px;}
 .category-filter-stack select{max-width:none;}
+
+/* Keep colours visible on uncertain items, with a soft grey tint. */
+.item-card.is-uncertain{filter:none;}
+.item-card.is-uncertain .catalog-image{opacity:1;}
+.item-card.is-uncertain .catalog-image img{filter:grayscale(35%) saturate(80%);opacity:.9;}
+
+/* Clickable catalog labels keep their compact appearance in both themes. */
+button.item-type-bubble{box-shadow:none;cursor:pointer;}
+button.item-type-bubble:hover{background:var(--green-dark);color:var(--card);transform:none;box-shadow:none;}
+.item-card button.card-location{display:block;align-self:flex-start;max-width:100%;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;text-align:left;font-weight:500;line-height:1.5;white-space:normal;}
+.item-card button.card-location:hover{text-decoration:underline;transform:none;background:transparent;box-shadow:none;}
