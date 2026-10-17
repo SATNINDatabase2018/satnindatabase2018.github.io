@@ -13,3 +13,6 @@ body>main{flex:1;}
 .info-page p,.info-page li{line-height:1.75;}
 .logo img{display:block;max-width:190px;max-height:56px;width:auto;height:auto;object-fit:contain;}
 @media(max-width:780px){.site-footer{padding:24px 18px;}.site-footer nav{width:auto;overflow:visible;flex-wrap:wrap;}}
+
+header .logo{display:inline-flex;align-items:center;gap:10px;}
+header .logo img{width:64px;height:56px;object-fit:contain;}
