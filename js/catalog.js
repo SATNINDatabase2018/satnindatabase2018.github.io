@@ -96,14 +96,21 @@
     }catch(e){message('Could not add horse: '+e.message);}finally{control.disabled=false;control.textContent=old;}
   }
   function card(item){
-    const card=text('article','', 'item-card'); card.dataset.itemKey=key(item);card.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(item)); card.append(image(item),text('h3',item.title),text('p',item.section || item.category));
-    if(item.description)card.append(text('p',item.description));
-    if(item.price_note)card.append(text('p',item.price_note));
-    if(item.speciality)card.append(text('p',item.speciality));
-    card.append(text('p',`SC ${item.sc ?? '—'} · JS ${item.js ?? '—'}`),text('p',item.shop || 'Site / shop not verified'));
+    const card=text('article','','item-card');card.dataset.itemKey=key(item);card.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(item));
+    const horse=item.kind==='horse';card.classList.toggle('horse-catalog-card',horse);
+    const visual=text('div','','catalog-card-visual');visual.append(image(item));
+    if(!horse)visual.append(text('span',item.section||item.category,'item-type-bubble'));
+    card.append(visual,text('h3',horse?(item.breed||item.title):item.title,'card-title'));
+    if(!horse && item.description)card.append(text('p',item.description,'card-description'));
+    card.append(text('p',item.shop||'Site / shop not verified','card-location'));
+    if(item.level!==undefined && item.level!==null && String(item.level).trim()!=='' && String(item.level)!=='0')card.append(text('p',`Level / requirement: ${item.level}`,'card-requirement'));
+    const sc=number(item.sc),js=number(item.js),money=[];
+    if(sc!==null)money.push(`SC ${sc}`);if(js!==null)money.push(`JS ${js}`);
+    if(money.length)card.append(text('p',money.join(' · '),'card-price'));
+    else if(!horse)card.append(text('p','SC -- · JS --','card-price'));
+    if(item.price_note)card.append(text('p',item.price_note,'card-price-note'));
     const stats=fields.slice(3).filter(([f])=>number(item[f])!==null).map(([f,label])=>`${label} ${item[f]}`).join(' · ');
-    if(stats)card.append(text('p',stats,'stats'));
-    if(item.level!==undefined && item.level!=='')card.append(text('p',`Level / requirement: ${item.level}`));
+    if(stats)card.append(text('p',stats,'stats card-stats'));
     const actions=text('div','','item-actions');
     if(item.kind==='horse'){
       actions.append(button('Add to My Stable',e=>addHorseHere(item,e.currentTarget)));
