@@ -14,9 +14,27 @@
   function message(value) {$('catalog-message').textContent=value;}
   async function json(path) {const r=await fetch(path); if(!r.ok)throw Error(`Could not load ${path} (${r.status}).`); const a=await r.json(); if(!Array.isArray(a))throw Error(`Invalid data in ${path}.`); return a;}
   function number(v) {if(v===null || v===undefined || String(v).trim()==='')return null; const n=Number(v); return Number.isFinite(n)?n:null;}
+  function overallStats(item) {
+    const values = fields
+        .slice(3)
+        .map(([field]) => number(item[field]))
+        .filter(value => value !== null);
+
+    return values.length
+        ? values.reduce((sum, value) => sum + value, 0)
+        : null;
+}
+
+function sortValue(item, field) {
+    if (field === "title") return item.title;
+    if (field === "overall") return overallStats(item);
+
+    return number(item[field]);
+}
   function compare(a,b,rules) {
     for(const {field,dir} of rules){
-      const av=field==='title'?a.title:number(a[field]), bv=field==='title'?b.title:number(b[field]);
+      const av = sortValue(a, field);
+const bv = sortValue(b, field);
       // Unknown values stay last in either direction. Zero is a known value.
       if(av==null && bv!=null)return 1; if(bv==null && av!=null)return -1;
       const c=av==null?0:field==='title'?av.localeCompare(bv,undefined,{numeric:true,sensitivity:'base'}):av-bv;
@@ -113,13 +131,59 @@
     $('catalog-panel').setAttribute('aria-labelledby',tab.id);
     updateOptions(); render();
   }
-  function addSort(field='title',dir='asc'){
-    const row=text('div','','sort-rule'),f=document.createElement('select'),d=document.createElement('select');
-    f.className='sort-field'; f.setAttribute('aria-label','Sort by'); fields.forEach(([v,l])=>f.add(new Option(l,v)));f.value=field;
-    d.className='sort-dir'; d.setAttribute('aria-label','Sort direction'); d.add(new Option('Ascending / A–Z','asc'));d.add(new Option('Descending / Z–A','desc'));d.value=dir;
-    [f,d].forEach(n=>n.addEventListener('change',render));
-    row.append(f,d,button('Remove rule',()=>{row.remove();render();})); $('sort-rules').append(row);
-  }
+  function addSort(field = "title", dir = "asc") {
+    const row = text("div", "", "sort-rule");
+    const fieldSelect = document.createElement("select");
+    const directionSelect = document.createElement("select");
+
+    fieldSelect.className = "sort-field";
+    fieldSelect.setAttribute("aria-label", "Sort by");
+
+    const sortOptions = [
+        ...fields,
+        ["overall", "Overall stats (best first)"]
+    ];
+
+    sortOptions.forEach(([value, label]) => {
+        fieldSelect.add(new Option(label, value));
+    });
+
+    fieldSelect.value = field;
+
+    directionSelect.className = "sort-dir";
+    directionSelect.setAttribute("aria-label", "Sort direction");
+
+    directionSelect.add(
+        new Option("Lowest first / A–Z", "asc")
+    );
+
+    directionSelect.add(
+        new Option("Highest first / Z–A", "desc")
+    );
+
+    directionSelect.value = dir;
+
+    fieldSelect.addEventListener("change", () => {
+        if (fieldSelect.value === "overall") {
+            directionSelect.value = "desc";
+        }
+
+        render();
+    });
+
+    directionSelect.addEventListener("change", render);
+
+    row.append(
+        fieldSelect,
+        directionSelect,
+        button("Remove rule", () => {
+            row.remove();
+            render();
+        })
+    );
+
+    $("sort-rules").append(row);
+}
   async function saveOutfit(){
     if(!user){outfitMessage('Log in to save this outfit. Your guest draft stays in this browser.');return;}
     const name=$('outfit-name').value.trim(); if(!name){outfitMessage('Give your outfit a name first.');$('outfit-name').focus();return;}
