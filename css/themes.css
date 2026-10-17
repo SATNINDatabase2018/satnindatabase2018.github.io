@@ -113,3 +113,10 @@ button.item-type-bubble:hover{background:var(--green-dark);color:var(--card);tra
 .pet-companion-tooltip{display:none;position:absolute;left:0;top:34px;width:180px;max-width:calc(100vw - 60px);padding:8px 10px;border-radius:9px;background:var(--text);color:var(--card);font:500 11px/1.5 Inter,system-ui,sans-serif;box-shadow:var(--shadow);text-align:left;}
 .pet-companion-star:hover .pet-companion-tooltip,.pet-companion-star:focus .pet-companion-tooltip{display:block;}
 .pet-companion-star:focus-visible{outline:2px solid var(--green);outline-offset:2px;}
+
+.outfit-builder .outfit-studio-link{display:flex;align-items:center;gap:10px;padding:14px;margin-top:18px;border:1px solid var(--border);border-radius:14px;background:var(--card);color:var(--green-dark);text-decoration:none;box-shadow:0 3px 12px #00000008;transition:background .15s ease,transform .15s ease;}
+.outfit-builder .outfit-studio-link:hover{background:var(--card-2);transform:translateY(-1px);}
+.studio-link-icon{display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:50%;background:var(--green-light);font-size:20px;}
+.studio-link-copy{display:flex;flex-direction:column;gap:4px;min-width:0;}
+.studio-link-copy strong{font-size:13px;}.studio-link-copy small{font-size:10px;line-height:1.5;color:var(--muted);}
+.studio-link-arrow{margin-left:auto;font-size:19px;}

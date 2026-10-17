@@ -14,3 +14,5 @@ body>header nav #theme-toggle{font-size:12px;padding:7px 10px;white-space:nowrap
 @media(max-width:780px){body>header{flex-direction:column;align-items:flex-start;padding:12px 18px;gap:12px;}body>header nav{width:100%;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;}}
 
 
+
+body>header .header-wordmark>.logo{font-size:clamp(20px,2.3vw,26px);}
