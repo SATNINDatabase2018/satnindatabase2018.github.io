@@ -9,7 +9,7 @@
     if(document.querySelector('.site-footer'))return;
     const footer=text('footer','','site-footer');
     const inner=text('div','','footer-inner');
-    const brand=text('div','','footer-brand');brand.append(text('strong','HM 2018'),text('p','My database for Horse Museum 2018 Version.'));
+    const brand=text('div','','footer-brand');brand.append(text('strong','HM 2018'),text('p','My database for Horse Museum 2018 Version. I’m SATNIN, and I’ve extracted, compiled and organised the data that makes this database possible.'));
     const nav=document.createElement('nav');nav.setAttribute('aria-label','Footer navigation');
     for(const [label,href]of [['About & credits','about.html'],['Contact / Discord','contact.html'],['Privacy','privacy.html']]){const a=text('a',label);a.href=href;nav.append(a);}
     brand.append(text('p','I’m SATNIN. Some information in my database may be incorrect. If you spot a mistake, please contact me on Discord: crabatthequeen.'));

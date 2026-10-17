@@ -101,3 +101,9 @@ button.item-type-bubble:hover{background:var(--green-dark);color:var(--card);tra
 .category-filter-stack,.location-filter-stack{display:grid;grid-template-rows:auto auto;align-content:start;gap:16px;min-width:0;}
 .filter-grid .category-filter-stack label,.filter-grid .location-filter-stack label{display:block;margin:0;min-width:0;}
 .category-filter-stack select,.location-filter-stack select{width:100%;max-width:none;margin:8px 0 0;}
+
+.database-mini-toolbar{position:fixed;top:var(--catalog-header-bottom,100px);left:0;right:0;z-index:990;display:flex;align-items:center;gap:7px;padding:9px 18px;background:var(--card);color:var(--text);border-bottom:1px solid var(--border);box-shadow:var(--shadow);overflow-x:auto;}
+.database-mini-toolbar input,.database-mini-toolbar select{flex:1 1 115px;width:115px;min-width:105px;max-width:200px;margin:0;padding:8px;font-size:12px;}
+.database-mini-toolbar input{flex-basis:190px;min-width:155px;}
+.database-mini-toolbar button{flex-shrink:0;padding:8px 11px;font-size:11px;}
+@media(max-width:780px){.database-mini-toolbar{padding:7px 12px;}.database-mini-toolbar input,.database-mini-toolbar select{flex-shrink:0;}}
