@@ -38,6 +38,7 @@
   }
   function sortValue(item,field) {return field==='title'?item.title:field==='overall'?overallStats(item):number(item[field]);}
   function compare(a,b,rules) {
+    const status=window.HMItemStatus?.compare(a,b)||0;if(status)return status;
     for(const {field,dir} of rules){
       const av=sortValue(a,field), bv=sortValue(b,field);
       // Unknown values stay last in either direction. Zero is a known value.
@@ -95,7 +96,7 @@
     }catch(e){message('Could not add horse: '+e.message);}finally{control.disabled=false;control.textContent=old;}
   }
   function card(item){
-    const card=text('article','', 'item-card'); card.dataset.itemKey=key(item); card.append(image(item),text('h3',item.title),text('p',item.section || item.category));
+    const card=text('article','', 'item-card'); card.dataset.itemKey=key(item);card.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(item)); card.append(image(item),text('h3',item.title),text('p',item.section || item.category));
     if(item.description)card.append(text('p',item.description));
     if(item.price_note)card.append(text('p',item.price_note));
     if(item.speciality)card.append(text('p',item.speciality));

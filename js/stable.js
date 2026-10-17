@@ -33,18 +33,27 @@
     const values=Object.fromEntries(statFields.map(([f])=>[f,0]));const unknown=new Set();let count=0;
     for(const [s,k] of Object.entries(outfit.slots||{})){
       const i=getItem(k);if(!i){missing=true;continue;}if(!horseSide(i))continue;
-      count++;const chip=el('div','','stable-gear-chip');chip.append(photo(i,i.title),el('span',s+': '+i.title));thumbs.append(chip);
+      count++;const chip=el('div','','stable-gear-chip');chip.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(i));chip.append(photo(i,i.title),el('span',s+': '+i.title));thumbs.append(chip);
       if(i.category==='Pets')continue;
       for(const [f] of statFields){const v=i[f]??(f==='agility'?i.agil:f==='discipline'?i.disc:f==='endurance'?i.endu:undefined);const n=v===null||v===undefined||String(v).trim()===''?NaN:Number(v);if(Number.isFinite(n))values[f]+=n;else unknown.add(f);}
     }
     box.append(thumbs);if(!count)box.append(el('p','No horse equipment selected in this outfit.'));
-    box.append(el('p',statFields.map(([f,l])=>`${l} ${values[f]}${missing||unknown.has(f)?' + unknown':''}`).join(' · '),'stats'));
+    box.append(el('p',statFields.filter(([f])=>!missing&&!unknown.has(f)).map(([f,l])=>`${l} ${values[f]}`).join(' · '),'stats'));
     box.append(el('small','Equipment bonuses only. Player clothing and horse level are not included.'));
     const link=el('a','Edit outfit in My Outfits','stable-outfit-link');link.href='outfits.html?outfit='+encodeURIComponent(outfit.id);box.append(link);return box;
   }
   function horseCard(own){
     const h=horseCatalog.find(x=>String(x.id)===String(own.horse_id));const card=el('article','','item-card stable-horse-card');card.dataset.horseId=own.id;
     card.append(photo(h,own.name||h?.breed||'Horse'),el('h3',own.name||h?.breed||'My horse'),el('p',[h?.breed,h?.coat,own.nickname].filter(Boolean).join(' · ')));
+    const levelLabel=el('label','Horse level');const level=document.createElement('select');level.setAttribute('aria-label',`Level for ${own.name||'horse'}`);level.add(new Option('Choose level',''));
+    for(let n=1;n<=15;n++)level.add(new Option(String(n),String(n)));level.value=own.level==null?'':String(own.level);
+    const levelStatus=el('p','','horse-level-status');levelStatus.setAttribute('role','status');
+    level.addEventListener('change',async()=>{
+      const previous=own.level;const value=level.value===''?null:Number(level.value);level.disabled=true;levelStatus.textContent='Saving level…';
+      try{const {error}=await supabaseClient.from('user_horses').update({level:value}).eq('id',own.id).eq('user_id',user.id);if(error)throw error;own.level=value;levelStatus.textContent='Level saved.';}
+      catch(e){level.value=previous==null?'':String(previous);levelStatus.textContent='Could not save level: '+e.message;}
+      finally{level.disabled=false;}
+    });levelLabel.append(level);card.append(levelLabel,levelStatus);
     const assigned=new Set((Array.isArray(own.outfit_ids)?own.outfit_ids:[]).map(String));
     const details=document.createElement('details');details.className='horse-outfit-picker';details.append(el('summary','Choose outfits'));
     const list=el('div','','horse-outfit-options');
@@ -77,8 +86,8 @@
   }
   function render(){const grid=$('stable-grid');grid.replaceChildren(...horses.map(horseCard));if(!horses.length)grid.append(el('p','Your stable is empty. Add your first horse above or from the database.'));}
   function picker(){
-    $('horse-options').replaceChildren(...horseCatalog.map(h=>{
-      const c=el('article','','item-card');c.append(photo(h,h.breed),el('h3',h.breed),el('p',h.coat||''),button('Add to Stable',async e=>{
+    $('horse-options').replaceChildren(...horseCatalog.slice().sort((a,b)=>(window.HMItemStatus?.compare(a,b)||0)||a.breed.localeCompare(b.breed)).map(h=>{
+      const c=el('article','','item-card');c.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(h));c.append(photo(h,h.breed),el('h3',h.breed),el('p',h.coat||''),button('Add to Stable',async e=>{
         const name=prompt("What is your horse’s name?");if(name===null||!name.trim())return;e.currentTarget.disabled=true;
         try{const {error}=await supabaseClient.from('user_horses').insert({user_id:user.id,horse_id:h.id,name:name.trim(),nickname:null});if(error)throw error;$('horse-picker').hidden=true;message(name.trim()+' added to your stable.');await load();}
         catch(error){message('Could not add horse: '+error.message);}finally{e.target.disabled=false;}

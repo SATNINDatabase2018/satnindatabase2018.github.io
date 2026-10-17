@@ -977,3 +977,9 @@ button:focus-visible,a:focus-visible,summary:focus-visible {outline:3px solid va
 .combine-outfits-dialog h2{font-family:Georgia,serif;color:var(--green-dark);}
 .combine-outfits-dialog input,.combine-outfits-dialog select{max-width:none;}
 .combine-status{font-size:13px;color:var(--green-dark);}
+
+.is-uncertain{filter:grayscale(1);background:#eeede9!important;border-color:#d2d0cb!important;color:#777!important;}
+.is-uncertain h3,.is-uncertain strong,.is-uncertain p,.is-uncertain .slot-label{color:#777!important;}
+.is-uncertain .catalog-image{opacity:.58;}
+.is-uncertain.item-card::before{background:#b4b2ad;}
+.horse-level-status{font-size:12px;color:var(--muted);}

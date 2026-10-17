@@ -50,11 +50,11 @@ window.HMOutfitWorkspace = {
           const values=list.map(i=>number(i[field]));
           const known=values.filter(v=>v!==null);const sum=known.reduce((a,b)=>a+b,0);total+=sum;
           const incomplete=values.some(v=>v===null)||unresolved>0;missing ||=incomplete;
-          dl.append(text('dt',label),text('dd',incomplete?`${sum} + unknown`:String(sum)));
+          if(!incomplete)dl.append(text('dt',label),text('dd',String(sum)));
         }
-        dl.append(text('dt','Combined'),text('dd',`${total}${missing?' + unknown':''}`));section.append(dl);wrap.append(section);
+        if(!missing)dl.append(text('dt','Combined'),text('dd',String(total)));if(dl.childElementCount){section.append(dl);wrap.append(section);}
       }
-      wrap.append(text('p','Equipment bonuses only. Base skills, horse level, training and care are not included. Missing stats are marked unknown.','stat-note'));return wrap;
+      wrap.append(text('p','Equipment bonuses only. Base skills, horse level, training and care are not included. ','stat-note'));return wrap;
     }
     function persist(){
       try{localStorage.setItem(storeKey,JSON.stringify({current,drafts}));}
@@ -199,6 +199,7 @@ window.HMOutfitWorkspace = {
       const results=text('div','','slot-results');const count=text('p','','picker-count');count.setAttribute('role','status');
       function statValue(i){const values=statFields.map(([f])=>number(i[f])).filter(v=>v!==null);return values.length?values.reduce((a,b)=>a+b,0):null;}
       function compareItems(a,b){
+        const status=window.HMItemStatus?.compare(a,b)||0;if(status)return status;
         if(sort.value==='az'||sort.value==='za')return a.title.localeCompare(b.title,undefined,{numeric:true,sensitivity:'base'})*(sort.value==='za'?-1:1);
         const av=sort.value==='stats'?statValue(a):number(a[sort.value]),bv=sort.value==='stats'?statValue(b):number(b[sort.value]);
         if(av===null&&bv!==null)return 1;if(bv===null&&av!==null)return -1;
@@ -209,7 +210,7 @@ window.HMOutfitWorkspace = {
         const candidates=pool.filter(i=>`${i.title} ${i.shop||''}`.toLowerCase().includes(query)&&(!shop.value||i.shop===shop.value)&&(!owned.checked||ownedIds.has(String(i.id)))).sort(compareItems);
         count.textContent=`${candidates.length} item${candidates.length===1?'':'s'} · Choose one for ${s.toLowerCase()}`;
         results.replaceChildren(...candidates.map(i=>{
-          const b=button('',()=>{add(i);dialog.close();});b.className='picker-item';b.setAttribute('aria-pressed',String(selected().slots[s]===key(i)));
+          const b=button('',()=>{add(i);dialog.close();});b.className='picker-item';b.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(i));b.setAttribute('aria-pressed',String(selected().slots[s]===key(i)));
           b.append(image(i),text('strong',i.title),text('span',`SC ${i.sc??'—'} · JS ${i.js??'—'}`,'picker-price'));
           if(i.shop)b.append(text('span',i.shop,'picker-shop'));
           const statText=i.category==='Pets'?'Companion':statFields.filter(([f])=>number(i[f])!==null).map(([f,label])=>`${label} ${i[f]}`).join(' · ');
@@ -227,7 +228,7 @@ window.HMOutfitWorkspace = {
       document.body.append(dialog);render();dialog.showModal();search.focus();
     }
     function slotButton(s,outfit=selected(),interactive=true){
-      const item=resolve(outfit.slots[s]);const b=interactive?button('',()=>changeSlot(s)):text('div');b.className='gear-slot';b.dataset.slot=s;b.classList.toggle('is-filled',!!item);b.setAttribute('aria-label',`${s}: ${item?.title||'Empty'}${interactive?'. Choose item':''}`);
+      const item=resolve(outfit.slots[s]);const b=interactive?button('',()=>changeSlot(s)):text('div');b.className='gear-slot';b.dataset.slot=s;b.classList.toggle('is-filled',!!item);b.classList.toggle('is-uncertain',!!item&&!!window.HMItemStatus?.isUncertain(item));b.setAttribute('aria-label',`${s}: ${item?.title||'Empty'}${interactive?'. Choose item':''}`);
       b.append(text('span',s,'slot-label'));if(item)b.append(image(item));else b.append(text('span','+','slot-plus'));
       b.append(text('span',item?.title || (outfit.slots[s]?'Item unavailable':'Choose item'),'slot-title'));return b;
     }
