@@ -1,25 +1,27 @@
 /* Multiple account-scoped outfit drafts, cloud saves, stats and character-sheet layout. */
 window.HMOutfitWorkspace = {
-  async create({items,user,key,slot,image,text,button,number,fields,onChange}) {
+  async create({items,user,key,slot,image,text,button,number,fields,onChange,getOwnedIds}) {
     const root=document.getElementById('outfit-workspace');
     const isStudio=document.body.dataset.view==='outfits';
     const statFields=fields.slice(3);
     const catalog=new Map(items.map(i=>[key(i),i]));
     const storeKey=`hm2018:outfits:v2:${user?.id||'guest'}`;
     let rows=[], horses=[], drafts={}, current='', busy=false;
+    let ownedIds=new Set(),ownedReady=false;
     const uid=()=>crypto.randomUUID();
     let notice='';
     const resolve=k=>catalog.get(k);
     const clone=v=>JSON.parse(JSON.stringify(v));
     const selected=()=>drafts[current];
     const outfitTypes={set:'Horse + player set',horse:'Horse equipment only',player:'Player outfit only'};
-    function side(s,k){const i=resolve(k);return i?(['Clothes','Player Accessories'].includes(i.category)?'player':'horse'):(['Bridle','Mane Decoration','Saddle','Blanket','Tail Decoration','Horseshoes','Leg Wraps','Saddle Bag'].includes(s)?'horse':'player');}
+    function side(s,k){const i=resolve(k);return i?(['Clothes','Player Accessories'].includes(i.category)?'player':'horse'):(['Bridle','Mane Decoration','Saddle','Blanket','Tail Decoration','Horseshoes','Leg Wraps','Saddle Bag','Pet'].includes(s)?'horse':'player');}
     function scopedSlots(d){return Object.fromEntries(Object.entries(d.slots||{}).filter(([s,k])=>d.outfit_type==='set' || side(s,k)===d.outfit_type));}
 
     function stats(slots){
       const groups={player:[],horse:[]};let unresolved=0;
       for(const k of Object.values(slots||{})){
         const i=resolve(k);if(!i){unresolved++;continue;}
+        if(i.category==='Pets')continue; // Companions are displayed, not counted as equipment bonuses.
         groups[['Clothes','Player Accessories'].includes(i.category)?'player':'horse'].push(i);
       }
       return {groups,unresolved};
@@ -53,12 +55,14 @@ window.HMOutfitWorkspace = {
     if(user){
       const results=await Promise.all([
         supabaseClient.from('hm_saved_outfits').select('id,name,slots,horse_instance_id,outfit_type').eq('user_id',user.id).order('created_at',{ascending:false}),
-        supabaseClient.from('user_horses').select('*').eq('user_id',user.id)
+        supabaseClient.from('user_horses').select('*').eq('user_id',user.id),
+        supabaseClient.from('user_items').select('item_id').eq('user_id',user.id).eq('owned',true)
       ]);
       if(results[0].error)notice='Saved outfits could not load. Run OUTFITS_V2_SETUP.sql if needed. '+results[0].error.message;
       else rows=results[0].data||[];
       if(results[1].error)notice+=' Your stable could not load: '+results[1].error.message;
       else horses=results[1].data||[];
+      if(!results[2].error){ownedIds=new Set((results[2].data||[]).map(r=>String(r.item_id)));ownedReady=true;}
     }
     try{
       const saved=JSON.parse(localStorage.getItem(storeKey)||'null');
@@ -84,17 +88,50 @@ window.HMOutfitWorkspace = {
     function update(){persist();draw();onChange();}
     function add(item){const s=slot(item);if(!s)return;if(selected().outfit_type!=='set' && side(s,key(item))!==selected().outfit_type){tell('This outfit is '+outfitTypes[selected().outfit_type]+'. Choose a matching outfit or change Save as to Horse + player set.');return;}selected().slots[s]=key(item);selected().dirty=true;tell(`${item.title} added to ${selected().name}.`);update();}
     function changeSlot(s){
-      const dialog=document.createElement('dialog');dialog.className='slot-picker';
-      const head=text('div','','picker-head');head.append(text('h2',`Choose ${s}`),button('Close',()=>dialog.close()));
-      const search=document.createElement('input');search.type='search';search.placeholder='Search items…';search.setAttribute('aria-label',`Search ${s}`);
-      const results=text('div','','slot-results');
-      const render=()=>{const candidates=items.filter(i=>slot(i)===s && `${i.title} ${i.shop||''}`.toLowerCase().includes(search.value.toLowerCase()));results.replaceChildren(...candidates.map(i=>{const b=button('',()=>{add(i);dialog.close();});b.append(image(i),text('span',i.title));return b;}));if(!candidates.length)results.append(text('p','No matching items in the current database.'));};
-      search.addEventListener('input',render);
-      dialog.append(head,search,button('Remove item from this slot',()=>{delete selected().slots[s];selected().dirty=true;update();dialog.close();}),results);
-      dialog.addEventListener('close',()=>dialog.remove());document.body.append(dialog);render();dialog.showModal();search.focus();
+      const latestOwned=getOwnedIds?.();if(latestOwned){ownedIds=latestOwned;ownedReady=true;}
+      const dialog=document.createElement('dialog');dialog.className='slot-picker';dialog.setAttribute('aria-labelledby','slot-picker-title');
+      const head=text('div','','picker-head');const title=text('h2',`Choose ${s}`);title.id='slot-picker-title';
+      head.append(title,button('Close',()=>dialog.close()));
+      const search=document.createElement('input');search.type='search';search.placeholder=`Search ${s.toLowerCase()}…`;search.setAttribute('aria-label',`Search ${s}`);
+      const sort=document.createElement('select');sort.setAttribute('aria-label','Sort items');
+      for(const [v,l] of [['az','Name: A–Z'],['za','Name: Z–A'],['stats','Overall stats: best first'],['sc','SC: lowest first'],['js','JS: lowest first']])sort.add(new Option(l,v));
+      const shop=document.createElement('select');shop.setAttribute('aria-label','Filter by shop');shop.add(new Option('All sites / shops',''));
+      const pool=items.filter(i=>slot(i)===s);
+      for(const v of [...new Set(pool.map(i=>i.shop).filter(Boolean))].sort((a,b)=>a.localeCompare(b)))shop.add(new Option(v,v));
+      const ownedLabel=text('label','','owned-picker-filter');const owned=document.createElement('input');owned.type='checkbox';owned.disabled=!user||!ownedReady;ownedLabel.append(owned,text('span','Only items I own'));
+      const toolbar=text('div','','picker-toolbar');toolbar.append(sort,shop,ownedLabel);
+      const results=text('div','','slot-results');const count=text('p','','picker-count');count.setAttribute('role','status');
+      function statValue(i){const values=statFields.map(([f])=>number(i[f])).filter(v=>v!==null);return values.length?values.reduce((a,b)=>a+b,0):null;}
+      function compareItems(a,b){
+        if(sort.value==='az'||sort.value==='za')return a.title.localeCompare(b.title,undefined,{numeric:true,sensitivity:'base'})*(sort.value==='za'?-1:1);
+        const av=sort.value==='stats'?statValue(a):number(a[sort.value]),bv=sort.value==='stats'?statValue(b):number(b[sort.value]);
+        if(av===null&&bv!==null)return 1;if(bv===null&&av!==null)return -1;
+        return (av===null?0:(av-bv)*(sort.value==='stats'?-1:1))||a.title.localeCompare(b.title);
+      }
+      const render=()=>{
+        const query=search.value.trim().toLowerCase();
+        const candidates=pool.filter(i=>`${i.title} ${i.shop||''}`.toLowerCase().includes(query)&&(!shop.value||i.shop===shop.value)&&(!owned.checked||ownedIds.has(String(i.id)))).sort(compareItems);
+        count.textContent=`${candidates.length} item${candidates.length===1?'':'s'} · Choose one for ${s.toLowerCase()}`;
+        results.replaceChildren(...candidates.map(i=>{
+          const b=button('',()=>{add(i);dialog.close();});b.className='picker-item';b.setAttribute('aria-pressed',String(selected().slots[s]===key(i)));
+          b.append(image(i),text('strong',i.title),text('span',`SC ${i.sc??'—'} · JS ${i.js??'—'}`,'picker-price'));
+          if(i.shop)b.append(text('span',i.shop,'picker-shop'));
+          const statText=i.category==='Pets'?'Companion':statFields.filter(([f])=>number(i[f])!==null).map(([f,label])=>`${label} ${i[f]}`).join(' · ');
+          if(statText)b.append(text('span',statText,'picker-stats'));
+          if(selected().slots[s]===key(i))b.append(text('span','✓ Selected','picker-badge'));
+          return b;
+        }));
+        if(!candidates.length)results.append(text('p','No matching items. Try another search or filter.','picker-empty'));
+      };
+      search.addEventListener('input',render);[sort,shop,owned].forEach(el=>el.addEventListener('change',render));
+      const remove=button('Remove current item',()=>{delete selected().slots[s];selected().dirty=true;update();dialog.close();});remove.disabled=!selected().slots[s];
+      const footer=text('div','','picker-footer');footer.append(remove,text('small','Selecting an item replaces the current item in this slot.'));
+      dialog.append(head,search,toolbar,count,results,footer);
+      dialog.addEventListener('close',()=>{dialog.remove();const target=[...root.querySelectorAll('.gear-slot')].find(n=>n.dataset.slot===s);target?.focus();});
+      document.body.append(dialog);render();dialog.showModal();search.focus();
     }
     function slotButton(s){
-      const item=resolve(selected().slots[s]);const b=button('',()=>changeSlot(s));b.className='gear-slot';b.setAttribute('aria-label',`${s}: ${item?.title||'Empty'}. Choose item`);
+      const item=resolve(selected().slots[s]);const b=button('',()=>changeSlot(s));b.className='gear-slot';b.dataset.slot=s;b.classList.toggle('is-filled',!!item);b.setAttribute('aria-label',`${s}: ${item?.title||'Empty'}. Choose item`);
       b.append(text('span',s,'slot-label'));if(item)b.append(image(item));else b.append(text('span','+','slot-plus'));
       b.append(text('span',item?.title || (selected().slots[s]?'Item unavailable':'Choose item'),'slot-title'));return b;
     }
@@ -105,17 +142,24 @@ window.HMOutfitWorkspace = {
       wrap.append(text('span','Player outfit'));return wrap;
     }
     function sheet(kind){
-      const panel=text('section','',`character-sheet ${kind}-sheet`);panel.append(text('h2',kind==='horse'?'Horse equipment':'Player outfit'));
+      const panel=text('section','',`character-sheet ${kind}-sheet`);
+      const left=kind==='horse'?['Bridle','Saddle','Blanket','Horseshoes']:['Hat','Top','Gloves'];
+      const right=kind==='horse'?['Mane Decoration','Tail Decoration','Leg Wraps']:['Pants','Shoes'];
+      const dock=kind==='horse'?['Saddle Bag','Pet']:[];
+      const slots=[...left,...right,...dock];
+      const head=text('div','','sheet-header');head.append(text('h2',kind==='horse'?'Horse equipment':'Player outfit'),text('span',`${slots.filter(s=>selected().slots[s]).length} / ${slots.length} selected`,'sheet-progress'));panel.append(head);
       const stage=text('div','','gear-stage');
-      const slots=kind==='horse'?['Bridle','Mane Decoration','Saddle','Blanket','Tail Decoration','Horseshoes','Leg Wraps','Saddle Bag']:['Hat','Top','Gloves','Pants','Shoes'];
       const centre=text('div','','sheet-centre');
       if(kind==='horse'){
         const h=horseInfo(selected().horse_instance_id);
-        centre.append(h?image(h):text('div','Choose a horse from your stable','horse-placeholder'),text('strong',h?.title||'Your horse'));
+        centre.append(h?image(h):text('div','Choose your horse above','horse-placeholder'),text('strong',h?.title||'Your horse'));
         if(h)centre.append(text('small',h.breed));
       }else centre.append(playerFigure());
-      stage.append(centre,...slots.map(slotButton));panel.append(stage);
-      const extras=Object.keys(selected().slots).filter(s=>!slots.includes(s) && resolve(selected().slots[s]) && (kind==='horse'?!['Clothes','Player Accessories'].includes(resolve(selected().slots[s]).category):['Clothes','Player Accessories'].includes(resolve(selected().slots[s]).category)));
+      const leftRail=text('div','','gear-rail gear-left');leftRail.append(...left.map(slotButton));
+      const rightRail=text('div','','gear-rail gear-right');rightRail.append(...right.map(slotButton));
+      stage.append(leftRail,centre,rightRail);panel.append(stage);
+      if(dock.length){const group=text('div','','companion-dock');group.append(text('h3','Saddle bag & companion'));const pair=text('div','','companion-pair');pair.append(...dock.map(slotButton));group.append(pair);panel.append(group);}
+      const extras=Object.keys(selected().slots).filter(s=>!slots.includes(s)&&resolve(selected().slots[s])&&side(s,selected().slots[s])===kind);
       if(extras.length){const extra=text('div','','extra-slots');extra.append(...extras.map(slotButton));panel.append(extra);}return panel;
     }
     async function save(){
@@ -157,8 +201,8 @@ window.HMOutfitWorkspace = {
       for(const [v,l] of Object.entries(outfitTypes))typeSelect.add(new Option(l,v));typeSelect.value=d.outfit_type;
       typeSelect.addEventListener('change',()=>{d.outfit_type=typeSelect.value;d.dirty=true;update();browse();});
       const typeLabel=text('label','Save as');typeLabel.htmlFor=typeSelect.id;
-      root.append(nl,name,typeLabel,typeSelect);
-      if(d.outfit_type!=='player')root.append(hl,horseSelect);
+      const form=text('div','','outfit-settings');const nameField=text('div','','setting-field');nameField.append(nl,name);const typeField=text('div','','setting-field');typeField.append(typeLabel,typeSelect);form.append(nameField,typeField);
+      if(d.outfit_type!=='player'){const horseField=text('div','','setting-field');horseField.append(hl,horseSelect);form.append(horseField);}root.append(form);
       if(Object.keys(scopedSlots(d)).length<Object.keys(d.slots).length)root.append(text('p','Only the selected side will be saved. Duplicate this outfit first if you also want to keep the full set.','stat-note'));
 
       if(!horses.length && d.outfit_type!=='player')root.append(text('p',user?'Add a horse in My Stable to select it here.':'Log in to choose a horse from My Stable.','stat-note'));

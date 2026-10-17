@@ -58,7 +58,8 @@
     return wrap;
   }
   function slot(item){
-    if(item.kind==='horse' || item.category==='Pets')return null;
+    if(item.kind==='horse')return null;
+    if(item.category==='Pets')return 'Pet';
     const s=String(item.section||'').toLowerCase().replace(/[_-]/g,' ');
     const aliases=[['Mane Decoration',/mane/],['Tail Decoration',/tail/],['Leg Wraps',/leg wrap|socks/],['Saddle Bag',/saddle ?bag/],['Horseshoes',/horseshoe|horse shoe/],['Bridle',/bridle/],['Blanket',/blanket|saddle pad/],['Saddle',/saddle/],['Hat',/hat|helmet/],['Top',/top|shirt|jacket|sweater|coat/],['Gloves',/glove/],['Pants',/pant|breech|trouser/],['Shoes',/shoe|boot/]];
     return aliases.find(([,re])=>re.test(s))?.[0] || (['Clothes','Player Accessories','Equipment','Horse Decorations'].includes(item.category) && item.section ? String(item.section) : null);
@@ -148,7 +149,7 @@
       const {data,error}=await supabaseClient.auth.getUser(); if(error && error.name!=='AuthSessionMissingError')throw error;user=data.user;
       const [catalog,horses]=await Promise.all([json('data/database.json'),json('data/horses.json')]);
       items=catalog.map(i=>({...i,kind:'item',title:String(i.title||'Untitled item'),agility:i.agility??i.agil,discipline:i.discipline??i.disc})).concat(horses.map(h=>({...h,kind:'horse',category:'Horses',section:h.breed,title:`${h.breed} ${h.coat||''}`.trim(),shop:h.location})));
-      workspace=await HMOutfitWorkspace.create({items,user,key,slot,image,text,button,number,fields,onChange:render});
+      workspace=await HMOutfitWorkspace.create({items,user,key,slot,image,text,button,number,fields,onChange:render,getOwnedIds:()=>ready?new Set([...states.entries()].filter(([,v])=>v.owned).map(([id])=>id)):null});
       supabaseClient.auth.onAuthStateChange((event,session)=>{if((session?.user?.id||null)!==(user?.id||null))setTimeout(()=>location.reload(),0);});
       if(view==='outfits')return;
       try{await loadStates();ready=true;}catch(e){message(e.message);}
