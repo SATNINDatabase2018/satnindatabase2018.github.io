@@ -6,7 +6,7 @@
   const SITE_NAME = 'HM 2018';
   const text=(tag,value,cls)=>{const n=document.createElement(tag);n.textContent=value;if(cls)n.className=cls;return n;};
   function mount(){
-    if(LOGO_IMAGE)document.querySelectorAll('header .logo').forEach(link=>{const img=document.createElement('img');img.src=LOGO_IMAGE;img.alt=SITE_NAME;link.replaceChildren(img,text('span',SITE_NAME));});
+    document.querySelectorAll('header .logo').forEach(link=>{const name=text('span','','logo-wordmark');name.append(text('span',SITE_NAME,'logo-title'),text('small','by SATNIN','logo-credit'));const parts=[];if(LOGO_IMAGE){const img=document.createElement('img');img.src=LOGO_IMAGE;img.alt='';parts.push(img);}link.replaceChildren(...parts,name);});
     if(document.querySelector('.site-footer'))return;
     const footer=text('footer','','site-footer');
     const inner=text('div','','footer-inner');
