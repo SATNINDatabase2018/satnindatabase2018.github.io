@@ -155,18 +155,18 @@
     updateBreedFilter();
     options($('shop-filter'),[...new Set(pool.map(i=>i.shop).filter(Boolean))].sort(),'All sites / shops');
   }
-  const mainCategories=[['Horse Decorations','Horse decoration'],['Equipment','Equipment'],['Clothes','Clothes'],['Player Accessories','Player accessories']];
+  const mainCategories=[['Horses','Horses'],['Horse Decorations','Horse decoration'],['Equipment','Equipment'],['Clothes','Clothes'],['Player Accessories','Player accessories']];
   function updateDBSubcategories(){
     const main=$('category-filter')?.value||'';
     const pool=items.filter(i=>(!active||i.category===active)&&(!main||i.category===main));
     options($('subcategory-filter'),[...new Set(pool.map(i=>i.section).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),'All item types');
-    if($('subcategory-wrap'))$('subcategory-wrap').hidden=!main;
+    if($('subcategory-wrap'))$('subcategory-wrap').hidden=!main||main==='Horses';
   }
   function setupDBCascade(){
     const select=$('category-filter');if(!select)return;
     select.replaceChildren(new Option('All categories',''),...mainCategories.map(([v,label])=>new Option(label,v)));
     select.value=mainCategories.some(([v])=>v===active)?active:'';
-    const special=active==='Horses'||active==='Pets';
+    const special=active==='Pets';
     if($('main-category-wrap')){$('main-category-wrap').hidden=special;$('main-category-wrap').parentElement.hidden=special;}
     updateDBSubcategories();
     options($('breed-filter'),[...new Set(items.filter(i=>i.kind==='horse').map(i=>i.section))].sort(),'All breeds');
@@ -238,7 +238,7 @@
     $('category-filter')?.addEventListener('change',()=>{
       if(view==='database'){
         const main=$('category-filter').value;
-        if(active && main!==active){history.replaceState(null,'','#'+encodeURIComponent(main));activate(main);return;}
+        if((active && main!==active)||main==='Horses'&&active!=='Horses'){history.replaceState(null,'','#'+encodeURIComponent(main));activate(main);return;}
         updateDBSubcategories();render();
       }else{updateBreedFilter();render();}
     });
