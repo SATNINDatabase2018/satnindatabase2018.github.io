@@ -966,3 +966,6 @@ button:focus-visible,a:focus-visible,summary:focus-visible {outline:3px solid va
 .outfit-hover-preview .stat-group h3{font-size:11px;margin-bottom:6px;}
 .outfit-hover-preview .stat-group dl{font-size:10px;gap:3px;}
 .outfit-hover-preview .stat-note{font-size:9px;margin:0;}
+
+.outfit-type-badge{display:block;min-height:44px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--green-light);font-size:14px;color:var(--green-dark);font-weight:600;}
+.expand-outfit-button{font-size:12px;padding:8px 13px;margin:0 0 12px;background:var(--green-light);color:var(--green-dark);border:1px solid var(--border);box-shadow:none;}

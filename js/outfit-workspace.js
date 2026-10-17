@@ -21,7 +21,13 @@ window.HMOutfitWorkspace = {
     const selected=()=>drafts[current];
     const outfitTypes={set:'Horse + player set',horse:'Horse equipment only',player:'Player outfit only'};
     function side(s,k){const i=resolve(k);return i?(['Clothes','Player Accessories'].includes(i.category)?'player':'horse'):(['Bridle','Mane Decoration','Saddle','Blanket','Tail Decoration','Horseshoes','Leg Wraps','Saddle Bag','Pet'].includes(s)?'horse':'player');}
-    function scopedSlots(d){return Object.fromEntries(Object.entries(d.slots||{}).filter(([s,k])=>d.outfit_type==='set' || side(s,k)===d.outfit_type));}
+    function scopedSlots(d){return {...d.slots};}
+    function autoType(d){
+      const sides=new Set(Object.entries(d.slots||{}).map(([s,k])=>side(s,k)));
+      if(sides.size>1)d.outfit_type='set';else if(sides.size===1)d.outfit_type=[...sides][0];
+      if(d.outfit_type==='player')d.horse_instance_id=null;
+      return d;
+    }
 
     function stats(slots){
       const groups={player:[],horse:[]};let unresolved=0;
@@ -55,7 +61,7 @@ window.HMOutfitWorkspace = {
       catch{notice='Draft storage is unavailable. Save to your account before leaving.';}
     }
     function clean(d){
-      return {id:String(d.id||uid()),name:String(d.name||'New outfit'),slots:d.slots && typeof d.slots==='object' && !Array.isArray(d.slots)?{...d.slots}:{},outfit_type:Object.hasOwn(outfitTypes,d.outfit_type)?d.outfit_type:'set',horse_instance_id:d.horse_instance_id?String(d.horse_instance_id):null,dirty:!!d.dirty};
+      return autoType({id:String(d.id||uid()),name:String(d.name||'New outfit'),slots:d.slots && typeof d.slots==='object' && !Array.isArray(d.slots)?{...d.slots}:{},outfit_type:Object.hasOwn(outfitTypes,d.outfit_type)?d.outfit_type:'set',horse_instance_id:d.horse_instance_id?String(d.horse_instance_id):null,dirty:!!d.dirty});
     }
     function newDraft(source){const d=clean(source||{});d.id=uid();d.dirty=true;drafts[d.id]=d;current=d.id;persist();return d;}
     if(user){
@@ -93,9 +99,9 @@ window.HMOutfitWorkspace = {
     }
     function tell(s){notice=s;const el=root.querySelector('[data-notice]');if(el)el.textContent=s;}
     function update(){persist();draw();onChange();}
-    function add(item){const s=slot(item);if(!s)return;if(selected().outfit_type!=='set' && side(s,key(item))!==selected().outfit_type){tell('This outfit is '+outfitTypes[selected().outfit_type]+'. Choose a matching outfit or change Save as to Horse + player set.');return;}selected().slots[s]=key(item);selected().dirty=true;tell(`${item.title} added to ${selected().name}.`);update();}
+    function add(item){const s=slot(item);if(!s)return;selected().slots[s]=key(item);autoType(selected());selected().dirty=true;tell(`${item.title} added to ${selected().name}.`);update();}
     let menuClose=null;
-    const compatible=(d,item)=>d.outfit_type==='set'||side(slot(item),key(item))===d.outfit_type;
+    const compatible=()=>true; // Any outfit can grow into a complete set.
     const count=item=>Object.values(drafts).filter(d=>compatible(d,item)&&d.slots[slot(item)]===key(item)).length;
     async function refreshHorses(){
       if(!user)return;
@@ -118,7 +124,7 @@ window.HMOutfitWorkspace = {
       function showPreview(d,row){
         hidePreview();if(window.innerWidth<760)return;
         preview=text('aside','','outfit-hover-preview');preview.id='outfit-hover-preview';preview.setAttribute('role','tooltip');
-        preview.append(text('h3',d.name||'New outfit'),text('p',outfitTypes[d.outfit_type]+(d.dirty?' · Unsaved changes':''),'hover-preview-meta'));
+        preview.append(text('h3',d.name||'New outfit'),text('p',outfitTypes[d.outfit_type],'hover-preview-meta'));
         const layout=text('div','','character-sheets');
         if(d.outfit_type!=='player')layout.append(sheet('horse',d,false));if(d.outfit_type!=='horse')layout.append(sheet('player',d,false));
         layout.classList.toggle('single-sheet',d.outfit_type!=='set');
@@ -154,7 +160,7 @@ window.HMOutfitWorkspace = {
         if(applying)return;applying=true;apply.disabled=true;create.disabled=true;renderList();let saved=0,failures=[];
         const changes=Object.values(drafts).filter(d=>compatible(d,item)&&(chosen.get(d.id)?d.dirty||d.slots[s]!==key(item):d.slots[s]===key(item)));
         for(const d of changes){
-          const next=clone(d);if(chosen.get(d.id))next.slots[s]=key(item);else if(next.slots[s]===key(item))delete next.slots[s];
+          const next=clone(d);if(chosen.get(d.id))next.slots[s]=key(item);else if(next.slots[s]===key(item))delete next.slots[s];autoType(next);
           if(user){
             try{
               const payload={id:next.id,user_id:user.id,name:next.name.trim()||'New outfit',slots:scopedSlots(next),horse_instance_id:next.outfit_type==='player'?null:next.horse_instance_id,outfit_type:next.outfit_type};
@@ -212,7 +218,7 @@ window.HMOutfitWorkspace = {
         if(!candidates.length)results.append(text('p','No matching items. Try another search or filter.','picker-empty'));
       };
       search.addEventListener('input',render);[sort,shop,owned].forEach(el=>el.addEventListener('change',render));
-      const remove=button('Remove current item',()=>{delete selected().slots[s];selected().dirty=true;update();dialog.close();});remove.disabled=!selected().slots[s];
+      const remove=button('Remove current item',()=>{delete selected().slots[s];autoType(selected());selected().dirty=true;update();dialog.close();});remove.disabled=!selected().slots[s];
       const footer=text('div','','picker-footer');footer.append(remove,text('small','Selecting an item replaces the current item in this slot.'));
       dialog.append(head,search,toolbar,count,results,footer);
       dialog.addEventListener('close',()=>{dialog.remove();const target=[...root.querySelectorAll('.gear-slot')].find(n=>n.dataset.slot===s);target?.focus();});
@@ -275,22 +281,21 @@ window.HMOutfitWorkspace = {
     function draw(){
       root.replaceChildren();const d=selected();
       const target=document.createElement('select');target.id='outfit-target';target.setAttribute('aria-label','Choose outfit to edit or add items to');
-      for(const v of Object.values(drafts))target.add(new Option(`${v.name}${v.dirty?' • unsaved':''}`,v.id));target.value=current;
+      for(const v of Object.values(drafts))target.add(new Option(v.name,v.id));target.value=current;
       target.addEventListener('change',()=>{current=target.value;update();});
       const controls=text('div','','outfit-controls');controls.append(target,button('+ New outfit',()=>{newDraft();update();}),button('Duplicate',()=>{newDraft({...selected(),name:selected().name+' (copy)'});update();}));root.append(controls);
       const name=document.createElement('input');name.id='outfit-name';name.maxLength=100;name.value=d.name;name.placeholder='Outfit name';
-      name.addEventListener('input',()=>{d.name=name.value;d.dirty=true;persist();target.selectedOptions[0].textContent=(d.name||'New outfit')+' • unsaved';browse();});
+      name.addEventListener('input',()=>{d.name=name.value;d.dirty=true;persist();target.selectedOptions[0].textContent=(d.name||'New outfit');browse();});
       const horseSelect=document.createElement('select');horseSelect.id='outfit-horse';horseSelect.add(new Option('No horse selected',''));
       for(const h of horses)horseSelect.add(new Option(horseInfo(h.id).title,String(h.id)));
       if(d.horse_instance_id && !horses.some(h=>String(h.id)===d.horse_instance_id))horseSelect.add(new Option('Previously selected horse unavailable',d.horse_instance_id));
       horseSelect.value=d.horse_instance_id||'';horseSelect.addEventListener('change',()=>{d.horse_instance_id=horseSelect.value||null;d.dirty=true;update();});
       const nl=text('label','Outfit name');nl.htmlFor=name.id;const hl=text('label','Horse from My Stable');hl.htmlFor=horseSelect.id;
-      const typeSelect=document.createElement('select');typeSelect.id='outfit-type';
-      for(const [v,l] of Object.entries(outfitTypes))typeSelect.add(new Option(l,v));typeSelect.value=d.outfit_type;
-      typeSelect.addEventListener('change',()=>{d.outfit_type=typeSelect.value;d.dirty=true;update();browse();});
-      const typeLabel=text('label','Save as');typeLabel.htmlFor=typeSelect.id;
+      const typeSelect=text('output',outfitTypes[d.outfit_type],'outfit-type-badge');typeSelect.id='outfit-type';
+      const typeLabel=text('label','Outfit type');typeLabel.htmlFor=typeSelect.id;
       const form=text('div','','outfit-settings');const nameField=text('div','','setting-field');nameField.append(nl,name);const typeField=text('div','','setting-field');typeField.append(typeLabel,typeSelect);form.append(nameField,typeField);
       if(d.outfit_type!=='player'){const horseField=text('div','','setting-field');horseField.append(hl,horseSelect);form.append(horseField);}root.append(form);
+      if(d.outfit_type!=='set'){const expand=button(d.outfit_type==='player'?'+ Add horse equipment':'+ Add player outfit',()=>{d.outfit_type='set';d.dirty=true;update();browse();});expand.className='expand-outfit-button';root.append(expand);}
       if(Object.keys(scopedSlots(d)).length<Object.keys(d.slots).length)root.append(text('p','Only the selected side will be saved. Duplicate this outfit first if you also want to keep the full set.','stat-note'));
 
       if(!horses.length && d.outfit_type!=='player')root.append(text('p',user?'Add a horse in My Stable to select it here.':'Log in to choose a horse from My Stable.','stat-note'));
@@ -298,7 +303,7 @@ window.HMOutfitWorkspace = {
       else {
         root.append(text('p',`Items you pick are added to “${d.name||'New outfit'}”.`));
         const tray=text('div','','compact-tray');
-        for(const [s,k] of Object.entries(scopedSlots(d))){const item=resolve(k);const row=text('div','','tray-row');if(item)row.append(image(item));row.append(text('span',`${s}: ${item?.title||'Item unavailable'}`),button('Remove',()=>{delete d.slots[s];d.dirty=true;update();}));tray.append(row);}root.append(tray);
+        for(const [s,k] of Object.entries(scopedSlots(d))){const item=resolve(k);const row=text('div','','tray-row');if(item)row.append(image(item));row.append(text('span',`${s}: ${item?.title||'Item unavailable'}`),button('Remove',()=>{delete d.slots[s];autoType(d);d.dirty=true;update();}));tray.append(row);}root.append(tray);
       }
       root.append(statTable(scopedSlots(d),d.outfit_type));
       const saveButton=button(busy?'Saving…':'Save outfit',save);saveButton.id='save-outfit';saveButton.disabled=busy;
