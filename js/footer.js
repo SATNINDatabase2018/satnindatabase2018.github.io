@@ -32,8 +32,7 @@
     inner.append(brand,nav);
     const bottom=text('div','','footer-bottom');bottom.append(text('small',`© ${new Date().getFullYear()} HM 2018. Unofficial fan-made archive.`),text('small','Star Stable and its game assets belong to their respective owners. This site is not affiliated with or endorsed by Star Stable Entertainment.'));
     footer.append(inner,bottom);document.body.append(footer);
-    const contact=document.getElementById('discord-contact');
-    if(contact){contact.replaceChildren();if(DISCORD_USERNAME){contact.append(text('strong',DISCORD_USERNAME),text('p','HM name: '+HM_NAME),text('p','My nickname is SATNIN. If you spot incorrect information or missing items, please send me a message on Discord.'));}else contact.append(text('p','Discord contact details will be added here soon.'));}
+
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});else mount();
 })();
