@@ -183,7 +183,7 @@ const bv = sortValue(b, field);
     );
 
     $("sort-rules").append(row);
-}
+  }
   async function saveOutfit(){
     if(!user){outfitMessage('Log in to save this outfit. Your guest draft stays in this browser.');return;}
     const name=$('outfit-name').value.trim(); if(!name){outfitMessage('Give your outfit a name first.');$('outfit-name').focus();return;}
