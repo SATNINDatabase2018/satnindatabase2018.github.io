@@ -18,6 +18,8 @@ async function updateAccountDisplay() {
     } = await supabaseClient.auth.getUser();
 
 
+    document.querySelectorAll("[data-guest-only]").forEach(section => { section.hidden = Boolean(user); });
+
     if (user) {
 
         loggedInSection.hidden = false;
@@ -165,3 +167,6 @@ logoutButton.addEventListener(
 
 
 updateAccountDisplay();
+
+// Defer account reads out of the auth callback.
+supabaseClient.auth.onAuthStateChange(() => setTimeout(updateAccountDisplay, 0));
