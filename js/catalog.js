@@ -157,6 +157,7 @@
     activate(active);
   }
   async function start(){
+    if(window.HMFeatureAccess)await window.HMFeatureAccess;
     try{
       const {data,error}=await supabaseClient.auth.getUser(); if(error && error.name!=='AuthSessionMissingError')throw error;user=data.user;
       const [catalog,horses]=await Promise.all([json('data/database.json'),json('data/horses.json')]);

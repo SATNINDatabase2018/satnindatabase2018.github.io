@@ -86,8 +86,14 @@
     }));
   }
   async function start(){
+    if(window.HMFeatureAccess)await window.HMFeatureAccess;
     try{
-      const {data,error}=await supabaseClient.auth.getUser();if(error)throw error;user=data.user;if(!user){location.href='login.html';return;}
+      const {data,error}=await supabaseClient.auth.getUser();if(error && error.name!=='AuthSessionMissingError')throw error;user=data.user;
+      if(!user){
+        horseCatalog=await json('data/horses.json');
+        horses=horseCatalog.slice(0,2).map((h,index)=>({id:'preview-'+index,horse_id:h.id,name:'Your horse',outfit_ids:[]}));
+        render();return;
+      }
       [horseCatalog,catalog]=await Promise.all([json('data/horses.json'),json('data/database.json')]);await load();
       $('add-horse-button').addEventListener('click',()=>{$('horse-picker').hidden=!$('horse-picker').hidden;picker();});
       supabaseClient.auth.onAuthStateChange((event,session)=>{if(session?.user?.id!==user.id)setTimeout(()=>location.reload(),0);});

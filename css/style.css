@@ -879,162 +879,67 @@ button:focus-visible,a:focus-visible,summary:focus-visible {outline:3px solid va
 .stable-outfit-preview small{font-size:10px;color:var(--muted);}
 .stable-outfit-link{display:block;font-size:12px;margin-top:10px;color:var(--green-dark);}
 
-
-/* Outfit slot layouts */
-
+/* Requested character-sheet slot positions. */
 .character-sheet .gear-stage {
-    grid-template-columns:
-        minmax(0, 1fr)
-        minmax(0, 1.35fr)
-        minmax(0, 1fr);
-
-    grid-template-rows:
-        repeat(3, minmax(110px, auto));
-
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) minmax(0, 1fr);
+    grid-template-rows: repeat(3, minmax(110px, auto));
     gap: 12px;
 }
-
-.character-sheet .gear-rail {
-    display: contents;
-}
-
-/* HORSE EQUIPMENT */
-
+.character-sheet .gear-rail { display: contents; }
 .horse-sheet .gear-stage {
     grid-template-areas:
         "mane . tail"
         "bridle portrait saddle"
         "horseshoes wraps blanket";
 }
-
-.horse-sheet .sheet-centre {
-    grid-area: portrait;
-}
-
-.horse-sheet [data-slot="Mane Decoration"] {
-    grid-area: mane;
-}
-
-.horse-sheet [data-slot="Tail Decoration"] {
-    grid-area: tail;
-}
-
-.horse-sheet [data-slot="Bridle"] {
-    grid-area: bridle;
-}
-
-.horse-sheet [data-slot="Saddle"] {
-    grid-area: saddle;
-}
-
-.horse-sheet [data-slot="Horseshoes"] {
-    grid-area: horseshoes;
-}
-
-.horse-sheet [data-slot="Leg Wraps"] {
-    grid-area: wraps;
-}
-
-.horse-sheet [data-slot="Blanket"] {
-    grid-area: blanket;
-}
-
-.horse-sheet .sheet-centre .catalog-image {
-    min-height: 0;
-}
-
-.horse-sheet .sheet-centre .catalog-image img {
-    height: 130px;
-}
-
-/* PLAYER OUTFIT */
-
+.horse-sheet .sheet-centre { grid-area: portrait; }
+.horse-sheet [data-slot="Mane Decoration"] { grid-area: mane; }
+.horse-sheet [data-slot="Tail Decoration"] { grid-area: tail; }
+.horse-sheet [data-slot="Bridle"] { grid-area: bridle; }
+.horse-sheet [data-slot="Saddle"] { grid-area: saddle; }
+.horse-sheet [data-slot="Horseshoes"] { grid-area: horseshoes; }
+.horse-sheet [data-slot="Leg Wraps"] { grid-area: wraps; }
+.horse-sheet [data-slot="Blanket"] { grid-area: blanket; }
+.horse-sheet .sheet-centre .catalog-image { min-height: 0; }
+.horse-sheet .sheet-centre .catalog-image img { height: 130px; }
 .player-sheet .gear-stage {
     grid-template-areas:
         ". hat ."
         "top portrait gloves"
         "pants portrait shoes";
 }
-
-.player-sheet .sheet-centre {
-    grid-area: portrait;
-}
-
-.player-sheet [data-slot="Hat"] {
-    grid-area: hat;
-}
-
-.player-sheet [data-slot="Top"] {
-    grid-area: top;
-}
-
-.player-sheet [data-slot="Gloves"] {
-    grid-area: gloves;
-}
-
-.player-sheet [data-slot="Pants"] {
-    grid-area: pants;
-}
-
-.player-sheet [data-slot="Shoes"] {
-    grid-area: shoes;
-}
-
+.player-sheet .sheet-centre { grid-area: portrait; }
+.player-sheet [data-slot="Hat"] { grid-area: hat; }
+.player-sheet [data-slot="Top"] { grid-area: top; }
+.player-sheet [data-slot="Gloves"] { grid-area: gloves; }
+.player-sheet [data-slot="Pants"] { grid-area: pants; }
+.player-sheet [data-slot="Shoes"] { grid-area: shoes; }
 @media (max-width: 600px) {
-    .character-sheet .gear-stage {
-        gap: 8px;
-    }
+    .character-sheet .gear-stage { gap: 8px; }
 }
 
+/* Override the original nth-child positions so slots cannot overlap. */
+.horse-sheet .gear-stage .gear-slot[data-slot="Mane Decoration"] { grid-area: mane; }
+.horse-sheet .gear-stage .gear-slot[data-slot="Tail Decoration"] { grid-area: tail; }
+.horse-sheet .gear-stage .gear-slot[data-slot="Bridle"] { grid-area: bridle; }
+.horse-sheet .gear-stage .gear-slot[data-slot="Saddle"] { grid-area: saddle; }
+.horse-sheet .gear-stage .gear-slot[data-slot="Horseshoes"] { grid-area: horseshoes; }
+.horse-sheet .gear-stage .gear-slot[data-slot="Leg Wraps"] { grid-area: wraps; }
+.horse-sheet .gear-stage .gear-slot[data-slot="Blanket"] { grid-area: blanket; }
+.player-sheet .gear-stage .gear-slot[data-slot="Hat"] { grid-area: hat; }
+.player-sheet .gear-stage .gear-slot[data-slot="Top"] { grid-area: top; }
+.player-sheet .gear-stage .gear-slot[data-slot="Gloves"] { grid-area: gloves; }
+.player-sheet .gear-stage .gear-slot[data-slot="Pants"] { grid-area: pants; }
+.player-sheet .gear-stage .gear-slot[data-slot="Shoes"] { grid-area: shoes; }
 
-/* Fix overlapping horse equipment slots */
+.account-gate{max-width:620px;margin:28px auto;padding:36px;text-align:center;}
+.account-gate>p{font-size:18px;color:var(--text);margin:0 0 24px;}
+.account-gate-actions{display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap;}
+.account-gate-actions>a:not(.button){font-size:14px;font-weight:600;color:var(--green-dark);}
 
-.horse-sheet .gear-stage .gear-slot[data-slot="Mane Decoration"] {
-    grid-area: mane;
-}
-
-.horse-sheet .gear-stage .gear-slot[data-slot="Tail Decoration"] {
-    grid-area: tail;
-}
-
-.horse-sheet .gear-stage .gear-slot[data-slot="Bridle"] {
-    grid-area: bridle;
-}
-
-.horse-sheet .gear-stage .gear-slot[data-slot="Saddle"] {
-    grid-area: saddle;
-}
-
-.horse-sheet .gear-stage .gear-slot[data-slot="Horseshoes"] {
-    grid-area: horseshoes;
-}
-
-.horse-sheet .gear-stage .gear-slot[data-slot="Leg Wraps"] {
-    grid-area: wraps;
-}
-
-.horse-sheet .gear-stage .gear-slot[data-slot="Blanket"] {
-    grid-area: blanket;
-}
-
-/* Fix overlapping player clothing slots */
-
-.player-sheet .gear-stage .gear-slot[data-slot="Hat"] {
-    grid-area: hat;
-}
-
-.player-sheet .gear-stage .gear-slot[data-slot="Top"] {
-    grid-area: top;
-}
-
-.player-sheet .gear-stage .gear-slot[data-slot="Gloves"] {
-    grid-area: gloves;
-}
-
-.player-sheet .gear-stage .gear-slot[data-slot="Pants"] {
-    grid-area: pants;
-}
-
-.player-sheet .gear-stage .gear-slot[data-slot="Shoes"] {
-    grid-area: shoes;
-}
+/* Logged-out visitors see a blurred, inactive preview of the tools. */
+.feature-shell{position:relative;min-height:440px;}
+.feature-blurred{filter:blur(5px);opacity:.55;pointer-events:none;user-select:none;min-height:440px;}
+.feature-shell>.account-gate{position:absolute;top:35px;left:50%;transform:translateX(-50%);z-index:30;width:min(620px,calc(100% - 24px));margin:0;background:rgba(255,253,248,.97);box-shadow:0 16px 50px #20332222;}
+.feature-blurred .outfit-builder{position:static!important;width:auto;max-height:none;}
+@media(min-width:1000px){body[data-view="collection"] main:has(.feature-blurred){padding-right:0;}}
