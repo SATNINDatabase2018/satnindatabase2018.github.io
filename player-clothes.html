@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Player Clothes | HM 2018</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="logo">HM 2018</a>
+
+    <nav>
+        <a href="database.html">Database</a>
+        <a href="stable.html">My Stable</a>
+        <a href="collection.html">My Collection</a>
+        <a href="outfits.html">My Outfits</a>
+        <a href="login.html" id="account-link">Login</a>
+    </nav>
+</header>
+
+<main>
+
+    <h1>Player Clothes</h1>
+
+    <input
+        id="search"
+        type="search"
+        placeholder="Search player clothes..."
+    >
+
+    <div
+        id="database-grid"
+        class="database-grid">
+    </div>
+
+</main>
+
+<script>
+    window.PAGE_CATEGORY = "Clothes";
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/category-page.js"></script>
+<script src="js/auth-status.js"></script>
+
+</body>
+</html>
