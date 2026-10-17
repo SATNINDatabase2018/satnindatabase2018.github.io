@@ -45,6 +45,27 @@
   function horseCard(own){
     const h=horseCatalog.find(x=>String(x.id)===String(own.horse_id));const card=el('article','','item-card stable-horse-card');card.dataset.horseId=own.id;
     card.append(photo(h,own.name||h?.breed||'Horse'),el('h3',own.name||h?.breed||'My horse'),el('p',[h?.breed,h?.coat,own.nickname].filter(Boolean).join(' · ')));
+    if(user){
+      const rename=button('Rename horse',()=>{form.hidden=false;input.value=own.name||'';status.textContent='';input.focus();input.select();});rename.className='rename-horse-button';
+      const form=document.createElement('form');form.className='horse-rename-form';form.hidden=true;
+      const label=el('label','Horse name'),input=document.createElement('input');input.type='text';input.required=true;input.maxLength=80;input.autocomplete='off';input.setAttribute('aria-label','New name for '+(own.name||'horse'));label.append(input);
+      const actions=el('div','','outfit-controls'),save=button('Save name',()=>{}),cancel=button('Cancel',()=>{form.hidden=true;status.textContent='';});save.type='submit';actions.append(save,cancel);
+      const status=el('p','','horse-name-status');status.setAttribute('role','status');form.append(label,actions,status);card.append(rename,form);
+      form.addEventListener('submit',async event=>{
+        event.preventDefault();const name=input.value.trim();if(!name){status.textContent='Please enter a horse name.';input.focus();return;}
+        if(name===own.name){form.hidden=true;return;}
+        save.disabled=true;cancel.disabled=true;rename.disabled=true;input.disabled=true;status.textContent='Saving name…';
+        try{
+          const {data,error}=await supabaseClient.from('user_horses').update({name}).eq('id',own.id).eq('user_id',user.id).select('id,name');
+          if(error)throw error;if(!data?.length)throw Error('The name was not saved. Refresh your stable and try again.');
+          own.name=name;card.querySelector('h3').textContent=name;card.querySelector('.catalog-image img')?.setAttribute('alt',name);input.setAttribute('aria-label','New name for '+name);level.setAttribute('aria-label','Level for '+name);form.hidden=true;
+          const grid=$('stable-grid'),cards=new Map([...grid.children].map(node=>[String(node.dataset.horseId),node]));
+          for(const horse of sortedHorses()){const node=cards.get(String(horse.id));if(node)grid.append(node);}
+          message('Horse renamed to '+name+'.');
+        }catch(e){status.textContent='Could not rename horse: '+e.message;}
+        finally{save.disabled=false;cancel.disabled=false;rename.disabled=false;input.disabled=false;}
+      });
+    }
     const levelLabel=el('label','Horse level');const level=document.createElement('select');level.setAttribute('aria-label',`Level for ${own.name||'horse'}`);level.add(new Option('Choose level',''));
     for(let n=1;n<=15;n++)level.add(new Option(String(n),String(n)));level.value=own.level==null?'':String(own.level);
     const levelStatus=el('p','','horse-level-status');levelStatus.setAttribute('role','status');

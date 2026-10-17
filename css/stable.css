@@ -5,3 +5,7 @@
 .stable-horse-card .remove-horse-button:hover{background:var(--green-light);}
 .horse-remove-status{font-size:12px;}
 @media(max-width:600px){.stable-sort-controls{grid-template-columns:1fr;}}
+
+.rename-horse-button{align-self:flex-start;margin:10px 0 8px;padding:7px 12px;font-size:12px;background:var(--green-light);color:var(--green-dark);border:1px solid var(--border);box-shadow:none;}
+.horse-rename-form{padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--card-2);margin:8px 0;}
+.horse-rename-form label{margin:0;font-size:12px;}.horse-rename-form input{max-width:none;margin:8px 0;}.horse-rename-form button{font-size:12px;padding:8px 12px;}.horse-name-status{font-size:12px;}
