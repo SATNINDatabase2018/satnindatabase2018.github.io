@@ -64,6 +64,18 @@
     const aliases=[['Mane Decoration',/mane/],['Tail Decoration',/tail/],['Leg Wraps',/leg wrap|socks/],['Saddle Bag',/saddle ?bag/],['Horseshoes',/horseshoe|horse shoe/],['Bridle',/bridle/],['Blanket',/blanket|saddle pad/],['Saddle',/saddle/],['Hat',/hat|helmet/],['Top',/top|shirt|jacket|sweater|coat/],['Gloves',/glove/],['Pants',/pant|breech|trouser/],['Shoes',/shoe|boot/]];
     return aliases.find(([,re])=>re.test(s))?.[0] || (['Clothes','Player Accessories','Equipment','Horse Decorations'].includes(item.category) && item.section ? String(item.section) : null);
   }
+  async function addHorseHere(horse,control){
+    if(!user){message('Please log in to add horses to your stable.');return;}
+    const entered=prompt(`Name your ${horse.breed||horse.title}:`);
+    if(entered===null)return;const name=entered.trim();if(!name){message('Enter a horse name to add it.');return;}
+    control.disabled=true;const old=control.textContent;control.textContent='Adding…';
+    try{
+      const {error}=await supabaseClient.from('user_horses').insert({user_id:user.id,horse_id:horse.id,name,nickname:null});
+      if(error)throw error;
+      message(`${name} was added to My Stable!`);
+      await workspace?.refreshHorses();
+    }catch(e){message('Could not add horse: '+e.message);}finally{control.disabled=false;control.textContent=old;}
+  }
   function card(item){
     const card=text('article','', 'item-card'); card.dataset.itemKey=key(item); card.append(image(item),text('h3',item.title),text('p',item.section || item.category));
     if(item.description)card.append(text('p',item.description));
@@ -73,7 +85,7 @@
     if(item.level!==undefined && item.level!=='')card.append(text('p',`Level / requirement: ${item.level}`));
     const actions=text('div','','item-actions');
     if(item.kind==='horse'){
-      const a=text('a','Add to My Stable','button'); a.href='stable.html'; actions.append(a);
+      actions.append(button('Add to My Stable',e=>addHorseHere(item,e.currentTarget)));
     }else{
       for(const [field,label] of [['owned','✓ I own this'],['wishlist','☆ Wishlist'],['favorite','♡ Favorite']]){
         const b=button(label,e=>toggle(item,field,e.currentTarget)); const selected=!!state(item)[field];
@@ -81,34 +93,34 @@
       }
     }
     const s=slot(item);
-    if(s){const selected=workspace?.slots[s]===key(item); actions.append(button(selected?'✓ In outfit':'+ Add to outfit',()=>workspace.add(item)));}
+    if(s){const count=workspace?.count(item)||0; const b=button(count?`✓ In ${count} outfit${count===1?'':'s'}`:'+ Add to outfit',e=>workspace.openMenu(item,e.currentTarget));b.className='outfit-menu-trigger';b.setAttribute('aria-expanded','false');b.setAttribute('aria-haspopup','dialog');actions.append(b);}
     card.append(actions); return card;
   }
   function render(){
     if(!$('database-grid'))return;
-    const q=$('search').value.trim().toLowerCase(), category=$('category-filter').value,shop=$('shop-filter').value;
+    const q=($('search')?.value||'').trim().toLowerCase(),category=$('category-filter')?.value||'',shop=$('shop-filter')?.value||'',breed=$('breed-filter')?.value||'';
     const flags=[...document.querySelectorAll('#state-filters input:checked')].map(n=>n.value);
     const rules=[...document.querySelectorAll('.sort-rule')].map(n=>({field:n.querySelector('.sort-field').value,dir:n.querySelector('.sort-dir').value}));
-    const filtered=items.filter(i=>(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && (!category || (active==='Horses'?i.section===category:category==='__horse__'?i.kind==='horse':i.kind!=='horse' && i.section===category)) && (!$('breed-filter').value || i.kind==='horse' && i.section===$('breed-filter').value) && (!shop || i.shop===shop) && (!flags.length || (i.kind!=='horse' && flags.every(f=>state(i)[f]))) && `${i.title} ${i.description||''} ${i.shop||''} ${i.section||''}`.toLowerCase().includes(q)).sort((a,b)=>compare(a,b,rules));
+    const filtered=items.filter(i=>(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && (!category || (active==='Horses'?i.section===category:category==='__horse__'?i.kind==='horse':i.kind!=='horse' && i.section===category)) && (!breed || i.kind==='horse' && i.section===breed) && (!shop || i.shop===shop) && (!flags.length || (i.kind!=='horse' && flags.every(f=>state(i)[f]))) && `${i.title} ${i.description||''} ${i.shop||''} ${i.section||''}`.toLowerCase().includes(q)).sort((a,b)=>compare(a,b,rules));
     $('database-grid').replaceChildren(...filtered.map(card));
     $('result-count').textContent=`${filtered.length} result${filtered.length===1?'':'s'}`;
     if(!filtered.length)$('database-grid').append(text('p','No items match these filters.'));
   }
-  function options(select,values,first){select.replaceChildren(new Option(first,''),...values.map(v=>new Option(v,v)));}
+  function options(select,values,first){if(!select)return;select.replaceChildren(new Option(first,''),...values.map(v=>new Option(v,v)));}
   function updateOptions(){
     const pool=items.filter(i=>view==='collection' || !active || i.category===active);
     const inHorses=view==='database' && active==='Horses';
     const types=[...new Set(pool.filter(i=>inHorses || i.kind!=='horse').map(i=>i.section).filter(Boolean))].sort();
     options($('category-filter'),types,inHorses?'All breeds':'All item types');
-    if(!inHorses && pool.some(i=>i.kind==='horse'))$('category-filter').add(new Option('Horse','__horse__'));
+    if(!inHorses && pool.some(i=>i.kind==='horse'))$('category-filter')?.add(new Option('Horse','__horse__'));
     options($('breed-filter'),[...new Set(pool.filter(i=>i.kind==='horse').map(i=>i.section))].sort(),'All breeds');
     updateBreedFilter();
     options($('shop-filter'),[...new Set(pool.map(i=>i.shop).filter(Boolean))].sort(),'All sites / shops');
   }
   function updateBreedFilter(){
-    const show=active!=='Horses' && $('category-filter').value==='__horse__';
-    $('breed-filter-wrap').hidden=!show;
-    if(!show)$('breed-filter').value='';
+    const show=active!=='Horses' && $('category-filter')?.value==='__horse__';
+    if($('breed-filter-wrap'))$('breed-filter-wrap').hidden=!show;
+    if(!show && $('breed-filter'))$('breed-filter').value='';
   }
   function activate(value){
     active=value;
@@ -124,7 +136,7 @@
     d.className='sort-dir'; d.setAttribute('aria-label','Sort direction'); d.add(new Option('Ascending / A–Z','asc'));d.add(new Option('Descending / Z–A','desc'));d.value=dir;
     f.addEventListener('change',()=>{if(f.value==='overall'){d.value='desc';render();}});
     [f,d].forEach(n=>n.addEventListener('change',render));
-    row.append(f,d,button('Remove rule',()=>{row.remove();render();})); $('sort-rules').append(row);
+    row.append(f,d,button('Remove rule',()=>{row.remove();render();})); $('sort-rules')?.append(row);
   }
   function setup(){
     const choices=view==='collection'?[['owned','Owned'],['wishlist','Wishlist'],['favorite','Favorites']]:categories;
@@ -136,12 +148,12 @@
       b.addEventListener('keydown',e=>{const all=[...tabs.children];const i=all.indexOf(b);const next=e.key==='ArrowRight'?all[(i+1)%all.length]:e.key==='ArrowLeft'?all[(i-1+all.length)%all.length]:e.key==='Home'?all[0]:e.key==='End'?all.at(-1):null;if(next){e.preventDefault();next.click();next.focus();}});tabs.append(b);
     });
     window.addEventListener('hashchange',()=>{let v;try{v=decodeURIComponent(location.hash.slice(1));}catch{return;}if(choices.some(([x])=>x===v))activate(v);});
-    $('search').addEventListener('input',render);
-    $('category-filter').addEventListener('change',()=>{updateBreedFilter();render();});
+    $('search')?.addEventListener('input',render);
+    $('category-filter')?.addEventListener('change',()=>{updateBreedFilter();render();});
     ['category-filter','breed-filter','shop-filter','state-filters'].forEach(id=>$(id)?.addEventListener('change',render));
     if(!user){document.querySelectorAll('#state-filters input').forEach(n=>n.disabled=true);$('state-filters')?.append(text('small','Log in to filter your saved items.'));}
-    $('add-sort').addEventListener('click',()=>{addSort('sc','asc');render();});addSort();
-    $('reset-filters').addEventListener('click',()=>{$('search').value='';updateOptions();document.querySelectorAll('#state-filters input').forEach(n=>n.checked=false);$('sort-rules').replaceChildren();addSort();render();});
+    $('add-sort')?.addEventListener('click',()=>{addSort('sc','asc');render();});addSort();
+    $('reset-filters')?.addEventListener('click',()=>{$('search').value='';updateOptions();document.querySelectorAll('#state-filters input').forEach(n=>n.checked=false);$('sort-rules').replaceChildren();addSort();render();});
     activate(active);
   }
   async function start(){

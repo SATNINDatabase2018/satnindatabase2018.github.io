@@ -87,6 +87,67 @@ window.HMOutfitWorkspace = {
     function tell(s){notice=s;const el=root.querySelector('[data-notice]');if(el)el.textContent=s;}
     function update(){persist();draw();onChange();}
     function add(item){const s=slot(item);if(!s)return;if(selected().outfit_type!=='set' && side(s,key(item))!==selected().outfit_type){tell('This outfit is '+outfitTypes[selected().outfit_type]+'. Choose a matching outfit or change Save as to Horse + player set.');return;}selected().slots[s]=key(item);selected().dirty=true;tell(`${item.title} added to ${selected().name}.`);update();}
+    let menuClose=null;
+    const compatible=(d,item)=>d.outfit_type==='set'||side(slot(item),key(item))===d.outfit_type;
+    const count=item=>Object.values(drafts).filter(d=>compatible(d,item)&&d.slots[slot(item)]===key(item)).length;
+    async function refreshHorses(){
+      if(!user)return;
+      const {data,error}=await supabaseClient.from('user_horses').select('*').eq('user_id',user.id);
+      if(error){tell('Horse added, but refresh My Outfits to reload your stable.');return;}
+      horses=data||[];draw();browse();
+    }
+    function openMenu(item,anchor){
+      menuClose?.();
+      const s=slot(item);if(!s)return;
+      const menu=text('div','','outfit-assign-menu');menu.setAttribute('role','dialog');menu.setAttribute('aria-label',`Add ${item.title} to outfits`);menu.tabIndex=-1;
+      anchor.setAttribute('aria-expanded','true');
+      const header=text('div','','assign-header');header.append(text('strong','Add to outfits'),button('Close',()=>close()));
+      menu.append(header,text('p',item.title,'assign-item-name'));
+      const list=text('div','','assign-outfit-list'),chosen=new Map();
+      for(const d of Object.values(drafts))chosen.set(d.id,compatible(d,item)&&d.slots[s]===key(item));
+      const status=text('p','','assign-status');status.setAttribute('role','status');
+      let applying=false;
+      function renderList(){
+        list.replaceChildren();
+        for(const d of Object.values(drafts)){
+          const label=text('label','','assign-outfit-row'),check=document.createElement('input');check.type='checkbox';check.value=d.id;check.checked=!!chosen.get(d.id);check.disabled=!compatible(d,item)||applying;
+          check.addEventListener('change',()=>chosen.set(d.id,check.checked));
+          const details=text('span','','assign-outfit-description');details.append(text('strong',d.name||'New outfit'));
+          const old=resolve(d.slots[s]);
+          const hint=!compatible(d,item)?outfitTypes[d.outfit_type]:old&&key(old)!==key(item)?`Replaces ${old.title} in ${s}`:outfitTypes[d.outfit_type];
+          details.append(text('small',hint));label.append(check,details);list.append(label);
+        }
+      }
+      const create=button('+ Create new outfit',()=>{
+        const name=prompt('New outfit name:');if(name===null||!name.trim())return;
+        const previous=current;const d=newDraft({name:name.trim().slice(0,100),outfit_type:side(s,key(item))});current=previous;
+        chosen.set(d.id,true);persist();renderList();draw();browse();status.textContent='New outfit selected. Click Save selections to add this item.';
+      });
+      const apply=button('Save selections',async()=>{
+        if(applying)return;applying=true;apply.disabled=true;create.disabled=true;renderList();let saved=0,failures=[];
+        const changes=Object.values(drafts).filter(d=>compatible(d,item)&&(chosen.get(d.id)?d.dirty||d.slots[s]!==key(item):d.slots[s]===key(item)));
+        for(const d of changes){
+          const next=clone(d);if(chosen.get(d.id))next.slots[s]=key(item);else if(next.slots[s]===key(item))delete next.slots[s];
+          if(user){
+            try{
+              const payload={id:next.id,user_id:user.id,name:next.name.trim()||'New outfit',slots:scopedSlots(next),horse_instance_id:next.outfit_type==='player'?null:next.horse_instance_id,outfit_type:next.outfit_type};
+              const {error}=await supabaseClient.from('hm_saved_outfits').upsert(payload,{onConflict:'id'});if(error)throw error;
+              const i=rows.findIndex(r=>r.id===d.id);if(i<0)rows.unshift(payload);else rows[i]=payload;
+              drafts[d.id]=clean(payload);saved++;
+            }catch(e){failures.push(`${d.name}: ${e.message}`);}
+          }else{next.dirty=true;drafts[d.id]=next;saved++;}
+        }
+        persist();draw();browse();applying=false;
+        if(failures.length){status.textContent=`${saved} updated. Could not save ${failures.join('; ')}`;apply.disabled=false;create.disabled=false;renderList();}
+        else{notice=user?`Updated ${saved} outfit${saved===1?'':'s'}.`:'Updated outfit drafts. Log in to save them to your account.';close();onChange();tell(notice);}
+      });
+      menu.append(list,create,apply,status,text('small','One item per slot in each outfit. Checking a different item replaces that slot.','assign-footnote'));
+      function outside(e){if(!applying&&!menu.contains(e.target)&&e.target!==anchor)close();}
+      function escape(e){if(e.key==='Escape'&&!applying){e.preventDefault();close();anchor.focus();}}
+      function close(){if(applying)return;menu.remove();anchor.setAttribute('aria-expanded','false');document.removeEventListener('pointerdown',outside);document.removeEventListener('keydown',escape);window.removeEventListener('resize',position);if(menuClose===close)menuClose=null;}
+      function position(){const r=anchor.getBoundingClientRect(),width=Math.min(340,window.innerWidth-24);menu.style.width=width+'px';menu.style.left=Math.max(12,Math.min(r.right+8,window.innerWidth-width-12))+'px';menu.style.top=Math.max(12,Math.min(r.top,window.innerHeight-menu.offsetHeight-12))+'px';}
+      menuClose=close;document.body.append(menu);renderList();position();menu.focus();document.addEventListener('pointerdown',outside);document.addEventListener('keydown',escape);window.addEventListener('resize',position);
+    }
     function changeSlot(s){
       const latestOwned=getOwnedIds?.();if(latestOwned){ownedIds=latestOwned;ownedReady=true;}
       const dialog=document.createElement('dialog');dialog.className='slot-picker';dialog.setAttribute('aria-labelledby','slot-picker-title');
@@ -233,6 +294,6 @@ window.HMOutfitWorkspace = {
     // Keep drafts and saved outfits visible together; each card clearly marks unsaved work.
     document.getElementById('outfit-search')?.addEventListener('input',browse);
     persist();draw();browse();
-    return {get slots(){return scopedSlots(selected());},add,stats:statTable};
+    return {get slots(){return scopedSlots(selected());},add,count,openMenu,refreshHorses,stats:statTable};
   }
 };
