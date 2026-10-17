@@ -146,6 +146,7 @@
     if(view==='database'||view==='collection'){updateDBSubcategories();updateDBShops();}
     const q=($('search')?.value||'').trim().toLowerCase(),category=$('category-filter')?.value||'',shop=$('shop-filter')?.value||'',breed=$('breed-filter')?.value||'',subtype=$('subcategory-filter')?.value||'';
     const flags=[...document.querySelectorAll('#state-filters input:checked')].map(n=>n.value);
+    syncSortChoices();
     const rules=[...document.querySelectorAll('.sort-rule')].map(n=>({field:n.querySelector('.sort-field').value,dir:n.querySelector('.sort-dir').value}));
     const filtered=items.filter(i=>(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && ((!category||i.category===category)&&(!subtype||itemType(i)===subtype)) && (!breed || i.kind==='horse' && i.section===breed) && (!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value)) && (!($('area-filter')?.value) || areaForShop(i.shop)===$('area-filter').value) && (!shop || i.shop===shop) && (!flags.length || (i.kind!=='horse' && flags.every(f=>state(i)[f]))) && `${i.title} ${i.description||''} ${i.shop||''} ${i.section||''} ${(i.aliases||[]).join(' ')}`.toLowerCase().includes(q)).sort((a,b)=>compare(a,b,rules));
     $('database-grid').replaceChildren(...filtered.slice(0,visibleLimit).map(card));
@@ -222,9 +223,30 @@
     $('catalog-panel').setAttribute('aria-labelledby',tab.id);
     updateOptions(); render();
   }
+  function sortChoices(){
+    const category=$('category-filter')?.value||(view==='database'?active:'');
+    const allowed={
+      Equipment:['speed','strength','agility','discipline'],
+      Clothes:['ride','jump','command','care'],
+      Horses:['speed','strength','agility','discipline','endurance'],
+      'Horse Decorations':[], 'Player Accessories':[], Pets:[]
+    };
+    const stats=Object.hasOwn(allowed,category)?fields.slice(3).filter(([field])=>allowed[category].includes(field)):fields.slice(3);
+    return [...fields.slice(0,3),['overall','Overall stats (combined)'],['shop','Location (site/shop)'],['generation','Generation'],...stats];
+  }
+  function syncSortChoices(){
+    const choices=sortChoices(),signature=choices.map(([value])=>value).join('|');
+    document.querySelectorAll('.sort-rule').forEach(row=>{
+      const select=row.querySelector('.sort-field');
+      if([...select.options].map(option=>option.value).join('|')===signature)return;
+      const previous=select.value;select.replaceChildren(...choices.map(([value,label])=>new Option(label,value)));
+      if(choices.some(([value])=>value===previous))select.value=previous;
+      else{select.value='title';row.querySelector('.sort-dir').value='asc';}
+    });
+  }
   function addSort(field='title',dir='asc'){
     const row=text('div','','sort-rule'),f=document.createElement('select'),d=document.createElement('select');
-    f.className='sort-field'; f.setAttribute('aria-label','Sort by'); [...fields.slice(0,3),['overall','Overall stats (combined)'],['shop','Location (site/shop)'],['generation','Generation'],...fields.slice(3)].forEach(([v,l])=>f.add(new Option(l,v)));f.value=field;
+    f.className='sort-field'; f.setAttribute('aria-label','Sort by'); sortChoices().forEach(([v,l])=>f.add(new Option(l,v)));f.value=field;
     d.className='sort-dir'; d.setAttribute('aria-label','Sort direction'); d.add(new Option('Ascending / A–Z','asc'));d.add(new Option('Descending / Z–A','desc'));d.value=dir;
     f.addEventListener('change',()=>{if(f.value==='overall'){d.value='desc';render();}});
     [f,d].forEach(n=>n.addEventListener('change',render));
