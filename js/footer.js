@@ -1,6 +1,6 @@
 /* Set your public Discord username here; no private account details are used. */
 (() => {
-  const DISCORD_USERNAME = '';
+  const DISCORD_USERNAME = 'crabatthequeen';
   const LOGO_IMAGE = ''; // Example: assets/logo.png
   const SITE_NAME = 'HM 2018';
   const text=(tag,value,cls)=>{const n=document.createElement(tag);n.textContent=value;if(cls)n.className=cls;return n;};
