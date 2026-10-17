@@ -61,7 +61,9 @@ window.HMOutfitWorkspace = {
       catch{notice='Draft storage is unavailable. Save to your account before leaving.';}
     }
     function clean(d){
-      return autoType({id:String(d.id||uid()),name:String(d.name||'New outfit'),slots:d.slots && typeof d.slots==='object' && !Array.isArray(d.slots)?{...d.slots}:{},outfit_type:Object.hasOwn(outfitTypes,d.outfit_type)?d.outfit_type:'set',horse_instance_id:d.horse_instance_id?String(d.horse_instance_id):null,dirty:!!d.dirty});
+      const value={id:String(d.id||uid()),name:String(d.name||'New outfit'),slots:d.slots && typeof d.slots==='object' && !Array.isArray(d.slots)?{...d.slots}:{},outfit_type:Object.hasOwn(outfitTypes,d.outfit_type)?d.outfit_type:'set',horse_instance_id:d.horse_instance_id?String(d.horse_instance_id):null,dirty:!!d.dirty};
+      if(new Set(Object.entries(value.slots).map(([s,k])=>side(s,k))).size>1)value.outfit_type='set';
+      return value;
     }
     function newDraft(source){const d=clean(source||{});d.id=uid();d.dirty=true;drafts[d.id]=d;current=d.id;persist();return d;}
     if(user){
@@ -235,13 +237,46 @@ window.HMOutfitWorkspace = {
       wrap.innerHTML='<svg viewBox="0 0 100 200" aria-hidden="true"><circle cx="50" cy="26" r="18"/><path d="M30 52 Q50 42 70 52 L85 108 L73 112 L64 80 L64 128 L70 188 L55 188 L50 140 L45 188 L30 188 L36 128 L36 80 L27 112 L15 108Z"/></svg>';
       wrap.append(text('span','Player outfit'));return wrap;
     }
+    function removeSection(kind){
+      const d=selected(),label=kind==='horse'?'horse equipment (including saddle bag and pet)':'player outfit';
+      if(!confirm(`Remove the ${label} section and all its selected items from “${d.name}”? The other section will be kept. Click Save outfit afterward to save this change.`))return;
+      d.slots=Object.fromEntries(Object.entries(d.slots).filter(([s,k])=>side(s,k)!==kind));
+      d.outfit_type=kind==='horse'?'player':'horse';
+      if(kind==='horse')d.horse_instance_id=null;
+      d.dirty=true;notice='Section removed. Click Save outfit to save this change.';update();browse();
+    }
+    function combineOutfits(){
+      const dialog=document.createElement('dialog');dialog.className='combine-outfits-dialog';dialog.setAttribute('aria-labelledby','combine-title');
+      const title=text('h2','Combine outfits');title.id='combine-title';
+      const hint=text('p','Choose a saved horse outfit and player outfit. A new complete set will be created; both originals are kept.');
+      const horse=document.createElement('select'),player=document.createElement('select'),name=document.createElement('input');horse.id='combine-horse';player.id='combine-player';name.id='combine-name';name.maxLength=100;name.placeholder='Name for the new set';
+      horse.add(new Option('Choose horse outfit',''));player.add(new Option('Choose player outfit',''));
+      const sourceRows=rows.map(clean);
+      for(const d of sourceRows.sort((a,b)=>a.name.localeCompare(b.name))){if(d.outfit_type==='horse')horse.add(new Option(d.name,d.id));if(d.outfit_type==='player')player.add(new Option(d.name,d.id));}
+      const status=text('p','','combine-status');status.setAttribute('role','status');
+      const label=(id,value)=>{const l=text('label',value);l.htmlFor=id;return l;};
+      const create=button('Create combined set',()=>{
+        const h=sourceRows.find(d=>d.id===horse.value),p=sourceRows.find(d=>d.id===player.value);
+        if(!h||!p){status.textContent='Choose one horse outfit and one player outfit.';return;}
+        const horseSlots=Object.fromEntries(Object.entries(h.slots).filter(([s,k])=>side(s,k)==='horse'));
+        const playerSlots=Object.fromEntries(Object.entries(p.slots).filter(([s,k])=>side(s,k)==='player'));
+        if(!Object.keys(horseSlots).length||!Object.keys(playerSlots).length){status.textContent='Both source outfits need at least one selected item.';return;}
+        const title=name.value.trim()||`${h.name} + ${p.name}`.slice(0,100);
+        newDraft({name:title,outfit_type:'set',horse_instance_id:h.horse_instance_id,slots:{...horseSlots,...playerSlots}});
+        notice='Combined set created. Click Save outfit to save it to your account.';update();browse();dialog.close();root.scrollIntoView?.({block:'start',behavior:'smooth'});
+      });
+      dialog.append(title,hint,label(horse.id,'Horse outfit'),horse,label(player.id,'Player outfit'),player,label(name.id,'New set name'),name);
+      if(horse.options.length===1||player.options.length===1)dialog.append(text('p','Save at least one horse-only outfit and one player-only outfit first.','stat-note'));
+      const actions=text('div','','outfit-controls');actions.append(create,button('Cancel',()=>dialog.close()));dialog.append(actions,status);
+      dialog.addEventListener('close',()=>dialog.remove());document.body.append(dialog);dialog.showModal();horse.focus();
+    }
     function sheet(kind,outfit=selected(),interactive=true){
       const panel=text('section','',`character-sheet ${kind}-sheet`);
       const left=kind==='horse'?['Bridle','Saddle','Blanket','Horseshoes']:['Hat','Top','Gloves'];
       const right=kind==='horse'?['Mane Decoration','Tail Decoration','Leg Wraps']:['Pants','Shoes'];
       const dock=kind==='horse'?['Saddle Bag','Pet']:[];
       const slots=[...left,...right,...dock];
-      const head=text('div','','sheet-header');head.append(text('h2',kind==='horse'?'Horse equipment':'Player outfit'),text('span',`${slots.filter(s=>outfit.slots[s]).length} / ${slots.length} selected`,'sheet-progress'));panel.append(head);
+      const head=text('div','','sheet-header');head.append(text('h2',kind==='horse'?'Horse equipment':'Player outfit'),text('span',`${slots.filter(s=>outfit.slots[s]).length} / ${slots.length} selected`,'sheet-progress'));if(interactive && isStudio && outfit.outfit_type==='set'){const remove=button(kind==='horse'?'Remove horse equipment':'Remove player outfit',()=>removeSection(kind));remove.className='remove-outfit-section';head.append(remove);}panel.append(head);
       const stage=text('div','','gear-stage');
       const centre=text('div','','sheet-centre');
       if(kind==='horse'){
@@ -283,7 +318,7 @@ window.HMOutfitWorkspace = {
       const target=document.createElement('select');target.id='outfit-target';target.setAttribute('aria-label','Choose outfit to edit or add items to');
       for(const v of Object.values(drafts))target.add(new Option(v.name,v.id));target.value=current;
       target.addEventListener('change',()=>{current=target.value;update();});
-      const controls=text('div','','outfit-controls');controls.append(target,button('+ New outfit',()=>{newDraft();update();}),button('Duplicate',()=>{newDraft({...selected(),name:selected().name+' (copy)'});update();}));root.append(controls);
+      const controls=text('div','','outfit-controls');controls.append(target,button('+ New outfit',()=>{newDraft();update();}),button('Duplicate',()=>{newDraft({...selected(),name:selected().name+' (copy)'});update();}));if(isStudio)controls.append(button('Combine outfits',combineOutfits));root.append(controls);
       const name=document.createElement('input');name.id='outfit-name';name.maxLength=100;name.value=d.name;name.placeholder='Outfit name';
       name.addEventListener('input',()=>{d.name=name.value;d.dirty=true;persist();target.selectedOptions[0].textContent=(d.name||'New outfit');browse();});
       const horseSelect=document.createElement('select');horseSelect.id='outfit-horse';horseSelect.add(new Option('No horse selected',''));
@@ -291,7 +326,15 @@ window.HMOutfitWorkspace = {
       if(d.horse_instance_id && !horses.some(h=>String(h.id)===d.horse_instance_id))horseSelect.add(new Option('Previously selected horse unavailable',d.horse_instance_id));
       horseSelect.value=d.horse_instance_id||'';horseSelect.addEventListener('change',()=>{d.horse_instance_id=horseSelect.value||null;d.dirty=true;update();});
       const nl=text('label','Outfit name');nl.htmlFor=name.id;const hl=text('label','Horse from My Stable');hl.htmlFor=horseSelect.id;
-      const typeSelect=text('output',outfitTypes[d.outfit_type],'outfit-type-badge');typeSelect.id='outfit-type';
+      const typeSelect=document.createElement('select');typeSelect.id='outfit-type';
+      for(const [value,label] of Object.entries(outfitTypes))typeSelect.add(new Option(label,value));typeSelect.value=d.outfit_type;
+      typeSelect.addEventListener('change',()=>{
+        const type=typeSelect.value;if(type===d.outfit_type)return;
+        if(type==='set'){d.outfit_type='set';d.dirty=true;update();browse();return;}
+        const removed=type==='horse'?'player':'horse';
+        if(d.outfit_type==='set'||Object.entries(d.slots).some(([s,k])=>side(s,k)===removed)){removeSection(removed);typeSelect.value=selected().outfit_type;}
+        else{d.outfit_type=type;if(type==='player')d.horse_instance_id=null;d.dirty=true;update();browse();}
+      });
       const typeLabel=text('label','Outfit type');typeLabel.htmlFor=typeSelect.id;
       const form=text('div','','outfit-settings');const nameField=text('div','','setting-field');nameField.append(nl,name);const typeField=text('div','','setting-field');typeField.append(typeLabel,typeSelect);form.append(nameField,typeField);
       if(d.outfit_type!=='player'){const horseField=text('div','','setting-field');horseField.append(hl,horseSelect);form.append(horseField);}root.append(form);

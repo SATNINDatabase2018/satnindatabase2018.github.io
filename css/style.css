@@ -969,3 +969,11 @@ button:focus-visible,a:focus-visible,summary:focus-visible {outline:3px solid va
 
 .outfit-type-badge{display:block;min-height:44px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--green-light);font-size:14px;color:var(--green-dark);font-weight:600;}
 .expand-outfit-button{font-size:12px;padding:8px 13px;margin:0 0 12px;background:var(--green-light);color:var(--green-dark);border:1px solid var(--border);box-shadow:none;}
+
+.remove-outfit-section{font-size:11px;padding:7px 10px;border:1px solid var(--border);background:var(--card-2);color:var(--text);box-shadow:none;}
+.sheet-header:has(.remove-outfit-section){flex-wrap:wrap;}
+.combine-outfits-dialog{width:min(540px,calc(100vw - 32px));max-height:88vh;overflow:auto;border:1px solid var(--border);border-radius:20px;background:var(--card);color:var(--text);padding:28px;box-shadow:0 20px 65px #20332233;}
+.combine-outfits-dialog::backdrop{background:#17251988;backdrop-filter:blur(4px);}
+.combine-outfits-dialog h2{font-family:Georgia,serif;color:var(--green-dark);}
+.combine-outfits-dialog input,.combine-outfits-dialog select{max-width:none;}
+.combine-status{font-size:13px;color:var(--green-dark);}

@@ -8,12 +8,14 @@
   let items=[], user=null, states=new Map(), active='', workspace=null, ready=false;
   const pending = new Set();
   let visibleLimit=60;
+  let accountLoading=true;
   const key = item => `${item.kind}:${item.id}`;
   const draftKey = () => `hm2018:outfit:${user?.id || 'guest'}`;
   const text = (tag, value, cls) => {const n=document.createElement(tag); n.textContent=value; if(cls)n.className=cls; return n;};
   const button = (label, action) => {const n=text('button',label); n.type='button'; n.addEventListener('click',action); return n;};
   function message(value) {$('catalog-message').textContent=value;}
   function requireAccount(){
+    if(accountLoading){message('Checking your account…');return false;}
     if(user)return true;
     const existing=$('database-login-dialog');if(existing?.open)return false;
     const dialog=document.createElement('dialog');dialog.id='database-login-dialog';dialog.className='database-login-dialog';dialog.setAttribute('aria-labelledby','database-login-title');
@@ -28,7 +30,7 @@
     dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
     document.body.append(dialog);dialog.showModal();return false;
   }
-  async function json(path) {const r=await fetch(path); if(!r.ok)throw Error(`Could not load ${path} (${r.status}).`); const a=await r.json(); if(!Array.isArray(a))throw Error(`Invalid data in ${path}.`); return a;}
+  async function json(path) {const r=await fetch(path,{cache:'no-cache'}); if(!r.ok)throw Error(`Could not load ${path} (${r.status}).`); const a=await r.json(); if(!Array.isArray(a))throw Error(`Invalid data in ${path}.`); return a;}
   function number(v) {if(v===null || v===undefined || String(v).trim()==='')return null; const n=Number(v); return Number.isFinite(n)?n:null;}
   function overallStats(item) {
     const values=fields.slice(3).map(([field])=>number(item[field])).filter(value=>value!==null);
@@ -111,7 +113,7 @@
       }
     }
     const s=slot(item);
-    if(s){const count=workspace?.count(item)||0; const b=button(count?`✓ In ${count} outfit${count===1?'':'s'}`:'+ Add to outfit',e=>{if(requireAccount())workspace.openMenu(item,e.currentTarget);});b.className='outfit-menu-trigger';b.setAttribute('aria-expanded','false');b.setAttribute('aria-haspopup','dialog');actions.append(b);}
+    if(s){const count=workspace?.count(item)||0; const b=button(count?`✓ In ${count} outfit${count===1?'':'s'}`:'+ Add to outfit',e=>{if(requireAccount()){if(workspace)workspace.openMenu(item,e.currentTarget);else message('Outfit tools are unavailable. Refresh My Outfits and try again.');}});b.className='outfit-menu-trigger';b.setAttribute('aria-expanded','false');b.setAttribute('aria-haspopup','dialog');actions.append(b);}
     card.append(actions); return card;
   }
   function render(reset=true){
@@ -172,7 +174,7 @@
     $('search')?.addEventListener('input',render);
     $('category-filter')?.addEventListener('change',()=>{updateBreedFilter();render();});
     ['category-filter','breed-filter','shop-filter','state-filters'].forEach(id=>$(id)?.addEventListener('change',render));
-    if(!user){$('state-filters')?.addEventListener('click',e=>{if(e.target.closest('label,input')){e.preventDefault();e.stopImmediatePropagation();requireAccount();}},true);}
+    $('state-filters')?.addEventListener('click',e=>{if(!user && e.target.closest('label,input')){e.preventDefault();e.stopImmediatePropagation();requireAccount();}},true);
     $('add-sort')?.addEventListener('click',()=>{addSort('sc','asc');render();});addSort();
     $('reset-filters')?.addEventListener('click',()=>{$('search').value='';updateOptions();document.querySelectorAll('#state-filters input').forEach(n=>n.checked=false);$('sort-rules').replaceChildren();addSort();render();});
     activate(active);
@@ -180,17 +182,32 @@
   async function start(){
     if(window.HMFeatureAccess)await window.HMFeatureAccess;
     try{
-      const {data,error}=await supabaseClient.auth.getUser(); if(error && error.name!=='AuthSessionMissingError')throw error;user=data.user;
+      // Public browsing must not depend on account requests or outfit drafts.
       const [catalog,horses]=await Promise.all([json('data/database.json'),json('data/horses.json')]);
       items=catalog.map(i=>({...i,kind:'item',title:String(i.title||'Untitled item'),agility:i.agility??i.agil,discipline:i.discipline??i.disc})).concat(horses.map(h=>({...h,kind:'horse',category:'Horses',section:h.breed,title:h.title||`${h.breed} ${h.coat||''}`.trim(),shop:h.location})));
-      workspace=await HMOutfitWorkspace.create({items,user,key,slot,image,text,button,number,fields,onChange:render,requireAccount,getOwnedIds:()=>ready?new Set([...states.entries()].filter(([,v])=>v.owned).map(([id])=>id)):null});
-      supabaseClient.auth.onAuthStateChange((event,session)=>{if((session?.user?.id||null)!==(user?.id||null))setTimeout(()=>location.reload(),0);});
-      if(view==='outfits')return;
+      if(view!=='outfits')setup();
+    }catch(e){message('Could not load catalog data: '+e.message);return;}
+    let authAvailable=true;
+    try{
+      if(typeof supabaseClient==='undefined')throw Error('Account service is unavailable.');
+      const {data,error}=await supabaseClient.auth.getUser();
+      if(error && error.name!=='AuthSessionMissingError')throw error;
+      user=data?.user||null;
+    }catch(e){authAvailable=false;message('Catalog loaded. Account features are temporarily unavailable: '+e.message);}
+    finally{accountLoading=false;}
+    if(authAvailable){
       try{await loadStates();ready=true;}catch(e){message(e.message);}
-      setup();
-      if(view==='collection' && !user)message('Log in to see your collection, wishlist and favorites.');
-
-    }catch(e){message(e.message || 'Could not load the database.');}
+      supabaseClient.auth.onAuthStateChange((event,session)=>{if((session?.user?.id||null)!==(user?.id||null))setTimeout(()=>location.reload(),0);});
+    }
+    if(view!=='outfits')render();
+    try{
+      if(typeof HMOutfitWorkspace==='undefined')throw Error('The outfit script did not load.');
+      workspace=await HMOutfitWorkspace.create({items,user,key,slot,image,text,button,number,fields,onChange:render,requireAccount,getOwnedIds:()=>ready?new Set([...states.entries()].filter(([,v])=>v.owned).map(([id])=>id)):null});
+    }catch(e){
+      message((view==='database'?'Catalog loaded. ':'')+'Outfit tools could not load: '+e.message);
+      console.error('Outfit workspace initialization failed',e);
+    }
+    if(view!=='outfits')render();
   }
   start();
 })();
