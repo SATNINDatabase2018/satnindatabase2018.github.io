@@ -113,8 +113,25 @@ window.HMOutfitWorkspace = {
       const list=text('div','','assign-outfit-list'),chosen=new Map();
       for(const d of Object.values(drafts))chosen.set(d.id,compatible(d,item)&&d.slots[s]===key(item));
       const status=text('p','','assign-status');status.setAttribute('role','status');
-      let applying=false;
+      let applying=false,hoverTimer=null,preview=null,previewRow=null;
+      function hidePreview(){clearTimeout(hoverTimer);preview?.remove();preview=null;previewRow?.removeAttribute('aria-describedby');previewRow=null;}
+      function showPreview(d,row){
+        hidePreview();if(window.innerWidth<760)return;
+        preview=text('aside','','outfit-hover-preview');preview.id='outfit-hover-preview';preview.setAttribute('role','tooltip');
+        preview.append(text('h3',d.name||'New outfit'),text('p',outfitTypes[d.outfit_type]+(d.dirty?' · Unsaved changes':''),'hover-preview-meta'));
+        const layout=text('div','','character-sheets');
+        if(d.outfit_type!=='player')layout.append(sheet('horse',d,false));if(d.outfit_type!=='horse')layout.append(sheet('player',d,false));
+        layout.classList.toggle('single-sheet',d.outfit_type!=='set');
+        const body=text('div','','hover-preview-body');body.append(layout);preview.append(body,statTable(scopedSlots(d),d.outfit_type));
+        document.body.append(preview);previewRow=row;row.setAttribute('aria-describedby',preview.id);
+        const mr=menu.getBoundingClientRect(),r=row.getBoundingClientRect();const right=window.innerWidth-mr.right-20,left=mr.left-20;
+        const width=Math.min(460,Math.max(right,left),window.innerWidth-24);preview.style.width=Math.max(260,width)+'px';layout.style.zoom=String(Math.min(.65,(Math.max(260,width)-28)/(d.outfit_type==='set'?700:440)));
+        const x=right>=width?mr.right+10:mr.left-width-10;preview.style.left=Math.max(12,Math.min(x,window.innerWidth-preview.offsetWidth-12))+'px';
+        preview.style.top=Math.max(12,Math.min(r.top,window.innerHeight-preview.offsetHeight-12))+'px';
+      }
+      list.addEventListener('scroll',hidePreview);
       function renderList(){
+        hidePreview();
         list.replaceChildren();
         for(const d of Object.values(drafts)){
           const label=text('label','','assign-outfit-row'),check=document.createElement('input');check.type='checkbox';check.value=d.id;check.checked=!!chosen.get(d.id);check.disabled=!compatible(d,item)||applying;
@@ -122,7 +139,10 @@ window.HMOutfitWorkspace = {
           const details=text('span','','assign-outfit-description');details.append(text('strong',d.name||'New outfit'));
           const old=resolve(d.slots[s]);
           const hint=!compatible(d,item)?outfitTypes[d.outfit_type]:old&&key(old)!==key(item)?`Replaces ${old.title} in ${s}`:outfitTypes[d.outfit_type];
-          details.append(text('small',hint));label.append(check,details);list.append(label);
+          details.append(text('small',hint));label.append(check,details);
+          label.addEventListener('mouseenter',()=>{clearTimeout(hoverTimer);hoverTimer=setTimeout(()=>showPreview(d,label),180);});
+          label.addEventListener('mouseleave',hidePreview);label.addEventListener('focusin',()=>showPreview(d,label));
+          label.addEventListener('focusout',e=>{if(!label.contains(e.relatedTarget))hidePreview();});list.append(label);
         }
       }
       const create=button('+ Create new outfit',()=>{
@@ -151,8 +171,8 @@ window.HMOutfitWorkspace = {
       menu.append(list,create,apply,status,text('small','One item per slot in each outfit. Checking a different item replaces that slot.','assign-footnote'));
       function outside(e){if(!applying&&!menu.contains(e.target)&&e.target!==anchor)close();}
       function escape(e){if(e.key==='Escape'&&!applying){e.preventDefault();close();anchor.focus();}}
-      function close(){if(applying)return;menu.remove();anchor.setAttribute('aria-expanded','false');document.removeEventListener('pointerdown',outside);document.removeEventListener('keydown',escape);window.removeEventListener('resize',position);if(menuClose===close)menuClose=null;}
-      function position(){const r=anchor.getBoundingClientRect(),width=Math.min(340,window.innerWidth-24);menu.style.width=width+'px';menu.style.left=Math.max(12,Math.min(r.right+8,window.innerWidth-width-12))+'px';menu.style.top=Math.max(12,Math.min(r.top,window.innerHeight-menu.offsetHeight-12))+'px';}
+      function close(){if(applying)return;hidePreview();menu.remove();anchor.setAttribute('aria-expanded','false');document.removeEventListener('pointerdown',outside);document.removeEventListener('keydown',escape);window.removeEventListener('resize',position);if(menuClose===close)menuClose=null;}
+      function position(){hidePreview();const r=anchor.getBoundingClientRect(),width=Math.min(340,window.innerWidth-24);menu.style.width=width+'px';menu.style.left=Math.max(12,Math.min(r.right+8,window.innerWidth-width-12))+'px';menu.style.top=Math.max(12,Math.min(r.top,window.innerHeight-menu.offsetHeight-12))+'px';}
       menuClose=close;document.body.append(menu);renderList();position();menu.focus();document.addEventListener('pointerdown',outside);document.addEventListener('keydown',escape);window.addEventListener('resize',position);
     }
     function changeSlot(s){
@@ -198,10 +218,10 @@ window.HMOutfitWorkspace = {
       dialog.addEventListener('close',()=>{dialog.remove();const target=[...root.querySelectorAll('.gear-slot')].find(n=>n.dataset.slot===s);target?.focus();});
       document.body.append(dialog);render();dialog.showModal();search.focus();
     }
-    function slotButton(s){
-      const item=resolve(selected().slots[s]);const b=button('',()=>changeSlot(s));b.className='gear-slot';b.dataset.slot=s;b.classList.toggle('is-filled',!!item);b.setAttribute('aria-label',`${s}: ${item?.title||'Empty'}. Choose item`);
+    function slotButton(s,outfit=selected(),interactive=true){
+      const item=resolve(outfit.slots[s]);const b=interactive?button('',()=>changeSlot(s)):text('div');b.className='gear-slot';b.dataset.slot=s;b.classList.toggle('is-filled',!!item);b.setAttribute('aria-label',`${s}: ${item?.title||'Empty'}${interactive?'. Choose item':''}`);
       b.append(text('span',s,'slot-label'));if(item)b.append(image(item));else b.append(text('span','+','slot-plus'));
-      b.append(text('span',item?.title || (selected().slots[s]?'Item unavailable':'Choose item'),'slot-title'));return b;
+      b.append(text('span',item?.title || (outfit.slots[s]?'Item unavailable':'Choose item'),'slot-title'));return b;
     }
     function playerFigure(){
       const wrap=text('div','','player-figure');
@@ -209,26 +229,26 @@ window.HMOutfitWorkspace = {
       wrap.innerHTML='<svg viewBox="0 0 100 200" aria-hidden="true"><circle cx="50" cy="26" r="18"/><path d="M30 52 Q50 42 70 52 L85 108 L73 112 L64 80 L64 128 L70 188 L55 188 L50 140 L45 188 L30 188 L36 128 L36 80 L27 112 L15 108Z"/></svg>';
       wrap.append(text('span','Player outfit'));return wrap;
     }
-    function sheet(kind){
+    function sheet(kind,outfit=selected(),interactive=true){
       const panel=text('section','',`character-sheet ${kind}-sheet`);
       const left=kind==='horse'?['Bridle','Saddle','Blanket','Horseshoes']:['Hat','Top','Gloves'];
       const right=kind==='horse'?['Mane Decoration','Tail Decoration','Leg Wraps']:['Pants','Shoes'];
       const dock=kind==='horse'?['Saddle Bag','Pet']:[];
       const slots=[...left,...right,...dock];
-      const head=text('div','','sheet-header');head.append(text('h2',kind==='horse'?'Horse equipment':'Player outfit'),text('span',`${slots.filter(s=>selected().slots[s]).length} / ${slots.length} selected`,'sheet-progress'));panel.append(head);
+      const head=text('div','','sheet-header');head.append(text('h2',kind==='horse'?'Horse equipment':'Player outfit'),text('span',`${slots.filter(s=>outfit.slots[s]).length} / ${slots.length} selected`,'sheet-progress'));panel.append(head);
       const stage=text('div','','gear-stage');
       const centre=text('div','','sheet-centre');
       if(kind==='horse'){
-        const h=horseInfo(selected().horse_instance_id);
+        const h=horseInfo(outfit.horse_instance_id);
         centre.append(h?image(h):text('div','Choose your horse above','horse-placeholder'),text('strong',h?.title||'Your horse'));
         if(h)centre.append(text('small',h.breed));
       }else centre.append(playerFigure());
-      const leftRail=text('div','','gear-rail gear-left');leftRail.append(...left.map(slotButton));
-      const rightRail=text('div','','gear-rail gear-right');rightRail.append(...right.map(slotButton));
+      const leftRail=text('div','','gear-rail gear-left');leftRail.append(...left.map(s=>slotButton(s,outfit,interactive)));
+      const rightRail=text('div','','gear-rail gear-right');rightRail.append(...right.map(s=>slotButton(s,outfit,interactive)));
       stage.append(leftRail,centre,rightRail);panel.append(stage);
-      if(dock.length){const group=text('div','','companion-dock');group.append(text('h3','Saddle bag & companion'));const pair=text('div','','companion-pair');pair.append(...dock.map(slotButton));group.append(pair);panel.append(group);}
-      const extras=Object.keys(selected().slots).filter(s=>!slots.includes(s)&&resolve(selected().slots[s])&&side(s,selected().slots[s])===kind);
-      if(extras.length){const extra=text('div','','extra-slots');extra.append(...extras.map(slotButton));panel.append(extra);}return panel;
+      if(dock.length){const group=text('div','','companion-dock');group.append(text('h3','Saddle bag & companion'));const pair=text('div','','companion-pair');pair.append(...dock.map(s=>slotButton(s,outfit,interactive)));group.append(pair);panel.append(group);}
+      const extras=Object.keys(outfit.slots).filter(s=>!slots.includes(s)&&resolve(outfit.slots[s])&&side(s,outfit.slots[s])===kind);
+      if(extras.length){const extra=text('div','','extra-slots');extra.append(...extras.map(s=>slotButton(s,outfit,interactive)));panel.append(extra);}return panel;
     }
     async function save(){
       if(busy)return;if(!user){requireAccount?.();return;}

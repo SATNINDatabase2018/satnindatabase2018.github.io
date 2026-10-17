@@ -948,3 +948,21 @@ button:focus-visible,a:focus-visible,summary:focus-visible {outline:3px solid va
 .database-login-dialog::backdrop{background:#17251988;backdrop-filter:blur(4px);}
 .database-login-dialog h2{font-family:Georgia,serif;color:var(--green-dark);font-size:29px;}
 .database-login-dialog p{margin-bottom:24px;}
+
+/* Read-only miniature outfit sheets alongside the assignment menu. */
+.outfit-hover-preview{position:fixed;z-index:2300;pointer-events:none;max-height:calc(100dvh - 24px);overflow:hidden;border:1px solid #c8d3c0;border-radius:16px;padding:14px;background:var(--card);color:var(--text);box-shadow:0 18px 55px #20332230;}
+.outfit-hover-preview>h3{font-family:Georgia,serif;font-size:20px;color:var(--green-dark);margin:0 0 5px;}
+.hover-preview-meta{font-size:11px;color:var(--muted);margin:0 0 10px;}
+.hover-preview-body{overflow:hidden;}
+.outfit-hover-preview .character-sheets{width:700px;zoom:.6;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0;}
+.outfit-hover-preview .character-sheets.single-sheet{grid-template-columns:1fr;width:440px;}
+.outfit-hover-preview .character-sheet{padding:12px;margin:0;box-shadow:none;}
+.outfit-hover-preview .sheet-header{gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.outfit-hover-preview .sheet-header h2{font-size:20px;}
+.outfit-hover-preview .gear-slot{cursor:default;}
+.outfit-hover-preview .gear-slot:hover{transform:none;background:#f7f8f2;}
+.outfit-hover-preview .outfit-stat-totals{margin:10px 0 0;gap:8px;}
+.outfit-hover-preview .stat-group{padding:8px;}
+.outfit-hover-preview .stat-group h3{font-size:11px;margin-bottom:6px;}
+.outfit-hover-preview .stat-group dl{font-size:10px;gap:3px;}
+.outfit-hover-preview .stat-note{font-size:9px;margin:0;}
