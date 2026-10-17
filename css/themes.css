@@ -1,0 +1,64 @@
+/* Cherry Blossom Summer (default) and Night. Shared geometry remains in style.css. */
+:root,[data-theme="light"]{
+  --bg:#fff7f7;--card:#fffdfb;--card-2:#faedf0;--text:#453139;--muted:#80656d;
+  --green:#ac496b;--green-dark:#913b5b;--green-light:#f8e2e9;--border:#ead3d9;
+  --shadow:0 10px 30px #8743590c;--accent-hover:#913b5b;--on-accent:#ffffff;
+  --surface:#fff6f7;--surface-hover:#fbe6ec;--filled:#f8e2e9;--slot-border:#e7c9d3;
+  --header:#fffdf9f0;--focus:#ba557333;--link:#913b5b;
+  --glow-pink:#f9d6e67a;--glow-sun:#ffe8bb70;--portrait:#f9dde7;
+  --neutral-bg:#eeeceb;--neutral-border:#d3cecb;--neutral-text:#716a67;
+  --backdrop:#41243380;--figure:#e7b9c8;--figure-stroke:#b8768e;
+}
+[data-theme="dark"]{
+  --bg:#121524;--card:#1c2033;--card-2:#272b42;--text:#f3e9ef;--muted:#b8acbf;
+  --green:#e7a6bf;--green-dark:#f1bad0;--green-light:#392d47;--border:#403a55;
+  --shadow:0 10px 32px #05061444;--accent-hover:#f1bad0;--on-accent:#251a28;
+  --surface:#23263a;--surface-hover:#353047;--filled:#3a2b45;--slot-border:#514059;
+  --header:#191c2eee;--focus:#e7a6bf38;--link:#f1bad0;
+  --glow-pink:#55335938;--glow-sun:#394b7330;--portrait:#46304e;
+  --neutral-bg:#2a2c34;--neutral-border:#45454e;--neutral-text:#c1bec6;
+  --backdrop:#050813b3;--figure:#7b668c;--figure-stroke:#bea5cf;
+}
+body{background:radial-gradient(ellipse at 8% 8%,var(--glow-pink),transparent 45%),radial-gradient(ellipse at 95% 20%,var(--glow-sun),transparent 45%),var(--bg);color:var(--text);}
+a{color:var(--link);}
+header{background:var(--header);border-bottom-color:var(--border);box-shadow:0 4px 22px #38203808;}
+nav{gap:8px;}
+#theme-toggle{flex:0 0 auto;white-space:nowrap;font:inherit;font-size:12px;font-weight:700;padding:8px 13px;border:1px solid var(--border);background:var(--green-light);color:var(--green-dark);box-shadow:none;}
+#theme-toggle:hover{background:var(--surface-hover);color:var(--green-dark);}
+.button,button{color:var(--on-accent);box-shadow:0 5px 15px #80345114;}
+.button:hover,button:hover{background:var(--accent-hover);color:var(--on-accent);}
+nav a:hover,.catalog-tabs button:hover,.database-categories .button:hover{background:var(--green-light);color:var(--green-dark);}
+.catalog-tabs [aria-selected="true"],.item-actions [aria-pressed="true"]{background:var(--green);color:var(--on-accent);border-color:var(--green);}
+input,select,textarea,#search,#horse-search{background:var(--card);color:var(--text);border-color:var(--border);}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:1;}
+input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0 0 4px var(--focus);}
+option{background:var(--card);color:var(--text);}
+.item-card:hover{border-color:var(--slot-border);box-shadow:var(--shadow);}
+.item-card::before{background:linear-gradient(90deg,var(--green),var(--figure));}
+.item-card img,.catalog-image{background:var(--card-2);}
+.character-sheet,.stat-group,.outfit-overview,.outfit-settings,.filter-panel{background:var(--card);color:var(--text);border-color:var(--border);}
+.gear-slot{background:var(--surface);color:var(--text);border-color:var(--slot-border);}
+.gear-slot:hover,.outfit-hover-preview .gear-slot:hover{background:var(--surface-hover);border-color:var(--green);color:var(--text);}
+.gear-slot.is-filled{background:var(--filled);border-color:var(--slot-border);}
+.gear-slot .slot-plus{border-color:var(--slot-border);color:var(--green-dark);}
+.sheet-centre{background:radial-gradient(ellipse,var(--portrait),transparent 74%);}
+.sheet-centre .catalog-image,.sheet-centre .catalog-image img,.gear-slot .catalog-image,.gear-slot .catalog-image img{background:transparent;}
+.player-figure svg{fill:var(--figure);stroke:var(--figure-stroke);}
+.slot-results>.picker-item{background:var(--card);color:var(--text);border-color:var(--border);}
+.slot-results>.picker-item:hover,.slot-results>.picker-item[aria-pressed="true"]{background:var(--filled);border-color:var(--green);color:var(--text);}
+.picker-item .catalog-image{background:var(--card-2);}
+.slot-picker,.combine-outfits-dialog,.database-login-dialog,.outfit-hover-preview{background:var(--card);color:var(--text);border-color:var(--border);}
+.slot-picker::backdrop,.combine-outfits-dialog::backdrop,.database-login-dialog::backdrop{background:var(--backdrop);}
+.outfit-hover-preview .character-sheet{background:var(--card);}
+.feature-shell>.account-gate{background:var(--card);border-color:var(--border);}
+.assign-outfit-row,.stable-outfit-preview{background:var(--surface);border-color:var(--border);}
+.assign-outfit-row:has(input:checked){background:var(--filled);border-color:var(--green);}
+.horse-outfit-option{background:var(--card);}
+.horse-outfit-picker,.outfit-builder{background:var(--green-light);}
+.remove-outfit-section,.expand-outfit-button,.item-actions button{background:var(--card-2);color:var(--green-dark);border-color:var(--border);box-shadow:none;}
+.remove-outfit-section:hover,.expand-outfit-button:hover,.item-actions button:hover{background:var(--surface-hover);color:var(--green-dark);}
+.item-actions [aria-pressed="true"]:hover{background:var(--accent-hover);color:var(--on-accent);}
+.is-uncertain{background:var(--neutral-bg)!important;border-color:var(--neutral-border)!important;color:var(--neutral-text)!important;}
+.is-uncertain h3,.is-uncertain strong,.is-uncertain p,.is-uncertain .slot-label{color:var(--neutral-text)!important;}
+::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--border);}
+@media(max-width:780px){#theme-toggle{margin-left:4px;}}
