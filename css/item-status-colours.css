@@ -2,7 +2,7 @@
 [data-theme="dark"]{--owned-card:#243d33;--wishlist-card:#443b27;--favorite-card:#432d40;--owned-ink:#b8e4c0;--wishlist-ink:#f5d88f;--favorite-ink:#f5b7d1}
 #database-grid .item-card.has-saved-status{background:var(--saved-status-background);border-color:var(--saved-status-border)}
 .catalog-card-visual{position:relative}
-.saved-status-badges{position:absolute;top:8px;left:-9px;display:flex;flex-direction:column;align-items:center;gap:3px;margin:0;padding:0;width:18px;z-index:3;pointer-events:auto}
+.saved-status-badges{position:absolute;top:-8px;left:-9px;display:flex;flex-direction:column;align-items:center;gap:3px;margin:0;padding:0;width:18px;z-index:3;pointer-events:auto}
 .saved-status-badges .saved-status-badge{position:static;display:inline-flex;align-items:center;justify-content:center;flex:0 0 18px;box-sizing:border-box;width:18px;height:18px;min-width:18px;min-height:18px;padding:0;margin:0;border-radius:50%;font-size:11px;line-height:1;font-weight:700;border:1px solid currentColor;box-shadow:none;cursor:help}
 .saved-status-owned{background:var(--owned-card);color:var(--owned-ink)}
 .saved-status-wishlist{background:var(--wishlist-card);color:var(--wishlist-ink)}
@@ -11,4 +11,4 @@
 
 #database-grid .catalog-card-visual{overflow:visible}
 #database-grid .catalog-card-visual .catalog-image{position:relative;overflow:visible}
-#database-grid .catalog-card-visual .item-type-bubble{right:-8px;top:8px;max-width:calc(100% - 20px);z-index:2}
+#database-grid .catalog-card-visual .item-type-bubble{right:-8px;top:0;transform:translateY(-45%);max-width:calc(100% - 20px);z-index:2}
