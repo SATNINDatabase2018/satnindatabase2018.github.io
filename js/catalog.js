@@ -130,6 +130,11 @@
     if(!horse){const badge=view==='database'?button(itemType(item)||item.category,()=>browseType(item)):text('span',itemType(item)||item.category);badge.className='item-type-bubble';if(view==='database')badge.title='Show all '+(itemType(item)||item.category);visual.firstElementChild.append(badge);}
     if(isCompanion(item)){const star=text('span','★','pet-companion-star');star.tabIndex=0;star.setAttribute('aria-label','companion (able to run beside you)');star.title='companion (able to run beside you)';const tip=text('span','companion (able to run beside you)','pet-companion-tooltip');star.append(tip);visual.append(star);}
     card.append(visual,text('h3',horse?(item.breed||item.title):item.title,'card-title'));
+    if(horse&&(String(item.id)==='923989698'||String(item.breed||item.title).toLowerCase()==='spirit')){
+      const picture=visual.querySelector('.catalog-image'),trigger=button('',()=>HMSpiritSchedule.open());trigger.className='spirit-picture-button';trigger.setAttribute('aria-label','View Spirit’s schedule');picture.replaceWith(trigger);trigger.append(picture);
+      const schedule=button('Spirit’s schedule · UTC',()=>HMSpiritSchedule.open());schedule.className='spirit-schedule-button';card.append(schedule);
+    }
+
     if(horse&&generationNumber(item.generation)!==null)card.append(text('p','Generation '+generationNumber(item.generation),'horse-generation'));
     if(horse&&item.speciality)card.append(text('p',item.speciality,'horse-speciality'));
     if(!horse && item.description)card.append(text('p',item.description,'card-description'));
