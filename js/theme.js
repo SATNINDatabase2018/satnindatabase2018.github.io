@@ -4,6 +4,8 @@
  let choice='light';try{const saved=localStorage.getItem(key);if(themes[saved])choice=saved;}catch{}
  function apply(theme){
   choice=themes[theme]?theme:'light';document.documentElement.dataset.theme=choice;document.documentElement.style.colorScheme=choice==='dark'?'dark':'light';
+  document.documentElement.style.backgroundColor=themes[choice].colour;
+  document.documentElement.style.setProperty('--loading-tint',choice==='dark'?'rgba(18,21,36,.38)':choice==='coffee'?'rgba(242,232,219,.38)':'rgba(255,248,242,.38)');
   const picker=document.getElementById('theme-toggle');if(picker)picker.value=choice;
   let meta=document.querySelector('meta[name="theme-color"]');if(!meta){meta=document.createElement('meta');meta.name='theme-color';document.head.append(meta);}meta.content=themes[choice].colour;
  }

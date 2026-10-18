@@ -138,3 +138,7 @@ button.item-type-bubble:hover{background:var(--green-dark);color:var(--card);tra
 [data-theme="coffee"] .sheet-progress{background:#e8d1b4;color:#624026}
 [data-theme="coffee"] #page-loading{background:rgba(242,232,219,.38)}
 select#theme-toggle{width:auto;max-width:150px;min-height:34px;margin-top:0;margin-bottom:0;cursor:pointer;color:var(--green-dark);background:var(--green-light);border:1px solid var(--border);border-radius:999px;padding:7px 12px;font:600 12px inherit}
+
+/* Match the document canvas to the selected theme during navigation. */
+html{background-color:var(--bg);min-height:100%}
+html body{min-height:100vh;min-height:100dvh}
