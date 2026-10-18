@@ -123,11 +123,11 @@
         card.style.setProperty('--saved-status-border',`var(--${statuses[0][0]}-ink)`);
         const badges=text('div','','saved-status-badges');
         for(const [field,symbol,label]of statuses){const badge=text('span',symbol,'saved-status-badge saved-status-'+field);badge.title=label;badge.setAttribute('aria-label',label);badge.setAttribute('role','img');badge.tabIndex=0;badges.append(badge);}
-        visual.append(badges);
+        visual.firstElementChild.append(badges);
       }
     }
 
-    if(!horse){const badge=view==='database'?button(itemType(item)||item.category,()=>browseType(item)):text('span',itemType(item)||item.category);badge.className='item-type-bubble';if(view==='database')badge.title='Show all '+(itemType(item)||item.category);visual.append(badge);}
+    if(!horse){const badge=view==='database'?button(itemType(item)||item.category,()=>browseType(item)):text('span',itemType(item)||item.category);badge.className='item-type-bubble';if(view==='database')badge.title='Show all '+(itemType(item)||item.category);visual.firstElementChild.append(badge);}
     if(isCompanion(item)){const star=text('span','★','pet-companion-star');star.tabIndex=0;star.setAttribute('aria-label','companion (able to run beside you)');star.title='companion (able to run beside you)';const tip=text('span','companion (able to run beside you)','pet-companion-tooltip');star.append(tip);visual.append(star);}
     card.append(visual,text('h3',horse?(item.breed||item.title):item.title,'card-title'));
     if(horse&&generationNumber(item.generation)!==null)card.append(text('p','Generation '+generationNumber(item.generation),'horse-generation'));
