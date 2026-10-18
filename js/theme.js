@@ -9,6 +9,7 @@
   const picker=document.getElementById('theme-toggle');if(picker)picker.value=choice;
   let meta=document.querySelector('meta[name="theme-color"]');if(!meta){meta=document.createElement('meta');meta.name='theme-color';document.head.append(meta);}meta.content=themes[choice].colour;
  }
+ const forestPaint=document.createElement('style');forestPaint.id='forest-first-paint';forestPaint.textContent='html[data-theme="forest"],html[data-theme="forest"] body{background:#101d18!important}html[data-theme="forest"] #page-loading{background:rgba(16,29,24,.38)!important;color:#eeeede}html[data-theme="forest"] #page-loading .loading-ring{border-color:#3a5140;border-top-color:#aec68c}';document.head.append(forestPaint);
  apply(choice);
  function mount(){const header=document.querySelector('header');if(!header||document.getElementById('theme-toggle'))return;const picker=document.createElement('select');picker.id='theme-toggle';picker.className='theme-toggle';picker.setAttribute('aria-label','Website theme');for(const [value,theme] of Object.entries(themes)){const option=document.createElement('option');option.value=value;option.textContent=theme.name;picker.append(option);}picker.addEventListener('change',()=>{apply(picker.value);try{localStorage.setItem(key,choice);}catch{}});(header.querySelector('nav')||header).append(picker);apply(choice);}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});else mount();
