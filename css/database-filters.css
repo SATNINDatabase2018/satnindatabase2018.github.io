@@ -15,3 +15,9 @@ body[data-view="database"] .filter-grid #generation-filter-wrap{grid-column:1;gr
 body[data-view="collection"] .filter-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
 @media(max-width:680px) and (min-width:421px){body[data-view="database"] .filter-grid #state-filters{grid-row:4;}}
 @media(max-width:420px){body[data-view="database"] .filter-grid #generation-filter-wrap{grid-column:1;grid-row:3;}body[data-view="database"] .filter-grid #area-filter-wrap{grid-row:4;}body[data-view="database"] .filter-grid #shop-filter-wrap{grid-row:5;}body[data-view="database"] .filter-grid #state-filters{grid-row:6;}body[data-view="collection"] .filter-grid{grid-template-columns:minmax(0,1fr);}}
+
+/* Compact personal-status filter without shrinking the checkbox hit area. */
+body[data-view="database"] #state-filters{padding:8px 10px;gap:5px}
+body[data-view="database"] #state-filters legend{font-size:11px;line-height:1.4;padding:0 4px}
+body[data-view="database"] #state-filters label{font-size:12px;line-height:1.4;margin:2px 0;padding:3px 0;gap:6px}
+body[data-view="database"] #state-filters input[type="checkbox"]{width:14px;height:14px;min-width:14px;margin:0}
