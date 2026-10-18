@@ -46,6 +46,7 @@
   function sortValue(item, field) {
     if (field === 'generation') return generationNumber(item.generation);
     if (field === 'title') return item.title;
+    if (field === 'category') return String(item.category || '').trim() || null;
     if (field === 'shop') return String(item.shop || '').trim() || null;
     if (field === 'overall') return overallStats(item);
     return number(item[field]);
@@ -56,7 +57,7 @@
       const av=sortValue(a,field), bv=sortValue(b,field);
       // Unknown values stay last in either direction. Zero is a known value.
       if(av==null && bv!=null)return 1; if(bv==null && av!=null)return -1;
-      const c=av==null?0:(field==='title'||field==='shop')?av.localeCompare(bv,undefined,{numeric:true,sensitivity:'base'}):av-bv;
+      const c=av==null?0:(field==='title'||field==='shop'||field==='category')?av.localeCompare(bv,undefined,{numeric:true,sensitivity:'base'}):av-bv;
       if(c)return c*(dir==='desc'?-1:1);
     }
     return a.title.localeCompare(b.title) || key(a).localeCompare(key(b));
@@ -232,7 +233,7 @@
       'Horse Decorations':[], 'Player Accessories':[], Pets:[]
     };
     const stats=Object.hasOwn(allowed,category)?fields.slice(3).filter(([field])=>allowed[category].includes(field)):fields.slice(3);
-    return [...fields.slice(0,3),['overall','Overall stats (combined)'],['shop','Location (site/shop)'],['generation','Generation'],...stats];
+    return [...fields.slice(0,3),['overall','Overall stats (combined)'],['shop','Location (site/shop)'],['generation','Generation'],['category','Category'],...stats];
   }
   function syncSortChoices(){
     const choices=sortChoices(),signature=choices.map(([value])=>value).join('|');
