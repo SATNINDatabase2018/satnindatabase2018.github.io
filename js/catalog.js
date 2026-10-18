@@ -79,8 +79,8 @@
     const before=state(item), next={owned:!!before.owned,wishlist:!!before.wishlist,favorite:!!before.favorite}; next[field]=!next[field];
     const {error}=await supabaseClient.from('user_items').upsert({user_id:user.id,item_id:item.id,...next},{onConflict:'user_id,item_id'});
     pending.delete(key(item));
-    if(error){message('Could not save this change: '+error.message); render(); return;}
-    states.set(String(item.id),next); message('Saved.'); render();
+    if(error){message('Could not save this change: '+error.message); render(false); return;}
+    states.set(String(item.id),next); message('Saved.'); render(false);
   }
   function image(item){
     const wrap=text('div','', 'catalog-image');
