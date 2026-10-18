@@ -30,3 +30,8 @@ body[data-view="database"] .filter-grid #main-category-wrap,
 body[data-view="database"] .filter-grid #area-filter-wrap{width:100%;box-sizing:border-box;min-width:0}
 body[data-view="database"] .filter-grid #category-filter,
 body[data-view="database"] .filter-grid #area-filter{width:100%;min-width:0;max-width:none;box-sizing:border-box}
+
+.database-mini-toolbar .database-mini-actions{display:flex;flex-direction:column;gap:5px;flex:0 0 auto;align-self:center}
+.database-mini-toolbar .database-mini-actions button{width:100%;min-height:29px;margin:0;padding:6px 10px;white-space:nowrap}
+.database-mini-toolbar .database-mini-actions .database-mini-reset{background:var(--card);color:var(--green-dark);border:1px solid var(--border);box-shadow:none}
+.database-mini-toolbar .database-mini-actions .database-mini-reset:hover{background:var(--green-light);border-color:var(--green)}

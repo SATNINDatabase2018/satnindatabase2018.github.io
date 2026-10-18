@@ -11,7 +11,9 @@
     const select=document.createElement('select');select.setAttribute('aria-label','Quick '+label);bar.append(select);controls.push({id,select});
     select.addEventListener('change',()=>{const source=id.startsWith('.')?document.querySelector(id):document.getElementById(id);if(source){source.value=select.value;source.dispatchEvent(new Event('change',{bubbles:true}));}});
   }
-  const more=document.createElement('button');more.type='button';more.textContent='All filters & sorts';more.addEventListener('click',()=>{panel.open=true;panel.scrollIntoView({behavior:'smooth',block:'center'});});bar.append(more);header.after(bar);
+  const more=document.createElement('button');more.type='button';more.textContent='All filters & sorts';more.addEventListener('click',()=>{panel.open=true;panel.scrollIntoView({behavior:'smooth',block:'center'});});const actions=document.createElement('div');actions.className='database-mini-actions';
+  const reset=document.createElement('button');reset.type='button';reset.textContent='Reset filters & sorting';reset.className='database-mini-reset';reset.addEventListener('click',()=>{document.getElementById('reset-filters')?.click();schedule();});
+  actions.append(more,reset);bar.append(actions);header.after(bar);
   let queued=false;
   function sync(){
     queued=false;if(document.activeElement!==query)query.value=search.value;
