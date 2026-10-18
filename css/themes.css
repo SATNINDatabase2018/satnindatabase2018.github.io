@@ -197,3 +197,16 @@ html body .database-mini-toolbar select{min-height:36px;padding:7px 32px 7px 10p
  html body select:not([multiple]) option:checked{background:var(--green-light);color:var(--green-dark);font-weight:700}
  html body select:not([multiple]) option::checkmark{color:var(--green-dark)}
 }
+
+/* A compact, single-line theme picker with space reserved for its arrow. */
+html body select#theme-toggle{
+ display:inline-flex;flex:0 0 190px;flex-direction:row;align-items:center;justify-content:space-between;
+ width:190px;min-width:190px;max-width:190px;height:32px;min-height:32px;
+ padding:5px 34px 5px 12px;font-size:12px;line-height:20px;white-space:nowrap;
+ vertical-align:middle;box-sizing:border-box;
+}
+@supports (appearance:base-select){
+ html body select#theme-toggle{padding:5px 12px;gap:12px}
+ html body select#theme-toggle::picker-icon{flex:none;margin-left:auto;align-self:center;line-height:1}
+}
+@media(max-width:480px){html body select#theme-toggle{flex-basis:180px;width:180px;min-width:180px;max-width:180px}}
