@@ -2,7 +2,7 @@
 (() => {
   const DISCORD_USERNAME = 'crabatthequeen';
   const HM_NAME = 'Luna Dovegarden (2018 version)';
-  const LOGO_IMAGE = 'assets/cloud-horseshoe-logo.png'; // Example: assets/logo.png
+  const LOGO_IMAGE = 'assets/satnin-floral-otter-logo.png?v=93'; // Example: assets/logo.png
   const SITE_NAME = "SATNIN's Database";
   const text=(tag,value,cls)=>{const n=document.createElement(tag);n.textContent=value;if(cls)n.className=cls;return n;};
   function updateHeader(){
