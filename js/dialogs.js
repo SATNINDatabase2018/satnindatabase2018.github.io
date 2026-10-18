@@ -19,3 +19,12 @@
  window.HMDialog={confirm:m=>show('confirm',m),prompt:(m,v)=>show('prompt',m,v),alert:m=>show('alert',m)};
  const css=document.createElement('style');css.textContent='.site-dialog{box-sizing:border-box;width:min(92vw,500px);max-height:85vh;overflow:auto;border:1px solid var(--border,#ccc);border-radius:20px;padding:28px;background:var(--card,#fff);color:var(--text,#222);box-shadow:0 24px 90px #0005}.site-dialog::backdrop{background:#14251d88;backdrop-filter:blur(4px)}.site-dialog h2{font-size:23px;margin:0 0 16px}.site-dialog p{white-space:pre-wrap;line-height:1.6}.site-dialog input{box-sizing:border-box;width:100%;margin:12px 0}.site-dialog-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:24px}';document.head.append(css);
 })();
+
+/* Dismiss native dialogs only when both press and release are on their backdrop. */
+(() => {
+ let pressed=null;
+ function outside(dialog,event){const r=dialog.getBoundingClientRect();return event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom;}
+ document.addEventListener('pointerdown',event=>{const dialog=event.target;pressed=dialog instanceof HTMLDialogElement&&dialog.open&&outside(dialog,event)?dialog:null;},true);
+ document.addEventListener('pointerup',event=>{const dialog=pressed;pressed=null;if(!dialog||event.target!==dialog||!dialog.open||!outside(dialog,event))return;const cancel=new Event('cancel',{cancelable:true});if(dialog.dispatchEvent(cancel))dialog.close('cancel');},true);
+ document.addEventListener('pointercancel',()=>{pressed=null;},true);
+})();

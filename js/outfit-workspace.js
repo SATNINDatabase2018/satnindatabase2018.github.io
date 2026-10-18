@@ -177,11 +177,11 @@ window.HMOutfitWorkspace = {
         else{notice=user?`Updated ${saved} outfit${saved===1?'':'s'}.`:'Updated outfit drafts. Log in to save them to your account.';close();onChange();tell(notice);}
       });
       menu.append(list,create,apply,status,text('small','One item per slot in each outfit. Checking a different item replaces that slot.','assign-footnote'));
-      function outside(e){if(!applying&&!menu.contains(e.target)&&e.target!==anchor)close();}
+      function outside(e){if(document.querySelector('dialog[open]'))return;if(!applying&&!menu.contains(e.target)&&e.target!==anchor)close();}
       function escape(e){if(e.key==='Escape'&&!applying){e.preventDefault();close();anchor.focus();}}
-      function close(){if(applying)return;hidePreview();menu.remove();anchor.setAttribute('aria-expanded','false');document.removeEventListener('pointerdown',outside);document.removeEventListener('keydown',escape);window.removeEventListener('resize',position);if(menuClose===close)menuClose=null;}
+      function close(){if(applying)return;hidePreview();menu.remove();anchor.setAttribute('aria-expanded','false');document.removeEventListener('pointerdown',outside,true);document.removeEventListener('keydown',escape);window.removeEventListener('resize',position);if(menuClose===close)menuClose=null;}
       function position(){hidePreview();const r=anchor.getBoundingClientRect(),width=Math.min(340,window.innerWidth-24);menu.style.width=width+'px';menu.style.left=Math.max(12,Math.min(r.right+8,window.innerWidth-width-12))+'px';menu.style.top=Math.max(12,Math.min(r.top,window.innerHeight-menu.offsetHeight-12))+'px';}
-      menuClose=close;document.body.append(menu);renderList();position();menu.focus();document.addEventListener('pointerdown',outside);document.addEventListener('keydown',escape);window.addEventListener('resize',position);
+      menuClose=close;document.body.append(menu);renderList();position();menu.focus();document.addEventListener('pointerdown',outside,true);document.addEventListener('keydown',escape);window.addEventListener('resize',position);
     }
     function changeSlot(s){
       const latestOwned=getOwnedIds?.();if(latestOwned){ownedIds=latestOwned;ownedReady=true;}
