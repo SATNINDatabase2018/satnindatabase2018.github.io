@@ -213,3 +213,23 @@ html body select#theme-toggle{
 
 
 .guides-menu{position:relative;flex-shrink:0}.guides-menu>summary{list-style:none;cursor:pointer;padding:10px 13px;border:1px solid var(--border);border-radius:12px;background:var(--card);color:var(--text);font-size:13px;font-weight:600}.guides-menu>summary::-webkit-details-marker{display:none}.guides-menu>summary::after{content:'⌄';margin-left:12px}.guides-menu[open]>summary{background:var(--green-light);color:var(--green-dark)}.guides-menu-links{position:absolute;top:calc(100% + 8px);right:0;z-index:1200;min-width:205px;padding:7px;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:0 12px 30px #0003}.guides-menu-links a{display:block;white-space:nowrap;border-radius:8px;padding:11px!important;color:var(--text)}.guides-menu-links a:hover{background:var(--surface-hover)}
+
+/* Dark Coffee: espresso surfaces, latte text and caramel accents. */
+[data-theme="darkcoffee"]{
+ --bg:#1c1511;--card:#2a201a;--card-2:#382b22;--text:#f0e3d3;--muted:#c2ad98;
+ --green:#d2ad7b;--green-dark:#e7c698;--green-light:#453322;--border:#594332;
+ --shadow:0 10px 32px #08040255;--accent-hover:#e8c797;--on-accent:#241810;
+ --surface:#30241c;--surface-hover:#493527;--filled:#44301f;--slot-border:#795b40;
+ --header:#211812f2;--focus:#d2ad7b38;--link:#e6bf8f;
+ --glow-pink:#63422924;--glow-sun:#a8793820;--portrait:#5a3e2a;
+ --neutral-bg:#342d27;--neutral-border:#5c5042;--neutral-text:#c9bcab;
+ --backdrop:#100905bb;--figure:#a78259;--figure-stroke:#dfbc89;
+ --owned-card:#30402b;--wishlist-card:#49391f;--favorite-card:#493039;
+ --owned-ink:#c0d7a8;--wishlist-ink:#f0d194;--favorite-ink:#e8b7c5;
+}
+[data-theme="darkcoffee"] .logo,[data-theme="darkcoffee"] h1,[data-theme="darkcoffee"] .character-sheet h2{color:#e7c698}
+[data-theme="darkcoffee"] .outfit-builder{background:linear-gradient(150deg,#39291d,#271c16)}
+[data-theme="darkcoffee"] .item-card::before{background:linear-gradient(90deg,#805b3b,#d2ad7b,#9e7046)}
+[data-theme="darkcoffee"] .sheet-progress{background:#453322;color:#f0d6b5}
+[data-theme="darkcoffee"] #page-loading{background:rgba(28,21,17,.38)!important;color:#f0e3d3}
+[data-theme="darkcoffee"] .contact-lyrics{opacity:.4}

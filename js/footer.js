@@ -2,7 +2,7 @@
 (() => {
   const DISCORD_USERNAME = 'crabatthequeen';
   const HM_NAME = 'Luna Dovegarden (2018 version)';
-  const logoImage=()=> 'assets/satnin-clam-otter-'+(['light','dark','coffee','forest'].includes(document.documentElement.dataset.theme)?document.documentElement.dataset.theme:'light')+'.png?v=96'; // Example: assets/logo.png
+  const logoImage=()=> 'assets/satnin-clam-otter-'+(document.documentElement.dataset.theme==='darkcoffee'?'coffee':(['light','dark','coffee','forest'].includes(document.documentElement.dataset.theme)?document.documentElement.dataset.theme:'light'))+'.png?v=96'; // Example: assets/logo.png
   const SITE_NAME = "SATNIN's Database";
   const text=(tag,value,cls)=>{const n=document.createElement(tag);n.textContent=value;if(cls)n.className=cls;return n;};
   function updateHeader(){
@@ -17,7 +17,8 @@
     if(nav&&!nav.querySelector('.guides-menu')){
       const menu=text('details','','guides-menu'),summary=text('summary','Guides');menu.append(summary);
       const links=text('div','','guides-menu-links');
-      for(const [label,path]of [['Spirit timetable','spirit/'],['Championships','championships/'],['Unlocking areas','areas/']]){const a=text('a',label);a.href=path;links.append(a);}menu.append(links);nav.insertBefore(menu,nav.querySelector('.account-nav-actions'));
+      links.append(text('small','JORVIK GUIDES','guides-caption'));
+      for(const [label,path,icon,description]of [['Spirit timetable','spirit/','◷','Find Spirit’s current location'],['Championships','championships/','⚑','See the next race in UTC'],['Unlocking areas','areas/','⌘','Explore area requirements']]){const a=text('a','');a.href=path;const badge=text('span',icon,'guide-link-icon');badge.setAttribute('aria-hidden','true');const copy=text('span','','guide-link-copy');copy.append(text('strong',label),text('small',description));a.append(badge,copy);links.append(a);}menu.append(links);nav.insertBefore(menu,nav.querySelector('.account-nav-actions'));
       document.addEventListener('pointerdown',e=>{if(!menu.contains(e.target))menu.open=false;},true);
       menu.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.open=false;summary.focus();}});
     }
