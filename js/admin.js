@@ -4,14 +4,14 @@
   let kind='item',records=[],current=null,dirty=false,busy=false,limit=60;
   const message=value=>{$('admin-message').textContent=value;};
   const name=row=>row.title||[row.breed,row.coat].filter(Boolean).join(' ')||'Untitled';
-  function allowDiscard(){return !dirty||confirm('Discard your unsaved changes?');}
+  async function allowDiscard(){return !dirty||(await HMDialog.confirm('Discard your unsaved changes?'));}
   function configure(){
     const horse=kind==='horse';
     for(const [key] of fields){const wrapper=$('edit-'+key).parentElement;wrapper.hidden=key==='is_companion'?(horse||$('edit-category').value!=='Pets'):horse?['category','section','ride','jump','command','care'].includes(key):['breed','coat','generation','speciality'].includes(key);}
     $('edit-title').required=!horse;$('edit-breed').required=horse;$('edit-section').required=!horse;
   }
-  function open(row=null){
-    if(busy||!allowDiscard())return;
+  async function open(row=null){
+    if(busy||!(await allowDiscard()))return;
     current=row?structuredClone(row):null;dirty=false;configure();
     for(const [key]of fields)$('edit-'+key).value=row?.[key]??(key==='category'?'Clothes':key==='is_companion'?'false':'');
     $('admin-editor-title').textContent=row?'Edit '+name(row):'Add '+(kind==='horse'?'horse':'item');
@@ -46,8 +46,8 @@
   }
   async function save(deleted=false){
     if(busy)return;if(!deleted&&!$('admin-form').reportValidity())return;
-    if(deleted&&!confirm(`Remove “${name(current)}” from the public database? Saved collections or outfits may refer to this entry. You can restore it from “Include removed entries”.`))return;
-    if(!deleted&&current?._deleted&&!confirm('Restore this entry to the public database?'))return;
+    if(deleted&&!(await HMDialog.confirm(`Remove “${name(current)}” from the public database? Saved collections or outfits may refer to this entry. You can restore it from “Include removed entries”.`)))return;
+    if(!deleted&&current?._deleted&&!(await HMDialog.confirm('Restore this entry to the public database?')))return;
     setBusy(true);message(deleted?'Removing entry…':'Saving entry…');
     try{
       const row=deleted?{...current}:payload();delete row._revision;delete row._deleted;
@@ -77,7 +77,7 @@
       $('admin-form').addEventListener('input',()=>{dirty=true;});$('edit-category').addEventListener('change',()=>{configure();updateTypes();});
       $('admin-form').addEventListener('submit',e=>{e.preventDefault();save();});$('admin-remove').addEventListener('click',()=>save(true));
       $('admin-add').addEventListener('click',()=>open());$('admin-kind').addEventListener('change',async()=>{
-        if(!allowDiscard()){$('admin-kind').value=kind;return;}kind=$('admin-kind').value;current=null;dirty=false;limit=60;$('admin-form').hidden=true;
+        if(!(await allowDiscard())){$('admin-kind').value=kind;return;}kind=$('admin-kind').value;current=null;dirty=false;limit=60;$('admin-form').hidden=true;
         try{await reload();open();}catch(e){records=[];renderList();message(e.message);}
       });
       ['admin-search','admin-show-removed'].forEach(id=>$(id).addEventListener(id==='admin-search'?'input':'change',()=>{limit=60;renderList();}));

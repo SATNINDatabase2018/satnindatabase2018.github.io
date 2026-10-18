@@ -132,7 +132,7 @@ async function setOwned(itemId) {
         await getCurrentUser();
 
     if (!user) {
-        alert("Please log in first.");
+        HMDialog.alert("Please log in first.");
         window.location.href = new URL("login/", document.baseURI).href;
         return;
     }
@@ -154,11 +154,11 @@ async function setOwned(itemId) {
 
     if (error) {
         console.error(error);
-        alert("Could not save item.");
+        HMDialog.alert("Could not save item.");
         return;
     }
 
-    alert("Added to your collection!");
+    HMDialog.alert("Added to your collection!");
 }
 
 
@@ -168,7 +168,7 @@ async function setWishlist(itemId) {
         await getCurrentUser();
 
     if (!user) {
-        alert("Please log in first.");
+        HMDialog.alert("Please log in first.");
         return;
     }
 
@@ -192,7 +192,7 @@ async function setWishlist(itemId) {
         return;
     }
 
-    alert("Added to wishlist!");
+    HMDialog.alert("Added to wishlist!");
 }
 
 
@@ -202,7 +202,7 @@ async function setFavorite(itemId) {
         await getCurrentUser();
 
     if (!user) {
-        alert("Please log in first.");
+        HMDialog.alert("Please log in first.");
         return;
     }
 
@@ -226,7 +226,7 @@ async function setFavorite(itemId) {
         return;
     }
 
-    alert("Added to favorites!");
+    HMDialog.alert("Added to favorites!");
 }
 
 

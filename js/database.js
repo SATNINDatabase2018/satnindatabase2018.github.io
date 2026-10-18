@@ -158,7 +158,7 @@ async function setOwned(itemId) {
 
     if (!user) {
 
-        alert("Please log in first.");
+        HMDialog.alert("Please log in first.");
 
         window.location.href = new URL("login/", document.baseURI).href;
 
@@ -182,11 +182,11 @@ async function setOwned(itemId) {
 
     if (error) {
         console.error(error);
-        alert("Could not save item.");
+        HMDialog.alert("Could not save item.");
         return;
     }
 
-    alert("Added to your collection!");
+    HMDialog.alert("Added to your collection!");
 }
 
 
@@ -197,7 +197,7 @@ async function setWishlist(itemId) {
 
     if (!user) {
 
-        alert("Please log in first.");
+        HMDialog.alert("Please log in first.");
 
         window.location.href = new URL("login/", document.baseURI).href;
 
@@ -221,11 +221,11 @@ async function setWishlist(itemId) {
 
     if (error) {
         console.error(error);
-        alert("Could not save wishlist item.");
+        HMDialog.alert("Could not save wishlist item.");
         return;
     }
 
-    alert("Added to wishlist!");
+    HMDialog.alert("Added to wishlist!");
 }
 
 
@@ -236,7 +236,7 @@ async function setFavorite(itemId) {
 
     if (!user) {
 
-        alert("Please log in first.");
+        HMDialog.alert("Please log in first.");
 
         window.location.href = new URL("login/", document.baseURI).href;
 
@@ -260,9 +260,9 @@ async function setFavorite(itemId) {
 
     if (error) {
         console.error(error);
-        alert("Could not save favorite.");
+        HMDialog.alert("Could not save favorite.");
         return;
     }
 
-    alert("Added to favorites!");
+    HMDialog.alert("Added to favorites!");
 }

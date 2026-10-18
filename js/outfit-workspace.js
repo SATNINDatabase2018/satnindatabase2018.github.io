@@ -153,8 +153,8 @@ window.HMOutfitWorkspace = {
           label.addEventListener('focusout',e=>{if(!label.contains(e.relatedTarget))hidePreview();});list.append(label);
         }
       }
-      const create=button('+ Create new outfit',()=>{
-        const name=prompt('New outfit name:');if(name===null||!name.trim())return;
+      const create=button('+ Create new outfit',async()=>{
+        const name=(await HMDialog.prompt('New outfit name:'));if(name===null||!name.trim())return;
         const previous=current;const d=newDraft({name:name.trim().slice(0,100),outfit_type:side(s,key(item))});current=previous;
         chosen.set(d.id,true);persist();renderList();draw();browse();status.textContent='New outfit selected. Click Save selections to add this item.';
       });
@@ -238,9 +238,9 @@ window.HMOutfitWorkspace = {
       wrap.innerHTML='<svg viewBox="0 0 100 200" aria-hidden="true"><circle cx="50" cy="26" r="18"/><path d="M30 52 Q50 42 70 52 L85 108 L73 112 L64 80 L64 128 L70 188 L55 188 L50 140 L45 188 L30 188 L36 128 L36 80 L27 112 L15 108Z"/></svg>';
       wrap.append(text('span','Player outfit'));return wrap;
     }
-    function removeSection(kind){
+    async function removeSection(kind){
       const d=selected(),label=kind==='horse'?'horse equipment (including saddle bag and pet)':'player outfit';
-      if(!confirm(`Remove the ${label} section and all its selected items from “${d.name}”? The other section will be kept. Click Save outfit afterward to save this change.`))return;
+      if(!(await HMDialog.confirm(`Remove the ${label} section and all its selected items from “${d.name}”? The other section will be kept. Click Save outfit afterward to save this change.`)))return;
       d.slots=Object.fromEntries(Object.entries(d.slots).filter(([s,k])=>side(s,k)!==kind));
       d.outfit_type=kind==='horse'?'player':'horse';
       if(kind==='horse')d.horse_instance_id=null;
@@ -306,7 +306,7 @@ window.HMOutfitWorkspace = {
       }catch(e){tell('Could not save: '+e.message);}finally{busy=false;draw();browse();}
     }
     async function remove(id){
-      const d=drafts[id]||rows.find(r=>r.id===id);if(!confirm(`Delete “${d?.name||'this outfit'}”?`))return;
+      const d=drafts[id]||rows.find(r=>r.id===id);if(!(await HMDialog.confirm(`Delete “${d?.name||'this outfit'}”?`)))return;
       if(rows.some(r=>r.id===id)){
         const {error}=await supabaseClient.from('hm_saved_outfits').delete().eq('id',id).eq('user_id',user.id);
         if(error){tell('Could not delete: '+error.message);return;}

@@ -99,7 +99,7 @@
   }
   async function addHorseHere(horse,control){
     if(!requireAccount())return;
-    const entered=prompt(`Name your ${horse.breed||horse.title}:`);
+    const entered=(await HMDialog.prompt(`Name your ${horse.breed||horse.title}:`));
     if(entered===null)return;const name=entered.trim();if(!name){message('Enter a horse name to add it.');return;}
     control.disabled=true;const old=control.textContent;control.textContent='Adding…';
     try{

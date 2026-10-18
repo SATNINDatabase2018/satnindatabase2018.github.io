@@ -109,7 +109,7 @@
       const removeStatus=el('p','','horse-remove-status');removeStatus.setAttribute('role','status');
       const remove=button('Remove horse',async()=>{
         const name=own.name||h?.breed||'this horse';
-        if(!confirm(`Remove ${name} from your stable? This removes this horse and its outfit assignments from your stable. Your saved outfits and the database horse will remain.`))return;
+        if(!(await HMDialog.confirm(`Remove ${name} from your stable? This removes this horse and its outfit assignments from your stable. Your saved outfits and the database horse will remain.`)))return;
         remove.disabled=true;removeStatus.textContent='Removing horse…';
         try{
           const {data,error}=await supabaseClient.from('user_horses').delete().eq('id',own.id).eq('user_id',user.id).select('id');
@@ -135,7 +135,7 @@
   function picker(){
     $('horse-options').replaceChildren(...horseCatalog.slice().sort((a,b)=>(window.HMItemStatus?.compare(a,b)||0)||a.breed.localeCompare(b.breed)).map(h=>{
       const c=el('article','','item-card');c.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(h));c.append(photo(h,h.breed),el('h3',h.breed),el('p',h.coat||''),button('Add to Stable',async e=>{
-        const name=prompt("What is your horse’s name?");if(name===null||!name.trim())return;e.currentTarget.disabled=true;
+        const control=e.currentTarget;const name=(await HMDialog.prompt("What is your horse’s name?"));if(name===null||!name.trim())return;control.disabled=true;
         try{const {error}=await supabaseClient.from('user_horses').insert({user_id:user.id,horse_id:h.id,name:name.trim(),nickname:null});if(error)throw error;$('horse-picker').hidden=true;message(name.trim()+' added to your stable.');await load();}
         catch(error){message('Could not add horse: '+error.message);}finally{e.target.disabled=false;}
       }));return c;

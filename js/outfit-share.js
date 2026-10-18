@@ -25,7 +25,7 @@ window.HMOutfitShare=(()=>{
       const actions=text('div','','outfit-controls');const copy=text('button','Copy link');copy.type='button';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(url.href);status.textContent='Link copied!';}catch{input.select();status.textContent='Select and copy the link above.';}});actions.append(copy);
       if(navigator.share){const share=text('button','Share…');share.type='button';share.addEventListener('click',async()=>{try{await navigator.share({title:snapshot.name,url:url.href});}catch(e){if(e.name!=='AbortError')status.textContent='Please copy the link above.';}});actions.append(share);}
       const close=text('button','Close');close.type='button';close.addEventListener('click',()=>dialog.close());actions.append(close);dialog.append(heading,note,label,actions,status);dialog.addEventListener('close',()=>dialog.remove());document.body.append(dialog);dialog.showModal();input.focus();input.select();
-    }catch(e){alert('Could not share outfit: '+e.message);}
+    }catch(e){HMDialog.alert('Could not share outfit: '+e.message);}
   }
   function slot(row,name){const box=text('div','','gear-slot');box.dataset.slot=name;box.append(text('span',name,'slot-label'));if(row)box.append(picture(row),text('span',safe(row.title),'slot-title'));else box.append(text('span','Empty','slot-title'));return box;}
   function sheet(kind,data){
