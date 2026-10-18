@@ -23,6 +23,19 @@
  const scroller=el('div','');scroller.className='spirit-schedule-scroll';scroller.tabIndex=0;scroller.setAttribute('role','region');scroller.setAttribute('aria-label','Spirit’s weekly UTC schedule');const table=el('table',''),thead=el('thead',''),tr=el('tr','');for(const day of ['Clock','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']){const th=el('th',day);th.scope='col';tr.append(th);}thead.append(tr);table.append(thead);const body=el('tbody','');
  for(const row of rows){const tr=el('tr','');row.forEach((value,i)=>{const cell=el(i===0?'th':'td',value);if(i===0)cell.scope='row';if(!value)cell.setAttribute('aria-label','No location supplied');tr.append(cell);});body.append(tr);}table.append(body);scroller.append(table);d.append(scroller,el('p','Spirit follows a weekly schedule and appears at different places depending on the day.'));
  const info=el('p','Times in this table are UTC (Coordinated Universal Time). Check or convert a time with '),a=el('a','UTC Time Converter ↗');a.href='https://www.utctime.net/';a.target='_blank';a.rel='noopener noreferrer';info.append(a);d.append(info,el('p','Spirit disappears at 21:00 UTC and returns the next morning.'),close);
- d.addEventListener('close',()=>{d.remove();if(previous?.isConnected)previous.focus();},{once:true});document.body.append(d);d.showModal();close.focus();
+ const current=el('p','');current.className='spirit-current-location';current.setAttribute('role','status');d.insertBefore(current,scroller);
+ function highlight(){
+  const now=new Date(),day=(now.getUTCDay()+6)%7,hour=now.getUTCHours(),rowIndex=hour-8;
+  table.querySelectorAll('.spirit-current-day,.spirit-current-hour,.spirit-current-cell').forEach(n=>n.classList.remove('spirit-current-day','spirit-current-hour','spirit-current-cell'));
+  table.querySelectorAll('[aria-current]').forEach(n=>n.removeAttribute('aria-current'));
+  thead.rows[0].cells[day+1].classList.add('spirit-current-day');
+  const clock=now.toLocaleTimeString('en-GB',{timeZone:'UTC',hour:'2-digit',minute:'2-digit'});
+  if(hour>=8&&hour<21){
+   const tr=body.rows[rowIndex],cell=tr.cells[day+1];tr.cells[0].classList.add('spirit-current-hour');cell.classList.add('spirit-current-cell');cell.setAttribute('aria-current','time');
+   current.textContent=`Now · ${clock} UTC · ${rows[rowIndex][day+1]||'No location supplied for this time.'}`;
+  }else current.textContent=`Now · ${clock} UTC · Spirit is away. He returns at 08:00 UTC.`;
+ }
+ highlight();const ticker=setInterval(highlight,15000);
+ d.addEventListener('close',()=>{clearInterval(ticker);d.remove();if(previous?.isConnected)previous.focus();},{once:true});document.body.append(d);d.showModal();close.focus();
  }};
 })();
