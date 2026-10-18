@@ -1,0 +1,13 @@
+(() => {
+ const $=id=>document.getElementById(id),node=(tag,t)=>{const n=document.createElement(tag);n.textContent=t;return n;};let page=0,busy=false;
+ async function load(){if(busy)return;busy=true;$('accounts-status').textContent='Loading accounts…';$('accounts-table').replaceChildren();try{
+ const {data,error}=await supabaseClient.rpc('hm_admin_account_overview',{p_search:$('accounts-search').value.trim(),p_page:page});if(error)throw error;
+ $('accounts-panel').hidden=false;$('accounts-summary').textContent=`${data.total} accounts · ${data.confirmed} email-confirmed · ${data.matching} match your search`;
+ const table=document.createElement('table'),head=document.createElement('tr');for(const s of ['Email','Created','Last sign-in','Email confirmed','Login methods','Role','User ID'])head.append(node('th',s));const thead=document.createElement('thead');thead.append(head);table.append(thead);const body=document.createElement('tbody');
+ for(const a of data.accounts){const tr=document.createElement('tr');for(const s of [a.email||'No email',new Date(a.created_at).toLocaleString(),a.last_sign_in_at?new Date(a.last_sign_in_at).toLocaleString():'Never',a.email_confirmed_at?'Yes':'No',(a.providers||[]).join(', '),a.is_admin?'Admin':'Member',a.id])tr.append(node('td',s));const b=document.createElement('button');b.type='button';b.textContent='Copy ID';b.onclick=async()=>{try{await navigator.clipboard.writeText(a.id);$('accounts-status').textContent='User ID copied.';}catch{$('accounts-status').textContent='Select and copy the displayed user ID.';}};tr.lastChild.append(b);body.append(tr);}table.append(body);$('accounts-table').append(table);
+ $('accounts-prev').disabled=page===0;$('accounts-next').disabled=(page+1)*50>=data.matching;$('accounts-status').textContent=`Page ${page+1} · ${data.accounts.length} accounts shown. Account details are admin-only.`;
+ }catch(e){$('accounts-status').textContent='Could not load accounts: '+e.message+'. If setup is new, run admin-account-overview.sql.';}finally{busy=false;}}
+ $('accounts-search-form').onsubmit=e=>{e.preventDefault();page=0;load();};$('accounts-refresh').onclick=()=>load();$('accounts-prev').onclick=()=>{page--;load();};$('accounts-next').onclick=()=>{page++;load();};
+ supabaseClient.auth.onAuthStateChange(()=>setTimeout(async()=>{const {data}=await supabaseClient.rpc('hm_is_admin');$('accounts-panel').hidden=data!==true;if(data!==true){$('accounts-table').replaceChildren();$('accounts-summary').textContent='';}if(data===true)load();},0));
+ (async()=>{const {data}=await supabaseClient.rpc('hm_is_admin');if(data===true){$('accounts-panel').hidden=false;load();}})();
+})();
