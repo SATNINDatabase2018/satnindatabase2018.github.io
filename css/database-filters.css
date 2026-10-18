@@ -19,4 +19,4 @@ body[data-view="collection"] .filter-grid{grid-template-columns:repeat(2,minmax(
 /* Narrow status box with one checkbox per row. */
 body[data-view="database"] .filter-grid #state-filters{box-sizing:border-box;width:240px;max-width:100%;justify-self:start;padding:12px}
 body[data-view="database"] #state-filters legend{font-size:inherit;line-height:1.4;padding:0 4px}
-body[data-view="database"] #state-filters label{display:flex;align-items:center;width:100%;box-sizing:border-box;gap:8px;margin:6px 0;font-size:inherit}
+body[data-view="database"] #state-filters label{display:flex;align-items:center;width:100%;box-sizing:border-box;gap:8px;margin:6px 0;font-size:.9em}
