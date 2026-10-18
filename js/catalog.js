@@ -4,7 +4,7 @@
   const $ = id => document.getElementById(id);
   const view = document.body.dataset.view;
   const categories = [['','Everything'],['Clothes','Player Clothes'],['Player Accessories','Player Accessories'],['Equipment','Horse Equipment'],['Horses','Horses'],['Horse Decorations','Horse Decorations'],['Pets','Pets']];
-  const fields = [['title','Name'],['sc','SC'],['js','JS'],['ride','Riding'],['jump','Jumping'],['command','Command'],['care','Care'],['speed','Speed'],['strength','Strength'],['agility','Agility'],['discipline','Discipline'],['endurance','Endurance']];
+  const fields = [['title','Name'],['sc','SC'],['js','JS'],['ride','Riding'],['jump','Jumping'],['command','Command'],['care','Care'],['speed','Swiftness'],['strength','Strength'],['agility','Agility'],['discipline','Discipline'],['endurance','Endurance']];
   let items=[], user=null, states=new Map(), active='', workspace=null, ready=false;
   const pending = new Set();
   let visibleLimit=60;
@@ -276,7 +276,7 @@
       Horses:['speed','strength','agility','discipline','endurance'],
       'Horse Decorations':[], 'Player Accessories':[], Pets:[]
     };
-    const stats=(Object.hasOwn(allowed,category)?fields.slice(3).filter(([field])=>allowed[category].includes(field)):fields.slice(3)).map(([field,label])=>[field,field==='speed'&&category==='Equipment'?'Swiftness':label]);
+    const stats=(Object.hasOwn(allowed,category)?fields.slice(3).filter(([field])=>allowed[category].includes(field)):fields.slice(3)).map(([field,label])=>[field,field==='speed'?'Swiftness':label]);
     return [...fields.slice(0,3),['overall','Overall stats (combined)'],['shop','Location (site/shop)'],['generation','Generation'],['category','Category'],['item_type','Item type'],...stats];
   }
   function syncSortChoices(){
