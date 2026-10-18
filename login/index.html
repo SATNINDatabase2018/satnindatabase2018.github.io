@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="css/footer.css?v=stable-filters-contact-13">
 <link rel="icon" type="image/png" href="assets/cloud-horseshoe-logo.png?v=1">
 <link rel="apple-touch-icon" href="assets/cloud-horseshoe-logo.png">
-<link rel="stylesheet" href="css/header.css?v=email-plain-subtitle-lyrics-34"><link rel="stylesheet" href="css/admin.css?v=admin-account-17"><link rel="stylesheet" href="css/discord-login.css?v=42"></head>
+<link rel="stylesheet" href="css/header.css?v=email-plain-subtitle-lyrics-34"><link rel="stylesheet" href="css/admin.css?v=admin-account-17"><link rel="stylesheet" href="css/discord-login.css?v=43"></head>
 
 <body>
 
@@ -127,6 +127,12 @@
 
         <p id="logged-in-email"></p>
 
+        <div class="discord-link-panel">
+            <h3>Discord account</h3>
+            <p>Link Discord to this account to keep using your saved collection, horses, and outfits when you log in with Discord.</p>
+            <button type="button" id="discord-link-button" disabled>Link with Discord</button>
+            <p id="discord-link-message" role="status" aria-live="polite">Checking linked accounts…</p>
+        </div>
         <button id="logout-button">
             Log out
         </button>
@@ -140,7 +146,7 @@
 
 <script src="js/supabase.js?v=clean-routes-41"></script>
 
-<script src="js/auth.js?v=discord-42"></script><script src="js/discord-login.js?v=42"></script><script src="js/delete-account.js?v=clean-routes-41"></script>
+<script src="js/auth.js?v=discord-link-43"></script><script src="js/discord-login.js?v=43"></script><script src="js/delete-account.js?v=clean-routes-41"></script>
 <script src="js/auth-status.js?v=clean-routes-41"></script>
 
 <script src="js/footer.js?v=clean-routes-41"></script></body>

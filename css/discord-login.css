@@ -1,1 +1,3 @@
 .discord-signin{border-top:4px solid var(--green);max-width:900px}.discord-signin>p{max-width:700px}.discord-signin button{min-height:46px;padding:12px 24px}.discord-account-note{font-size:13px;color:var(--muted)}#discord-login-message:empty{display:none}#discord-login-message{color:var(--green-dark);font-weight:600;overflow-wrap:anywhere}
+
+.discord-link-panel{max-width:700px;margin:24px 0;padding:20px;border:1px solid var(--border);border-radius:14px;background:var(--card-2)}.discord-link-panel h3{margin:0 0 10px}.discord-link-panel p{font-size:14px}.discord-link-panel [role="status"]{color:var(--green-dark)}
