@@ -63,7 +63,23 @@
     return a.title.localeCompare(b.title) || key(a).localeCompare(key(b));
   }
   // Exposed for small regression checks; no network or writes.
-  window.HMCatalog={compare,number,overallStats};
+  window.HMCatalog={compare,number,overallStats,searchRank};
+  function searchRank(item,query){
+    const normal=value=>String(value??'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[‐‑–—-]/g,' ').replace(/\s+/g,' ').trim();
+    const q=normal(query);if(!q)return 0;
+    const stats=['ride','jump','command','care','speed','strength','agility','discipline','endurance'].filter(k=>item[k]!==undefined&&item[k]!==null&&item[k]!=='').map(k=>`${k} ${item[k]}`).join(' ');
+    const money=[item.sc!=null?`SC ${item.sc} star coins ${item.sc}`:'',item.js!=null?`JS ${item.js} jorvik shillings ${item.js}`:'',item.price_note||''].join(' ');
+    const special=[item.speciality,item.specialty,item.is_companion===true?'companion pet':'',isCompanion(item)?'companion pet':'',item.section,item.category,item.generation?`generation ${item.generation}`:'',/pony/i.test(item.breed||'')?'pony':''].filter(Boolean).join(' ');
+    const groups=[[item.title,item.breed,item.coat,...(item.aliases||[])].filter(Boolean).join(' '),item.description,[item.shop,item.location].filter(Boolean).join(' '),stats,money,special].map(normal);
+    for(let tier=0;tier<groups.length;tier++){
+      const text=groups[tier];if(!text)continue;
+      if(text===q)return tier*100;
+      if(text.startsWith(q))return tier*100+1;
+      if(text.includes(q))return tier*100+2;
+      if(q.split(' ').every(word=>text.includes(word)))return tier*100+3;
+    }
+    return Infinity;
+  }
   function state(item){return states.get(String(item.id)) || {};}
   async function loadStates(){
     states=new Map(); if(!user)return;
@@ -132,7 +148,7 @@
     card.append(visual,text('h3',horse?(item.breed||item.title):item.title,'card-title'));
     if(horse&&(String(item.id)==='923989698'||String(item.breed||item.title).toLowerCase()==='spirit')){
       const picture=visual.querySelector('.catalog-image'),trigger=button('',()=>HMSpiritSchedule.open());trigger.className='spirit-picture-button';trigger.setAttribute('aria-label','View Spirit’s schedule');picture.replaceWith(trigger);trigger.append(picture);
-      const schedule=button('Spirit’s schedule · UTC',()=>HMSpiritSchedule.open());schedule.className='spirit-schedule-button';card.append(schedule);
+      const schedule=button('Spirit’s schedule · UTC',()=>HMSpiritSchedule.open());schedule.className='spirit-schedule-button';card.append(schedule);const spiritTitle=card.querySelector('.card-title');if(spiritTitle){const titleButton=button('Spirit',()=>HMSpiritSchedule.open());titleButton.className='spirit-title-button';spiritTitle.replaceChildren(titleButton);}
     }
 
     if(horse&&generationNumber(item.generation)!==null)card.append(text('p','Generation '+generationNumber(item.generation),'horse-generation'));
@@ -168,7 +184,7 @@
     const flags=[...document.querySelectorAll('#state-filters input:checked')].map(n=>n.value);
     syncSortChoices();
     const rules=[...document.querySelectorAll('.sort-rule')].map(n=>({field:n.querySelector('.sort-field').value,dir:n.querySelector('.sort-dir').value}));
-    const filtered=items.filter(i=>(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && ((!category||i.category===category)&&(!subtype||itemType(i)===subtype)) && (!breed || i.kind==='horse' && i.section===breed) && (!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value)) && (!($('area-filter')?.value) || areaForShop(i.shop)===$('area-filter').value) && (!shop || i.shop===shop) && (!flags.length || (i.kind!=='horse' && flags.some(f=>state(i)[f]))) && `${i.title} ${i.description||''} ${i.shop||''} ${i.section||''} ${(i.aliases||[]).join(' ')}`.toLowerCase().includes(q)).sort((a,b)=>compare(a,b,rules));
+    const filtered=items.filter(i=>(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && ((!category||i.category===category)&&(!subtype||itemType(i)===subtype)) && (!breed || i.kind==='horse' && i.section===breed) && (!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value)) && (!($('area-filter')?.value) || areaForShop(i.shop)===$('area-filter').value) && (!shop || i.shop===shop) && (!flags.length || (i.kind!=='horse' && flags.some(f=>state(i)[f]))) && Number.isFinite(searchRank(i,q))).sort((a,b)=>(q?(searchRank(a,q)-searchRank(b,q)):0)||compare(a,b,rules));
     $('database-grid').replaceChildren(...filtered.slice(0,visibleLimit).map(card));
     $('catalog-load-more')?.remove();
     if(filtered.length>visibleLimit){const more=button(`Load 60 more (${filtered.length-visibleLimit} remaining)`,()=>{visibleLimit+=60;render(false);});more.id='catalog-load-more';$('database-grid').after(more);}
@@ -224,7 +240,7 @@
   function updateDBShops(){
     const main=$('category-filter')?.value||'',sub=$('subcategory-filter')?.value||'',breed=$('breed-filter')?.value||'',search=($('search')?.value||'').trim().toLowerCase();
     const flags=[...document.querySelectorAll('#state-filters input:checked')].map(n=>n.value);
-    const matching=categoryPool().filter(i=>(!main||i.category===main)&&(!sub||itemType(i)===sub)&&(!breed||i.section===breed)&&(!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value))&&(!flags.length||i.kind!=='horse'&&flags.some(f=>state(i)[f]))&&`${i.title} ${i.description||''} ${i.shop||''} ${i.section||''} ${(i.aliases||[]).join(' ')}`.toLowerCase().includes(search));
+    const matching=categoryPool().filter(i=>(!main||i.category===main)&&(!sub||itemType(i)===sub)&&(!breed||i.section===breed)&&(!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value))&&(!flags.length||i.kind!=='horse'&&flags.some(f=>state(i)[f]))&&Number.isFinite(searchRank(i,search)));
     const area=$('area-filter');const previousArea=area?.value||'';const areas=[...new Set(matching.map(i=>areaForShop(i.shop)).filter(Boolean))].sort((a,b)=>a.localeCompare(b));options(area,areas,'All areas');if(area&&areas.includes(previousArea))area.value=previousArea;
     const shop=$('shop-filter');if(!shop)return;const previous=shop.value;
     const shops=[...new Set(matching.filter(i=>!area?.value||areaForShop(i.shop)===area.value).map(i=>i.shop).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
