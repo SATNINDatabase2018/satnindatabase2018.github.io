@@ -13,6 +13,8 @@
 #database-grid .catalog-card-visual .catalog-image{position:relative;overflow:visible}
 #database-grid .catalog-card-visual .item-type-bubble{right:-8px;top:0;transform:translateY(-45%);max-width:calc(100% - 20px);z-index:2}
 
-/* Keep names above pictures with room for the raised image labels. */
-#database-grid .item-card>.card-title{order:-1;position:relative;margin:0 0 20px;min-height:0;overflow-wrap:anywhere}
-#database-grid .item-card>.catalog-card-visual{order:0}
+/* Keep the picture in its own full-height block and allow every title to wrap. */
+#database-grid .item-card>.catalog-card-visual{flex:0 0 auto;order:0;margin-top:10px;margin-bottom:14px;isolation:isolate}
+#database-grid .catalog-card-visual .catalog-image{box-sizing:border-box}
+#database-grid .catalog-card-visual .catalog-image img{box-sizing:border-box;object-fit:contain;max-width:100%}
+#database-grid .item-card>.card-title{order:0;position:relative;flex:0 0 auto;display:block;height:auto;max-height:none;min-height:0;margin:0 0 10px;padding:0;overflow:visible;white-space:normal;overflow-wrap:anywhere;text-overflow:clip;line-height:1.4;-webkit-line-clamp:unset}
