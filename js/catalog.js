@@ -155,9 +155,9 @@
     if(s){const count=workspace?.count(item)||0; const b=button(count?`✓ In ${count} outfit${count===1?'':'s'}`:'+ Add to outfit',e=>{if(requireAccount()){if(workspace)workspace.openMenu(item,e.currentTarget);else message('Outfit tools are unavailable. Refresh My Outfits and try again.');}});b.className='outfit-menu-trigger';b.setAttribute('aria-expanded','false');b.setAttribute('aria-haspopup','dialog');actions.append(b);}
     card.append(actions); return card;
   }
-  function render(reset=true){
+  function render(reset=false){
     if(!$('database-grid'))return;
-    if(reset!==false)visibleLimit=60;
+    if(reset===true)visibleLimit=60;
     if(view==='database'||view==='collection'){updateDBSubcategories();updateDBShops();}
     const q=($('search')?.value||'').trim().toLowerCase(),category=$('category-filter')?.value||'',shop=$('shop-filter')?.value||'',breed=$('breed-filter')?.value||'',subtype=$('subcategory-filter')?.value||'';
     const flags=[...document.querySelectorAll('#state-filters input:checked')].map(n=>n.value);
@@ -288,7 +288,7 @@
     ['subcategory-filter','breed-filter','generation-filter','area-filter','shop-filter','state-filters'].forEach(id=>$(id)?.addEventListener('change',render));
     $('state-filters')?.addEventListener('click',e=>{if(!user && e.target.closest('label,input')){e.preventDefault();e.stopImmediatePropagation();requireAccount();}},true);
     $('add-sort')?.addEventListener('click',()=>{addSort('sc','asc');render();});addSort();
-    $('reset-filters')?.addEventListener('click',()=>{$('search').value='';if($('area-filter'))$('area-filter').value='';if($('shop-filter'))$('shop-filter').value='';updateOptions();document.querySelectorAll('#state-filters input').forEach(n=>n.checked=false);$('sort-rules').replaceChildren();addSort();render();});
+    $('reset-filters')?.addEventListener('click',()=>{$('search').value='';if($('area-filter'))$('area-filter').value='';if($('shop-filter'))$('shop-filter').value='';updateOptions();document.querySelectorAll('#state-filters input').forEach(n=>n.checked=false);$('sort-rules').replaceChildren();addSort();render(true);});
     activate(active);
   }
   async function start(){
@@ -314,7 +314,7 @@
     if(view!=='outfits')render();
     try{
       if(typeof HMOutfitWorkspace==='undefined')throw Error('The outfit script did not load.');
-      workspace=await HMOutfitWorkspace.create({items,user,key,slot,image,text,button,number,fields,onChange:render,requireAccount,getOwnedIds:()=>ready?new Set([...states.entries()].filter(([,v])=>v.owned).map(([id])=>id)):null});
+      workspace=await HMOutfitWorkspace.create({items,user,key,slot,image,text,button,number,fields,onChange:()=>render(false),requireAccount,getOwnedIds:()=>ready?new Set([...states.entries()].filter(([,v])=>v.owned).map(([id])=>id)):null});
     }catch(e){
       message((view==='database'?'Catalog loaded. ':'')+'Outfit tools could not load: '+e.message);
       console.error('Outfit workspace initialization failed',e);
