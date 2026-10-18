@@ -16,3 +16,13 @@ body>header nav #theme-toggle{font-size:12px;padding:7px 10px;white-space:nowrap
 
 
 body>header .header-wordmark>.logo{font-size:clamp(20px,2.3vw,26px);}
+
+/* Dropdowns must escape the navigation row on narrow screens. */
+@media(max-width:780px){
+ body>header,body>header nav{overflow:visible}
+ body>header nav{flex-wrap:wrap;row-gap:8px}
+ body>header nav .guides-menu{position:relative;flex:0 0 auto}
+ body>header nav .guides-menu-links{left:0;right:auto;min-width:205px;max-width:calc(100vw - 36px);box-sizing:border-box;z-index:1200}
+ body>header nav .guides-menu-links a{display:block;white-space:normal;min-height:36px;box-sizing:border-box}
+ body>header nav .guides-menu>summary{touch-action:manipulation;min-height:36px;box-sizing:border-box;display:flex;align-items:center}
+}
