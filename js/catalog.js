@@ -67,7 +67,7 @@
   function searchRank(item,query){
     const normal=value=>String(value??'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[‐‑–—-]/g,' ').replace(/\s+/g,' ').trim();
     const q=normal(query);if(!q)return 0;
-    const stats=['ride','jump','command','care','speed','strength','agility','discipline','endurance'].filter(k=>item[k]!==undefined&&item[k]!==null&&item[k]!=='').map(k=>`${k} ${item[k]}`).join(' ');
+    const stats=['ride','jump','command','care','speed','strength','agility','discipline','endurance'].filter(k=>item[k]!==undefined&&item[k]!==null&&item[k]!=='').map(k=>`${k==='speed'&&item.category==='Equipment'?'swiftness speed':k} ${item[k]}`).join(' ');
     const money=[item.sc!=null?`SC ${item.sc} star coins ${item.sc}`:'',item.js!=null?`JS ${item.js} jorvik shillings ${item.js}`:'',item.price_note||''].join(' ');
     const special=[item.speciality,item.specialty,item.is_companion===true?'companion pet':'',isCompanion(item)?'companion pet':'',item.section,item.category,item.generation?`generation ${item.generation}`:'',/pony/i.test(item.breed||'')?'pony':''].filter(Boolean).join(' ');
     const groups=[[item.title,item.breed,item.coat,...(item.aliases||[])].filter(Boolean).join(' '),item.description,[item.shop,item.location].filter(Boolean).join(' '),stats,money,special].map(normal);
@@ -162,7 +162,7 @@
     if(money.length)card.append(text('p',money.join(' · '),'card-price'));
     else if(!horse)card.append(text('p','SC～ ✧ JS～','card-price'));
     if(item.price_note)card.append(text('p',item.price_note,'card-price-note'));
-    const stats=fields.slice(3).filter(([f])=>number(item[f])!==null).map(([f,label])=>`${label} ${item[f]}`).join(' · ');
+    const stats=fields.slice(3).filter(([f])=>number(item[f])!==null&&number(item[f])!==0).map(([f,label])=>`${f==='speed'&&item.category==='Equipment'?'Swiftness':label} ${item[f]}`).join(' · ');
     if(stats)card.append(text('p',stats,'stats card-stats'));
     const actions=text('div','','item-actions');
     if(item.kind==='horse'){
@@ -274,14 +274,14 @@
       Horses:['speed','strength','agility','discipline','endurance'],
       'Horse Decorations':[], 'Player Accessories':[], Pets:[]
     };
-    const stats=Object.hasOwn(allowed,category)?fields.slice(3).filter(([field])=>allowed[category].includes(field)):fields.slice(3);
+    const stats=(Object.hasOwn(allowed,category)?fields.slice(3).filter(([field])=>allowed[category].includes(field)):fields.slice(3)).map(([field,label])=>[field,field==='speed'&&category==='Equipment'?'Swiftness':label]);
     return [...fields.slice(0,3),['overall','Overall stats (combined)'],['shop','Location (site/shop)'],['generation','Generation'],['category','Category'],...stats];
   }
   function syncSortChoices(){
-    const choices=sortChoices(),signature=choices.map(([value])=>value).join('|');
+    const choices=sortChoices(),signature=choices.map(([value,label])=>value+':'+label).join('|');
     document.querySelectorAll('.sort-rule').forEach(row=>{
       const select=row.querySelector('.sort-field');
-      if([...select.options].map(option=>option.value).join('|')===signature)return;
+      if([...select.options].map(option=>option.value+':'+option.text).join('|')===signature)return;
       const previous=select.value;select.replaceChildren(...choices.map(([value,label])=>new Option(label,value)));
       if(choices.some(([value])=>value===previous))select.value=previous;
       else{select.value='title';row.querySelector('.sort-dir').value='asc';}

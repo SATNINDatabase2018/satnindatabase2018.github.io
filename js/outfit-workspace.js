@@ -9,7 +9,7 @@ window.HMOutfitWorkspace = {
       root.addEventListener('pointerdown',e=>{if(e.target.closest('input,select'))protect(e);},true);
       root.addEventListener('keydown',e=>{if(e.key!=='Tab' && e.key!=='Escape')protect(e);},true);
     }
-    const statFields=fields.slice(3);
+    const statFields=fields.slice(3).map(([field,label])=>[field,field==='speed'?'Swiftness':label]);
     const catalog=new Map(items.map(i=>[key(i),i]));
     const storeKey=`hm2018:outfits:v2:${user?.id||'guest'}`;
     let rows=[], horses=[], drafts={}, current='', busy=false;
@@ -50,9 +50,9 @@ window.HMOutfitWorkspace = {
           const values=list.map(i=>number(i[field]));
           const known=values.filter(v=>v!==null);const sum=known.reduce((a,b)=>a+b,0);total+=sum;
           const incomplete=values.some(v=>v===null)||unresolved>0;missing ||=incomplete;
-          if(!incomplete)dl.append(text('dt',label),text('dd',String(sum)));
+          if(!incomplete&&sum!==0)dl.append(text('dt',label),text('dd',String(sum)));
         }
-        if(!missing)dl.append(text('dt','Combined'),text('dd',String(total)));if(dl.childElementCount){section.append(dl);wrap.append(section);}
+        if(!missing&&total!==0)dl.append(text('dt','Combined'),text('dd',String(total)));if(dl.childElementCount){section.append(dl);wrap.append(section);}
       }
       wrap.append(text('p','Equipment bonuses only. Base skills, horse level, training and care are not included. ','stat-note'));return wrap;
     }
@@ -213,7 +213,7 @@ window.HMOutfitWorkspace = {
           const b=button('',()=>{add(i);dialog.close();});b.className='picker-item';b.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(i));b.setAttribute('aria-pressed',String(selected().slots[s]===key(i)));
           b.append(image(i),text('strong',i.title),text('span',`SC ${i.sc??'—'} · JS ${i.js??'—'}`,'picker-price'));
           if(i.shop)b.append(text('span',i.shop,'picker-shop'));
-          const statText=i.category==='Pets'?'Companion':statFields.filter(([f])=>number(i[f])!==null).map(([f,label])=>`${label} ${i[f]}`).join(' · ');
+          const statText=i.category==='Pets'?'Companion':statFields.filter(([f])=>number(i[f])!==null&&number(i[f])!==0).map(([f,label])=>`${label} ${i[f]}`).join(' · ');
           if(statText)b.append(text('span',statText,'picker-stats'));
           if(selected().slots[s]===key(i))b.append(text('span','✓ Selected','picker-badge'));
           return b;
