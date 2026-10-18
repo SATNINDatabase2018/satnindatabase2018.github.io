@@ -123,7 +123,7 @@
         card.style.setProperty('--saved-status-border',`var(--${statuses[0][0]}-ink)`);
         const badges=text('div','','saved-status-badges');
         for(const [field,symbol,label]of statuses){const badge=text('span',symbol,'saved-status-badge saved-status-'+field);badge.title=label;badge.setAttribute('aria-label',label);badge.setAttribute('role','img');badge.tabIndex=0;badges.append(badge);}
-        visual.append(badges);
+        card.prepend(badges);
       }
     }
 
