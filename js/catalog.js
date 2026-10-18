@@ -22,8 +22,8 @@
     const heading=text('h2','Account required');heading.id='database-login-title';
     const prompt=text('p','To use this feature, please log in or create an account');
     const actions=text('div','','account-gate-actions');
-    const signup=text('a','Create account','button');signup.href='login.html#signup';
-    const login=text('a','Log in');login.href='login.html';
+    const signup=text('a','Create account','button');signup.href='login/#signup';
+    const login=text('a','Log in');login.href='login/';
     actions.append(signup,login,button('Close',()=>dialog.close()));dialog.append(heading,prompt,actions);
     const previous=document.activeElement;
     dialog.addEventListener('close',()=>{dialog.remove();if(previous?.isConnected)previous.focus();});

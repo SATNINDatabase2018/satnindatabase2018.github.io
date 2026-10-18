@@ -18,7 +18,7 @@ window.HMOutfitShare=(()=>{
   }
   async function open(snapshot){
     try{
-      const url=new URL('outfit-share.html',location.href);url.hash=await encode({...snapshot,v:1});if(url.href.length>30000)throw Error('This outfit is too large to share as a link.');
+      const url=new URL('outfit-share/',document.baseURI);url.hash=await encode({...snapshot,v:1});if(url.href.length>30000)throw Error('This outfit is too large to share as a link.');
       const dialog=text('dialog','','slot-picker share-dialog');dialog.setAttribute('aria-labelledby','share-heading');const heading=text('h2','Share '+snapshot.name);heading.id='share-heading';
       const note=text('p','Anyone with this link can view the outfit name, selected horse, items and stats without logging in. This shares a snapshot: later edits or deletion won’t change the link.');
       const label=text('label','Share link'),input=document.createElement('input');input.readOnly=true;input.value=url.href;label.append(input);const status=text('p','');status.setAttribute('role','status');

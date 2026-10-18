@@ -78,7 +78,7 @@ function renderHorses() {
 
                 <a
                     class="button"
-                    href="stable.html"
+                    href="stable/"
                 >
                     Add to My Stable
                 </a>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><base href="../"><script src="js/theme.js?v=clean-routes-41"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Stable | SATNIN's Database</title>
+
+    <link rel="stylesheet" href="css/style.css?v=horse-level-status-1"><link rel="stylesheet" href="css/themes.css?v=satnin-24">
+<style>[hidden]{display:none!important}</style><link rel="stylesheet" href="css/footer.css?v=stable-filters-contact-13">
+<link rel="icon" type="image/png" href="assets/cloud-horseshoe-logo.png?v=1">
+<link rel="apple-touch-icon" href="assets/cloud-horseshoe-logo.png">
+<link rel="stylesheet" href="css/header.css?v=email-plain-subtitle-lyrics-34"><link rel="stylesheet" href="css/stable.css?v=rename-horse-30"></head>
+
+<body>
+
+<header>
+    <div class="header-brand"><a href="./" class="header-logo-image" aria-label="SATNIN's Database home"><img src="assets/cloud-horseshoe-logo.png" alt=""></a><div class="header-wordmark"><a href="./" class="logo">SATNIN's Database</a><span class="logo-credit">for 2018 Horse Museum</span></div></div>
+
+    <nav>
+        <a href="database/">Database</a>
+        <a href="stable/" aria-current="page">My Stable</a>
+        <a href="collection/">My Collection</a>
+        <a href="outfits/">My Outfits</a>
+        <span class="account-nav-actions"><a href="login/" id="account-link">Log in</a><a href="login/#signup" id="signup-nav-link" hidden>Create account</a></span>
+    </nav>
+</header>
+
+<main>
+
+    <h1>My Stable</h1><p id="feature-access-status" role="status">Checking account…</p><div class="feature-shell"><section id="feature-login-gate" class="account-gate" hidden><p>To use this feature, please log in or create an account</p><div class="account-gate-actions"><a href="login/#signup" class="button">Create account</a><a href="login/">Log in</a></div></section><div id="feature-content" hidden>
+<p>Choose outfits for each of your horses. The same outfit can be used for several horses.</p>
+<p id="stable-message" role="status" aria-live="polite"></p>
+
+    <button id="add-horse-button">
+        + Add Horse
+    </button>
+
+    <div class="stable-sort-controls" role="group" aria-label="Sort your horses">
+      <label for="stable-sort">Sort horses<select id="stable-sort"><option value="name">Name</option><option value="breed">Breed</option><option value="level">Level</option></select></label>
+      <label for="stable-sort-direction">Order<select id="stable-sort-direction"><option value="asc">Ascending / A–Z / lowest level first</option><option value="desc">Descending / Z–A / highest level first</option></select></label>
+    </div>
+    <section id="horse-picker" hidden>
+
+        <h2>Choose Horse</h2>
+
+        <div
+            id="horse-options"
+            class="database-grid">
+        </div>
+
+    </section>
+
+    <div
+        id="stable-grid"
+        class="database-grid">
+    </div>
+
+</div></div></main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js?v=clean-routes-41"></script><script src="js/catalog-data.js?v=clean-routes-41"></script><script src="js/item-status.js?v=clean-routes-41"></script><script src="js/feature-access.js?v=clean-routes-41"></script>
+<script src="js/stable.js?v=clean-routes-41"></script>
+<script src="js/auth-status.js?v=clean-routes-41"></script>
+
+<script src="js/footer.js?v=clean-routes-41"></script></body>
+</html>

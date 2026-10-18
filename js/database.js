@@ -160,8 +160,7 @@ async function setOwned(itemId) {
 
         alert("Please log in first.");
 
-        window.location.href =
-            "login.html";
+        window.location.href = new URL("login/", document.baseURI).href;
 
         return;
     }
@@ -200,8 +199,7 @@ async function setWishlist(itemId) {
 
         alert("Please log in first.");
 
-        window.location.href =
-            "login.html";
+        window.location.href = new URL("login/", document.baseURI).href;
 
         return;
     }
@@ -240,8 +238,7 @@ async function setFavorite(itemId) {
 
         alert("Please log in first.");
 
-        window.location.href =
-            "login.html";
+        window.location.href = new URL("login/", document.baseURI).href;
 
         return;
     }

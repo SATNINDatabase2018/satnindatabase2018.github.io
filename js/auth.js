@@ -69,9 +69,7 @@ signupButton.addEventListener(
                     },
 
                     emailRedirectTo:
-                        window.location.origin +
-                        window.location.pathname
-                        .replace("login.html", "")
+                        new URL("./", document.baseURI).href
 
                 }
 

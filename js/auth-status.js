@@ -1,6 +1,6 @@
 let navbarUpdateVersion=0;
 function uniqueAdminLink(){
-    const links=[...document.querySelectorAll('header nav a[href]')].filter(a=>new URL(a.href,location.href).pathname.endsWith('/admin.html'));
+    const links=[...document.querySelectorAll('header nav a[href]')].filter(a=>new URL(a.href,location.href).pathname.replace(/\/$/,'').endsWith('/admin'));
     const link=links.find(a=>a.id==='admin-nav-link')||links[0];
     links.forEach(a=>{if(a!==link)a.remove();});
     if(link)link.id='admin-nav-link';
@@ -23,9 +23,9 @@ async function updateNavbar() {
         if(!error&&data===true){
           // Re-read the DOM after asynchronous checks; another update may have created it.
           adminLink=uniqueAdminLink();
-          if(!adminLink){adminLink=document.createElement('a');adminLink.id='admin-nav-link';adminLink.href='admin.html';adminLink.textContent='Admin';document.querySelector('header nav')?.append(adminLink);}
+          if(!adminLink){adminLink=document.createElement('a');adminLink.id='admin-nav-link';adminLink.href='admin/';adminLink.textContent='Admin';document.querySelector('header nav')?.append(adminLink);}
           adminLink.hidden=false;
-          if(location.pathname.endsWith('/admin.html'))adminLink.setAttribute('aria-current','page');else adminLink.removeAttribute('aria-current');
+          if(location.pathname.replace(/\/$/,'').endsWith('/admin'))adminLink.setAttribute('aria-current','page');else adminLink.removeAttribute('aria-current');
         }
       }catch{}
     }

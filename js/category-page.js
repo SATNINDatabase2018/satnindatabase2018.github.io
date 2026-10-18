@@ -133,7 +133,7 @@ async function setOwned(itemId) {
 
     if (!user) {
         alert("Please log in first.");
-        window.location.href = "login.html";
+        window.location.href = new URL("login/", document.baseURI).href;
         return;
     }
 

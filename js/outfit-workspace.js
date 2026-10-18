@@ -363,7 +363,7 @@ window.HMOutfitWorkspace = {
       const saveButton=button(busy?'Saving…':'Save outfit',save);saveButton.id='save-outfit';saveButton.disabled=busy;
       const actions=text('div','','outfit-controls');actions.append(saveButton,button('Share outfit',()=>shareOutfit(d)),button('Delete outfit',()=>remove(d.id)));root.append(actions);
       const status=text('p',notice);status.dataset.notice='';status.id='outfit-message';status.setAttribute('role','status');root.append(status);
-      if(!isStudio){const a=text('a','','outfit-studio-link');a.href='outfits.html';
+      if(!isStudio){const a=text('a','','outfit-studio-link');a.href='outfits/';
         const icon=text('span','✦','studio-link-icon');icon.setAttribute('aria-hidden','true');const copy=text('span','','studio-link-copy');copy.append(text('strong','Open outfit studio'),text('small','Create, style & save your looks'));const arrow=text('span','↗','studio-link-arrow');arrow.setAttribute('aria-hidden','true');a.append(icon,copy,arrow);root.append(a);}
     }
     function browse(){

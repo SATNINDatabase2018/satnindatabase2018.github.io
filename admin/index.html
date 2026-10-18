@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><base href="../"><script src="js/theme.js?v=clean-routes-41"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin | SATNIN's Database</title>
+
+    <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/themes.css?v=satnin-24">
+<link rel="stylesheet" href="css/footer.css?v=stable-filters-contact-13">
+<link rel="icon" type="image/png" href="assets/cloud-horseshoe-logo.png?v=1">
+<link rel="apple-touch-icon" href="assets/cloud-horseshoe-logo.png">
+<link rel="stylesheet" href="css/header.css?v=email-plain-subtitle-lyrics-34"><link rel="stylesheet" href="css/admin.css?v=admin-account-17"></head>
+
+<body data-view="admin">
+
+<header>
+    <div class="header-brand"><a href="./" class="header-logo-image" aria-label="SATNIN's Database home"><img src="assets/cloud-horseshoe-logo.png" alt=""></a><div class="header-wordmark"><a href="./" class="logo">SATNIN's Database</a><span class="logo-credit">for 2018 Horse Museum</span></div></div>
+
+    <nav>
+        <a href="database/">Database</a>
+        <a href="stable/">My Stable</a>
+        <a href="collection/">My Collection</a>
+        <a href="outfits/">My Outfits</a>
+        <span class="account-nav-actions"><a href="login/" id="account-link">Log in</a><a href="login/#signup" id="signup-nav-link" hidden>Create account</a></span>
+    </nav>
+</header>
+
+<main><h1>Database admin</h1><p>Add, edit and remove catalogue items and horses. Changes are shared with all visitors.</p>
+<p id="admin-access" role="status">Checking admin access…</p><p id="admin-message" role="status" aria-live="polite"></p>
+<div id="admin-workspace" hidden><div class="admin-toolbar"><label>Manage<select id="admin-kind"><option value="item">Items</option><option value="horse">Horses</option></select></label><button id="admin-add" type="button">+ Add new entry</button><button id="admin-export" type="button">Export current catalogue</button></div>
+<div class="admin-layout"><div class="admin-list-panel"><label for="admin-search">Find an entry</label><input id="admin-search" type="search" placeholder="Search title, breed, shop or ID…"><label class="admin-checkbox"><input id="admin-show-removed" type="checkbox"> Include removed entries</label><p id="admin-count"></p><div id="admin-results" class="admin-results"></div><button id="admin-more" type="button" hidden>Show more entries</button></div>
+<form id="admin-form" class="admin-editor" hidden><h2 id="admin-editor-title">Add item</h2><p id="admin-entry-id"></p><p>Blank prices or stats remain unspecified. You can also use “Not verified” where appropriate.</p><div id="admin-fields" class="admin-fields"></div><datalist id="admin-item-types"></datalist><div class="admin-actions"><button id="admin-save" type="submit">Save</button><button id="admin-remove" type="button" hidden>Remove entry</button></div></form></div></div></main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase.js?v=clean-routes-41"></script><script src="js/catalog-data.js?v=clean-routes-41"></script><script src="js/admin.js?v=clean-routes-41"></script><script src="js/auth-status.js?v=clean-routes-41"></script><script src="js/footer.js?v=clean-routes-41"></script></body></html>

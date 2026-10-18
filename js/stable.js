@@ -40,7 +40,7 @@
     box.append(thumbs);if(!count)box.append(el('p','No horse equipment selected in this outfit.'));
     box.append(el('p',statFields.filter(([f])=>!missing&&!unknown.has(f)).map(([f,l])=>`${l} ${values[f]}`).join(' · '),'stats'));
     box.append(el('small','Equipment bonuses only. Player clothing and horse level are not included.'));
-    const link=el('a','Edit outfit in My Outfits','stable-outfit-link');link.href='outfits.html?outfit='+encodeURIComponent(outfit.id);box.append(link);return box;
+    const link=el('a','Edit outfit in My Outfits','stable-outfit-link');link.href='outfits/?outfit='+encodeURIComponent(outfit.id);box.append(link);return box;
   }
   function horseCard(own){
     const h=horseCatalog.find(x=>String(x.id)===String(own.horse_id));const card=el('article','','item-card stable-horse-card');card.dataset.horseId=own.id;
@@ -96,7 +96,7 @@
       }catch(e){status.textContent='Could not save outfits: '+e.message;}
       finally{save.disabled=!outfitsReady;list.querySelectorAll('input').forEach(n=>n.disabled=false);}
     });save.disabled=!outfitsReady;
-    const studio=el('a','Create an outfit in My Outfits');studio.href='outfits.html';details.append(list,save,status,studio);card.append(details);
+    const studio=el('a','Create an outfit in My Outfits');studio.href='outfits/';details.append(list,save,status,studio);card.append(details);
     const previews=el('div','','horse-assigned-outfits');card.append(previews);
     function refreshPreview(){
       previews.replaceChildren();const available=outfits.filter(o=>assigned.has(String(o.id)));

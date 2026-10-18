@@ -5,8 +5,7 @@ async function loadCollection() {
     } = await supabaseClient.auth.getUser();
 
     if (!user) {
-        window.location.href =
-            "login.html";
+        window.location.href = new URL("login/", document.baseURI).href;
         return;
     }
 
