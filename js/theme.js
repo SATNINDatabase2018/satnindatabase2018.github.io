@@ -7,6 +7,7 @@
   document.documentElement.style.backgroundColor=themes[choice].colour;
   document.documentElement.style.setProperty('--loading-tint',choice==='forest'?'rgba(16,29,24,.38)':choice==='dark'?'rgba(18,21,36,.38)':choice==='coffee'?'rgba(242,232,219,.38)':'rgba(255,248,242,.38)');
   const picker=document.getElementById('theme-toggle');if(picker)picker.value=choice;
+  document.querySelectorAll('.header-logo-image img').forEach(img=>{img.src='assets/satnin-clam-otter-'+choice+'.png?v=96';});
   let meta=document.querySelector('meta[name="theme-color"]');if(!meta){meta=document.createElement('meta');meta.name='theme-color';document.head.append(meta);}meta.content=themes[choice].colour;
  }
  const forestPaint=document.createElement('style');forestPaint.id='forest-first-paint';forestPaint.textContent='html[data-theme="forest"],html[data-theme="forest"] body{background:#101d18!important}html[data-theme="forest"] #page-loading{background:rgba(16,29,24,.38)!important;color:#eeeede}html[data-theme="forest"] #page-loading .loading-ring{border-color:#3a5140;border-top-color:#aec68c}';document.head.append(forestPaint);

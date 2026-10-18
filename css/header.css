@@ -26,3 +26,26 @@ body>header .header-wordmark>.logo{font-size:clamp(20px,2.3vw,26px);}
  body>header nav .guides-menu-links a{display:block;white-space:normal;min-height:36px;box-sizing:border-box}
  body>header nav .guides-menu>summary{touch-action:manipulation;min-height:36px;box-sizing:border-box;display:flex;align-items:center}
 }
+
+/* Theme-matched framing keeps the floral emblem readable on every header. */
+:root,[data-theme="light"]{--logo-surface:#fff6eb;--logo-edge:#d8b483;--logo-halo:#e8b7ca45}
+[data-theme="dark"]{--logo-surface:#28273a;--logo-edge:#bb9d69;--logo-halo:#e7a6bf22}
+[data-theme="coffee"]{--logo-surface:#ecdbc5;--logo-edge:#b78a54;--logo-halo:#8d60332a}
+[data-theme="forest"]{--logo-surface:#233c2b;--logo-edge:#b7aa64;--logo-halo:#a8c78322}
+body>header .header-logo-image{
+ display:flex;align-items:center;justify-content:center;flex:0 0 72px;
+ box-sizing:border-box;width:72px;height:72px;padding:4px;line-height:0;
+ border-radius:50%;background:var(--logo-surface);border:1px solid var(--logo-edge);
+ box-shadow:0 0 0 4px var(--logo-halo),0 3px 10px #00000012;
+}
+body>header .header-logo-image img{display:block;width:64px;height:64px;max-width:100%;object-fit:contain;background:transparent;padding:0;margin:0}
+body>header .header-logo-image:hover{background:var(--logo-surface);border-color:var(--green);transform:none}
+body>header .header-logo-image:focus-visible{outline:2px solid var(--green);outline-offset:5px}
+@media(max-width:480px){body>header .header-logo-image{flex-basis:64px;width:64px;height:64px;padding:3px}body>header .header-logo-image img{width:58px;height:58px}}
+
+/* The illustration itself follows the theme, including its circle and flowers. */
+:root,[data-theme="light"]{--themed-otter:url('../assets/satnin-clam-otter-light.png?v=96')}
+[data-theme="dark"]{--themed-otter:url('../assets/satnin-clam-otter-dark.png?v=96')}
+[data-theme="coffee"]{--themed-otter:url('../assets/satnin-clam-otter-coffee.png?v=96')}
+[data-theme="forest"]{--themed-otter:url('../assets/satnin-clam-otter-forest.png?v=96')}
+body>header .header-logo-image img{content:var(--themed-otter)}

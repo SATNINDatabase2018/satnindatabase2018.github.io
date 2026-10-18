@@ -2,7 +2,7 @@
 (() => {
   const DISCORD_USERNAME = 'crabatthequeen';
   const HM_NAME = 'Luna Dovegarden (2018 version)';
-  const LOGO_IMAGE = 'assets/satnin-floral-otter-logo.png?v=93'; // Example: assets/logo.png
+  const logoImage=()=> 'assets/satnin-clam-otter-'+(['light','dark','coffee','forest'].includes(document.documentElement.dataset.theme)?document.documentElement.dataset.theme:'light')+'.png?v=96'; // Example: assets/logo.png
   const SITE_NAME = "SATNIN's Database";
   const text=(tag,value,cls)=>{const n=document.createElement(tag);n.textContent=value;if(cls)n.className=cls;return n;};
   function updateHeader(){
@@ -10,7 +10,7 @@
     const old=header.querySelector('.header-brand,.logo');
     if(old){
       const brand=text('div','','header-brand');const imageLink=text('a','','header-logo-image');imageLink.href='./';imageLink.setAttribute('aria-label',SITE_NAME+' home');
-      const img=document.createElement('img');img.src=LOGO_IMAGE;img.alt='';imageLink.append(img);
+      const img=document.createElement('img');img.src=logoImage();img.alt='';imageLink.append(img);
       const words=text('div','','header-wordmark');const title=text('a',SITE_NAME,'logo');title.href='./';const credit=text('span','for 2018 Horse Museum','logo-credit');words.append(title,credit);brand.append(imageLink,words);old.replaceWith(brand);
     }
     const nav=header.querySelector('nav');
