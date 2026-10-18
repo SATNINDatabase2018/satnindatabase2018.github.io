@@ -18,7 +18,7 @@ def releases():
   if any(p.endswith('.html') for p in changed):areas.append('website pages')
   if any(p.startswith('assets/') for p in changed):areas.append('website images and artwork')
   posts.append({'id':'release:'+sha,'source':'website','title':'Website updated','body':'Updated '+', '.join(areas)+'.','created_at':git('show','-s','--format=%cI',sha)})
-  if len(posts)==30:break
+  if len(posts)==1:break
  return posts
 if __name__=='__main__':
  posts=releases()
