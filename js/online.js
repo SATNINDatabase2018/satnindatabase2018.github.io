@@ -1,7 +1,7 @@
 /* All pages join one shared site-wide room. Every visitor participates;
    only admins see the total. Temporary connection data contains no account details. */
 (() => {
- const nav=document.querySelector('body>header nav');if(!nav||typeof supabaseClient==='undefined')return;
+ const nav=document.querySelector('body>header nav');if(!nav||typeof supabaseClient==='undefined'||document.querySelector('.online-count'))return;
  const label=document.createElement('span');label.className='online-count';label.hidden=true;label.textContent='Whole site online: …';label.title='Total connected tabs across ALL website pages, including guests. Multiple tabs or devices can count more than once. Connections may take a moment to disappear after closing.';label.style.cssText='font-size:12px;white-space:nowrap;opacity:.85;padding:8px';nav.append(label);
  let connected=false,permissionCheck=0;
  const channel=supabaseClient.channel('website-online-v1',{config:{presence:{key:crypto.randomUUID()}}});
