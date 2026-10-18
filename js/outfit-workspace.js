@@ -230,7 +230,13 @@ window.HMOutfitWorkspace = {
     function slotButton(s,outfit=selected(),interactive=true){
       const item=resolve(outfit.slots[s]);const b=interactive?button('',()=>changeSlot(s)):text('div');b.className='gear-slot';b.dataset.slot=s;b.classList.toggle('is-filled',!!item);b.classList.toggle('is-uncertain',!!item&&!!window.HMItemStatus?.isUncertain(item));b.setAttribute('aria-label',`${s}: ${item?.title||'Empty'}${interactive?'. Choose item':''}`);
       b.append(text('span',s,'slot-label'));if(item)b.append(image(item));else b.append(text('span','+','slot-plus'));
-      b.append(text('span',item?.title || (outfit.slots[s]?'Item unavailable':'Choose item'),'slot-title'));return b;
+      b.append(text('span',item?.title || (outfit.slots[s]?'Item unavailable':'Choose item'),'slot-title'));
+      if(interactive&&outfit.slots[s]){
+        const frame=text('div','','gear-slot gear-slot-removable');frame.dataset.slot=s;frame.classList.toggle('is-filled',!!item);frame.classList.toggle('is-uncertain',!!item&&!!window.HMItemStatus?.isUncertain(item));frame.tabIndex=-1;
+        b.className='gear-slot-choice';b.removeAttribute('data-slot');
+        const remove=button('×',event=>{event.preventDefault();event.stopPropagation();delete outfit.slots[s];autoType(outfit);outfit.dirty=true;notice=s+' removed. Click Save outfit to save this change.';update();browse();});remove.className='remove-slot-item';remove.title='Remove '+(item?.title||s);remove.setAttribute('aria-label','Remove '+(item?.title||s)+' from '+s);frame.append(b,remove);return frame;
+      }
+      return b;
     }
     function playerFigure(){
       const wrap=text('div','','player-figure');
