@@ -1,0 +1,10 @@
+:root{--owned-card:#e2efdf;--wishlist-card:#fff0c9;--favorite-card:#f9dfe9;--owned-ink:#315938;--wishlist-ink:#725211;--favorite-ink:#8a3659}
+[data-theme="dark"]{--owned-card:#243d33;--wishlist-card:#443b27;--favorite-card:#432d40;--owned-ink:#b8e4c0;--wishlist-ink:#f5d88f;--favorite-ink:#f5b7d1}
+#database-grid .item-card.has-saved-status{background:var(--saved-status-background);border-color:var(--saved-status-border)}
+.catalog-card-visual{position:relative}
+.saved-status-badges{position:absolute;top:8px;left:8px;display:flex;gap:5px;flex-wrap:wrap;max-width:calc(100% - 45px);z-index:3;pointer-events:auto}
+.saved-status-badge{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;width:29px;height:29px;border-radius:50%;font-size:18px;font-weight:800;border:1px solid currentColor;box-shadow:0 2px 7px #0002;cursor:help}
+.saved-status-owned{background:var(--owned-card);color:var(--owned-ink)}
+.saved-status-wishlist{background:var(--wishlist-card);color:var(--wishlist-ink)}
+.saved-status-favorite{background:var(--favorite-card);color:var(--favorite-ink)}
+.saved-status-badge:focus-visible{outline:3px solid var(--green);outline-offset:2px}
