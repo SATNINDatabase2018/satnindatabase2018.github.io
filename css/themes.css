@@ -211,7 +211,3 @@ html body select#theme-toggle{
 }
 @media(max-width:480px){html body select#theme-toggle{flex-basis:180px;width:180px;min-width:180px;max-width:180px}}
 
-/* Keep the previous document visible until the new document can paint. */
-@view-transition{navigation:auto}
-::view-transition-group(root){animation-duration:0s}
-::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
