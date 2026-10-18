@@ -1,5 +1,24 @@
-:root{--owned-card:#e2efdf;--wishlist-card:#fff0c9;--favorite-card:#f9dfe9;--owned-ink:#315938;--wishlist-ink:#725211;--favorite-ink:#8a3659}
-[data-theme="dark"]{--owned-card:#243d33;--wishlist-card:#443b27;--favorite-card:#432d40;--owned-ink:#b8e4c0;--wishlist-ink:#f5d88f;--favorite-ink:#f5b7d1}
+/* Saved-item colours designed for each website palette. */
+:root,[data-theme="light"]{
+ --owned-card:#e8f0df;--wishlist-card:#fbefda;--favorite-card:#f5e0e9;
+ --owned-ink:#506c43;--wishlist-ink:#866024;--favorite-ink:#994f70;
+}
+[data-theme="dark"]{
+ --owned-card:#26363b;--wishlist-card:#393447;--favorite-card:#3e2d43;
+ --owned-ink:#b0d6c9;--wishlist-ink:#e6cea0;--favorite-ink:#edb0cd;
+}
+[data-theme="coffee"]{
+ --owned-card:#e5e6d5;--wishlist-card:#efddbe;--favorite-card:#ecd5cc;
+ --owned-ink:#64623b;--wishlist-ink:#865b27;--favorite-ink:#905949;
+}
+[data-theme="forest"]{
+ --owned-card:#294432;--wishlist-card:#3c4029;--favorite-card:#3c3037;
+ --owned-ink:#b5d19b;--wishlist-ink:#ddcc92;--favorite-ink:#dcafb7;
+}
+[data-theme="darkcoffee"]{
+ --owned-card:#333c2c;--wishlist-card:#453421;--favorite-card:#43302d;
+ --owned-ink:#c0c79a;--wishlist-ink:#e5bc7d;--favorite-ink:#dcaaa0;
+}
 #database-grid .item-card.has-saved-status{background:var(--saved-status-background);border-color:var(--saved-status-border)}
 .catalog-card-visual{position:relative}
 .saved-status-badges{position:absolute;top:-8px;left:-9px;display:flex;flex-direction:column;align-items:center;gap:3px;margin:0;padding:0;width:18px;z-index:3;pointer-events:auto}
@@ -18,3 +37,6 @@
 #database-grid .catalog-card-visual .catalog-image{box-sizing:border-box}
 #database-grid .catalog-card-visual .catalog-image img{box-sizing:border-box;object-fit:contain;max-width:100%}
 #database-grid .item-card>.card-title{order:0;position:relative;flex:0 0 auto;display:block;height:auto;max-height:none;min-height:0;margin:0 0 10px;padding:0;overflow:visible;white-space:normal;overflow-wrap:anywhere;text-overflow:clip;line-height:1.4;-webkit-line-clamp:unset}
+
+/* Subtle borders preserve contrast without overpowering the palette. */
+#database-grid .item-card.has-saved-status{border-color:color-mix(in srgb,var(--saved-status-border) 34%,var(--border))}
