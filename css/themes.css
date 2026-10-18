@@ -163,3 +163,37 @@ html body{min-height:100vh;min-height:100dvh}
 [data-theme="forest"] .contact-lyrics{opacity:.27}
 [data-theme="forest"] #page-loading{background:rgba(16,29,24,.38)}
 select#theme-toggle{max-width:180px}
+
+/* Shared dropdown styling: every control inherits the active theme. */
+html body select:not([multiple]){
+ -webkit-appearance:none;appearance:none;box-sizing:border-box;
+ min-height:42px;border:1px solid var(--border);border-radius:12px;
+ background-color:var(--card);color:var(--text);
+ background-image:linear-gradient(45deg,transparent 50%,var(--green-dark) 50%),linear-gradient(135deg,var(--green-dark) 50%,transparent 50%);
+ background-position:calc(100% - 19px) 50%,calc(100% - 14px) 50%;
+ background-size:5px 5px,5px 5px;background-repeat:no-repeat;
+ padding:10px 38px 10px 13px;font-family:inherit;font-weight:500;line-height:1.4;
+ box-shadow:0 2px 5px #00000005;cursor:pointer;
+ transition:border-color .15s ease,box-shadow .15s ease,background-color .15s ease;
+}
+html body select:not([multiple]):hover:not(:disabled){border-color:var(--green);background-color:var(--surface)}
+html body select:not([multiple]):focus-visible{outline:2px solid var(--green);outline-offset:2px;border-color:var(--green);box-shadow:0 0 0 4px var(--focus)}
+html body select:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+html body select option,html body select optgroup{background:var(--card);color:var(--text);font-family:inherit;line-height:1.5}
+html body select option:checked{background:var(--green-light);color:var(--green-dark)}
+html body select[multiple]{border-radius:12px;padding:8px;background:var(--card);color:var(--text);border:1px solid var(--border)}
+html body select#theme-toggle{min-height:36px;margin:0;max-width:185px;border-radius:999px;padding:7px 34px 7px 13px;font-size:12px;font-weight:700;background-color:var(--green-light);color:var(--green-dark);box-shadow:none}
+html body .database-mini-toolbar select{min-height:36px;padding:7px 32px 7px 10px;font-size:12px;border-radius:10px}
+@media(prefers-reduced-motion:reduce){html body select{transition:none}}
+/* Enhanced native pickers where the browser supports styling their open menu. */
+@supports (appearance:base-select){
+ html body select:not([multiple]),html body select:not([multiple])::picker(select){appearance:base-select}
+ html body select:not([multiple]){background-image:none;padding-right:12px;align-items:center;gap:12px}
+ html body select:not([multiple])::picker-icon{color:var(--green-dark);transition:transform .15s ease}
+ html body select:not([multiple]):open::picker-icon{transform:rotate(180deg)}
+ html body select:not([multiple])::picker(select){background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:14px;padding:6px;box-shadow:0 12px 36px #0003;max-height:320px;overflow:auto;margin-top:6px}
+ html body select:not([multiple]) option{border-radius:8px;padding:9px 12px;gap:10px;cursor:pointer;min-height:36px}
+ html body select:not([multiple]) option:hover,html body select:not([multiple]) option:focus{background:var(--surface-hover);color:var(--text)}
+ html body select:not([multiple]) option:checked{background:var(--green-light);color:var(--green-dark);font-weight:700}
+ html body select:not([multiple]) option::checkmark{color:var(--green-dark)}
+}
