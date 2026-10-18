@@ -41,10 +41,8 @@ signupButton.addEventListener(
     "click",
     async () => {
 
-        const username =
-            document.getElementById(
-                "signup-username"
-            ).value;
+        const username = document.getElementById('signup-username').value.trim();
+        if(!username||username.length>80||username.includes('@')){document.getElementById('signup-message').textContent='Choose a username of 1–80 characters without @.';return;}
 
         const email =
             document.getElementById(
@@ -105,56 +103,21 @@ signupButton.addEventListener(
 );
 
 
-loginButton.addEventListener(
-    "click",
-    async () => {
-
-        const email =
-            document.getElementById(
-                "login-email"
-            ).value;
-
-        const password =
-            document.getElementById(
-                "login-password"
-            ).value;
-
-
-        const { data, error } =
-            await supabaseClient.auth
-            .signInWithPassword({
-
-                email: email,
-                password: password
-
-            });
-
-
-        const message =
-            document.getElementById(
-                "login-message"
-            );
-
-
-        if (error) {
-
-            message.textContent =
-                error.message;
-
-            return;
-
-        }
-
-
-        message.textContent =
-            "Logged in!";
-
-
-        updateAccountDisplay();
-
-    }
-);
-
+async function logIn(){
+    const identifier=document.getElementById('login-email').value.trim();
+    const password=document.getElementById('login-password').value;
+    const message=document.getElementById('login-message');
+    if(!identifier||!password){message.textContent='Enter your email address and password.';return;}
+    if(!document.getElementById('login-email').reportValidity())return;
+    if(loginButton.disabled)return;loginButton.disabled=true;message.textContent='Logging in…';
+    try{
+      const {error}=await supabaseClient.auth.signInWithPassword({email:identifier,password});if(error)throw error;
+      document.getElementById('login-password').value='';message.textContent='Logged in!';await updateAccountDisplay();
+    }catch(e){message.textContent=e.message||'Could not log in. Please try again.';}
+    finally{loginButton.disabled=false;}
+}
+loginButton.addEventListener('click',logIn);
+['login-email','login-password'].forEach(id=>document.getElementById(id).addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();logIn();}}));
 
 logoutButton.addEventListener(
     "click",

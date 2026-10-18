@@ -11,7 +11,7 @@
     if(old){
       const brand=text('div','','header-brand');const imageLink=text('a','','header-logo-image');imageLink.href='index.html';imageLink.setAttribute('aria-label',SITE_NAME+' home');
       const img=document.createElement('img');img.src=LOGO_IMAGE;img.alt='';imageLink.append(img);
-      const words=text('div','','header-wordmark');const title=text('a',SITE_NAME,'logo');title.href='index.html';const credit=text('a','for 2018 Horse Museum','logo-credit');credit.href='contact.html';words.append(title,credit);brand.append(imageLink,words);old.replaceWith(brand);
+      const words=text('div','','header-wordmark');const title=text('a',SITE_NAME,'logo');title.href='index.html';const credit=text('span','for 2018 Horse Museum','logo-credit');words.append(title,credit);brand.append(imageLink,words);old.replaceWith(brand);
     }
     const current=location.pathname.split('/').pop()||'index.html';
     header.querySelectorAll('nav a').forEach(a=>{

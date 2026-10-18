@@ -1,8 +1,8 @@
-/* Repeating Elvis song titles, preserving each theme's original background. */
+/* Repeating user-supplied lyrics, preserving each theme's original background. */
 body.contact-page{position:relative;isolation:isolate;}
-.contact-lyrics{position:absolute;inset:0;z-index:0;pointer-events:none;user-select:none;overflow:hidden;background-image:url('../assets/elvis-song-pattern.svg?v=31');background-repeat:repeat;background-size:600px 216px;opacity:.16;}
+.contact-lyrics{position:absolute;inset:0;z-index:0;pointer-events:none;user-select:none;overflow:hidden;background-image:url('../assets/elvis-song-pattern.svg?v=34');background-repeat:repeat;background-size:1000px 312px;opacity:.16;}
 body.contact-page>main{position:relative;z-index:1;}
 /* Let the pattern remain gently visible behind the opaque card's background. */
 body.contact-page .contact-card{background:color-mix(in srgb,var(--card) 94%,transparent);}
 [data-theme="dark"] .contact-lyrics{opacity:.18;}
-@media(max-width:700px){.contact-lyrics{background-size:600px 216px;opacity:.14;}}
+@media(max-width:700px){.contact-lyrics{background-size:1000px 312px;opacity:.14;}}
