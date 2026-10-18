@@ -50,9 +50,9 @@ window.HMOutfitWorkspace = {
           const values=list.map(i=>number(i[field]));
           const known=values.filter(v=>v!==null);const sum=known.reduce((a,b)=>a+b,0);total+=sum;
           const incomplete=values.some(v=>v===null)||unresolved>0;missing ||=incomplete;
-          if(!incomplete&&sum!==0)dl.append(text('dt',label),text('dd',String(sum)));
+          if(!incomplete)dl.append(text('dt',label),text('dd',String(sum)));
         }
-        if(!missing&&total!==0)dl.append(text('dt','Combined'),text('dd',String(total)));if(dl.childElementCount){section.append(dl);wrap.append(section);}
+        if(!missing)dl.append(text('dt','Combined'),text('dd',String(total)));if(dl.childElementCount){section.append(dl);wrap.append(section);}
       }
       wrap.append(text('p','Equipment bonuses only. Base skills, horse level, training and care are not included. ','stat-note'));return wrap;
     }
@@ -213,7 +213,7 @@ window.HMOutfitWorkspace = {
           const b=button('',()=>{add(i);dialog.close();});b.className='picker-item';b.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(i));b.setAttribute('aria-pressed',String(selected().slots[s]===key(i)));
           b.append(image(i),text('strong',i.title),text('span',`SC ${i.sc??'—'} · JS ${i.js??'—'}`,'picker-price'));
           if(i.shop)b.append(text('span',i.shop,'picker-shop'));
-          const statText=i.category==='Pets'?'Companion':statFields.filter(([f])=>number(i[f])!==null&&number(i[f])!==0).map(([f,label])=>`${label} ${i[f]}`).join(' · ');
+          const statText=i.category==='Pets'?'Companion':statFields.filter(([f])=>number(i[f])!==null).map(([f,label])=>`${label} ${i[f]}`).join(' · ');
           if(statText)b.append(text('span',statText,'picker-stats'));
           if(selected().slots[s]===key(i))b.append(text('span','✓ Selected','picker-badge'));
           return b;
@@ -274,7 +274,7 @@ window.HMOutfitWorkspace = {
     function sheet(kind,outfit=selected(),interactive=true){
       const panel=text('section','',`character-sheet ${kind}-sheet`);
       const left=kind==='horse'?['Bridle','Saddle','Blanket','Horseshoes']:['Hat','Top','Gloves'];
-      const right=kind==='horse'?['Mane Decoration','Tail Decoration','Leg Wraps']:['Pants','Shoes'];
+      const right=kind==='horse'?['Mane Decoration','Tail Decoration','Leg Wraps']:['Player Accessories','Pants','Shoes'];
       const dock=kind==='horse'?['Saddle Bag','Pet']:[];
       const slots=[...left,...right,...dock];
       const head=text('div','','sheet-header');head.append(text('h2',kind==='horse'?'Horse equipment':'Player outfit'),text('span',`${slots.filter(s=>outfit.slots[s]).length} / ${slots.length} selected`,'sheet-progress'));if(interactive && isStudio && outfit.outfit_type==='set'){const remove=button(kind==='horse'?'Remove horse equipment':'Remove player outfit',()=>removeSection(kind));remove.className='remove-outfit-section';head.append(remove);}panel.append(head);

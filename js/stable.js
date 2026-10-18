@@ -38,7 +38,7 @@
       for(const [f] of statFields){const v=i[f]??(f==='agility'?i.agil:f==='discipline'?i.disc:f==='endurance'?i.endu:undefined);const n=v===null||v===undefined||String(v).trim()===''?NaN:Number(v);if(Number.isFinite(n))values[f]+=n;else unknown.add(f);}
     }
     box.append(thumbs);if(!count)box.append(el('p','No horse equipment selected in this outfit.'));
-    box.append(el('p',statFields.filter(([f])=>!missing&&!unknown.has(f)&&values[f]!==0).map(([f,l])=>`${l} ${values[f]}`).join(' · '),'stats'));
+    box.append(el('p',statFields.filter(([f])=>!missing&&!unknown.has(f)).map(([f,l])=>`${l} ${values[f]}`).join(' · '),'stats'));
     box.append(el('small','Equipment bonuses only. Player clothing and horse level are not included.'));
     const link=el('a','Edit outfit in My Outfits','stable-outfit-link');link.href='outfits/?outfit='+encodeURIComponent(outfit.id);box.append(link);return box;
   }

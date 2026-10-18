@@ -108,6 +108,7 @@
   }
   function slot(item){
     if(item.kind==='horse')return null;
+    if(item.category==='Player Accessories')return 'Player Accessories';
     if(item.category==='Pets')return 'Pet';
     const s=String(item.section||'').toLowerCase().replace(/[_-]/g,' ');
     const aliases=[['Mane Decoration',/mane/],['Tail Decoration',/tail/],['Leg Wraps',/leg wrap|socks/],['Saddle Bag',/saddle ?bag/],['Horseshoes',/horseshoe|horse shoe/],['Bridle',/bridle/],['Blanket',/blanket|saddle pad/],['Saddle',/saddle/],['Hat',/hat|helmet/],['Top',/top|shirt|jacket|sweater|coat/],['Gloves',/glove/],['Pants',/pant|breech|trouser/],['Shoes',/shoe|boot/]];

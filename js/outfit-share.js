@@ -30,7 +30,7 @@ window.HMOutfitShare=(()=>{
   function slot(row,name){const box=text('div','','gear-slot');box.dataset.slot=name;box.append(text('span',name,'slot-label'));if(row)box.append(picture(row),text('span',safe(row.title),'slot-title'));else box.append(text('span','Empty','slot-title'));return box;}
   function sheet(kind,data){
     const panel=text('section','',`character-sheet ${kind}-sheet`);panel.append(text('h2',kind==='horse'?'Horse equipment':'Player outfit'));
-    const names=kind==='horse'?['Mane Decoration','Tail Decoration','Bridle','Saddle','Horseshoes','Leg Wraps','Blanket']:['Hat','Top','Gloves','Pants','Shoes'];
+    const names=kind==='horse'?['Mane Decoration','Tail Decoration','Bridle','Saddle','Horseshoes','Leg Wraps','Blanket']:['Hat','Player Accessories','Top','Gloves','Pants','Shoes'];
     const stage=text('div','','gear-stage');for(const name of names)stage.append(slot(data.slots.find(s=>s.slot===name&&s.side===kind),name));
     const centre=text('div','','sheet-centre');if(kind==='horse'&&data.horse)centre.append(picture(data.horse),text('strong',safe(data.horse.title)),text('small',safe(data.horse.breed)));else centre.append(text('span',kind==='horse'?'Horse':'Player','horse-placeholder'));stage.append(centre);panel.append(stage);
     const extras=data.slots.filter(s=>s.side===kind&&!names.includes(s.slot));if(extras.length){const dock=text('div','','companion-pair');extras.forEach(s=>dock.append(slot(s,s.slot)));panel.append(dock);}return panel;
@@ -38,7 +38,7 @@ window.HMOutfitShare=(()=>{
   async function render(){const root=document.getElementById('shared-outfit');if(!root)return;try{
     const data=await decode(location.hash.slice(1));root.replaceChildren(text('h1',safe(data.name)||'Shared outfit'),text('p','A shared snapshot · '+({set:'Horse + player set',horse:'Horse equipment',player:'Player outfit'})[data.type]));
     const sheets=text('div','','character-sheets');sheets.classList.toggle('single-sheet',data.type!=='set');if(data.type!=='player')sheets.append(sheet('horse',data));if(data.type!=='horse')sheets.append(sheet('player',data));root.append(sheets);
-    const stats=text('div','','outfit-stat-totals');for(const group of data.stats){const box=text('section','','stat-group');box.append(text('h3',safe(group.title)));const dl=document.createElement('dl');for(const pair of (Array.isArray(group.values)?group.values:[]).slice(0,15))if(Array.isArray(pair)&&pair.length===2&&String(pair[1]).trim()!==''&&Number(pair[1])!==0)dl.append(text('dt',safe(pair[0]==='Speed'?'Swiftness':pair[0])),text('dd',safe(pair[1])));box.append(dl);stats.append(box);}root.append(stats,text('p','Stats are the item bonuses captured when this link was created.'));
+    const stats=text('div','','outfit-stat-totals');for(const group of data.stats){const box=text('section','','stat-group');box.append(text('h3',safe(group.title)));const dl=document.createElement('dl');for(const pair of (Array.isArray(group.values)?group.values:[]).slice(0,15))if(Array.isArray(pair)&&pair.length===2)dl.append(text('dt',safe(pair[0]==='Speed'?'Swiftness':pair[0])),text('dd',safe(pair[1])));box.append(dl);stats.append(box);}root.append(stats,text('p','Stats are the item bonuses captured when this link was created.'));
   }catch(e){root.replaceChildren(text('h1','Could not open this outfit'),text('p',e.message));}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',render,{once:true});else render();return{open,encode,decode};
 })();

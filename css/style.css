@@ -983,3 +983,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible {outline:3px solid va
 .is-uncertain .catalog-image{opacity:.58;}
 .is-uncertain.item-card::before{background:#b4b2ad;}
 .horse-level-status{font-size:12px;color:var(--muted);}
+
+/* Accessories sit beside the hat in player outfits and shared snapshots. */
+.player-sheet .gear-stage{grid-template-areas:'. hat accessories' 'top portrait gloves' 'pants portrait shoes'}
+.player-sheet .gear-stage .gear-slot[data-slot="Player Accessories"]{grid-area:accessories}
