@@ -40,3 +40,5 @@
 
 /* Subtle borders preserve contrast without overpowering the palette. */
 #database-grid .item-card.has-saved-status{border-color:color-mix(in srgb,var(--saved-status-border) 34%,var(--border))}
+
+#database-grid .card-location .card-shop-link{display:block;max-width:100%;padding:3px 0;margin:0 0 4px;border:0;background:transparent;color:var(--green-dark);font:inherit;font-size:12px;text-align:left;white-space:normal;overflow-wrap:anywhere;box-shadow:none}#database-grid .card-shop-link:hover{text-decoration:underline;transform:none}
