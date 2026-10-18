@@ -124,14 +124,15 @@
     const field=$('stable-sort')?.value||'name',direction=$('stable-sort-direction')?.value==='desc'?-1:1;
     const source=own=>horseCatalog.find(h=>String(h.id)===String(own.horse_id));
     const value=own=>field==='breed'?(source(own)?.breed||''):field==='level'?(own.level==null||own.level===''?null:Number(own.level)):(own.name||source(own)?.breed||'');
-    return horses.slice().sort((a,b)=>{
+    const query=($('stable-search')?.value||'').trim().toLowerCase();
+    return horses.filter(own=>{const h=source(own);return `${own.name||''} ${own.nickname||''} ${h?.breed||''} ${h?.coat||''}`.toLowerCase().includes(query);}).sort((a,b)=>{
       const av=value(a),bv=value(b),empty=v=>v===null||v===undefined||v===''||typeof v==='number'&&!Number.isFinite(v);
       if(empty(av)!==empty(bv))return empty(av)?1:-1;
       const result=empty(av)?0:field==='level'?av-bv:String(av).localeCompare(String(bv),undefined,{numeric:true,sensitivity:'base'});
       return direction*result||String(a.name||'').localeCompare(String(b.name||''),undefined,{numeric:true,sensitivity:'base'})||String(a.id).localeCompare(String(b.id));
     });
   }
-  function render(){const grid=$('stable-grid');grid.replaceChildren(...sortedHorses().map(horseCard));if(!horses.length)grid.append(el('p','Your stable is empty. Add your first horse above or from the database.'));}
+  function render(){const grid=$('stable-grid');grid.replaceChildren(...sortedHorses().map(horseCard));if(horses.length&&!grid.children.length)grid.append(el('p','No horses match your search.'));if(!horses.length)grid.append(el('p','Your stable is empty. Add your first horse above or from the database.'));}
   function picker(){
     $('horse-options').replaceChildren(...horseCatalog.slice().sort((a,b)=>(window.HMItemStatus?.compare(a,b)||0)||a.breed.localeCompare(b.breed)).map(h=>{
       const c=el('article','','item-card');c.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(h));c.append(photo(h,h.breed),el('h3',h.breed),el('p',h.coat||''),button('Add to Stable',async e=>{
@@ -142,6 +143,7 @@
     }));
   }
   async function start(){
+    $('stable-search')?.addEventListener('input',render);
     ['stable-sort','stable-sort-direction'].forEach(id=>$(id)?.addEventListener('change',render));
     if(window.HMFeatureAccess)await window.HMFeatureAccess;
     try{

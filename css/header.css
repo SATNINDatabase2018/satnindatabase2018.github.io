@@ -58,8 +58,8 @@ body>header .header-logo-image img{width:74px;height:74px}
 /* Refined guides menu; colours follow every theme. */
 body>header nav .guides-menu>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:34px;padding:7px 12px;border-radius:11px;border:1px solid var(--border);background:var(--card);color:var(--text);font:600 12px/1.4 inherit;box-shadow:0 2px 8px #00000008;user-select:none}
 body>header nav .guides-menu>summary::before{content:'✧';font-size:17px;color:var(--green-dark)}
-body>header nav .guides-menu>summary::after{content:'';width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin:0 2px 3px 8px;transition:transform .15s}
-body>header nav .guides-menu[open]>summary::after{transform:rotate(225deg);margin-bottom:-2px}
+body>header nav .guides-menu>summary::after{content:'';width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin:0 2px 0 8px;transform-origin:50% 50%;flex-shrink:0;transition:transform .18s}
+body>header nav .guides-menu[open]>summary::after{transform:rotate(225deg);margin:0 2px 0 8px}
 body>header nav .guides-menu>summary:hover,body>header nav .guides-menu[open]>summary{background:var(--green-light);border-color:var(--green);color:var(--green-dark)}
 body>header nav .guides-menu>summary:focus-visible{outline:2px solid var(--green);outline-offset:3px}
 body>header nav .guides-menu-links{width:285px;max-width:calc(100vw - 36px);padding:9px;border-radius:17px;background:var(--card);border:1px solid var(--border);box-shadow:0 14px 40px #00000026}

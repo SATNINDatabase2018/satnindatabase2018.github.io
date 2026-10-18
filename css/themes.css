@@ -233,3 +233,20 @@ html body select#theme-toggle{
 [data-theme="darkcoffee"] .sheet-progress{background:#453322;color:#f0d6b5}
 [data-theme="darkcoffee"] #page-loading{background:rgba(28,21,17,.38)!important;color:#f0e3d3}
 [data-theme="darkcoffee"] .contact-lyrics{opacity:.4}
+
+/* Keep every picker arrow fixed in position as it rotates. */
+@supports (appearance:base-select){
+ html body select:not([multiple])::picker-icon{display:inline-grid;place-items:center;flex:0 0 12px;width:12px;height:12px;margin:0 0 0 auto;padding:0;align-self:center;transform:rotate(0deg);transform-origin:50% 50%;transition:transform .18s ease;line-height:1}
+ html body select:not([multiple]):open::picker-icon{transform:rotate(180deg)}
+ html body select#theme-toggle::picker-icon{margin:0 0 0 auto;transform-origin:50% 50%}
+}
+.database-mini-toolbar .database-mini-actions{display:flex;flex-direction:column;gap:5px;flex:0 0 auto;align-self:center}
+.database-mini-toolbar .database-mini-actions button{width:100%;min-height:29px;margin:0;padding:6px 10px;white-space:nowrap}
+.database-mini-toolbar .database-mini-reset{background:var(--card);color:var(--green-dark);border:1px solid var(--border);box-shadow:none}
+.stable-sort-controls .stable-search-label{grid-column:1/-1}
+.stable-sort-controls #stable-search{width:100%;max-width:none;margin-top:8px}
+/* Disclosure arrows also turn around their own centre. */
+details>summary{list-style:none}details>summary::-webkit-details-marker{display:none}
+details>summary::after{content:'';display:inline-block;width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);transform-origin:50% 50%;transition:transform .18s ease;margin:0 3px 2px 12px;vertical-align:middle}
+details[open]>summary::after{transform:rotate(225deg)}
+@media(prefers-reduced-motion:reduce){details>summary::after,html body select::picker-icon{transition:none}}
