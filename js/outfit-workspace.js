@@ -359,6 +359,15 @@ window.HMOutfitWorkspace = {
       if(Object.keys(scopedSlots(d)).length<Object.keys(d.slots).length)root.append(text('p','Only the selected side will be saved. Duplicate this outfit first if you also want to keep the full set.','stat-note'));
 
       if(!horses.length && d.outfit_type!=='player')root.append(text('p',user?'Add a horse in My Stable to select it here.':'Log in to choose a horse from My Stable.','stat-note'));
+      function outfitActions(top=false){
+        const actions=text('div','','outfit-controls');
+        const saveButton=button(busy?'Saving…':'Save outfit',save);saveButton.disabled=busy;
+        if(!top)saveButton.id='save-outfit';
+        actions.setAttribute('role','group');actions.setAttribute('aria-label','Outfit actions');
+        actions.append(saveButton,button('Share outfit',()=>shareOutfit(d)),button('Delete outfit',()=>remove(d.id)));
+        return actions;
+      }
+      if(isStudio)root.append(outfitActions(true));
       if(isStudio){const layout=text('div','','character-sheets');if(d.outfit_type!=='player')layout.append(sheet('horse'));if(d.outfit_type!=='horse')layout.append(sheet('player'));layout.classList.toggle('single-sheet',d.outfit_type!=='set');root.append(layout);}
       else {
         root.append(text('p',`Items you pick are added to “${d.name||'New outfit'}”.`));
@@ -366,8 +375,7 @@ window.HMOutfitWorkspace = {
         for(const [s,k] of Object.entries(scopedSlots(d))){const item=resolve(k);const row=text('div','','tray-row');if(item)row.append(image(item));row.append(text('span',`${s}: ${item?.title||'Item unavailable'}`),button('Remove',()=>{delete d.slots[s];autoType(d);d.dirty=true;update();}));tray.append(row);}root.append(tray);
       }
       root.append(statTable(scopedSlots(d),d.outfit_type));
-      const saveButton=button(busy?'Saving…':'Save outfit',save);saveButton.id='save-outfit';saveButton.disabled=busy;
-      const actions=text('div','','outfit-controls');actions.append(saveButton,button('Share outfit',()=>shareOutfit(d)),button('Delete outfit',()=>remove(d.id)));root.append(actions);
+      root.append(outfitActions());
       const status=text('p',notice);status.dataset.notice='';status.id='outfit-message';status.setAttribute('role','status');root.append(status);
       if(!isStudio){const a=text('a','','outfit-studio-link');a.href='outfits/';
         const icon=text('span','✦','studio-link-icon');icon.setAttribute('aria-hidden','true');const copy=text('span','','studio-link-copy');copy.append(text('strong','Open outfit studio'),text('small','Create, style & save your looks'));const arrow=text('span','↗','studio-link-arrow');arrow.setAttribute('aria-hidden','true');a.append(icon,copy,arrow);root.append(a);}

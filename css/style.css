@@ -995,3 +995,8 @@ button:focus-visible,a:focus-visible,summary:focus-visible {outline:3px solid va
 .gear-slot-removable>.remove-slot-item{position:absolute;top:5px;right:5px;z-index:4;display:grid;place-items:center;width:24px;height:24px;min-width:24px;min-height:24px;margin:0;padding:0;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--text);font:700 18px/1 system-ui;box-shadow:0 1px 5px #0001}
 .gear-slot-removable>.remove-slot-item:hover{background:var(--surface-hover);color:var(--text);border-color:var(--green);transform:none}
 .gear-slot-choice:focus-visible,.remove-slot-item:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+
+/* Draw a centred cross independently of font glyph alignment. */
+.gear-slot-removable>.remove-slot-item{font-size:0}
+.gear-slot-removable>.remove-slot-item::before,.gear-slot-removable>.remove-slot-item::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:2px;border-radius:1px;background:currentColor;transform:translate(-50%,-50%) rotate(45deg);pointer-events:none}
+.gear-slot-removable>.remove-slot-item::after{transform:translate(-50%,-50%) rotate(-45deg)}
