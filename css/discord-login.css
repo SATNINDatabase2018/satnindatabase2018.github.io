@@ -1,0 +1,1 @@
+.discord-signin{border-top:4px solid var(--green);max-width:900px}.discord-signin>p{max-width:700px}.discord-signin button{min-height:46px;padding:12px 24px}.discord-account-note{font-size:13px;color:var(--muted)}#discord-login-message:empty{display:none}#discord-login-message{color:var(--green-dark);font-weight:600;overflow-wrap:anywhere}

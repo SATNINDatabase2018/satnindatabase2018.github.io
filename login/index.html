@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="css/footer.css?v=stable-filters-contact-13">
 <link rel="icon" type="image/png" href="assets/cloud-horseshoe-logo.png?v=1">
 <link rel="apple-touch-icon" href="assets/cloud-horseshoe-logo.png">
-<link rel="stylesheet" href="css/header.css?v=email-plain-subtitle-lyrics-34"><link rel="stylesheet" href="css/admin.css?v=admin-account-17"></head>
+<link rel="stylesheet" href="css/header.css?v=email-plain-subtitle-lyrics-34"><link rel="stylesheet" href="css/admin.css?v=admin-account-17"><link rel="stylesheet" href="css/discord-login.css?v=42"></head>
 
 <body>
 
@@ -51,7 +51,13 @@
     <h1>Account</h1>
 
 
-    <div class="guest-account-forms"><section id="signup" data-guest-only hidden>
+    <section class="discord-signin" data-guest-only hidden aria-labelledby="discord-heading">
+<h2 id="discord-heading">Continue with Discord</h2>
+<p>Use your Discord account to sign up or log in. No separate website password or confirmation email needed for this option.</p>
+<button type="button" id="discord-login-button">Continue with Discord</button>
+<p id="discord-login-message" role="status" aria-live="polite"></p>
+<p class="discord-account-note">Already have an account here? Use a Discord account with the same verified email address to help keep your saved collection, horses, and outfits together. Different email addresses may create separate accounts.</p>
+</section><div class="guest-account-forms"><section id="signup" data-guest-only hidden>
 
         <h2>Create account</h2>
 
@@ -134,7 +140,7 @@
 
 <script src="js/supabase.js?v=clean-routes-41"></script>
 
-<script src="js/auth.js?v=clean-routes-41"></script><script src="js/delete-account.js?v=clean-routes-41"></script>
+<script src="js/auth.js?v=discord-42"></script><script src="js/discord-login.js?v=42"></script><script src="js/delete-account.js?v=clean-routes-41"></script>
 <script src="js/auth-status.js?v=clean-routes-41"></script>
 
 <script src="js/footer.js?v=clean-routes-41"></script></body>

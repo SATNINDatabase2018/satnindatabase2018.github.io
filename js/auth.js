@@ -84,8 +84,9 @@ signupButton.addEventListener(
 
         if (error) {
 
-            message.textContent =
-                error.message;
+            message.textContent = /over_email_send_rate_limit|email rate limit/i.test((error.code||'')+' '+(error.message||''))
+                ? 'Email signups are temporarily limited. You can use Continue with Discord above, or try email again later.'
+                : error.message;
 
             return;
 
