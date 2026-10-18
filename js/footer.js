@@ -13,6 +13,14 @@
       const img=document.createElement('img');img.src=LOGO_IMAGE;img.alt='';imageLink.append(img);
       const words=text('div','','header-wordmark');const title=text('a',SITE_NAME,'logo');title.href='./';const credit=text('span','for 2018 Horse Museum','logo-credit');words.append(title,credit);brand.append(imageLink,words);old.replaceWith(brand);
     }
+    const nav=header.querySelector('nav');
+    if(nav&&!nav.querySelector('.guides-menu')){
+      const menu=text('details','','guides-menu'),summary=text('summary','Guides');menu.append(summary);
+      const links=text('div','','guides-menu-links');
+      for(const [label,path]of [['Spirit timetable','spirit/'],['Championships','championships/'],['Unlocking areas','areas/']]){const a=text('a',label);a.href=path;links.append(a);}menu.append(links);nav.insertBefore(menu,nav.querySelector('.account-nav-actions'));
+      document.addEventListener('pointerdown',e=>{if(!menu.contains(e.target))menu.open=false;},true);
+      menu.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.open=false;summary.focus();}});
+    }
     const pageName=path=>path.replace(/\/index\.html$/,'/').replace(/\/$/,'').split('/').pop()||'';const current=pageName(location.pathname);
     header.querySelectorAll('nav a').forEach(a=>{
       const url=new URL(a.href,location.href);const matches=pageName(url.pathname)===current&&(!url.hash||url.hash===location.hash)&&!(current==='login'&&location.hash==='#signup'&&!url.hash);

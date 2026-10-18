@@ -211,3 +211,5 @@ html body select#theme-toggle{
 }
 @media(max-width:480px){html body select#theme-toggle{flex-basis:180px;width:180px;min-width:180px;max-width:180px}}
 
+
+.guides-menu{position:relative;flex-shrink:0}.guides-menu>summary{list-style:none;cursor:pointer;padding:10px 13px;border:1px solid var(--border);border-radius:12px;background:var(--card);color:var(--text);font-size:13px;font-weight:600}.guides-menu>summary::-webkit-details-marker{display:none}.guides-menu>summary::after{content:'⌄';margin-left:12px}.guides-menu[open]>summary{background:var(--green-light);color:var(--green-dark)}.guides-menu-links{position:absolute;top:calc(100% + 8px);right:0;z-index:1200;min-width:205px;padding:7px;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:0 12px 30px #0003}.guides-menu-links a{display:block;white-space:nowrap;border-radius:8px;padding:11px!important;color:var(--text)}.guides-menu-links a:hover{background:var(--surface-hover)}
