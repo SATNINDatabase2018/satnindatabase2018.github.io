@@ -120,3 +120,21 @@ button.item-type-bubble:hover{background:var(--green-dark);color:var(--card);tra
 .studio-link-copy{display:flex;flex-direction:column;gap:4px;min-width:0;}
 .studio-link-copy strong{font-size:13px;}.studio-link-copy small{font-size:10px;line-height:1.5;color:var(--muted);}
 .studio-link-arrow{margin-left:auto;font-size:19px;}
+
+/* Coffee: cream surfaces, caramel accents and espresso text. */
+[data-theme="coffee"]{
+ --bg:#f2e8db;--card:#fff9f0;--card-2:#eadac7;--text:#3d2b21;--muted:#776150;
+ --green:#805438;--green-dark:#583820;--green-light:#e9d5bc;--border:#d9c2a9;
+ --shadow:0 10px 30px #57371914;--accent-hover:#684027;--on-accent:#fff9f0;
+ --surface:#f4e6d4;--surface-hover:#e7cfaf;--filled:#e9d8bf;--slot-border:#c4a280;
+ --header:#fff7edf2;--focus:#a7794938;--link:#754629;
+ --glow-pink:#dcb88c45;--glow-sun:#f4d7a34d;--portrait:#e6d0b7;
+ --neutral-bg:#e5ded4;--neutral-border:#c9bcab;--neutral-text:#6b6052;
+ --backdrop:#30201688;--figure:#b8916d;--figure-stroke:#7b573c;
+}
+[data-theme="coffee"] .logo,[data-theme="coffee"] h1,[data-theme="coffee"] .character-sheet h2{color:#624026}
+[data-theme="coffee"] .outfit-builder{background:linear-gradient(155deg,#f1e0ca,#e4ccb0)}
+[data-theme="coffee"] .item-card::before{background:linear-gradient(90deg,#795137,#be9467,#e6cda6)}
+[data-theme="coffee"] .sheet-progress{background:#e8d1b4;color:#624026}
+[data-theme="coffee"] #page-loading{background:rgba(242,232,219,.38)}
+select#theme-toggle{width:auto;max-width:150px;min-height:34px;margin-top:0;margin-bottom:0;cursor:pointer;color:var(--green-dark);background:var(--green-light);border:1px solid var(--border);border-radius:999px;padding:7px 12px;font:600 12px inherit}
