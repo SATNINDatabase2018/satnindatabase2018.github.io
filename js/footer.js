@@ -22,7 +22,7 @@
   window.addEventListener('hashchange',updateHeader);
   function mount(){
     updateHeader();
-    if(!document.querySelector('script[data-online-counter]')){const script=document.createElement('script');script.src='js/online.js?v=46';script.dataset.onlineCounter='true';document.body.append(script);}
+    if(!document.querySelector('script[data-online-counter]')){const script=document.createElement('script');script.src='js/online.js?v=site-total-48';script.dataset.onlineCounter='true';document.body.append(script);}
     if(document.querySelector('.site-footer'))return;
     const footer=text('footer','','site-footer');
     const inner=text('div','','footer-inner');
