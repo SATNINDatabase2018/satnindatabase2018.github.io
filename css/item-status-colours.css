@@ -12,3 +12,7 @@
 #database-grid .catalog-card-visual{overflow:visible}
 #database-grid .catalog-card-visual .catalog-image{position:relative;overflow:visible}
 #database-grid .catalog-card-visual .item-type-bubble{right:-8px;top:0;transform:translateY(-45%);max-width:calc(100% - 20px);z-index:2}
+
+/* Keep names above pictures with room for the raised image labels. */
+#database-grid .item-card>.card-title{order:-1;position:relative;margin:0 0 20px;min-height:0;overflow-wrap:anywhere}
+#database-grid .item-card>.catalog-card-visual{order:0}
