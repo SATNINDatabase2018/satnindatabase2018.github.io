@@ -142,3 +142,24 @@ select#theme-toggle{width:auto;max-width:150px;min-height:34px;margin-top:0;marg
 /* Match the document canvas to the selected theme during navigation. */
 html{background-color:var(--bg);min-height:100%}
 html body{min-height:100vh;min-height:100dvh}
+
+/* Night Forest: deep evergreen, moss and warm ivory. */
+[data-theme="forest"]{
+ --bg:#101d18;--card:#192b22;--card-2:#22392c;--text:#eeeede;--muted:#b2c0ab;
+ --green:#aec68c;--green-dark:#c8dca8;--green-light:#2d4431;--border:#3a5140;
+ --shadow:0 10px 32px #020b0744;--accent-hover:#c5dba6;--on-accent:#142519;
+ --surface:#1b3025;--surface-hover:#304c37;--filled:#2b4330;--slot-border:#4c6750;
+ --header:#12231bf2;--focus:#aec68c38;--link:#c0d5a2;
+ --glow-pink:#315c3d30;--glow-sun:#657e3422;--portrait:#314a35;
+ --neutral-bg:#29342b;--neutral-border:#4b574b;--neutral-text:#c0c7b9;
+ --backdrop:#030d08b3;--figure:#77956c;--figure-stroke:#bbcea6;
+ --owned-card:#24422e;--wishlist-card:#41402a;--favorite-card:#40303a;
+ --owned-ink:#bbdfaf;--wishlist-ink:#edda98;--favorite-ink:#e9b8ce;
+}
+[data-theme="forest"] .logo,[data-theme="forest"] h1,[data-theme="forest"] .character-sheet h2{color:#d0dfa9}
+[data-theme="forest"] .outfit-builder{background:linear-gradient(150deg,#1e3628,#17291f)}
+[data-theme="forest"] .item-card::before{background:linear-gradient(90deg,#4c7353,#a9bf80,#536e3d)}
+[data-theme="forest"] .sheet-progress{background:#304a33;color:#deebc0}
+[data-theme="forest"] .contact-lyrics{opacity:.27}
+[data-theme="forest"] #page-loading{background:rgba(16,29,24,.38)}
+select#theme-toggle{max-width:180px}
