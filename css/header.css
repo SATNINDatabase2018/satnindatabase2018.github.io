@@ -70,3 +70,10 @@ body>header nav .guides-menu-links a:hover{background:var(--surface-hover);trans
 .guide-link-copy{display:flex;flex-direction:column;gap:4px;min-width:0}.guide-link-copy strong{font-size:12px;line-height:1.3}.guide-link-copy small{font-size:10px;line-height:1.4;color:var(--muted);font-weight:400}
 [data-theme="darkcoffee"]{--logo-surface:#34261f;--logo-edge:#bd925f;--logo-halo:#d7ad7520;--themed-otter:url('../assets/satnin-clam-otter-coffee.png?v=96')}
 @media(max-width:780px){body>header nav .guides-menu-links{left:0;right:auto;max-width:calc(100vw - 36px)}}
+
+/* A shorter header and a tighter, more discreet logo frame. */
+body>header{padding-top:9px;padding-bottom:9px;gap:16px}
+body>header .header-logo-image{flex-basis:76px;width:76px;height:76px;padding:1px;border-width:1px;box-shadow:0 0 0 2px var(--logo-halo),0 2px 6px #0000000c}
+body>header .header-logo-image img{width:72px;height:72px}
+@media(max-width:780px){body>header{padding-top:9px;padding-bottom:9px;gap:8px}}
+@media(max-width:480px){body>header .header-logo-image{flex-basis:66px;width:66px;height:66px;padding:1px}body>header .header-logo-image img{width:62px;height:62px}}
