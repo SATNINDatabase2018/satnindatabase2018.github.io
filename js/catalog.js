@@ -46,6 +46,7 @@
   function sortValue(item, field) {
     if (field === 'generation') return generationNumber(item.generation);
     if (field === 'title') return item.title;
+    if (field === 'color') return String(item.color||'').trim()||null;
     if (field === 'category') return String(item.category || '').trim() || null;
     if (field === 'item_type') return String(itemType(item)||'').trim()||null;
     if (field === 'shop') return String(item.shop || '').trim() || null;
@@ -58,7 +59,7 @@
       const av=sortValue(a,field), bv=sortValue(b,field);
       // Unknown values stay last in either direction. Zero is a known value.
       if(av==null && bv!=null)return 1; if(bv==null && av!=null)return -1;
-      const c=av==null?0:(field==='title'||field==='shop'||field==='category'||field==='item_type')?av.localeCompare(bv,undefined,{numeric:true,sensitivity:'base'}):av-bv;
+      const c=av==null?0:(field==='color'||field==='title'||field==='shop'||field==='category'||field==='item_type')?av.localeCompare(bv,undefined,{numeric:true,sensitivity:'base'}):av-bv;
       if(c)return c*(dir==='desc'?-1:1);
     }
     return a.title.localeCompare(b.title) || key(a).localeCompare(key(b));
@@ -162,9 +163,9 @@
     if(view==='database'&&places.length){for(const shop of places){const link=button(shop,()=>browseShop(shop));link.className='card-shop-link';place.append(link);}}else place.textContent=places.join(' | ')||'Site / shop not verified';card.append(place);
     if(item.level!==undefined && item.level!==null && String(item.level).trim()!=='' && String(item.level)!=='0')card.append(text('p',`Level / requirement: ${item.level}`,'card-requirement'));
     const sc=number(item.sc),js=number(item.js),money=[];
-    if(sc!==null)money.push(`SC ${sc}`);if(js!==null)money.push(`JS ${js}`);
+    if(sc!==null)money.push(`SC ${sc}`);if(item.category!=='Hairstyles'&&js!==null)money.push(`JS ${js}`);
     if(money.length)card.append(text('p',money.join(' · '),'card-price'));
-    else if(!horse)card.append(text('p','SC～ ✧ JS～','card-price'));
+    else if(!horse)card.append(text('p',item.category==='Hairstyles'?'SC～':'SC～ ✧ JS～','card-price'));
     if(item.price_note)card.append(text('p',item.price_note,'card-price-note'));
     const stats=fields.slice(3).filter(([f])=>number(item[f])!==null&&number(item[f])!==0).map(([f,label])=>`${f==='speed'&&item.category==='Equipment'?'Swiftness':label} ${item[f]}`).join(' · ');
     if(stats)card.append(text('p',stats,'stats card-stats'));
@@ -204,8 +205,10 @@
     const main=$('category-filter')?.value||'';
     const pool=categoryPool().filter(i=>!main||i.category===main);
     const previous=$('subcategory-filter')?.value||'';
-    options($('subcategory-filter'),[...new Set(pool.map(itemType).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),'All item types');
+    options($('subcategory-filter'),[...new Set(pool.map(itemType).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),main==='Hairstyles'?'All hairstyles':'All item types');
     if(main&&main!=='Horses'&&$('subcategory-filter')&&[...$('subcategory-filter').options].some(o=>o.value===previous))$('subcategory-filter').value=previous;
+    if($('subcategory-wrap'))$('subcategory-wrap').firstChild.textContent=main==='Hairstyles'?'Hairstyle':'Item type';
+    $('subcategory-filter')?.setAttribute('aria-label',main==='Hairstyles'?'Hairstyle':'Item type');
     if(main==='Hairstyles')for(const option of $('subcategory-filter')?.options||[]){
       const example=pool.find(i=>itemType(i)===option.value&&i.general_image);
       if(example){const img=document.createElement('img');img.src=example.general_image;img.alt='';img.className='hairstyle-option-image';option.prepend(img);}
@@ -276,6 +279,7 @@
   }
   function sortChoices(){
     const category=$('category-filter')?.value||(view==='database'?active:'');
+    if(category==='Hairstyles')return [['title','Name'],['sc','SC'],['shop','Location (site/shop)'],['color','Hair color'],['item_type','Hairstyle']];
     const allowed={
       Equipment:['speed','strength','agility','discipline'],
       Clothes:['ride','jump','command','care'],

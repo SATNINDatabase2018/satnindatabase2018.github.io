@@ -18,7 +18,7 @@
   let queued=false;
   function sync(){
     queued=false;if(document.activeElement!==query)query.value=search.value;
-    for(const {id,select}of controls){const source=id.startsWith('.')?document.querySelector(id):document.getElementById(id);select.hidden=!source||!!source.closest('[hidden]');if(!source)continue;const signature=source.innerHTML;if(select.innerHTML!==signature)select.innerHTML=signature;select.value=source.value;}
+    for(const {id,select}of controls){const source=id.startsWith('.')?document.querySelector(id):document.getElementById(id);select.hidden=!source||!!source.closest('[hidden]');if(!source)continue;const signature=source.innerHTML;if(select.innerHTML!==signature)select.innerHTML=signature;select.value=source.value;if(id==='subcategory-filter')select.setAttribute('aria-label','Quick '+(source.getAttribute('aria-label')||'Item type'));}
   }
   function schedule(){if(!queued){queued=true;requestAnimationFrame(sync);}}
   function position(){const bottom=header.getBoundingClientRect().bottom;document.documentElement.style.setProperty('--catalog-header-bottom',bottom+'px');bar.hidden=!!panel.closest('[hidden]')||panel.getBoundingClientRect().bottom>bottom;}
