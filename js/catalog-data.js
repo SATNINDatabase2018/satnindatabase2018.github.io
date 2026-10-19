@@ -2,7 +2,7 @@
 (() => {
   const baseCache=new Map();let changesPromise;
   async function base(kind){
-    if(!baseCache.has(kind))baseCache.set(kind,(async()=>{const path=kind==='horse'?'data/horses.json':'data/database.json';const r=await fetch(path,{cache:'no-cache'});if(!r.ok)throw Error('Could not load '+path);const data=await r.json();if(!Array.isArray(data))throw Error('Invalid catalogue file.');return data;})());
+    if(!baseCache.has(kind))baseCache.set(kind,(async()=>{const path=kind==='horse'?'data/horses.json':'data/database.json';const r=await fetch(path,{cache:'no-cache'});if(!r.ok)throw Error('Could not load '+path);const data=await r.json();if(!Array.isArray(data))throw Error('Invalid catalogue file.');if(kind==='item'){const extra=await fetch('data/hairstyles.json',{cache:'no-cache'});if(!extra.ok)throw Error('Could not load hairstyles.');data.push(...await extra.json());}return data;})());
     return baseCache.get(kind);
   }
   async function changes(refresh=false){

@@ -3,7 +3,7 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const view = document.body.dataset.view;
-  const categories = [['','Everything'],['Clothes','Player Clothes'],['Player Accessories','Player Accessories'],['Equipment','Horse Equipment'],['Horses','Horses'],['Horse Decorations','Horse Decorations'],['Pets','Pets']];
+  const categories = [['','Everything'],['Hairstyles','Hairstyles'],['Clothes','Player Clothes'],['Player Accessories','Player Accessories'],['Equipment','Horse Equipment'],['Horses','Horses'],['Horse Decorations','Horse Decorations'],['Pets','Pets']];
   const fields = [['title','Name'],['sc','SC'],['js','JS'],['ride','Riding'],['jump','Jumping'],['command','Command'],['care','Care'],['speed','Swiftness'],['strength','Strength'],['agility','Agility'],['discipline','Discipline'],['endurance','Endurance']];
   let items=[], user=null, states=new Map(), active='', workspace=null, ready=false;
   const pending = new Set();
@@ -71,7 +71,7 @@
     const stats=['ride','jump','command','care','speed','strength','agility','discipline','endurance'].filter(k=>item[k]!==undefined&&item[k]!==null&&item[k]!=='').map(k=>`${k==='speed'&&item.category==='Equipment'?'swiftness speed':k} ${item[k]}`).join(' ');
     const money=[item.sc!=null?`SC ${item.sc} star coins ${item.sc}`:'',item.js!=null?`JS ${item.js} jorvik shillings ${item.js}`:'',item.price_note||''].join(' ');
     const special=[item.speciality,item.specialty,item.is_companion===true?'companion pet':'',isCompanion(item)?'companion pet':'',item.section,item.category,item.generation?`generation ${item.generation}`:'',/pony/i.test(item.breed||'')?'pony':''].filter(Boolean).join(' ');
-    const groups=[[item.title,item.breed,item.coat,...(item.aliases||[])].filter(Boolean).join(' '),item.description,[item.shop,item.location].filter(Boolean).join(' '),stats,money,special].map(normal);
+    const groups=[[item.title,item.color,item.breed,item.coat,...(item.aliases||[])].filter(Boolean).join(' '),item.description,[item.shop,item.location].filter(Boolean).join(' '),stats,money,special].map(normal);
     for(let tier=0;tier<groups.length;tier++){
       const text=groups[tier];if(!text)continue;
       if(text===q)return tier*100;
@@ -109,6 +109,7 @@
   }
   function slot(item){
     if(item.kind==='horse')return null;
+    if(item.category==='Hairstyles')return 'Hairstyle';
     if(item.category==='Player Accessories')return 'Player Accessories';
     if(item.category==='Pets')return 'Pet';
     const s=String(item.section||'').toLowerCase().replace(/[_-]/g,' ');
@@ -155,6 +156,7 @@
 
     if(horse&&generationNumber(item.generation)!==null)card.append(text('p','Generation '+generationNumber(item.generation),'horse-generation'));
     if(horse&&item.speciality)card.append(text('p',item.speciality,'horse-speciality'));
+    if(item.color)card.append(text('p','Color: '+item.color,'card-description'));
     if(!horse && item.description)card.append(text('p',item.description,'card-description'));
     const places=shopsFor(item);const place=text('div','','card-location');
     if(view==='database'&&places.length){for(const shop of places){const link=button(shop,()=>browseShop(shop));link.className='card-shop-link';place.append(link);}}else place.textContent=places.join(' | ')||'Site / shop not verified';card.append(place);
@@ -197,13 +199,17 @@
   function options(select,values,first){if(!select)return;select.replaceChildren(new Option(first,''),...values.map(v=>new Option(v,v)));}
   function updateOptions(){setupDBCascade();}
   function categoryPool(){return items.filter(i=>view==='collection'?i.kind!=='horse'&&state(i)[active]:!active||i.category===active);}
-  const mainCategories=[['Horses','Horses'],['Horse Decorations','Horse decoration'],['Equipment','Equipment'],['Clothes','Clothes'],['Player Accessories','Player accessories'],['Pets','Pets']];
+  const mainCategories=[['Horses','Horses'],['Horse Decorations','Horse decoration'],['Equipment','Equipment'],['Hairstyles','Hairstyles'],['Clothes','Clothes'],['Player Accessories','Player accessories'],['Pets','Pets']];
   function updateDBSubcategories(){
     const main=$('category-filter')?.value||'';
     const pool=categoryPool().filter(i=>!main||i.category===main);
     const previous=$('subcategory-filter')?.value||'';
     options($('subcategory-filter'),[...new Set(pool.map(itemType).filter(Boolean))].sort((a,b)=>a.localeCompare(b)),'All item types');
     if(main&&main!=='Horses'&&$('subcategory-filter')&&[...$('subcategory-filter').options].some(o=>o.value===previous))$('subcategory-filter').value=previous;
+    if(main==='Hairstyles')for(const option of $('subcategory-filter')?.options||[]){
+      const example=pool.find(i=>itemType(i)===option.value&&i.general_image);
+      if(example){const img=document.createElement('img');img.src=example.general_image;img.alt='';img.className='hairstyle-option-image';option.prepend(img);}
+    }
     if($('subcategory-wrap'))$('subcategory-wrap').hidden=!main||main==='Horses';
   }
   function setupDBCascade(){
@@ -274,7 +280,7 @@
       Equipment:['speed','strength','agility','discipline'],
       Clothes:['ride','jump','command','care'],
       Horses:['speed','strength','agility','discipline','endurance'],
-      'Horse Decorations':[], 'Player Accessories':[], Pets:[]
+      Hairstyles:[], 'Horse Decorations':[], 'Player Accessories':[], Pets:[]
     };
     const stats=(Object.hasOwn(allowed,category)?fields.slice(3).filter(([field])=>allowed[category].includes(field)):fields.slice(3)).map(([field,label])=>[field,field==='speed'?'Swiftness':label]);
     return [...fields.slice(0,3),['overall','Overall stats (combined)'],['shop','Location (site/shop)'],['generation','Generation'],['category','Category'],['item_type','Item type'],...stats];

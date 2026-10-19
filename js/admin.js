@@ -1,13 +1,13 @@
 (() => {
   const $=id=>document.getElementById(id),text=(tag,value,cls)=>{const n=document.createElement(tag);n.textContent=value;if(cls)n.className=cls;return n;};
-  const fields=[['title','Title'],['category','Category'],['section','Item type'],['breed','Horse breed'],['coat','Coat'],['generation','Generation'],['speciality','Speciality'],['description','Description'],['image','Picture URL (HTTPS)'],['shop','Site / shop'],['level','Level / requirement'],['sc','SC'],['js','JS'],['ride','Riding'],['jump','Jumping'],['command','Command'],['care','Care'],['speed','Speed'],['strength','Strength'],['agility','Agility'],['discipline','Discipline'],['endurance','Endurance'],['availability','Availability / status'],['price_note','Price note'],['is_companion','Runs beside you (pets)']];
+  const fields=[['title','Title'],['category','Category'],['section','Item type'],['breed','Horse breed'],['coat','Coat'],['color','Color'],['generation','Generation'],['speciality','Speciality'],['description','Description'],['image','Picture URL (HTTPS)'],['shop','Site / shop'],['level','Level / requirement'],['sc','SC'],['js','JS'],['ride','Riding'],['jump','Jumping'],['command','Command'],['care','Care'],['speed','Speed'],['strength','Strength'],['agility','Agility'],['discipline','Discipline'],['endurance','Endurance'],['availability','Availability / status'],['price_note','Price note'],['is_companion','Runs beside you (pets)']];
   let kind='item',records=[],current=null,dirty=false,busy=false,limit=60;let bulkSelected=new Set();
   const message=value=>{$('admin-message').textContent=value;};
   const name=row=>row.title||[row.breed,row.coat].filter(Boolean).join(' ')||'Untitled';
   async function allowDiscard(){return !dirty||(await HMDialog.confirm('Discard your unsaved changes?'));}
   function configure(){
     const horse=kind==='horse';
-    for(const [key] of fields){const wrapper=$('edit-'+key).parentElement;wrapper.hidden=key==='is_companion'?(horse||$('edit-category').value!=='Pets'):horse?['category','section','ride','jump','command','care'].includes(key):['breed','coat','generation','speciality'].includes(key);}
+    for(const [key] of fields){const wrapper=$('edit-'+key).parentElement;wrapper.hidden=key==='color'?(horse||$('edit-category').value!=='Hairstyles'):key==='is_companion'?(horse||$('edit-category').value!=='Pets'):horse?['category','section','ride','jump','command','care'].includes(key):['breed','coat','generation','speciality'].includes(key);}
     $('edit-speed').parentElement.firstChild.textContent=horse||$('edit-category').value!=='Equipment'?'Speed':'Swiftness';
     $('edit-title').required=!horse;$('edit-breed').required=horse;$('edit-section').required=!horse;
   }
@@ -18,7 +18,14 @@
     $('admin-editor-title').textContent=row?'Edit '+name(row):'Add '+(kind==='horse'?'horse':'item');
     $('admin-entry-id').textContent=row?'Record ID: '+row.id:'A new ID will be assigned when you save.';
     $('admin-remove').hidden=!row||!!row._deleted;$('admin-save').textContent=row?row._deleted?'Restore and save':'Save changes':'Add to database';
-    $('admin-form').hidden=false;configure();updateTypes();
+    $('admin-form').hidden=false;configure();updateTypes();updatePreview();
+  }
+  function updatePreview(){
+    const box=$('admin-image-preview');box.replaceChildren();
+    const url=$('edit-image').value.trim();
+    if(!/^https:\/\//i.test(url)){box.append(text('span','No picture added'));return;}
+    const img=document.createElement('img');img.alt=$('edit-title').value||$('edit-breed').value||'Item preview';
+    img.addEventListener('error',()=>box.replaceChildren(text('span','Picture could not be loaded')),{once:true});img.src=url;box.append(img);
   }
   function updateTypes(){
     const values=new Set(records.filter(r=>r.category===$('edit-category').value).map(r=>r.section).filter(Boolean));
@@ -102,11 +109,11 @@
       for(const [key,label]of fields){
         const wrapper=text('label',label);let input;
         if(key==='is_companion'){input=document.createElement('select');input.add(new Option('No — stays in the saddle bag','false'));input.add(new Option('Yes — companion','true'));}
-        else if(key==='category'){input=document.createElement('select');for(const value of ['Clothes','Player Accessories','Equipment','Horse Decorations','Pets'])input.add(new Option(value,value));}
+        else if(key==='category'){input=document.createElement('select');for(const value of ['Hairstyles','Clothes','Player Accessories','Equipment','Horse Decorations','Pets'])input.add(new Option(value,value));}
         else if(key==='description')input=document.createElement('textarea');else{input=document.createElement('input');input.type=key==='image'?'url':'text';if(key==='image')input.pattern='https://.*';}
         input.id='edit-'+key;if(key==='section')input.setAttribute('list','admin-item-types');if(['description','image'].includes(key))wrapper.className='admin-field-wide';input.maxLength=key==='description'?10000:2000;wrapper.append(input);$('admin-fields').append(wrapper);
       }
-      $('admin-form').addEventListener('input',()=>{dirty=true;});$('edit-category').addEventListener('change',()=>{configure();updateTypes();});
+      $('edit-image').addEventListener('input',updatePreview);$('admin-form').addEventListener('input',()=>{dirty=true;});$('edit-category').addEventListener('change',()=>{configure();updateTypes();});
       $('admin-form').addEventListener('submit',e=>{e.preventDefault();save();});$('admin-remove').addEventListener('click',()=>save(true));
       $('admin-add').addEventListener('click',()=>open());$('admin-kind').addEventListener('change',async()=>{
         if(!(await allowDiscard())){$('admin-kind').value=kind;return;}kind=$('admin-kind').value;bulkSelected.clear();bulkCount();current=null;dirty=false;limit=60;$('admin-form').hidden=true;

@@ -30,7 +30,7 @@ window.HMOutfitShare=(()=>{
   function slot(row,name){const box=text('div','','gear-slot');box.dataset.slot=name;box.append(text('span',name,'slot-label'));if(row)box.append(picture(row),text('span',safe(row.title),'slot-title'));else box.append(text('span','Empty','slot-title'));return box;}
   function sheet(kind,data){
     const panel=text('section','',`character-sheet ${kind}-sheet`);panel.append(text('h2',kind==='horse'?'Horse equipment':'Player outfit'));
-    const names=kind==='horse'?['Mane Decoration','Tail Decoration','Bridle','Saddle','Horseshoes','Leg Wraps','Blanket']:['Hat','Player Accessories','Top','Gloves','Pants','Shoes'];
+    const names=kind==='horse'?['Mane Decoration','Tail Decoration','Bridle','Saddle','Horseshoes','Leg Wraps','Blanket']:['Hairstyle','Hat','Player Accessories','Top','Gloves','Pants','Shoes'];
     const stage=text('div','','gear-stage');for(const name of names)stage.append(slot(data.slots.find(s=>s.slot===name&&s.side===kind),name));
     const centre=text('div','','sheet-centre');if(kind==='horse'&&data.horse)centre.append(picture(data.horse),text('strong',safe(data.horse.title)),text('small',safe(data.horse.breed)));else centre.append(text('span',kind==='horse'?'Horse':'Player','horse-placeholder'));stage.append(centre);panel.append(stage);
     const extras=data.slots.filter(s=>s.side===kind&&!names.includes(s.slot));if(extras.length){const dock=text('div','','companion-pair');extras.forEach(s=>dock.append(slot(s,s.slot)));panel.append(dock);}return panel;
