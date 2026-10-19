@@ -29,8 +29,36 @@
     });
   }
   window.addEventListener('hashchange',updateHeader);
+  function mountNewsBanner(){
+    const header=document.querySelector('body>header');
+    if(!header||typeof supabaseClient==='undefined'||document.getElementById('satnin-news-banner'))return;
+    const neverKey='hm2018:hide-all-news-banners';let never=false;try{never=localStorage.getItem(neverKey)==='true';}catch{}
+    const storageKey='hm2018:dismissed-satnin-news';let latest=null,closed=new Set(),loading=false;
+    try{const value=JSON.parse(localStorage.getItem(storageKey)||'[]');if(Array.isArray(value))closed=new Set(value.map(String));}catch{}
+    const banner=text('aside','','satnin-news-banner');banner.id='satnin-news-banner';banner.hidden=true;banner.setAttribute('aria-label','Latest news from SATNIN');
+    const copy=text('div','','satnin-news-copy'),label=text('span','From SATNIN','satnin-news-label'),title=text('strong','','satnin-news-title'),body=text('p','','satnin-news-excerpt');
+    const link=text('a','Read news →','satnin-news-link');link.href='news/';
+    const close=text('button','×','satnin-news-close');close.type='button';close.setAttribute('aria-label','Dismiss this news announcement');
+    const neverButton=text('button','Never show news banners again','satnin-news-never');neverButton.type='button';
+    neverButton.addEventListener('click',()=>{never=true;try{localStorage.setItem(neverKey,'true');}catch{}show();});
+    copy.append(label,title,body,link,neverButton);banner.append(copy,close);header.after(banner);
+    function show(){banner.hidden=never||!latest||closed.has(String(latest.id));}
+    close.addEventListener('click',()=>{if(!latest)return;closed.add(String(latest.id));try{localStorage.setItem(storageKey,JSON.stringify([...closed].slice(-50)));}catch{}show();});
+    window.addEventListener('storage',event=>{if(event.key===neverKey){never=event.newValue==='true';show();return;}if(event.key!==storageKey)return;try{closed=new Set(JSON.parse(event.newValue||'[]').map(String));show();}catch{}});
+    async function refresh(){
+      if(never||loading||document.hidden)return;loading=true;
+      try{const {data,error}=await supabaseClient.from('hm_news').select('id,title,body,created_at').eq('source','admin').is('parent_key',null).order('created_at',{ascending:false}).order('id',{ascending:false}).limit(1);
+        if(error)return;latest=data?.[0]||null;
+        if(latest){title.textContent=latest.title||'Latest update';const content=String(latest.body||'').replace(/\s+/g,' ').trim();body.textContent=content.length>280?content.slice(0,277)+'…':content;body.hidden=!content;}
+        show();
+      }catch{}finally{loading=false;}
+    }
+    refresh();setInterval(refresh,60000);
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
+  }
   function mount(){
     updateHeader();
+    mountNewsBanner();
     if(document.querySelector('.site-footer'))return;
     const footer=text('footer','','site-footer');
     const inner=text('div','','footer-inner');
