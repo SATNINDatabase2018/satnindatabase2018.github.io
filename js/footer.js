@@ -41,7 +41,7 @@
     const close=text('button','×','satnin-news-close');close.type='button';close.setAttribute('aria-label','Dismiss this news announcement');
     const neverButton=text('button','Never show news banners again','satnin-news-never');neverButton.type='button';
     neverButton.addEventListener('click',()=>{never=true;try{localStorage.setItem(neverKey,'true');}catch{}show();});
-    copy.append(label,title,body,link,neverButton);banner.append(copy,close);header.after(banner);
+    copy.append(label,title,link,neverButton);banner.append(copy,close);header.after(banner);
     function show(){banner.hidden=never||!latest||closed.has(String(latest.id));}
     close.addEventListener('click',()=>{if(!latest)return;closed.add(String(latest.id));try{localStorage.setItem(storageKey,JSON.stringify([...closed].slice(-50)));}catch{}show();});
     window.addEventListener('storage',event=>{if(event.key===neverKey){never=event.newValue==='true';show();return;}if(event.key!==storageKey)return;try{closed=new Set(JSON.parse(event.newValue||'[]').map(String));show();}catch{}});
