@@ -1000,3 +1000,9 @@ button:focus-visible,a:focus-visible,summary:focus-visible {outline:3px solid va
 .gear-slot-removable>.remove-slot-item{font-size:0}
 .gear-slot-removable>.remove-slot-item::before,.gear-slot-removable>.remove-slot-item::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:2px;border-radius:1px;background:currentColor;transform:translate(-50%,-50%) rotate(45deg);pointer-events:none}
 .gear-slot-removable>.remove-slot-item::after{transform:translate(-50%,-50%) rotate(-45deg)}
+
+.player-sheet .gear-stage{grid-template-areas:"hair hat accessories" "top portrait gloves" "pants portrait shoes"}
+.player-sheet .gear-stage .gear-slot[data-slot="Hairstyle"]{grid-area:hair}
+
+/* Hairstyle type thumbnails share the theme-aware native picker. */
+@supports(appearance:base-select){html body select option:has(.hairstyle-option-image){display:flex;align-items:center;gap:10px}html body select option .hairstyle-option-image{width:44px;height:44px;object-fit:contain;flex:0 0 44px;border-radius:6px}}

@@ -25,3 +25,5 @@
 #accounts-panel>summary{display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:700;font-size:19px;color:var(--green-dark);padding:4px 0;list-style:none}#accounts-panel>summary::after{margin-left:auto}.accounts-toggle-hint{font-size:11px;font-weight:400;color:var(--muted)}#accounts-panel[open]>summary{margin-bottom:16px}
 
 .admin-selectable-row{display:flex;align-items:center;gap:10px;min-width:0}.admin-selectable-row>input[type=checkbox]{flex:0 0 18px;width:18px;height:18px}.admin-selectable-row>.admin-entry{flex:1;min-width:0}.admin-bulk{padding:20px;border:1px solid var(--border);border-radius:16px;background:var(--card);margin:20px 0}.admin-bulk summary{cursor:pointer;font-weight:700;color:var(--green-dark)}.admin-bulk textarea{width:100%;box-sizing:border-box}.admin-bulk .admin-actions{flex-wrap:wrap}.admin-bulk select{max-width:100%}
+
+.admin-image-preview{display:grid;place-items:center;width:180px;min-height:140px;margin:16px 0;padding:12px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--muted)}.admin-image-preview img{display:block;max-width:100%;height:160px;object-fit:contain}
