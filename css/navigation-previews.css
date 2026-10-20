@@ -11,3 +11,8 @@ body>header nav .guides-menu[open]>summary::after{transform:rotate(225deg);margi
 body>header nav details.guides-menu{padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;min-height:0!important;min-width:0!important;width:auto!important;flex:0 0 auto!important}
 body>header nav>a,body>header nav details.guides-menu>summary{box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;font-family:inherit!important;font-size:12px!important;font-weight:600!important;line-height:1.4!important;height:31px!important;min-height:31px!important;max-height:31px!important;width:auto!important;min-width:0!important;padding:7px 10px!important;margin:0!important;border:0!important;border-radius:999px!important;box-shadow:none!important;white-space:nowrap!important}
 body>header nav details.guides-menu>summary::before{display:none!important;content:none!important}
+
+/* The page name navigates; the remaining summary/arrow toggles its menu. */
+body>header nav details.header-page-menu>summary{padding:0!important;gap:7px!important}
+body>header nav details.header-page-menu>summary>.header-page-link{box-sizing:border-box;display:inline-flex;align-items:center;height:31px;font-family:inherit;font-size:12px!important;font-weight:600;line-height:1.4;padding:7px 0 7px 10px!important;margin:0;border:0;background:transparent;border-radius:999px;text-decoration:none;color:inherit}
+body>header nav details.header-page-menu>summary::after,body>header nav details.header-page-menu[open]>summary::after{margin-right:10px!important}

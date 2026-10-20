@@ -26,7 +26,7 @@
     if(nav){
       for(const [path,name,entries]of [['stable/','My Stable',[['My Horses','owned'],['Wishlist','wishlist']]],['collection/','My Collection',[['Everything','everything'],['Owned','owned'],['Wishlist','wishlist'],['Wardrobe (My Storage)','wardrobe']]]]){
         const original=[...nav.querySelectorAll('a')].find(a=>a.getAttribute('href')===path);if(!original||original.closest('.header-page-menu'))continue;
-        const menu=text('details','','guides-menu header-page-menu'),summary=text('summary',name),links=text('div','','guides-menu-links');menu.append(summary,links);original.replaceWith(menu);
+        const menu=text('details','','guides-menu header-page-menu'),summary=text('summary',''),links=text('div','','guides-menu-links');const mainLink=text('a',name,'header-page-link');mainLink.href=path;mainLink.addEventListener('click',e=>{e.stopPropagation();menu.open=false;});summary.setAttribute('aria-label',name+' menu');summary.append(mainLink);menu.append(summary,links);original.replaceWith(menu);
         for(const [label,hash]of entries){const a=text('a',label);a.href=path+'#'+hash;if(hash==='wardrobe'){a.hidden=true;supabaseClient.rpc('hm_is_admin').then(({data,error})=>{a.hidden=!!error||data!==true;}).catch(()=>{});}a.addEventListener('click',()=>menu.open=false);links.append(a);}
       }
       for(const menu of nav.querySelectorAll('.guides-menu')){
