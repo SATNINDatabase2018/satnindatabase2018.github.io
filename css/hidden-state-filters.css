@@ -18,3 +18,9 @@ body[data-view="database"] .filter-grid #sort-rules select{flex:1;min-width:0;wi
  body[data-view="database"] .filter-grid #sort-rules{width:100%}
 }
 @media(max-width:420px){body[data-view="database"] .filter-grid .category-filter-stack,body[data-view="database"] .filter-grid .location-filter-stack{grid-template-columns:minmax(0,1fr)}}
+
+/* Slimmer status column, with room for its legends to wrap. */
+@media(min-width:681px){body[data-view="database"] .filter-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 175px}}
+body[data-view="database"] .filter-grid .state-filter-stack{width:175px;max-width:100%}
+body[data-view="database"] .state-filter-stack fieldset legend{white-space:normal;overflow-wrap:normal;max-width:100%;font-size:11px;line-height:1.4}
+body[data-view="database"] .filter-grid .state-filter-stack #state-filters,body[data-view="database"] .filter-grid .state-filter-stack #hidden-state-filters{padding:10px}
