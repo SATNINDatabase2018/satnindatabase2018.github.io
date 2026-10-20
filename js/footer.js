@@ -32,37 +32,60 @@
   function mountNewsBanner(){
     const header=document.querySelector('body>header');
     if(!header||typeof supabaseClient==='undefined'||document.getElementById('satnin-news-banner'))return;
-    let neverKey='',storageKey='',never=false,latest=null,closed=new Set(),loading=false,preferencesReady=false,profile=null;
+    let neverKey='',storageKey='',never=false,latest=null,closed=new Set(),loading=false,preferencesReady=false,profile=null,pending=false;
     const banner=text('aside','','satnin-news-banner');banner.id='satnin-news-banner';banner.hidden=true;banner.setAttribute('aria-label','Latest news from SATNIN');
     const copy=text('div','','satnin-news-copy'),label=text('span','From SATNIN','satnin-news-label'),title=text('strong','','satnin-news-title'),body=text('p','','satnin-news-excerpt');
     const link=text('a','Read news →','satnin-news-link');link.href='news/';
     const close=text('button','×','satnin-news-close');close.type='button';close.setAttribute('aria-label','Dismiss this news announcement');
     const neverButton=text('button','Never show news banners again','satnin-news-never');neverButton.type='button';
-    neverButton.addEventListener('click',()=>{never=true;try{localStorage.setItem(neverKey,'true');}catch{}show();});
-    copy.append(label,title,body,link,neverButton);banner.append(copy,close);header.after(banner);
+    const status=text('p','','satnin-news-sync-status');status.hidden=true;status.setAttribute('role','status');header.after(status);header.after(banner);
+    function persist(){try{localStorage.setItem(neverKey,String(never));localStorage.setItem(storageKey,JSON.stringify([...closed]));}catch{}}
     function show(){banner.hidden=!preferencesReady||never||!latest||closed.has(String(latest.id));}
-    close.addEventListener('click',()=>{if(!latest)return;closed.add(String(latest.id));try{localStorage.setItem(storageKey,JSON.stringify([...closed].slice(-50)));}catch{}show();});
-    window.addEventListener('storage',event=>{if(event.key===neverKey){never=event.newValue==='true';show();return;}if(event.key!==storageKey)return;try{closed=new Set(JSON.parse(event.newValue||'[]').map(String));show();}catch{}});
+    function changed(){pending=true;persist();show();syncPreferences();}
+    neverButton.addEventListener('click',()=>{never=true;changed();});
+    close.addEventListener('click',()=>{if(latest){closed.add(String(latest.id));changed();}});
+    copy.append(label,title,body,link,neverButton);banner.append(copy,close);
+    function merge(row){if(row){never=never||row.hide_all;for(const id of row.dismissed_ids||[])closed.add(String(id));}persist();}
+    let syncing=null;
+    async function syncPreferences(){
+      if(!profile||profile==='guest'){pending=false;return true;}
+      if(syncing){await syncing;return pending?syncPreferences():true;}
+      const owner=profile,ids=[...closed],hide=never;
+      syncing=(async()=>{
+        try{const {data,error}=await supabaseClient.rpc('hm_save_news_banner_preferences',{p_dismissed_ids:ids,p_hide_all:hide});if(error)throw error;
+          if(owner!==profile)return false;merge(Array.isArray(data)?data[0]:data);pending=[...closed].some(id=>!ids.includes(id))||never!==hide;status.hidden=true;show();return true;
+        }catch{if(owner===profile){pending=true;status.textContent='Banner choice saved on this device. Account sync failed; retrying automatically.';status.hidden=false;}return false;}
+      })();
+      const ok=await syncing;syncing=null;if(ok&&pending&&owner===profile)return syncPreferences();return ok;
+    }
+    window.addEventListener('storage',event=>{if(event.key!==storageKey&&event.key!==neverKey)return;
+      try{never=localStorage.getItem(neverKey)==='true';closed=new Set(JSON.parse(localStorage.getItem(storageKey)||'[]').map(String));pending=true;show();syncPreferences();}catch{}
+    });
     async function refresh(){
-      if(!preferencesReady||never||loading||document.hidden)return;loading=true;
-      try{const {data,error}=await supabaseClient.from('hm_news').select('id,title,body,created_at').eq('source','admin').is('parent_key',null).order('created_at',{ascending:false}).order('id',{ascending:false}).limit(1);
-        if(error)return;latest=data?.[0]||null;
-        if(latest){title.textContent=latest.title||'Latest update';const content=String(latest.body||'').replace(/\s+/g,' ').trim();body.textContent=content.length>280?content.slice(0,277)+'…':content;body.hidden=!content;}
-        show();
-      }catch{}finally{loading=false;}
+      if(!profile||loading||document.hidden)return;loading=true;const owner=profile;
+      try{
+        if(owner!=='guest'){
+          if(pending)await syncPreferences();
+          const {data,error}=await supabaseClient.from('hm_news_banner_preferences').select('hide_all,dismissed_ids').eq('user_id',owner).maybeSingle();
+          if(owner!==profile)return;
+          if(!error){merge(data);status.hidden=!pending;}
+        }
+        if(owner!==profile)return;preferencesReady=true;show();if(never)return;
+        const {data,error}=await supabaseClient.from('hm_news').select('id,title,body,created_at').eq('source','admin').is('parent_key',null).order('created_at',{ascending:false}).order('id',{ascending:false}).limit(1);
+        if(error||owner!==profile)return;latest=data?.[0]||null;
+        if(latest){title.textContent=latest.title||'Latest update';const content=String(latest.body||'').replace(/\s+/g,' ').trim();body.textContent=content.length>280?content.slice(0,277)+'…':content;body.hidden=!content;}show();
+      }catch{}finally{loading=false;if(owner!==profile)refresh();}
     }
     function useProfile(user){
-      const next=user?.id||'guest';if(profile===next)return;profile=next;
-      neverKey='hm2018:hide-all-news-banners:'+next;storageKey='hm2018:dismissed-satnin-news:'+next;
-      never=false;closed=new Set();
+      const next=user?.id||'guest';if(profile===next)return;profile=next;latest=null;preferencesReady=false;
+      neverKey='hm2018:hide-all-news-banners:'+next;storageKey='hm2018:dismissed-satnin-news:'+next;never=false;closed=new Set();status.hidden=true;
       try{never=localStorage.getItem(neverKey)==='true';const value=JSON.parse(localStorage.getItem(storageKey)||'[]');if(Array.isArray(value))closed=new Set(value.map(String));}catch{}
-      preferencesReady=true;show();refresh();
+      pending=never||closed.size>0;show();refresh();
     }
-    // Read local session state; anonymous visitors have their own persistent preferences.
     supabaseClient.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>useProfile(session?.user),0);});
-    supabaseClient.auth.getSession().then(({data})=>{if(!preferencesReady)useProfile(data?.session?.user);}).catch(()=>{if(!preferencesReady)useProfile(null);});
-    setInterval(refresh,60000);
-    document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
+    supabaseClient.auth.getSession().then(({data})=>{if(profile===null)useProfile(data?.session?.user);}).catch(()=>{if(profile===null)useProfile(null);});
+    setInterval(refresh,60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
+    window.addEventListener('online',refresh);
   }
   function mount(){
     updateHeader();

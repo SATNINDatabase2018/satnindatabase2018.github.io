@@ -98,3 +98,5 @@ body.contact-page main{position:relative;}
 .satnin-news-copy .satnin-news-excerpt{display:block;flex:1;min-width:0;margin:0;font-size:12px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .satnin-news-copy .satnin-news-excerpt[hidden]{display:none}
 @media(max-width:600px){.satnin-news-copy .satnin-news-title{max-width:65%;flex:1}.satnin-news-copy .satnin-news-excerpt{flex-basis:100%;font-size:11px}}
+
+.satnin-news-sync-status{margin:0;padding:6px 16px;background:var(--card);color:var(--text);font-size:12px}.satnin-news-sync-status[hidden]{display:none}
