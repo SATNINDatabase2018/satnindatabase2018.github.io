@@ -1,4 +1,4 @@
-/* Administrator-only HM wardrobe. Positions are account-owned, revision-checked records. */
+/* Account-private HM wardrobe for signed-in users. Positions are account-owned, revision-checked records. */
 window.HMAdminWardrobe=(()=>{
   const groups={clothes:{label:'Clothes',pages:15,cols:12,rows:8,categories:['Clothes','Player Accessories']},gear:{label:'Horse gear',pages:15,cols:12,rows:8,categories:['Equipment','Horse Decorations']},pets:{label:'Pets',pages:7,cols:8,rows:5,categories:['Pets']}};
   const el=(tag,value='',cls)=>{const n=document.createElement(tag);n.textContent=value;if(cls)n.className=cls;return n;};
@@ -6,7 +6,7 @@ window.HMAdminWardrobe=(()=>{
   const groupFor=item=>Object.keys(groups).find(g=>groups[g].categories.includes(item?.category));
   const validPosition=p=>!!p&&!!groups[p.group]&&Number.isInteger(p.page)&&p.page>=1&&p.page<=groups[p.group].pages&&Number.isInteger(p.cell)&&p.cell>=0&&p.cell<groups[p.group].cols*groups[p.group].rows-1;
   let favorites=new Set(),favoriteBusy=new Set();
-  let account=null,admin=false,catalog=new Map(),owned=new Set(),state={titles:{},locations:{}},revision=0,busy=false,root=null,tab=null,viewGroup='clothes',viewPage=1,selected=null,query='',limit=80,notice='',hover=null;
+  let account=null,enabled=false,catalog=new Map(),owned=new Set(),state={titles:{},locations:{}},revision=0,busy=false,root=null,tab=null,viewGroup='clothes',viewPage=1,selected=null,query='',limit=80,notice='',hover=null;
   const itemName=i=>(i?.title||'Unavailable item')+(i?.color?' — '+i.color:'');
   const label=(g,p)=>p+(state.titles?.[g]?.[p]?' · '+state.titles[g][p]:'');
   function available(id){return owned.has(String(id))&&groupFor(catalog.get(String(id)));}
@@ -26,7 +26,7 @@ window.HMAdminWardrobe=(()=>{
     state=clean(data?.layout);revision=Number(data?.revision||0);
   }
   async function commit(change){
-    if(!admin||busy)return false;const next=clean(state);change(next);const checked=clean(next);busy=true;notice='Saving wardrobe…';draw();
+    if(!enabled||busy)return false;const next=clean(state);change(next);const checked=clean(next);busy=true;notice='Saving wardrobe…';draw();
     try{const {data,error}=await supabaseClient.rpc('hm_save_admin_wardrobe',{p_layout:checked,p_expected_revision:revision});if(error)throw error;const row=Array.isArray(data)?data[0]:data;if(!row)throw Error('No saved wardrobe returned.');state=clean(row.layout);revision=Number(row.revision);notice='Wardrobe saved.';document.dispatchEvent(new CustomEvent('hm-wardrobe-updated'));return true;}
     catch(e){notice='Could not save: '+e.message+' Use Refresh wardrobe before trying again.';return false;}
     finally{busy=false;draw();}
@@ -119,10 +119,10 @@ window.HMAdminWardrobe=(()=>{
     tabs.addEventListener('click',e=>{if(e.target.closest('[role="tab"]')!==tab&&e.target.closest('[role="tab"]')){root.hidden=true;panel.hidden=false;hideHover();const builder=document.getElementById('outfit-builder');if(builder)builder.hidden=false;}},true);
   }
   async function init({items,user}){
-    account=user;if(!user)return;try{const {data,error}=await supabaseClient.rpc('hm_is_admin');if(error||data!==true)return;admin=true;catalog=new Map(items.filter(i=>i.kind!=='horse'&&groupFor(i)).map(i=>[String(i.id),i]));mount();await reload();notice='';draw();if(location.hash==='#wardrobe')tab?.click();}catch(e){notice='Wardrobe could not load: '+e.message+'. Apply the wardrobe SQL setup, then refresh.';if(admin){mount();draw();}}
+    account=user;if(!user)return;try{enabled=true;catalog=new Map(items.filter(i=>i.kind!=='horse'&&groupFor(i)).map(i=>[String(i.id),i]));mount();await reload();notice='';draw();if(location.hash==='#wardrobe')tab?.click();}catch(e){notice='Wardrobe could not load: '+e.message+'. Apply the wardrobe SQL setup, then refresh.';if(enabled){mount();draw();}}
   }
   async function chooseLocation(item){
-    if(!admin||!owned.has(String(item.id))||!groupFor(item))return;const g=groupFor(item),id=String(item.id);const dialog=el('dialog','','wardrobe-location-dialog');dialog.setAttribute('aria-label','Choose HM Wardrobe location');dialog.append(el('h2','HM Wardrobe · '+itemName(item)),el('p','Choose a numbered page and an empty square, or keep this item unsorted.'));
+    if(!enabled||!owned.has(String(item.id))||!groupFor(item))return;const g=groupFor(item),id=String(item.id);const dialog=el('dialog','','wardrobe-location-dialog');dialog.setAttribute('aria-label','Choose HM Wardrobe location');dialog.append(el('h2','HM Wardrobe · '+itemName(item)),el('p','Choose a numbered page and an empty square, or keep this item unsorted.'));
     let page=state.locations[id]?.page||1;
     const pageButtons=el('div','','wardrobe-page-tabs');pageButtons.setAttribute('role','group');pageButtons.setAttribute('aria-label','Wardrobe numbered pages');dialog.append(pageButtons);
     const scroller=el('div','','wardrobe-grid-scroll'),grid=el('div','','wardrobe-grid');grid.style.setProperty('--wardrobe-columns',groups[g].cols);scroller.append(grid);dialog.append(scroller);const feedback=el('p','');feedback.setAttribute('role','status');
@@ -133,9 +133,9 @@ window.HMAdminWardrobe=(()=>{
     dialog.append(feedback,btn('Keep unsorted',async()=>{if(!state.locations[id]||await commit(next=>delete next.locations[id]))dialog.close();}),btn('Close',()=>dialog.close()));dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});dialog.addEventListener('close',()=>{hideHover();dialog.remove();});document.body.append(dialog);render();dialog.showModal();
   }
   async function ownedChanged(item,isOwned){
-    if(!admin||!groupFor(item))return;const id=String(item.id);if(isOwned)owned.add(id);else owned.delete(id);
+    if(!enabled||!groupFor(item))return;const id=String(item.id);if(isOwned)owned.add(id);else owned.delete(id);
     if(!isOwned&&state.locations[id])await commit(next=>delete next.locations[id]);draw();
   }
-  function locationButton(item){if(!admin||!available(item.id))return null;const pos=state.locations[String(item.id)],b=btn(pos?'HM Wardrobe · '+groups[pos.group].label+' '+label(pos.group,pos.page):'Choose HM Wardrobe location',()=>chooseLocation(item),'wardrobe-item-location');return b;}
+  function locationButton(item){if(!enabled||!available(item.id))return null;const pos=state.locations[String(item.id)],b=btn(pos?'HM Wardrobe · '+groups[pos.group].label+' '+label(pos.group,pos.page):'Choose HM Wardrobe location',()=>chooseLocation(item),'wardrobe-item-location');return b;}
   return {init,ownedChanged,locationButton,favoriteChanged,groupFor,validPosition};
 })();
