@@ -380,12 +380,20 @@ window.HMOutfitWorkspace = {
       if(!isStudio){const a=text('a','','outfit-studio-link');a.href='outfits/';
         const icon=text('span','✦','studio-link-icon');icon.setAttribute('aria-hidden','true');const copy=text('span','','studio-link-copy');copy.append(text('strong','Open outfit studio'),text('small','Create, style & save your looks'));const arrow=text('span','↗','studio-link-arrow');arrow.setAttribute('aria-hidden','true');a.append(icon,copy,arrow);root.append(a);}
     }
+    let browsePreview=null;
+    function hideBrowsePreview(){browsePreview?.remove();browsePreview=null;}
+    function previewOutfit(d,anchor){
+      hideBrowsePreview();const preview=text('aside','','outfit-hover-preview browse-outfit-preview');browsePreview=preview;preview.setAttribute('role','tooltip');preview.append(text('h3',d.name||'New outfit'),text('p',outfitTypes[d.outfit_type]));
+      const layout=text('div','','character-sheets');if(d.outfit_type!=='player')layout.append(sheet('horse',d,false));if(d.outfit_type!=='horse')layout.append(sheet('player',d,false));layout.classList.toggle('single-sheet',d.outfit_type!=='set');const body=text('div','','hover-preview-body');body.append(layout);preview.append(body,statTable(scopedSlots(d),d.outfit_type));document.body.append(preview);
+      const width=Math.min(460,innerWidth-24),r=anchor.getBoundingClientRect();preview.style.width=width+'px';layout.style.zoom=String(Math.min(.65,(width-28)/(d.outfit_type==='set'?700:440)));preview.style.left=Math.max(12,Math.min(r.right+10,innerWidth-width-12))+'px';preview.style.top=Math.max(12,Math.min(r.top,innerHeight-preview.offsetHeight-12))+'px';
+    }
+    window.addEventListener('scroll',hideBrowsePreview,true);window.addEventListener('resize',hideBrowsePreview);
     function browse(){
       const host=document.getElementById('saved-outfits');if(!host)return;
-      const q=(document.getElementById('outfit-search')?.value||'').toLowerCase();host.replaceChildren();
+      hideBrowsePreview();const q=(document.getElementById('outfit-search')?.value||'').toLowerCase();host.replaceChildren();
       const all=Object.values(drafts).filter(d=>d.name.toLowerCase().includes(q));
       for(const d of all){
-        const card=text('article','','outfit-overview');card.append(text('h3',d.name),text('p',d.dirty?'Unsaved changes':'Saved to your account'));
+        const card=text('article','','outfit-overview');const title=text('h3',d.name);title.tabIndex=0;title.addEventListener('mouseenter',()=>previewOutfit(d,title));title.addEventListener('mouseleave',hideBrowsePreview);title.addEventListener('focus',()=>previewOutfit(d,title));title.addEventListener('blur',hideBrowsePreview);card.append(title,text('p',d.dirty?'Unsaved changes':'Saved to your account'));
         card.append(text('p',outfitTypes[d.outfit_type]));const h=d.outfit_type==='player'?null:horseInfo(d.horse_instance_id);if(h)card.append(image(h),text('p',h.title));
         const thumbs=text('div','','outfit-thumbnails');for(const k of Object.values(scopedSlots(d))){const i=resolve(k);if(i)thumbs.append(image(i));}card.append(thumbs,statTable(scopedSlots(d),d.outfit_type));
         card.append(button('Share outfit',()=>shareOutfit(d)),button('Open outfit',()=>{current=d.id;update();root.scrollIntoView?.({behavior:'smooth',block:'start'});}),button('Delete',()=>remove(d.id)));host.append(card);

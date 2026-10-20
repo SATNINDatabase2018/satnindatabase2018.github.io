@@ -22,6 +22,18 @@
       document.addEventListener('pointerdown',e=>{if(!menu.contains(e.target))menu.open=false;},true);
       menu.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.open=false;summary.focus();}});
     }
+    if(nav){
+      for(const [path,name,entries]of [['stable/','My Stable',[['My Horses','owned'],['Wishlist','wishlist']]],['collection/','My Collection',[['Everything','everything'],['Owned','owned'],['Wishlist','wishlist'],['Wardrobe (My Storage)','wardrobe']]]]){
+        const original=[...nav.querySelectorAll('a')].find(a=>a.getAttribute('href')===path);if(!original||original.closest('.header-page-menu'))continue;
+        const menu=text('details','','guides-menu header-page-menu'),summary=text('summary',name),links=text('div','','guides-menu-links');menu.append(summary,links);original.replaceWith(menu);
+        for(const [label,hash]of entries){const a=text('a',label);a.href=path+'#'+hash;if(hash==='wardrobe'){a.hidden=true;supabaseClient.rpc('hm_is_admin').then(({data,error})=>{a.hidden=!!error||data!==true;}).catch(()=>{});}a.addEventListener('click',()=>menu.open=false);links.append(a);}
+      }
+      for(const menu of nav.querySelectorAll('.guides-menu')){
+        if(menu.dataset.hoverReady)continue;menu.dataset.hoverReady='true';let timer;
+        menu.addEventListener('mouseenter',()=>{if(matchMedia('(hover:hover)').matches){clearTimeout(timer);menu.open=true;}});menu.addEventListener('mouseleave',()=>{timer=setTimeout(()=>{if(!menu.contains(document.activeElement))menu.open=false;},100);});
+        document.addEventListener('pointerdown',e=>{if(!menu.contains(e.target))menu.open=false;},true);menu.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.open=false;menu.querySelector('summary').focus();}});
+      }
+    }
     const pageName=path=>path.replace(/\/index\.html$/,'/').replace(/\/$/,'').split('/').pop()||'';const current=pageName(location.pathname);
     header.querySelectorAll('nav a').forEach(a=>{
       const url=new URL(a.href,location.href);const matches=pageName(url.pathname)===current&&(!url.hash||url.hash===location.hash)&&!(current==='login'&&location.hash==='#signup'&&!url.hash);
