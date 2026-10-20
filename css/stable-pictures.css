@@ -1,0 +1,4 @@
+/* Larger main horse portraits; equipment thumbnails retain their sizes. */
+.stable-horse-card > .catalog-image{width:100%;min-height:250px;display:grid;place-items:center}
+.stable-horse-card > .catalog-image > img{display:block;box-sizing:border-box;width:100%;max-width:320px;height:250px;object-fit:contain;margin:0 auto 12px;padding:0}
+@media(max-width:600px){.stable-horse-card > .catalog-image{min-height:220px}.stable-horse-card > .catalog-image > img{height:220px;max-width:100%}}
