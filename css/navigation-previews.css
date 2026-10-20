@@ -6,3 +6,8 @@ body>header nav .guides-menu>summary{box-sizing:content-box;font-family:inherit;
 body>header nav .guides-menu>summary::before{display:none;content:none}
 body>header nav .guides-menu>summary::after{content:'';box-sizing:border-box;width:6px;height:6px;border:0;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin:0 2px 3px 0;flex:0 0 6px}
 body>header nav .guides-menu[open]>summary::after{transform:rotate(225deg);margin:0 2px 3px 0}
+
+/* One sizing rule for the main links and dropdown triggers, across all themes. */
+body>header nav details.guides-menu{padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;min-height:0!important;min-width:0!important;width:auto!important;flex:0 0 auto!important}
+body>header nav>a,body>header nav details.guides-menu>summary{box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;font-family:inherit!important;font-size:12px!important;font-weight:600!important;line-height:1.4!important;height:31px!important;min-height:31px!important;max-height:31px!important;width:auto!important;min-width:0!important;padding:7px 10px!important;margin:0!important;border:0!important;border-radius:999px!important;box-shadow:none!important;white-space:nowrap!important}
+body>header nav details.guides-menu>summary::before{display:none!important;content:none!important}

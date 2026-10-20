@@ -14,6 +14,7 @@
       const words=text('div','','header-wordmark');const title=text('a',SITE_NAME,'logo');title.href='./';const credit=text('span','for 2018 Horse Museum','logo-credit');words.append(title,credit);brand.append(imageLink,words);old.replaceWith(brand);
     }
     const nav=header.querySelector('nav');
+    if(nav){const database=nav.querySelector('a[href="database/"]'),outfits=nav.querySelector('a[href="outfits/"]');if(database&&outfits&&database.nextElementSibling!==outfits)database.after(outfits);}
     if(nav&&!nav.querySelector('.guides-menu')){
       const menu=text('details','','guides-menu'),summary=text('summary','HM Guides');menu.append(summary);
       const links=text('div','','guides-menu-links');
