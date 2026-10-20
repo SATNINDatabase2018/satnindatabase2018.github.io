@@ -29,3 +29,6 @@ body[data-view="collection"] main:has(#admin-wardrobe:not([hidden])){max-width:1
 @media(max-width:1200px){.admin-wardrobe .wardrobe-layout{grid-template-columns:minmax(0,1fr) 340px}}@media(max-width:900px){.admin-wardrobe .wardrobe-layout{grid-template-columns:minmax(0,1fr)}}
 
 .wardrobe-hover-card .wardrobe-favorite-indicator{position:absolute;top:8px;right:8px;z-index:6;display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:var(--favorite-card,var(--card));color:var(--favorite-ink,#96702c);font-size:19px;line-height:1;pointer-events:none}
+
+/* Numbered page previews retain the storage positions. */
+.wardrobe-page-preview{box-sizing:border-box;padding:12px;max-height:calc(100vh - 24px);overflow:auto;border:1px solid var(--border);pointer-events:auto}.wardrobe-page-preview>strong{font-size:13px}.wardrobe-page-preview>p{margin:6px 0;font-size:12px}.wardrobe-preview-grid{display:grid;grid-template-columns:repeat(var(--preview-columns),minmax(0,1fr));gap:3px}.wardrobe-preview-cell{display:block;aspect-ratio:1;min-width:0;overflow:hidden;border:1px solid var(--border);border-radius:3px;background:var(--surface,var(--card))}.wardrobe-preview-cell:last-child{visibility:hidden}

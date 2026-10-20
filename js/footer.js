@@ -15,7 +15,7 @@
     }
     const nav=header.querySelector('nav');
     if(nav&&!nav.querySelector('.guides-menu')){
-      const menu=text('details','','guides-menu'),summary=text('summary','Guides');menu.append(summary);
+      const menu=text('details','','guides-menu'),summary=text('summary','HM Guides');menu.append(summary);
       const links=text('div','','guides-menu-links');
       links.append(text('small','JORVIK GUIDES','guides-caption'));
       for(const [label,path,icon,description]of [['Spirit timetable','spirit/','◷','Find Spirit’s current location'],['Championships','championships/','⚑','See the next race in UTC'],['Unlocking areas','areas/','⌘','Explore area requirements']]){const a=text('a','');a.href=path;const badge=text('span',icon,'guide-link-icon');badge.setAttribute('aria-hidden','true');const copy=text('span','','guide-link-copy');copy.append(text('strong',label),text('small',description));a.append(badge,copy);links.append(a);}menu.append(links);nav.insertBefore(menu,nav.querySelector('.account-nav-actions'));
