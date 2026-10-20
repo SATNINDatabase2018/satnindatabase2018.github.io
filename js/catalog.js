@@ -112,6 +112,7 @@
     if(error){message('Could not save this change: '+error.message); render(false); return;}
     states.set(String(item.id),next); message('Saved.'); render(false);
     if(field==='owned'&&window.HMAdminWardrobe){await HMAdminWardrobe.ownedChanged(item,next.owned);render(false);}
+    if(field==='favorite')window.HMAdminWardrobe?.favoriteChanged(item,next.favorite);
   }
   function image(item){
     const wrap=text('div','', 'catalog-image');
@@ -385,6 +386,7 @@
     }
     if(view!=='outfits')render();
   }
+  document.addEventListener('hm-wardrobe-favorite',event=>{const {id,favorite}=event.detail;states.set(String(id),{...(states.get(String(id))||{}),favorite});if(view!=='outfits')render(false);});
   document.addEventListener('hm-wardrobe-updated',()=>{if(view!=='outfits')render(false);});
   start();
 })();

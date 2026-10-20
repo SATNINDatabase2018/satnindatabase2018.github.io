@@ -5,6 +5,7 @@ window.HMAdminWardrobe=(()=>{
   const btn=(label,fn,cls)=>{const b=el('button',label,cls);b.type='button';b.addEventListener('click',fn);return b;};
   const groupFor=item=>Object.keys(groups).find(g=>groups[g].categories.includes(item?.category));
   const validPosition=p=>!!p&&!!groups[p.group]&&Number.isInteger(p.page)&&p.page>=1&&p.page<=groups[p.group].pages&&Number.isInteger(p.cell)&&p.cell>=0&&p.cell<groups[p.group].cols*groups[p.group].rows-1;
+  let favorites=new Set(),favoriteBusy=new Set();
   let account=null,admin=false,catalog=new Map(),owned=new Set(),state={titles:{},locations:{}},revision=0,busy=false,root=null,tab=null,viewGroup='clothes',viewPage=1,selected=null,query='',limit=80,notice='',hover=null;
   const itemName=i=>(i?.title||'Unavailable item')+(i?.color?' — '+i.color:'');
   const label=(g,p)=>p+(state.titles?.[g]?.[p]?' · '+state.titles[g][p]:'');
@@ -18,7 +19,7 @@ window.HMAdminWardrobe=(()=>{
     }return next;
   }
   async function loadOwned(){
-    const ids=new Set();for(let n=0;;n+=1000){const {data,error}=await supabaseClient.from('user_items').select('item_id').eq('user_id',account.id).eq('owned',true).range(n,n+999);if(error)throw error;for(const row of data||[])ids.add(String(row.item_id));if((data||[]).length<1000)break;}owned=ids;
+    const ids=new Set(),stars=new Set();for(let n=0;;n+=1000){const {data,error}=await supabaseClient.from('user_items').select('item_id,favorite').eq('user_id',account.id).eq('owned',true).range(n,n+999);if(error)throw error;for(const row of data||[]){ids.add(String(row.item_id));if(row.favorite)stars.add(String(row.item_id));}if((data||[]).length<1000)break;}owned=ids;favorites=stars;
   }
   async function reload(){
     await loadOwned();const {data,error}=await supabaseClient.from('hm_admin_wardrobe').select('layout,revision').eq('user_id',account.id).maybeSingle();if(error)throw error;
@@ -34,7 +35,7 @@ window.HMAdminWardrobe=(()=>{
   function preview(item,anchor){
     hideHover();if(!item)return;hover=el('div','','wardrobe-hover-card');
     if(window.HMCatalog?.createCard)hover.append(HMCatalog.createCard(item));else hover.append(el('strong',itemName(item)));
-    hover.setAttribute('role','tooltip');document.body.append(hover);const r=anchor.getBoundingClientRect(),width=Math.min(280,innerWidth-24);hover.style.width=width+'px';hover.style.left=Math.max(12,Math.min(r.right+10,innerWidth-width-12))+'px';hover.style.top=Math.max(12,Math.min(r.top,innerHeight-hover.offsetHeight-12))+'px';
+    hover.setAttribute('role','tooltip');document.body.append(hover);const r=anchor.getBoundingClientRect(),width=Math.min(230,innerWidth-24);hover.style.width=width+'px';hover.style.left=Math.max(12,Math.min(r.right+10,innerWidth-width-12))+'px';hover.style.top=Math.max(12,Math.min(r.top,innerHeight-hover.offsetHeight-12))+'px';
   }
   function picture(item){const wrap=el('span','','wardrobe-picture');if(/^https:\/\//i.test(item?.image||'')){const image=document.createElement('img');image.src=item.image;image.alt=itemName(item);image.loading='lazy';image.draggable=false;image.addEventListener('error',()=>wrap.replaceChildren(el('span',itemName(item))),{once:true});wrap.append(image);}else wrap.append(el('span',itemName(item)));return wrap;}
   function startDrag(event,id){
@@ -42,6 +43,18 @@ window.HMAdminWardrobe=(()=>{
     selected=id;event.dataTransfer.effectAllowed='move';event.dataTransfer.setData('text/plain',id);root?.classList.add('is-dragging');hideHover();
   }
   function endDrag(){root?.classList.toggle('is-dragging',false);root?.querySelectorAll('.is-drop-target').forEach(n=>n.classList.toggle('is-drop-target',false));}
+  function favoriteChanged(item,value){const id=String(item.id);if(value)favorites.add(id);else favorites.delete(id);draw();}
+  function withFavorite(tile,item,unsorted=false){
+    if(!item)return tile;const id=String(item.id),frame=el('div','',unsorted?'wardrobe-unsorted-cell':'wardrobe-cell');
+    const star=btn('★',async event=>{
+      event.preventDefault();event.stopPropagation();hideHover();if(favoriteBusy.has(id))return;favoriteBusy.add(id);star.disabled=true;const next=!favorites.has(id);
+      try{const {data,error}=await supabaseClient.from('user_items').update({favorite:next}).eq('user_id',account.id).eq('item_id',item.id).eq('owned',true).select('item_id,favorite');if(error)throw error;if(!data?.length)throw Error('Item is no longer owned. Refresh wardrobe.');
+        if(next)favorites.add(id);else favorites.delete(id);document.dispatchEvent(new CustomEvent('hm-wardrobe-favorite',{detail:{id,favorite:next}}));notice=next?'Item favorited.':'Item unfavorited.';
+      }catch(e){notice='Could not update favorite: '+e.message;}finally{favoriteBusy.delete(id);draw();}
+    },'wardrobe-favorite-star');
+    star.classList.toggle('is-favorite',favorites.has(id));star.setAttribute('aria-pressed',String(favorites.has(id)));star.setAttribute('aria-label',(favorites.has(id)?'Unfavorite ':'Favorite ')+itemName(item));star.title=favorites.has(id)?'Remove favorite':'Favorite item';star.disabled=busy||favoriteBusy.has(id);star.draggable=false;
+    frame.append(tile,star);return frame;
+  }
   function hoverable(node,item){node.addEventListener('mouseenter',()=>preview(item,node));node.addEventListener('mouseleave',hideHover);node.addEventListener('focus',()=>preview(item,node));node.addEventListener('blur',hideHover);}
   function match(item){return !query||[item.title,item.color,item.category,item.section,item.shop].filter(Boolean).join(' ').toLowerCase().includes(query.toLowerCase());}
   async function place(id,group,page,cell){
@@ -69,10 +82,10 @@ window.HMAdminWardrobe=(()=>{
       const reserved=cell===spec.cols*spec.rows-1,id=Object.keys(state.locations).find(id=>{const p=state.locations[id];return p.group===viewGroup&&p.page===viewPage&&p.cell===cell;}),item=catalog.get(id);
       const square=btn('',()=>{if(busy)return;if(id){selected=id;draw();}else if(selected)place(selected,viewGroup,viewPage,cell);},'wardrobe-square');square.dataset.cell=cell;square.disabled=reserved||busy;square.classList.toggle('is-reserved',reserved);square.classList.toggle('is-selected',!!id&&id===selected);square.setAttribute('aria-label',reserved?'Reserved blank square':`Row ${Math.floor(cell/spec.cols)+1}, column ${cell%spec.cols+1}: ${item?itemName(item):'Empty'}`);
       if(item&&!reserved){square.append(picture(item));square.classList.toggle('is-dimmed',!match(item));hoverable(square,item);square.draggable=true;square.addEventListener('dragstart',e=>startDrag(e,id));square.addEventListener('dragend',endDrag);}
-      if(!reserved){square.addEventListener('dragover',e=>{if(!busy&&selected&&available(selected)&&groupFor(catalog.get(selected))===viewGroup&&(!id||id===selected)){e.preventDefault();e.dataTransfer.dropEffect='move';square.classList.add('is-drop-target');}});square.addEventListener('dragleave',()=>square.classList.toggle('is-drop-target',false));square.addEventListener('drop',e=>{e.preventDefault();endDrag();if(!busy)place(e.dataTransfer.getData('text/plain'),viewGroup,viewPage,cell);});}grid.append(square);
+      if(!reserved){square.addEventListener('dragover',e=>{if(!busy&&selected&&available(selected)&&groupFor(catalog.get(selected))===viewGroup&&(!id||id===selected)){e.preventDefault();e.dataTransfer.dropEffect='move';square.classList.add('is-drop-target');}});square.addEventListener('dragleave',()=>square.classList.toggle('is-drop-target',false));square.addEventListener('drop',e=>{e.preventDefault();endDrag();if(!busy)place(e.dataTransfer.getData('text/plain'),viewGroup,viewPage,cell);});}grid.append(withFavorite(square,item));
     }scroll.append(grid);layout.append(scroll);
     const unsorted=el('aside','','wardrobe-unsorted'),items=[...catalog.values()].filter(i=>owned.has(String(i.id))&&groupFor(i)===viewGroup&&!state.locations[String(i.id)]&&match(i)).sort((a,b)=>itemName(a).localeCompare(itemName(b),undefined,{numeric:true,sensitivity:'base'}));unsorted.append(el('h3','Unsorted items ('+items.length+')'),el('p','Owned '+spec.label.toLowerCase()+' not placed on any page.','stat-note'));
-    const tray=el('div','','wardrobe-unsorted-grid');for(const item of items.slice(0,limit)){const id=String(item.id),b=btn('',()=>{selected=id;draw();},'wardrobe-unsorted-item');b.disabled=busy;b.setAttribute('aria-label','Select '+itemName(item));b.classList.toggle('is-selected',id===selected);b.append(picture(item),el('small',itemName(item)));b.draggable=true;b.addEventListener('dragstart',e=>startDrag(e,id));b.addEventListener('dragend',endDrag);hoverable(b,item);tray.append(b);}unsorted.append(tray);if(items.length>limit)unsorted.append(btn('Load more unsorted items',()=>{limit+=80;draw();}));if(!items.length)unsorted.append(el('p','No unsorted items match this category and search.'));layout.append(unsorted);root.append(layout);
+    const tray=el('div','','wardrobe-unsorted-grid');for(const item of items.slice(0,limit)){const id=String(item.id),b=btn('',()=>{selected=id;draw();},'wardrobe-unsorted-item');b.disabled=busy;b.setAttribute('aria-label','Select '+itemName(item));b.classList.toggle('is-selected',id===selected);b.append(picture(item),el('small',itemName(item)));b.draggable=true;b.addEventListener('dragstart',e=>startDrag(e,id));b.addEventListener('dragend',endDrag);hoverable(b,item);tray.append(withFavorite(b,item,true));}unsorted.append(tray);if(items.length>limit)unsorted.append(btn('Load more unsorted items',()=>{limit+=80;draw();}));if(!items.length)unsorted.append(el('p','No unsorted items match this category and search.'));layout.append(unsorted);root.append(layout);
     const status=el('p',notice,'wardrobe-status');status.setAttribute('role','status');root.append(status);
   }
   function mount(){
@@ -86,14 +99,19 @@ window.HMAdminWardrobe=(()=>{
   }
   async function chooseLocation(item){
     if(!admin||!owned.has(String(item.id))||!groupFor(item))return;const g=groupFor(item),id=String(item.id);const dialog=el('dialog','','wardrobe-location-dialog');dialog.setAttribute('aria-label','Choose HM Wardrobe location');dialog.append(el('h2','HM Wardrobe · '+itemName(item)),el('p','Choose a numbered page and an empty square, or keep this item unsorted.'));
-    const select=document.createElement('select');select.setAttribute('aria-label','Wardrobe page');for(let p=1;p<=groups[g].pages;p++)select.add(new Option(label(g,p),String(p)));select.value=String(state.locations[id]?.page||1);dialog.append(select);const scroller=el('div','','wardrobe-grid-scroll'),grid=el('div','','wardrobe-grid');grid.style.setProperty('--wardrobe-columns',groups[g].cols);scroller.append(grid);dialog.append(scroller);const feedback=el('p','');feedback.setAttribute('role','status');
-    function render(){grid.replaceChildren();const spec=groups[g],page=Number(select.value);for(let cell=0;cell<spec.cols*spec.rows;cell++){const reserved=cell===spec.cols*spec.rows-1,other=Object.keys(state.locations).find(k=>{const p=state.locations[k];return p.group===g&&p.page===page&&p.cell===cell;});const b=btn('',async()=>{if(await place(id,g,page,cell))dialog.close();else feedback.textContent=notice;},'wardrobe-square');b.disabled=reserved||busy||!!other&&other!==id;b.classList.toggle('is-reserved',reserved);b.setAttribute('aria-label',reserved?'Reserved blank square':`Row ${Math.floor(cell/spec.cols)+1}, column ${cell%spec.cols+1}${other?': occupied':': empty'}`);if(other&&!reserved)b.append(picture(catalog.get(other)));grid.append(b);}}
-    select.addEventListener('change',render);dialog.append(feedback,btn('Keep unsorted',async()=>{if(!state.locations[id]||await commit(next=>delete next.locations[id]))dialog.close();}),btn('Close',()=>dialog.close()));dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});dialog.addEventListener('close',()=>dialog.remove());document.body.append(dialog);render();dialog.showModal();
+    let page=state.locations[id]?.page||1;
+    const pageButtons=el('div','','wardrobe-page-tabs');pageButtons.setAttribute('role','group');pageButtons.setAttribute('aria-label','Wardrobe numbered pages');dialog.append(pageButtons);
+    const scroller=el('div','','wardrobe-grid-scroll'),grid=el('div','','wardrobe-grid');grid.style.setProperty('--wardrobe-columns',groups[g].cols);scroller.append(grid);dialog.append(scroller);const feedback=el('p','');feedback.setAttribute('role','status');
+    function render(){
+      pageButtons.replaceChildren();for(let p=1;p<=groups[g].pages;p++){const b=btn(label(g,p),()=>{page=p;render();});b.setAttribute('aria-pressed',String(p===page));pageButtons.append(b);}
+      grid.replaceChildren();const spec=groups[g];for(let cell=0;cell<spec.cols*spec.rows;cell++){const reserved=cell===spec.cols*spec.rows-1,other=Object.keys(state.locations).find(k=>{const p=state.locations[k];return p.group===g&&p.page===page&&p.cell===cell;});const b=btn('',async()=>{if(await place(id,g,page,cell))dialog.close();else feedback.textContent=notice;},'wardrobe-square');b.disabled=reserved||busy||!!other&&other!==id;b.classList.toggle('is-reserved',reserved);b.setAttribute('aria-label',reserved?'Reserved blank square':`Row ${Math.floor(cell/spec.cols)+1}, column ${cell%spec.cols+1}${other?': occupied':': empty'}`);if(other&&!reserved)b.append(picture(catalog.get(other)));grid.append(b);}
+    }
+    dialog.append(feedback,btn('Keep unsorted',async()=>{if(!state.locations[id]||await commit(next=>delete next.locations[id]))dialog.close();}),btn('Close',()=>dialog.close()));dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});dialog.addEventListener('close',()=>dialog.remove());document.body.append(dialog);render();dialog.showModal();
   }
   async function ownedChanged(item,isOwned){
     if(!admin||!groupFor(item))return;const id=String(item.id);if(isOwned)owned.add(id);else owned.delete(id);
-    if(!isOwned&&state.locations[id])await commit(next=>delete next.locations[id]);draw();if(isOwned)await chooseLocation(item);
+    if(!isOwned&&state.locations[id])await commit(next=>delete next.locations[id]);draw();
   }
   function locationButton(item){if(!admin||!available(item.id))return null;const pos=state.locations[String(item.id)],b=btn(pos?'HM Wardrobe · '+groups[pos.group].label+' '+label(pos.group,pos.page):'Choose HM Wardrobe location',()=>chooseLocation(item),'wardrobe-item-location');return b;}
-  return {init,ownedChanged,locationButton,groupFor,validPosition};
+  return {init,ownedChanged,locationButton,favoriteChanged,groupFor,validPosition};
 })();

@@ -10,3 +10,15 @@ body[data-view="collection"] main:has(#admin-wardrobe:not([hidden])){max-width:1
 .wardrobe-grid button.wardrobe-square.is-drop-target{background:var(--green-light);outline:3px solid var(--green-dark);outline-offset:-3px;border-style:solid}
 @media(max-width:1000px){.admin-wardrobe .wardrobe-layout{grid-template-columns:minmax(0,1fr) 220px}}
 @media(max-width:760px){.admin-wardrobe .wardrobe-layout{grid-template-columns:minmax(0,1fr)}}
+
+/* Wider unsorted tray, compact hover card and favorite overlays. */
+.admin-wardrobe .wardrobe-layout{grid-template-columns:minmax(0,1fr) 390px}.wardrobe-unsorted-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.wardrobe-hover-card .item-card{padding:10px}.wardrobe-hover-card .catalog-image{width:100%;height:150px;min-height:150px;display:grid;place-items:center;padding:0}.wardrobe-hover-card .catalog-image img{display:block;width:100%;height:150px;max-width:100%;object-fit:contain;margin:0;padding:0}.wardrobe-hover-card .card-title{font-size:14px}.wardrobe-hover-card p{font-size:11px}
+.wardrobe-cell,.wardrobe-unsorted-cell{position:relative;min-width:0;min-height:0}.wardrobe-cell{aspect-ratio:1}.wardrobe-cell>button.wardrobe-square{height:100%}.wardrobe-unsorted-cell>button.wardrobe-unsorted-item{width:100%;height:100%}
+.wardrobe-cell>button.wardrobe-favorite-star,.wardrobe-unsorted-cell>button.wardrobe-favorite-star{position:absolute;right:2px;top:2px;z-index:4;display:grid;place-items:center;width:22px;height:22px;min-height:22px;padding:0;margin:0;border:1px solid var(--border);border-radius:50%;background:var(--card);color:var(--green-dark);font-size:16px;line-height:1;box-shadow:0 1px 4px #0002;opacity:0;pointer-events:none;transform:none}
+.wardrobe-cell:hover>button.wardrobe-favorite-star,.wardrobe-cell:focus-within>button.wardrobe-favorite-star,.wardrobe-unsorted-cell:hover>button.wardrobe-favorite-star,.wardrobe-unsorted-cell:focus-within>button.wardrobe-favorite-star,.wardrobe-cell>button.wardrobe-favorite-star.is-favorite,.wardrobe-unsorted-cell>button.wardrobe-favorite-star.is-favorite{opacity:1;pointer-events:auto}.wardrobe-favorite-star.is-favorite{color:var(--favorite-ink,#96702c)!important;background:var(--favorite-card,#fbefda)!important}
+@media(hover:none){.wardrobe-cell>button.wardrobe-favorite-star,.wardrobe-unsorted-cell>button.wardrobe-favorite-star{opacity:1;pointer-events:auto}}
+@media(max-width:1200px){.admin-wardrobe .wardrobe-layout{grid-template-columns:minmax(0,1fr) 320px}.wardrobe-unsorted-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:900px){.admin-wardrobe .wardrobe-layout{grid-template-columns:minmax(0,1fr)}.wardrobe-unsorted-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:500px){.wardrobe-unsorted-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.wardrobe-hover-card .catalog-image{width:160px;max-width:100%;height:160px;min-height:160px;margin:0 auto}.wardrobe-hover-card .catalog-image img{width:160px;height:160px;max-width:100%;object-fit:contain}
