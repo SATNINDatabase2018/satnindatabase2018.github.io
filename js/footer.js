@@ -24,7 +24,7 @@
       menu.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.open=false;summary.focus();}});
     }
     if(nav){
-      for(const [path,name,entries]of [['stable/','My Stable',[['My Horses','owned'],['Wishlist','wishlist']]],['collection/','My Collection',[['Everything','everything'],['Owned','owned'],['Wishlist','wishlist'],['Wardrobe (My Storage)','wardrobe']]]]){
+      for(const [path,name,entries]of [['stable/','My Stable',[['My Horses','owned'],['Wishlist','wishlist']]],['collection/','My Collection',[['Everything','everything'],['Owned','owned'],['Wishlist','wishlist'],['Favorites','favorite'],['Wardrobe (My Storage)','wardrobe']]]]){
         const original=[...nav.querySelectorAll('a')].find(a=>a.getAttribute('href')===path);if(!original||original.closest('.header-page-menu'))continue;
         const menu=text('details','','guides-menu header-page-menu'),summary=text('summary',''),links=text('div','','guides-menu-links');const mainLink=text('a',name,'header-page-link');mainLink.href=path;mainLink.addEventListener('click',e=>{e.stopPropagation();menu.open=false;});summary.setAttribute('aria-label',name+' menu');summary.append(mainLink);menu.append(summary,links);original.replaceWith(menu);
         for(const [label,hash]of entries){const a=text('a',label);a.href=path+'#'+hash;if(hash==='wardrobe'){a.hidden=true;supabaseClient.auth.getUser().then(({data,error})=>{a.hidden=!!error||!data?.user;}).catch(()=>{});}a.addEventListener('click',()=>menu.open=false);links.append(a);}
