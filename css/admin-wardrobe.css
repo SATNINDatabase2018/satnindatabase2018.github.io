@@ -36,3 +36,15 @@ body[data-view="collection"] main:has(#admin-wardrobe:not([hidden])){max-width:1
 /* Item tooltips never intercept movement or clicks to neighboring tiles. */
 .wardrobe-hover-card:not(.wardrobe-page-preview),.wardrobe-hover-card:not(.wardrobe-page-preview) *{pointer-events:none!important}
 .wardrobe-search-results{margin:16px 0;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:12px}.wardrobe-search-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;max-height:330px;overflow:auto}.wardrobe-search-result{display:flex;align-items:center;gap:9px;text-align:left;padding:6px;margin:0;background:var(--surface,var(--card));color:var(--text);border:1px solid var(--border);font-size:12px}.wardrobe-search-result .wardrobe-picture{width:50px;height:50px;flex:0 0 50px}.wardrobe-page-tabs button.has-search-results{border-color:var(--green-dark);font-weight:800;box-shadow:inset 0 -2px var(--green-dark)}
+/* Softer, theme-aware framing for the unsorted tray and its item tiles. */
+.wardrobe-unsorted{border:1px solid var(--border);border-radius:18px;background:var(--card);box-shadow:0 3px 14px #0000000a;padding:16px}
+.wardrobe-unsorted-grid{gap:10px}
+.wardrobe-unsorted-cell{border-radius:12px}
+.wardrobe-unsorted button.wardrobe-unsorted-item{box-sizing:border-box;padding:7px;border:1px solid var(--border);border-radius:12px;background:var(--surface,var(--card));box-shadow:0 1px 4px #00000008;transition:border-color .15s,background-color .15s,box-shadow .15s;transform:none;overflow:hidden}
+.wardrobe-unsorted-item .wardrobe-picture{border-radius:8px;background:transparent}
+.wardrobe-unsorted-item small{padding:5px 2px 2px;color:var(--text)}
+.wardrobe-unsorted button.wardrobe-unsorted-item:hover{border-color:var(--green);background:var(--green-light);box-shadow:0 2px 8px #00000012;transform:none}
+.wardrobe-unsorted button.wardrobe-unsorted-item.is-selected{border-color:var(--green-dark);background:var(--green-light);outline:2px solid var(--green-dark);outline-offset:1px;box-shadow:none}
+.wardrobe-unsorted button.wardrobe-unsorted-item:focus-visible{outline:2px solid var(--green-dark);outline-offset:2px}
+.wardrobe-unsorted.is-drop-target{border-color:var(--green-dark);box-shadow:inset 0 0 0 2px var(--green-dark);background:var(--green-light)}
+@media(prefers-reduced-motion:reduce){.wardrobe-unsorted button.wardrobe-unsorted-item{transition:none}}
