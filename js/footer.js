@@ -2,7 +2,7 @@
 (() => {
   const DISCORD_USERNAME = 'crabatthequeen';
   const HM_NAME = 'Luna Dovegarden (2018 version)';
-  const logoImage=()=> 'assets/satnin-clam-otter-'+(document.documentElement.dataset.theme==='darkcoffee'?'coffee':(['light','dark','coffee','forest'].includes(document.documentElement.dataset.theme)?document.documentElement.dataset.theme:'light'))+'.png?v=96'; // Example: assets/logo.png
+  const logoImage=()=> 'assets/satnin-clam-otter-'+(['darkcoffee','tcb'].includes(document.documentElement.dataset.theme)?'coffee':(['light','dark','coffee','forest'].includes(document.documentElement.dataset.theme)?document.documentElement.dataset.theme:'light'))+'.png?v=96'; // Example: assets/logo.png
   const SITE_NAME = "SATNIN's Database";
   const text=(tag,value,cls)=>{const n=document.createElement(tag);n.textContent=value;if(cls)n.className=cls;return n;};
   function updateHeader(){

@@ -1,13 +1,13 @@
 /* Apply saved theme before paint; offer all themes on every page. */
 (() => {
- const key='hm2018:theme',themes={light:{name:'✿ Blossom',colour:'#fff8f2'},dark:{name:'☾ Night',colour:'#121524'},coffee:{name:'☕ Coffee',colour:'#f2e8db'},forest:{name:'🌲 Night Forest',colour:'#101d18'},darkcoffee:{name:'☕ Dark Coffee',colour:'#1c1511'}};
+ const key='hm2018:theme',themes={light:{name:'✿ Blossom',colour:'#fff8f2'},dark:{name:'☾ Night',colour:'#121524'},coffee:{name:'☕ Coffee',colour:'#f2e8db'},forest:{name:'🌲 Night Forest',colour:'#101d18'},darkcoffee:{name:'☕ Dark Coffee',colour:'#1c1511'},tcb:{name:'ϟ TCB',colour:'#10100f'}};
  let choice='light';try{const saved=localStorage.getItem(key);if(themes[saved])choice=saved;}catch{}
  function apply(theme){
-  choice=themes[theme]?theme:'light';document.documentElement.dataset.theme=choice;document.documentElement.style.colorScheme=['dark','darkcoffee'].includes(choice)?'dark':'light';
+  choice=themes[theme]?theme:'light';document.documentElement.dataset.theme=choice;document.documentElement.style.colorScheme=['dark','darkcoffee','tcb'].includes(choice)?'dark':'light';
   document.documentElement.style.backgroundColor=themes[choice].colour;
-  document.documentElement.style.setProperty('--loading-tint',choice==='darkcoffee'?'rgba(28,21,17,.38)':choice==='forest'?'rgba(16,29,24,.38)':choice==='dark'?'rgba(18,21,36,.38)':choice==='coffee'?'rgba(242,232,219,.38)':'rgba(255,248,242,.38)');
+  document.documentElement.style.setProperty('--loading-tint',choice==='tcb'?'rgba(16,16,15,.38)':choice==='darkcoffee'?'rgba(28,21,17,.38)':choice==='forest'?'rgba(16,29,24,.38)':choice==='dark'?'rgba(18,21,36,.38)':choice==='coffee'?'rgba(242,232,219,.38)':'rgba(255,248,242,.38)');
   const picker=document.getElementById('theme-toggle');if(picker)picker.value=choice;
-  document.querySelectorAll('.header-logo-image img').forEach(img=>{img.src='assets/satnin-clam-otter-'+(choice==='darkcoffee'?'coffee':choice)+'.png?v=96';});
+  document.querySelectorAll('.header-logo-image img').forEach(img=>{img.src='assets/satnin-clam-otter-'+(['darkcoffee','tcb'].includes(choice)?'coffee':choice)+'.png?v=96';});
   let meta=document.querySelector('meta[name="theme-color"]');if(!meta){meta=document.createElement('meta');meta.name='theme-color';document.head.append(meta);}meta.content=themes[choice].colour;
  }
  const forestPaint=document.createElement('style');forestPaint.id='forest-first-paint';forestPaint.textContent='html[data-theme="forest"],html[data-theme="forest"] body{background:#101d18!important}html[data-theme="forest"] #page-loading{background:rgba(16,29,24,.38)!important;color:#eeeede}html[data-theme="forest"] #page-loading .loading-ring{border-color:#3a5140;border-top-color:#aec68c}';document.head.append(forestPaint);

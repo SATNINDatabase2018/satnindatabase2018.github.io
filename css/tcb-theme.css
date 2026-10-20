@@ -1,0 +1,28 @@
+/* TCB — black velvet, ivory, warm gold and a lightning-bolt detail. */
+html[data-theme="tcb"]{
+ --bg:#10100f;--card:#1d1c19;--card-2:#2b271f;--text:#f7f0df;--muted:#c5bba5;
+ --green:#d5b361;--green-dark:#f0cf82;--green-light:#352d1c;--border:#514734;
+ --shadow:0 12px 32px #0005;--accent-hover:#f0cf82;--on-accent:#17130b;
+ --surface:#24221d;--surface-hover:#393120;--filled:#3c321e;--slot-border:#76603a;
+ --header:#14130ff2;--focus:#d5b36140;--link:#f0cf82;
+ --glow-pink:#ad833b12;--glow-sun:#efd8a012;--portrait:#4a3d25;
+ --neutral-bg:#2a2925;--neutral-border:#555147;--neutral-text:#cec7b8;
+ --backdrop:#080704bf;--figure:#c7b281;--figure-stroke:#f4dfac;
+ --owned-card:#29372d;--wishlist-card:#3e331e;--favorite-card:#3c2932;
+ --owned-ink:#c3ddc3;--wishlist-ink:#f3d594;--favorite-ink:#edc2d2;
+ --logo-surface:#30271a;--logo-edge:#c7a052;--logo-halo:#d5b36122;
+ --themed-otter:url('../assets/satnin-clam-otter-coffee.png?v=96');
+ --loading-tint:rgba(16,16,15,.38);color-scheme:dark;background:#10100f!important;
+}
+html[data-theme="tcb"] body{background:radial-gradient(ellipse at 8% 0%,#a17b2510,transparent 48%),radial-gradient(ellipse at 95% 15%,#efd8a00d,transparent 42%),#10100f!important;color:var(--text)}
+[data-theme="tcb"] body>header{border-bottom:1px solid #a98a49;box-shadow:0 3px 22px #0003}
+[data-theme="tcb"] h1,[data-theme="tcb"] h2,[data-theme="tcb"] .logo{color:#f0cf82}
+[data-theme="tcb"] main>h1::after{content:'ϟ';display:inline-block;margin-left:.4em;color:#d5b361;font-size:.8em;vertical-align:.05em}
+[data-theme="tcb"] .item-card::before{background:linear-gradient(90deg,#9e7739,#f3dc9a,#bb8f48)}
+[data-theme="tcb"] .outfit-builder{background:linear-gradient(145deg,#30291b,#1b1915)}
+[data-theme="tcb"] .sheet-progress{background:#352d1c;color:#f0cf82}
+[data-theme="tcb"] #theme-toggle{border-color:#a98a49}
+[data-theme="tcb"] #page-loading{background:rgba(16,16,15,.38)!important;color:#f7f0df}
+[data-theme="tcb"] #page-loading .loading-ring{border-color:#514734;border-top-color:#f0cf82}
+[data-theme="tcb"] .contact-lyrics{opacity:.38}
+[data-theme="tcb"] ::selection{background:#d5b361;color:#10100f}
