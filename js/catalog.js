@@ -218,7 +218,7 @@
     const excludedFlags=[...document.querySelectorAll('#hidden-state-filters input:checked')].map(n=>n.value);
     syncSortChoices();
     const rules=[...document.querySelectorAll('.sort-rule')].map(n=>({field:n.querySelector('.sort-field').value,dir:n.querySelector('.sort-dir').value}));
-    const filtered=items.filter(i=>!excludedFlags.some(f=>state(i)[f])&&(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && (matchesValues(chosenCategories,i.category)&&matchesValues(chosenTypes,itemType(i))) && (!breed || i.kind==='horse' && i.section===breed) && (!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value)) && (!chosenAreas.length || shopsFor(i).some(value=>chosenAreas.includes(areaForShop(value)))) && (!chosenShops.length || chosenShops.some(value=>hasShop(i,value))) && (!flags.length || flags.some(f=>state(i)[f])) && Number.isFinite(searchRank(i,q))).sort((a,b)=>(window.HMItemStatus?.compare(a,b)||0)||(q?(searchRank(a,q)-searchRank(b,q)):0)||compare(a,b,rules));
+    const filtered=items.filter(i=>!excludedFlags.some(f=>state(i)[f])&&(view!=='collection' || collectionMatch(i)) && (view==='collection' || !active || i.category===active) && (matchesValues(chosenCategories,i.category)&&matchesValues(chosenTypes,itemType(i))) && (!breed || i.kind==='horse' && i.section===breed) && (!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value)) && (!chosenAreas.length || shopsFor(i).some(value=>chosenAreas.includes(areaForShop(value)))) && (!chosenShops.length || chosenShops.some(value=>hasShop(i,value))) && (!flags.length || flags.some(f=>state(i)[f])) && Number.isFinite(searchRank(i,q))).sort((a,b)=>(window.HMItemStatus?.compare(a,b)||0)||(q?(searchRank(a,q)-searchRank(b,q)):0)||compare(a,b,rules));
     $('database-grid').replaceChildren(...filtered.slice(0,visibleLimit).map(card));
     $('catalog-load-more')?.remove();
     if(filtered.length>visibleLimit){const more=button(`Load 60 more (${filtered.length-visibleLimit} remaining)`,()=>{visibleLimit+=60;render(false);});more.id='catalog-load-more';$('database-grid').after(more);}
@@ -227,7 +227,8 @@
   }
   function options(select,values,first){if(!select)return;select.replaceChildren(new Option(first,''),...values.map(v=>new Option(v,v)));}
   function updateOptions(){setupDBCascade();}
-  function categoryPool(){return items.filter(i=>view==='collection'?i.kind!=='horse'&&state(i)[active]:!active||i.category===active);}
+  function collectionMatch(item){const saved=state(item);return item.kind!=='horse'&&(active==='everything'?!!(saved.owned||saved.wishlist||saved.favorite):!!saved[active]);}
+  function categoryPool(){return items.filter(i=>view==='collection'?collectionMatch(i):!active||i.category===active);}
   const mainCategories=[['Horses','Horses'],['Horse Decorations','Horse decoration'],['Equipment','Equipment'],['Hairstyles','Hairstyles'],['Clothes','Clothes'],['Player Accessories','Player accessories'],['Pets','Pets']];
   function updateDBSubcategories(){
     const chosen=filterValues('category-filter'),main=chosen.length===1?chosen[0]:'';
@@ -338,7 +339,7 @@
     row.append(f,d,button('Remove rule',()=>{row.remove();render();})); $('sort-rules')?.append(row);
   }
   function setup(){
-    const choices=view==='collection'?[['owned','Owned'],['wishlist','Wishlist'],['favorite','Favorites']]:categories;
+    const choices=view==='collection'?[['everything','Everything'],['owned','Owned'],['wishlist','Wishlist'],['favorite','Favorites']]:categories;
     let hash='';try{hash=decodeURIComponent(location.hash.slice(1));}catch{}
     active=choices.some(([v])=>v===hash)?hash:choices[0][0];
     const tabs=$('catalog-tabs');

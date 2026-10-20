@@ -1,0 +1,8 @@
+/* Keep every My Collection view as wide as the wardrobe. */
+body[data-view="collection"] main{box-sizing:border-box;max-width:1680px;width:calc(100% - 32px);padding-left:0;padding-right:0}
+body[data-view="collection"] #catalog-panel{min-width:0}
+@media(min-width:1000px){
+ body[data-view="collection"] #feature-content{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:0 24px;align-items:start}
+ body[data-view="collection"] #catalog-tabs,body[data-view="collection"] #admin-wardrobe{grid-column:1 / -1}
+ body[data-view="collection"] #outfit-builder{box-sizing:border-box;position:sticky;top:110px;right:auto;width:100%;margin:0;max-height:calc(100vh - 135px);overflow:auto;grid-column:2;grid-row:2}
+}
