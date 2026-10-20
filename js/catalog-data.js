@@ -24,7 +24,10 @@
       if(row.deleted&&!includeDeleted){map.delete(String(row.entry_id));continue;}
       map.set(String(row.entry_id),{...(map.get(String(row.entry_id))||{}),...row.payload,id:Number(row.entry_id),_revision:Number(row.revision),_deleted:row.deleted});
     }
-    return [...map.values()];
+    return [...map.values()].map(item=>{
+      if(kind==='horse'&&/^https:\/\/ssodb\.bplaced\.net\/db\/items\/[^/?]+-small\.webp(?:\?|$)/i.test(item.image||''))item.image=item.image.replace(/-small\.webp(?=\?|$)/i,'.webp');
+      return item;
+    });
   }
   window.HMCatalogData={records,changes,load:path=>records(path.includes('horses.json')?'horse':'item')};
 })();
