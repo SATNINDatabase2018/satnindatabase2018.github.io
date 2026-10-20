@@ -22,3 +22,8 @@ body[data-view="collection"] main:has(#admin-wardrobe:not([hidden])){max-width:1
 @media(max-width:900px){.admin-wardrobe .wardrobe-layout{grid-template-columns:minmax(0,1fr)}.wardrobe-unsorted-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
 @media(max-width:500px){.wardrobe-unsorted-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .wardrobe-hover-card .catalog-image{width:160px;max-width:100%;height:160px;min-height:160px;margin:0 auto}.wardrobe-hover-card .catalog-image img{width:160px;height:160px;max-width:100%;object-fit:contain}
+
+.admin-wardrobe .wardrobe-layout{grid-template-columns:minmax(0,1fr) 440px}.admin-wardrobe .wardrobe-grid{max-width:880px}.admin-wardrobe .wardrobe-grid[data-group="pets"]{max-width:590px}.admin-wardrobe .wardrobe-unsorted-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.wardrobe-unsorted.is-drop-target{outline:3px solid var(--green-dark);background:var(--green-light)}
+.wardrobe-hover-card{pointer-events:auto}.wardrobe-hover-card>.wardrobe-favorite-star{position:absolute;top:7px;right:7px;z-index:6;display:grid;place-items:center;width:26px;height:26px;min-height:26px;margin:0;padding:0;border:1px solid var(--border);border-radius:50%;background:var(--card);color:var(--green-dark);font-size:19px;opacity:1;pointer-events:auto}.wardrobe-hover-card .saved-status-owned{display:none!important}
+.admin-wardrobe .wardrobe-cell:hover>.wardrobe-favorite-star,.admin-wardrobe .wardrobe-unsorted-cell:hover>.wardrobe-favorite-star{visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+@media(max-width:1200px){.admin-wardrobe .wardrobe-layout{grid-template-columns:minmax(0,1fr) 340px}}@media(max-width:900px){.admin-wardrobe .wardrobe-layout{grid-template-columns:minmax(0,1fr)}}

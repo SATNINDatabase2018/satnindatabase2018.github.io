@@ -9,6 +9,7 @@
   const controls=[];
   const controlSpecs=stable?[['stable-sort','Sort horses'],['stable-sort-direction','Order']]:[['category-filter','Category'],['subcategory-filter','Item type'],['breed-filter','Breed'],['generation-filter','Generation'],['area-filter','Area'],['shop-filter','Site / shop'],['.sort-field','Sort by'],['.sort-dir','Direction']];
   for(const [id,label]of controlSpecs){
+    if(view==='database'&&['category-filter','area-filter'].includes(id)&&window.HMMultiFilters){const source=document.getElementById(id);if(source){const node=HMMultiFilters.attach(source,bar,'Quick '+label);controls.push({id,multi:true,node});continue;}}
     const select=document.createElement('select');select.setAttribute('aria-label','Quick '+label);bar.append(select);controls.push({id,select});
     select.addEventListener('change',()=>{const source=id.startsWith('.')?document.querySelector(id):document.getElementById(id);if(source){source.value=select.value;source.dispatchEvent(new Event('change',{bubbles:true}));}});
   }
@@ -18,7 +19,7 @@
   let queued=false;
   function sync(){
     queued=false;if(document.activeElement!==query)query.value=search.value;
-    for(const {id,select}of controls){const source=id.startsWith('.')?document.querySelector(id):document.getElementById(id);select.hidden=!source||!!source.closest('[hidden]');if(!source)continue;const signature=source.innerHTML;if(select.innerHTML!==signature)select.innerHTML=signature;select.value=source.value;if(id==='subcategory-filter')select.setAttribute('aria-label','Quick '+(source.getAttribute('aria-label')||'Item type'));}
+    for(const {id,select,multi,node}of controls){const source=id.startsWith('.')?document.querySelector(id):document.getElementById(id);if(multi){node.hidden=!source||!!source.closest('[hidden]');continue;}select.hidden=!source||!!source.closest('[hidden]');if(!source)continue;const signature=source.innerHTML;if(select.innerHTML!==signature)select.innerHTML=signature;select.value=source.value;if(id==='subcategory-filter')select.setAttribute('aria-label','Quick '+(source.getAttribute('aria-label')||'Item type'));}
   }
   function schedule(){if(!queued){queued=true;requestAnimationFrame(sync);}}
   function position(){const bottom=header.getBoundingClientRect().bottom;document.documentElement.style.setProperty('--catalog-header-bottom',bottom+'px');bar.hidden=!!panel.closest('[hidden]')||panel.getBoundingClientRect().bottom>bottom;}

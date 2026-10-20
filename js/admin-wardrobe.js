@@ -31,11 +31,13 @@ window.HMAdminWardrobe=(()=>{
     catch(e){notice='Could not save: '+e.message+' Use Refresh wardrobe before trying again.';return false;}
     finally{busy=false;draw();}
   }
-  function hideHover(){hover?.remove();hover=null;}
+  let hoverTimer;
+  function hideHover(){clearTimeout(hoverTimer);hover?.remove();hover=null;}
+  function scheduleHide(){clearTimeout(hoverTimer);hoverTimer=setTimeout(hideHover,220);}
   function preview(item,anchor){
     hideHover();if(!item)return;hover=el('div','','wardrobe-hover-card');
     if(window.HMCatalog?.createCard)hover.append(HMCatalog.createCard(item));else hover.append(el('strong',itemName(item)));
-    hover.setAttribute('role','tooltip');document.body.append(hover);const r=anchor.getBoundingClientRect(),width=Math.min(230,innerWidth-24);hover.style.width=width+'px';hover.style.left=Math.max(12,Math.min(r.right+10,innerWidth-width-12))+'px';hover.style.top=Math.max(12,Math.min(r.top,innerHeight-hover.offsetHeight-12))+'px';
+    hover.querySelectorAll('.saved-status-owned,.saved-status-favorite').forEach(n=>n.remove());hover.append(favoriteControl(item));hover.setAttribute('role','dialog');hover.setAttribute('aria-label','Item preview');hover.addEventListener('mouseenter',()=>clearTimeout(hoverTimer));hover.addEventListener('mouseleave',scheduleHide);hover.addEventListener('focusin',()=>clearTimeout(hoverTimer));hover.addEventListener('focusout',scheduleHide);document.body.append(hover);const r=anchor.getBoundingClientRect(),width=Math.min(230,innerWidth-24);hover.style.width=width+'px';hover.style.left=Math.max(12,Math.min(r.right+10,innerWidth-width-12))+'px';hover.style.top=Math.max(12,Math.min(r.top,innerHeight-hover.offsetHeight-12))+'px';
   }
   function picture(item){const wrap=el('span','','wardrobe-picture');if(/^https:\/\//i.test(item?.image||'')){const image=document.createElement('img');image.src=item.image;image.alt=itemName(item);image.loading='lazy';image.draggable=false;image.addEventListener('error',()=>wrap.replaceChildren(el('span',itemName(item))),{once:true});wrap.append(image);}else wrap.append(el('span',itemName(item)));return wrap;}
   function startDrag(event,id){
@@ -44,8 +46,8 @@ window.HMAdminWardrobe=(()=>{
   }
   function endDrag(){root?.classList.toggle('is-dragging',false);root?.querySelectorAll('.is-drop-target').forEach(n=>n.classList.toggle('is-drop-target',false));}
   function favoriteChanged(item,value){const id=String(item.id);if(value)favorites.add(id);else favorites.delete(id);draw();}
-  function withFavorite(tile,item,unsorted=false){
-    if(!item)return tile;const id=String(item.id),frame=el('div','',unsorted?'wardrobe-unsorted-cell':'wardrobe-cell');
+  function favoriteControl(item){
+    const id=String(item.id);
     const star=btn('★',async event=>{
       event.preventDefault();event.stopPropagation();hideHover();if(favoriteBusy.has(id))return;favoriteBusy.add(id);star.disabled=true;const next=!favorites.has(id);
       try{const {data,error}=await supabaseClient.from('user_items').update({favorite:next}).eq('user_id',account.id).eq('item_id',item.id).eq('owned',true).select('item_id,favorite');if(error)throw error;if(!data?.length)throw Error('Item is no longer owned. Refresh wardrobe.');
@@ -53,9 +55,10 @@ window.HMAdminWardrobe=(()=>{
       }catch(e){notice='Could not update favorite: '+e.message;}finally{favoriteBusy.delete(id);draw();}
     },'wardrobe-favorite-star');
     star.classList.toggle('is-favorite',favorites.has(id));star.setAttribute('aria-pressed',String(favorites.has(id)));star.setAttribute('aria-label',(favorites.has(id)?'Unfavorite ':'Favorite ')+itemName(item));star.title=favorites.has(id)?'Remove favorite':'Favorite item';star.disabled=busy||favoriteBusy.has(id);star.draggable=false;
-    frame.append(tile,star);return frame;
+    return star;
   }
-  function hoverable(node,item){node.addEventListener('mouseenter',()=>preview(item,node));node.addEventListener('mouseleave',hideHover);node.addEventListener('focus',()=>preview(item,node));node.addEventListener('blur',hideHover);}
+  function withFavorite(tile,item,unsorted=false){if(!item)return tile;const frame=el('div','',unsorted?'wardrobe-unsorted-cell':'wardrobe-cell');frame.append(tile,favoriteControl(item));return frame;}
+  function hoverable(node,item){node.addEventListener('mouseenter',()=>preview(item,node));node.addEventListener('mouseleave',scheduleHide);node.addEventListener('focus',()=>preview(item,node));node.addEventListener('blur',scheduleHide);}
   function match(item){return !query||[item.title,item.color,item.category,item.section,item.shop].filter(Boolean).join(' ').toLowerCase().includes(query.toLowerCase());}
   async function place(id,group,page,cell){
     if(!available(id)||groupFor(catalog.get(id))!==group||!validPosition({group,page,cell}))return false;
@@ -77,14 +80,14 @@ window.HMAdminWardrobe=(()=>{
     const pageActions=el('div','','wardrobe-actions');pageActions.append(el('h3',groups[viewGroup].label+' · '+label(viewGroup,viewPage)));
     const rename=btn('Name this page',async()=>{const g=viewGroup,p=viewPage;const value=await HMDialog.prompt('Title for '+groups[g].label+' page '+p+' (the number always stays in front):',state.titles[g]?.[p]||'');if(value===null)return;await commit(next=>{next.titles[g]??={};next.titles[g][p]=value.trim().slice(0,80);});});rename.disabled=busy;pageActions.append(rename);
     if(selected){pageActions.append(el('span','Selected: '+itemName(catalog.get(selected))));const remove=btn('Move to unsorted',async()=>{const id=selected;const ok=await commit(next=>delete next.locations[id]);if(ok){selected=null;draw();}});remove.disabled=busy||!state.locations[selected];pageActions.append(remove,btn('Cancel selection',()=>{selected=null;draw();}));}root.append(pageActions);
-    const layout=el('div','','wardrobe-layout'),scroll=el('div','','wardrobe-grid-scroll'),grid=el('div','','wardrobe-grid');const spec=groups[viewGroup];grid.style.setProperty('--wardrobe-columns',spec.cols);grid.setAttribute('aria-label',groups[viewGroup].label+' storage grid');
+    const layout=el('div','','wardrobe-layout'),scroll=el('div','','wardrobe-grid-scroll'),grid=el('div','','wardrobe-grid');const spec=groups[viewGroup];grid.style.setProperty('--wardrobe-columns',spec.cols);grid.dataset.group=viewGroup;grid.setAttribute('aria-label',groups[viewGroup].label+' storage grid');
     for(let cell=0;cell<spec.cols*spec.rows;cell++){
       const reserved=cell===spec.cols*spec.rows-1,id=Object.keys(state.locations).find(id=>{const p=state.locations[id];return p.group===viewGroup&&p.page===viewPage&&p.cell===cell;}),item=catalog.get(id);
       const square=btn('',()=>{if(busy)return;if(id){selected=id;draw();}else if(selected)place(selected,viewGroup,viewPage,cell);},'wardrobe-square');square.dataset.cell=cell;square.disabled=reserved||busy;square.classList.toggle('is-reserved',reserved);square.classList.toggle('is-selected',!!id&&id===selected);square.setAttribute('aria-label',reserved?'Reserved blank square':`Row ${Math.floor(cell/spec.cols)+1}, column ${cell%spec.cols+1}: ${item?itemName(item):'Empty'}`);
       if(item&&!reserved){square.append(picture(item));square.classList.toggle('is-dimmed',!match(item));hoverable(square,item);square.draggable=true;square.addEventListener('dragstart',e=>startDrag(e,id));square.addEventListener('dragend',endDrag);}
       if(!reserved){square.addEventListener('dragover',e=>{if(!busy&&selected&&available(selected)&&groupFor(catalog.get(selected))===viewGroup&&(!id||id===selected)){e.preventDefault();e.dataTransfer.dropEffect='move';square.classList.add('is-drop-target');}});square.addEventListener('dragleave',()=>square.classList.toggle('is-drop-target',false));square.addEventListener('drop',e=>{e.preventDefault();endDrag();if(!busy)place(e.dataTransfer.getData('text/plain'),viewGroup,viewPage,cell);});}grid.append(withFavorite(square,item));
     }scroll.append(grid);layout.append(scroll);
-    const unsorted=el('aside','','wardrobe-unsorted'),items=[...catalog.values()].filter(i=>owned.has(String(i.id))&&groupFor(i)===viewGroup&&!state.locations[String(i.id)]&&match(i)).sort((a,b)=>itemName(a).localeCompare(itemName(b),undefined,{numeric:true,sensitivity:'base'}));unsorted.append(el('h3','Unsorted items ('+items.length+')'),el('p','Owned '+spec.label.toLowerCase()+' not placed on any page.','stat-note'));
+    const unsorted=el('aside','','wardrobe-unsorted'),items=[...catalog.values()].filter(i=>owned.has(String(i.id))&&groupFor(i)===viewGroup&&!state.locations[String(i.id)]&&match(i)).sort((a,b)=>itemName(a).localeCompare(itemName(b),undefined,{numeric:true,sensitivity:'base'}));unsorted.addEventListener('dragover',e=>{if(!busy&&selected&&state.locations[selected]){e.preventDefault();e.dataTransfer.dropEffect='move';unsorted.classList.add('is-drop-target');}});unsorted.addEventListener('dragleave',()=>unsorted.classList.toggle('is-drop-target',false));unsorted.addEventListener('drop',async e=>{e.preventDefault();e.stopPropagation();endDrag();const id=e.dataTransfer.getData('text/plain');if(!busy&&available(id)&&state.locations[id]){if(await commit(next=>delete next.locations[id])){selected=null;draw();}}});unsorted.append(el('h3','Unsorted items ('+items.length+')'),el('p','Owned '+spec.label.toLowerCase()+' not placed on any page.','stat-note'));
     const tray=el('div','','wardrobe-unsorted-grid');for(const item of items.slice(0,limit)){const id=String(item.id),b=btn('',()=>{selected=id;draw();},'wardrobe-unsorted-item');b.disabled=busy;b.setAttribute('aria-label','Select '+itemName(item));b.classList.toggle('is-selected',id===selected);b.append(picture(item),el('small',itemName(item)));b.draggable=true;b.addEventListener('dragstart',e=>startDrag(e,id));b.addEventListener('dragend',endDrag);hoverable(b,item);tray.append(withFavorite(b,item,true));}unsorted.append(tray);if(items.length>limit)unsorted.append(btn('Load more unsorted items',()=>{limit+=80;draw();}));if(!items.length)unsorted.append(el('p','No unsorted items match this category and search.'));layout.append(unsorted);root.append(layout);
     const status=el('p',notice,'wardrobe-status');status.setAttribute('role','status');root.append(status);
   }
