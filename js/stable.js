@@ -45,8 +45,12 @@
     box.append(el('small','Equipment bonuses only. Player clothing and horse level are not included.'));
     const link=el('a','Edit outfit in My Outfits','stable-outfit-link');link.href='outfits/?outfit='+encodeURIComponent(outfit.id);box.append(link);return box;
   }
+  function horseStatus(card,id){
+    const owned=horses.filter(r=>String(r.horse_id)===String(id)).length,statuses=[...(owned?['owned']:[]),...(wishIds.has(String(id))?['wishlist']:[])];
+    if(statuses.length){card.classList.add('has-saved-status');card.style.setProperty('--saved-status-background',`linear-gradient(120deg, ${statuses.map((v,i)=>`var(--${v}-card) ${i*100/statuses.length}%, var(--${v}-card) ${(i+1)*100/statuses.length}%`).join(', ')})`);card.style.setProperty('--saved-status-border',`var(--${statuses[0]}-ink)`);}
+  }
   function horseCard(own){
-    const h=horseCatalog.find(x=>String(x.id)===String(own.horse_id));const card=el('article','','item-card stable-horse-card');card.dataset.horseId=own.id;
+    const h=horseCatalog.find(x=>String(x.id)===String(own.horse_id));const card=el('article','','item-card stable-horse-card');card.dataset.horseId=own.id;horseStatus(card,own.horse_id);
     card.append(photo(h,own.name||h?.breed||'Horse'),el('h3',own.name||h?.breed||'My horse'),el('p',[h?.breed,h?.coat,own.nickname].filter(Boolean).join(' · ')));
     if(user){
       const rename=button('Rename horse',()=>{form.hidden=false;input.value=own.name||'';status.textContent='';input.focus();input.select();});rename.className='rename-horse-button';
@@ -136,7 +140,7 @@
     });
   }
   function wishlistCard(h){
-    const card=el('article','','item-card stable-horse-card');card.append(photo(h,h.title||h.breed),el('h3',h.breed||h.title),el('p',h.coat||''));
+    const card=el('article','','item-card stable-horse-card');horseStatus(card,h.id);card.append(photo(h,h.title||h.breed),el('h3',h.breed||h.title),el('p',h.coat||''));
     const places=h.shop||h.location;if(places)card.append(el('p',places));if(h.sc!==null&&h.sc!==undefined&&h.sc!=='')card.append(el('p','SC '+h.sc));
     card.append(button('Add to My Stable',async e=>{const name=await HMDialog.prompt('What is your horse’s name?');if(!name?.trim())return;const b=e.currentTarget;b.disabled=true;try{const {error}=await supabaseClient.from('user_horses').insert({user_id:user.id,horse_id:h.id,name:name.trim(),nickname:null});if(error)throw error;await load();message(name.trim()+' added to your stable.');}catch(error){message(error.message);}finally{b.disabled=false;}}),button('Remove from Wishlist',async e=>{e.currentTarget.disabled=true;try{const {error}=await supabaseClient.from('user_horse_wishlist').delete().eq('user_id',user.id).eq('horse_id',h.id);if(error)throw error;wishIds.delete(String(h.id));render();}catch(error){message(error.message);e.currentTarget.disabled=false;}}));return card;
   }

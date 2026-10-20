@@ -82,10 +82,11 @@
     }
     return Infinity;
   }
-  let horseWishlist=new Set();
-  function state(item){return item.kind==='horse'?{wishlist:horseWishlist.has(String(item.id))}:states.get(String(item.id)) || {};}
+  let horseWishlist=new Set(),horseCounts=new Map();
+  function state(item){return item.kind==='horse'?{owned:(horseCounts.get(String(item.id))||0)>0,wishlist:horseWishlist.has(String(item.id))}:states.get(String(item.id)) || {};}
   async function loadStates(){
-    states=new Map();horseWishlist=new Set(); if(!user)return;
+    states=new Map();horseWishlist=new Set();horseCounts=new Map(); if(!user)return;
+    for(let start=0;;start+=1000){const stable=await supabaseClient.from('user_horses').select('horse_id').eq('user_id',user.id).range(start,start+999);if(stable.error)throw Error('Could not load your horse ownership: '+stable.error.message);for(const row of stable.data||[])horseCounts.set(String(row.horse_id),(horseCounts.get(String(row.horse_id))||0)+1);if((stable.data||[]).length<1000)break;}
     const wished=await supabaseClient.from('user_horse_wishlist').select('horse_id').eq('user_id',user.id);
     if(!wished.error)horseWishlist=new Set((wished.data||[]).map(r=>String(r.horse_id)));
     const {data,error}=await supabaseClient.from('user_items').select('item_id,owned,wishlist,favorite').eq('user_id',user.id);
@@ -134,6 +135,7 @@
     try{
       const {error}=await supabaseClient.from('user_horses').insert({user_id:user.id,horse_id:horse.id,name,nickname:null});
       if(error)throw error;
+      horseCounts.set(String(horse.id),(horseCounts.get(String(horse.id))||0)+1);render(false);
       message(`${name} was added to My Stable!`);
       await workspace?.refreshHorses();
     }catch(e){message('Could not add horse: '+e.message);}finally{control.disabled=false;control.textContent=old;}
@@ -142,7 +144,7 @@
     const card=text('article','','item-card');card.dataset.itemKey=key(item);card.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(item));
     const horse=item.kind==='horse';card.classList.toggle('horse-catalog-card',horse);
     const visual=text('div','','catalog-card-visual');visual.append(image(item));
-    if(!horse){
+    {
       const saved=state(item),statuses=[['owned','✓','I own this'],['wishlist','☆','Wishlist'],['favorite','♡','Favorite']].filter(([field])=>saved[field]);
       if(statuses.length){
         card.classList.add('has-saved-status');
@@ -151,7 +153,7 @@
         card.style.setProperty('--saved-status-background',`linear-gradient(120deg, ${stops})`);
         card.style.setProperty('--saved-status-border',`var(--${statuses[0][0]}-ink)`);
         const badges=text('div','','saved-status-badges');
-        for(const [field,symbol,label]of statuses){const badge=text('span',symbol,'saved-status-badge saved-status-'+field);badge.title=label;badge.setAttribute('aria-label',label);badge.setAttribute('role','img');badge.tabIndex=0;badges.append(badge);}
+        for(const [field,symbol,label]of statuses){const badge=text('span',symbol,'saved-status-badge saved-status-'+field);badge.title=horse&&field==='owned'?'In My Stable':label;badge.setAttribute('aria-label',badge.title);badge.setAttribute('role','img');badge.tabIndex=0;badges.append(badge);}
         visual.firstElementChild.append(badges);
       }
     }
@@ -180,7 +182,7 @@
     if(stats)card.append(text('p',stats,'stats card-stats'));
     const actions=text('div','','item-actions');
     if(item.kind==='horse'){
-      actions.append(button('Add to My Stable',e=>addHorseHere(item,e.currentTarget)));
+      const stableAction=text('div','','horse-stable-action');stableAction.append(button('Add to My Stable',e=>addHorseHere(item,e.currentTarget)));const count=horseCounts.get(String(item.id))||0;if(count)stableAction.append(text('small',`${count} in My Stable`,'horse-stable-count'));actions.append(stableAction);
       const wish=button(state(item).wishlist?'★ Wishlisted':'☆ Wishlist',e=>toggle(item,'wishlist',e.currentTarget));wish.setAttribute('aria-pressed',String(!!state(item).wishlist));wish.disabled=!ready||pending.has(key(item));actions.append(wish);
     }else{
       for(const [field,label] of [['owned','✓ I own this'],['wishlist','☆ Wishlist'],['favorite','♡ Favorite']]){
@@ -194,6 +196,9 @@
   }
   function render(reset=false){
     if(!$('database-grid'))return;
+    if(view==='collection'){
+      let note=$('horse-wishlist-note');if(!note){note=text('p','','stat-note');note.id='horse-wishlist-note';const link=text('a','My Stable');link.href='stable/';note.append(document.createTextNode('Wishlisted horses are in '),link,document.createTextNode(' → Wishlist.'));$('result-count').before(note);}note.hidden=active!=='wishlist';
+    }
     if(reset===true)visibleLimit=60;
     if(view==='database'||view==='collection'){updateDBSubcategories();updateDBShops();}
     const q=($('search')?.value||'').trim().toLowerCase(),category=$('category-filter')?.value||'',shop=$('shop-filter')?.value||'',breed=$('breed-filter')?.value||'',subtype=$('subcategory-filter')?.value||'';
