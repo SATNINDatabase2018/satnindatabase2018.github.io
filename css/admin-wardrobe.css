@@ -48,3 +48,5 @@ body[data-view="collection"] main:has(#admin-wardrobe:not([hidden])){max-width:1
 .wardrobe-unsorted button.wardrobe-unsorted-item:focus-visible{outline:2px solid var(--green-dark);outline-offset:2px}
 .wardrobe-unsorted.is-drop-target{border-color:var(--green-dark);box-shadow:inset 0 0 0 2px var(--green-dark);background:var(--green-light)}
 @media(prefers-reduced-motion:reduce){.wardrobe-unsorted button.wardrobe-unsorted-item{transition:none}}
+
+.wardrobe-outfit-membership{padding:10px 12px;border-top:1px solid var(--border);font-size:11px;line-height:1.4;background:var(--card);color:var(--text)}.wardrobe-outfit-membership>strong{font-size:12px}.wardrobe-outfit-membership ul{padding-left:16px;margin:6px 0 0}.wardrobe-outfit-membership li{margin:3px 0;overflow-wrap:anywhere}.wardrobe-outfit-membership p{margin:6px 0 0}

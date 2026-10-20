@@ -5,7 +5,7 @@ window.HMAdminWardrobe=(()=>{
   const btn=(label,fn,cls)=>{const b=el('button',label,cls);b.type='button';b.addEventListener('click',fn);return b;};
   const groupFor=item=>Object.keys(groups).find(g=>groups[g].categories.includes(item?.category));
   const validPosition=p=>!!p&&!!groups[p.group]&&Number.isInteger(p.page)&&p.page>=1&&p.page<=groups[p.group].pages&&Number.isInteger(p.cell)&&p.cell>=0&&p.cell<groups[p.group].cols*groups[p.group].rows-1;
-  let favorites=new Set(),favoriteBusy=new Set();
+  let favorites=new Set(),favoriteBusy=new Set(),outfitMembership=new Map(),outfitsReady=false;
   let account=null,enabled=false,catalog=new Map(),owned=new Set(),state={titles:{},locations:{}},revision=0,busy=false,root=null,tab=null,viewGroup='clothes',viewPage=1,selected=null,query='',limit=80,notice='',hover=null;
   const itemName=i=>(i?.title||'Unavailable item')+(i?.color?' — '+i.color:'');
   const label=(g,p)=>p+(state.titles?.[g]?.[p]?' · '+state.titles[g][p]:'');
@@ -21,8 +21,16 @@ window.HMAdminWardrobe=(()=>{
   async function loadOwned(){
     const ids=new Set(),stars=new Set();for(let n=0;;n+=1000){const {data,error}=await supabaseClient.from('user_items').select('item_id,favorite').eq('user_id',account.id).eq('owned',true).range(n,n+999);if(error)throw error;for(const row of data||[]){ids.add(String(row.item_id));if(row.favorite)stars.add(String(row.item_id));}if((data||[]).length<1000)break;}owned=ids;favorites=stars;
   }
+  async function loadOutfits(){
+    outfitsReady=false;const membership=new Map();
+    try{for(let n=0;;n+=1000){const {data,error}=await supabaseClient.from('hm_saved_outfits').select('id,name,slots').eq('user_id',account.id).order('id').range(n,n+999);if(error)throw error;
+      for(const outfit of data||[]){for(const key of new Set(Object.values(outfit.slots||{}))){if(typeof key!=='string'||!key.startsWith('item:'))continue;const id=key.slice(5);if(!membership.has(id))membership.set(id,[]);membership.get(id).push({id:outfit.id,name:outfit.name||'Untitled outfit'});}}
+      if((data||[]).length<1000)break;
+    }outfitMembership=membership;outfitsReady=true;}catch{outfitMembership=new Map();}
+  }
+  function outfitList(item){const box=el('section','','wardrobe-outfit-membership');box.append(el('strong','In your outfits'));if(!outfitsReady){box.append(el('p','Outfit list unavailable. Use Refresh wardrobe to try again.'));return box;}const outfits=outfitMembership.get(String(item.id))||[];if(!outfits.length)box.append(el('p','Not in any saved outfits.'));else{const list=el('ul');for(const outfit of [...outfits].sort((a,b)=>a.name.localeCompare(b.name)))list.append(el('li',outfit.name));box.append(list);}return box;}
   async function reload(){
-    await loadOwned();const {data,error}=await supabaseClient.from('hm_admin_wardrobe').select('layout,revision').eq('user_id',account.id).maybeSingle();if(error)throw error;
+    await Promise.all([loadOwned(),loadOutfits()]);const {data,error}=await supabaseClient.from('hm_admin_wardrobe').select('layout,revision').eq('user_id',account.id).maybeSingle();if(error)throw error;
     state=clean(data?.layout);revision=Number(data?.revision||0);
   }
   async function commit(change){
@@ -39,7 +47,7 @@ window.HMAdminWardrobe=(()=>{
   function preview(item,anchor){
     hideHover();if(!item)return;hover=el('div','','wardrobe-hover-card');
     if(window.HMCatalog?.createCard)hover.append(HMCatalog.createCard(item));else hover.append(el('strong',itemName(item)));
-    hover.querySelectorAll('.saved-status-owned,.saved-status-favorite').forEach(n=>n.remove());if(favorites.has(String(item.id))){const star=el('span','★','wardrobe-favorite-indicator');star.setAttribute('role','img');star.setAttribute('aria-label','Favorite');hover.append(star);}hover.setAttribute('role','tooltip');hover.setAttribute('aria-label','Item preview');document.body.append(hover);const r=anchor.getBoundingClientRect(),width=Math.min(230,innerWidth-24);hover.style.width=width+'px';hover.style.left=Math.max(12,Math.min(r.right+10,innerWidth-width-12))+'px';hover.style.top=Math.max(12,Math.min(r.top,innerHeight-hover.offsetHeight-12))+'px';
+    hover.querySelectorAll('.saved-status-owned,.saved-status-favorite').forEach(n=>n.remove());if(favorites.has(String(item.id))){const star=el('span','★','wardrobe-favorite-indicator');star.setAttribute('role','img');star.setAttribute('aria-label','Favorite');hover.append(star);}hover.append(outfitList(item));hover.setAttribute('role','tooltip');hover.setAttribute('aria-label','Item preview');document.body.append(hover);const r=anchor.getBoundingClientRect(),width=Math.min(230,innerWidth-24);hover.style.width=width+'px';hover.style.left=Math.max(12,Math.min(r.right+10,innerWidth-width-12))+'px';hover.style.top=Math.max(12,Math.min(r.top,innerHeight-hover.offsetHeight-12))+'px';
   }
   function pagePreview(group,page,anchor){
     hideHover();const spec=groups[group],entries=Object.entries(state.locations).filter(([id,p])=>p.group===group&&p.page===page&&available(id));
