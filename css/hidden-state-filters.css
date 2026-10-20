@@ -1,1 +1,20 @@
 #hidden-state-filters{box-sizing:border-box;min-width:0;width:max-content;max-width:100%;margin:0;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--card);color:var(--text)}#hidden-state-filters legend{font-size:12px;font-weight:700;padding:0 4px}#hidden-state-filters label{display:flex;align-items:center;gap:7px;margin:6px 0;font-size:11px;font-weight:400;white-space:nowrap}#hidden-state-filters input{width:auto;max-width:none;margin:0;accent-color:var(--green)}
+
+/* Stack saved-status controls beside equal-width category/location columns. */
+body[data-view="database"] .filter-grid .state-filter-stack{grid-column:3;grid-row:1 / span 4;display:flex;flex-direction:column;gap:16px;min-width:0;align-self:start}
+body[data-view="database"] .filter-grid .state-filter-stack #state-filters,
+body[data-view="database"] .filter-grid .state-filter-stack #hidden-state-filters{box-sizing:border-box;width:100%;max-width:none;margin:0;padding:12px;align-self:stretch}
+body[data-view="database"] .filter-grid #sort-rules{grid-column:1 / span 2;grid-row:3;min-width:0;margin:0}
+body[data-view="database"] .filter-grid:has(#generation-filter-wrap:not([hidden])) #sort-rules{grid-row:4}
+body[data-view="database"] .filter-grid #sort-rules .sort-rule{min-width:0;display:flex;gap:10px}
+body[data-view="database"] .filter-grid #sort-rules select{flex:1;min-width:0;width:0;box-sizing:border-box}
+@media(max-width:680px){
+ body[data-view="database"] .filter-grid{display:flex;flex-direction:column;gap:16px}
+ body[data-view="database"] .filter-grid .category-filter-stack,
+ body[data-view="database"] .filter-grid .location-filter-stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;width:100%}
+ body[data-view="database"] .filter-grid .category-filter-stack>label,
+ body[data-view="database"] .filter-grid .location-filter-stack>label{grid-column:auto!important;grid-row:auto!important}
+ body[data-view="database"] .filter-grid .state-filter-stack{width:205px;max-width:100%;order:2}
+ body[data-view="database"] .filter-grid #sort-rules{width:100%}
+}
+@media(max-width:420px){body[data-view="database"] .filter-grid .category-filter-stack,body[data-view="database"] .filter-grid .location-filter-stack{grid-template-columns:minmax(0,1fr)}}
