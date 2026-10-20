@@ -65,7 +65,7 @@
     return a.title.localeCompare(b.title) || key(a).localeCompare(key(b));
   }
   // Exposed for small regression checks; no network or writes.
-  window.HMCatalog={compare,number,overallStats,searchRank,shopsFor,hasShop};
+  window.HMCatalog={compare,number,overallStats,searchRank,shopsFor,hasShop,createCard:card};
   function searchRank(item,query){
     const normal=value=>String(value??'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[‐‑–—-]/g,' ').replace(/\s+/g,' ').trim();
     const q=normal(query);if(!q)return 0;
@@ -111,6 +111,7 @@
     pending.delete(key(item));
     if(error){message('Could not save this change: '+error.message); render(false); return;}
     states.set(String(item.id),next); message('Saved.'); render(false);
+    if(field==='owned'&&window.HMAdminWardrobe){await HMAdminWardrobe.ownedChanged(item,next.owned);render(false);}
   }
   function image(item){
     const wrap=text('div','', 'catalog-image');
@@ -193,6 +194,7 @@
         b.setAttribute('aria-pressed',String(selected)); b.disabled=!ready || pending.has(key(item)); actions.append(b);
       }
     }
+    if(!horse&&state(item).owned){const wardrobeButton=window.HMAdminWardrobe?.locationButton(item);if(wardrobeButton)actions.append(wardrobeButton);}
     const s=slot(item);
     if(s){const count=workspace?.count(item)||0; const b=button(count?`✓ In ${count} outfit${count===1?'':'s'}`:'+ Add to outfit',e=>{if(requireAccount()){if(workspace)workspace.openMenu(item,e.currentTarget);else message('Outfit tools are unavailable. Refresh My Outfits and try again.');}});b.className='outfit-menu-trigger';b.setAttribute('aria-expanded','false');b.setAttribute('aria-haspopup','dialog');actions.append(b);}
     card.append(actions); return card;
@@ -372,6 +374,7 @@
       try{await loadStates();ready=true;}catch(e){message(e.message);}
       supabaseClient.auth.onAuthStateChange((event,session)=>{if((session?.user?.id||null)!==(user?.id||null))setTimeout(()=>location.reload(),0);});
     }
+    if(window.HMAdminWardrobe&&user)await HMAdminWardrobe.init({items,user});
     if(view!=='outfits')render();
     try{
       if(typeof HMOutfitWorkspace==='undefined')throw Error('The outfit script did not load.');
@@ -382,5 +385,6 @@
     }
     if(view!=='outfits')render();
   }
+  document.addEventListener('hm-wardrobe-updated',()=>{if(view!=='outfits')render(false);});
   start();
 })();
