@@ -1,3 +1,5 @@
 /* Reuse the saved-item palette for horses in each theme. */
 #stable-grid .stable-horse-card.has-saved-status{background:var(--saved-status-background);border-color:color-mix(in srgb,var(--saved-status-border) 34%,var(--border))}
 .horse-stable-action{display:flex;flex-direction:column;align-items:flex-start;gap:3px}.horse-stable-count{display:block;font-size:12px;color:var(--text);margin:0 0 4px}
+
+a.horse-stable-count{color:var(--green-dark);font-weight:700;text-decoration:underline;text-underline-offset:3px}.linked-horse-filter{margin:12px 0;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--card)}.linked-horse-filter button{font-size:12px;padding:6px 10px}.linked-horse-filter[hidden]{display:none}

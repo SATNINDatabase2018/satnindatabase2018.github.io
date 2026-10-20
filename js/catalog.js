@@ -182,7 +182,7 @@
     if(stats)card.append(text('p',stats,'stats card-stats'));
     const actions=text('div','','item-actions');
     if(item.kind==='horse'){
-      const stableAction=text('div','','horse-stable-action');stableAction.append(button('Add to My Stable',e=>addHorseHere(item,e.currentTarget)));const count=horseCounts.get(String(item.id))||0;if(count)stableAction.append(text('small',`${count} in My Stable`,'horse-stable-count'));actions.append(stableAction);
+      const stableAction=text('div','','horse-stable-action');stableAction.append(button('Add to My Stable',e=>addHorseHere(item,e.currentTarget)));const count=horseCounts.get(String(item.id))||0;if(count){const ownedLink=text('a',`${count} in My Stable`,'horse-stable-count');ownedLink.href='stable/?horse='+encodeURIComponent(item.id);ownedLink.setAttribute('aria-label',`View your ${count} ${item.breed||item.title} in My Stable`);stableAction.append(ownedLink);}actions.append(stableAction);
       const wish=button(state(item).wishlist?'★ Wishlisted':'☆ Wishlist',e=>toggle(item,'wishlist',e.currentTarget));wish.setAttribute('aria-pressed',String(!!state(item).wishlist));wish.disabled=!ready||pending.has(key(item));actions.append(wish);
     }else{
       for(const [field,label] of [['owned','✓ I own this'],['wishlist','☆ Wishlist'],['favorite','♡ Favorite']]){

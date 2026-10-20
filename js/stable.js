@@ -6,6 +6,7 @@
   const button=(label,action)=>{const b=el('button',label);b.type='button';b.addEventListener('click',action);return b;};
   let user=null, catalog=[], horseCatalog=[], horses=[], outfits=[], outfitsReady=false;
   let wishIds=new Set(),stableTab='owned';
+  let linkedHorseId=new URLSearchParams(location.search).get('horse')||'';
   function message(s){$('stable-message').textContent=s;}
   async function json(path){if(window.HMCatalogData)return window.HMCatalogData.load(path);const r=await fetch(path);if(!r.ok)throw Error('Could not load '+path);return r.json();}
   const getItem=k=>catalog.find(i=>`item:${i.id}`===k);
@@ -132,7 +133,7 @@
     const source=own=>horseCatalog.find(h=>String(h.id)===String(own.horse_id));
     const value=own=>field==='breed'?(source(own)?.breed||''):field==='level'?(own.level==null||own.level===''?null:Number(own.level)):(own.name||source(own)?.breed||'');
     const query=($('stable-search')?.value||'').trim().toLowerCase();
-    return horses.filter(own=>{const h=source(own);return `${own.name||''} ${own.nickname||''} ${h?.breed||''} ${h?.coat||''}`.toLowerCase().includes(query);}).sort((a,b)=>{
+    return horses.filter(own=>{if(linkedHorseId&&String(own.horse_id)!==linkedHorseId)return false;const h=source(own);return `${own.name||''} ${own.nickname||''} ${h?.breed||''} ${h?.coat||''}`.toLowerCase().includes(query);}).sort((a,b)=>{
       const av=value(a),bv=value(b),empty=v=>v===null||v===undefined||v===''||typeof v==='number'&&!Number.isFinite(v);
       if(empty(av)!==empty(bv))return empty(av)?1:-1;
       const result=empty(av)?0:field==='level'?av-bv:String(av).localeCompare(String(bv),undefined,{numeric:true,sensitivity:'base'});
@@ -146,6 +147,12 @@
   }
   function render(){
     const grid=$('stable-grid');
+    let linkedNotice=$('linked-horse-filter');
+    if(!linkedNotice){linkedNotice=el('div','','linked-horse-filter');linkedNotice.id='linked-horse-filter';grid.before(linkedNotice);}
+    linkedNotice.hidden=!linkedHorseId||stableTab!=='owned';
+    if(linkedHorseId&&stableTab==='owned'){
+      const h=horseCatalog.find(h=>String(h.id)===linkedHorseId);linkedNotice.replaceChildren(el('span','Showing your '+(h?.breed||h?.title||'selected horse')+' horses. '),button('Show all my horses',()=>{linkedHorseId='';const url=new URL(location.href);url.searchParams.delete('horse');history.replaceState(null,'',url);render();}));
+    }
     if(stableTab==='wishlist'){
       const q=($('stable-search')?.value||'').trim().toLowerCase(),dir=$('stable-sort-direction')?.value==='desc'?-1:1;
       const wanted=horseCatalog.filter(h=>wishIds.has(String(h.id))&&`${h.title||''} ${h.breed||''} ${h.coat||''}`.toLowerCase().includes(q)).sort((a,b)=>dir*String(a.breed||a.title).localeCompare(String(b.breed||b.title),undefined,{numeric:true,sensitivity:'base'})||dir*String(a.coat||'').localeCompare(String(b.coat||'')));
