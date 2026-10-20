@@ -96,7 +96,7 @@
     const brand=text('div','','footer-brand');brand.append(text('strong',SITE_NAME),text('p','My database for Horse Museum 2018 Version. I’m SATNIN, and I’ve extracted, compiled and organised the data that makes this database possible.'));
     const nav=document.createElement('nav');nav.setAttribute('aria-label','Footer navigation');
     for(const [label,href]of [['News','news/'],['How to use','tutorial/'],['About & credits','about/'],['Contact / Discord','contact/'],['Privacy','privacy/']]){const a=text('a',label);a.href=href;nav.append(a);}
-    brand.append(text('p','I’m SATNIN. Some information in my database may be incorrect. If you spot a mistake, please contact me on Discord: crabatthequeen.'));
+    brand.append(text('p','Some information in my database may be incorrect. If you spot a mistake, please contact me on Discord: crabatthequeen.'));
     inner.append(brand,nav);
     const bottom=text('div','','footer-bottom');bottom.append(text('small',`© ${new Date().getFullYear()} ${SITE_NAME}. Unofficial fan-made archive.`),text('small','Star Stable and its game assets belong to their respective owners. This site is not affiliated with or endorsed by Star Stable Entertainment.'));
     footer.append(inner,bottom);document.body.append(footer);
