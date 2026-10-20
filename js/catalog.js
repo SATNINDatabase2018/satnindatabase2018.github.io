@@ -82,13 +82,14 @@
     }
     return Infinity;
   }
-  let horseWishlist=new Set(),horseCounts=new Map();
-  function state(item){return item.kind==='horse'?{owned:(horseCounts.get(String(item.id))||0)>0,wishlist:horseWishlist.has(String(item.id))}:states.get(String(item.id)) || {};}
+  let horseWishlist=new Set(),horseFavorites=new Set(),horseCounts=new Map();
+  function state(item){return item.kind==='horse'?{owned:(horseCounts.get(String(item.id))||0)>0,wishlist:horseWishlist.has(String(item.id)),favorite:horseFavorites.has(String(item.id))}:states.get(String(item.id)) || {};}
   async function loadStates(){
-    states=new Map();horseWishlist=new Set();horseCounts=new Map(); if(!user)return;
+    states=new Map();horseWishlist=new Set();horseFavorites=new Set();horseCounts=new Map(); if(!user)return;
     for(let start=0;;start+=1000){const stable=await supabaseClient.from('user_horses').select('horse_id').eq('user_id',user.id).range(start,start+999);if(stable.error)throw Error('Could not load your horse ownership: '+stable.error.message);for(const row of stable.data||[])horseCounts.set(String(row.horse_id),(horseCounts.get(String(row.horse_id))||0)+1);if((stable.data||[]).length<1000)break;}
     const wished=await supabaseClient.from('user_horse_wishlist').select('horse_id').eq('user_id',user.id);
     if(!wished.error)horseWishlist=new Set((wished.data||[]).map(r=>String(r.horse_id)));
+    const favorites=await supabaseClient.from('user_horse_favorites').select('horse_id').eq('user_id',user.id);if(!favorites.error)horseFavorites=new Set((favorites.data||[]).map(r=>String(r.horse_id)));
     const {data,error}=await supabaseClient.from('user_items').select('item_id,owned,wishlist,favorite').eq('user_id',user.id);
     if(error)throw Error('Could not load your saved item states. '+error.message);
     for(const row of data)states.set(String(row.item_id),row);
@@ -97,9 +98,10 @@
     if(!requireAccount())return;
     if(item.kind==='horse'){
       if(pending.has(key(item)))return;pending.add(key(item));control.disabled=true;
-      try{const exists=horseWishlist.has(String(item.id));const result=exists?await supabaseClient.from('user_horse_wishlist').delete().eq('user_id',user.id).eq('horse_id',item.id):await supabaseClient.from('user_horse_wishlist').insert({user_id:user.id,horse_id:item.id});if(result.error)throw result.error;
-        if(exists)horseWishlist.delete(String(item.id));else horseWishlist.add(String(item.id));message(exists?'Removed from horse wishlist.':'Added to horse wishlist.');
-      }catch(e){message('Could not save horse wishlist: '+e.message);}finally{pending.delete(key(item));render(false);}return;
+      const set=field==='favorite'?horseFavorites:horseWishlist,table=field==='favorite'?'user_horse_favorites':'user_horse_wishlist',label=field==='favorite'?'favorites':'wishlist';
+      try{const exists=set.has(String(item.id));const result=exists?await supabaseClient.from(table).delete().eq('user_id',user.id).eq('horse_id',item.id):await supabaseClient.from(table).insert({user_id:user.id,horse_id:item.id});if(result.error)throw result.error;
+        if(exists)set.delete(String(item.id));else set.add(String(item.id));message(exists?'Removed from horse '+label+'.':'Added to horse '+label+'.');
+      }catch(e){message('Could not save horse preference: '+e.message);}finally{pending.delete(key(item));render(false);}return;
     }
     if(pending.has(key(item)))return;
     pending.add(key(item));
@@ -182,8 +184,9 @@
     if(stats)card.append(text('p',stats,'stats card-stats'));
     const actions=text('div','','item-actions');
     if(item.kind==='horse'){
-      const stableAction=text('div','','horse-stable-action');stableAction.append(button('Add to My Stable',e=>addHorseHere(item,e.currentTarget)));const count=horseCounts.get(String(item.id))||0;if(count){const ownedLink=text('a',`${count} in My Stable`,'horse-stable-count');ownedLink.href='stable/?horse='+encodeURIComponent(item.id);ownedLink.setAttribute('aria-label',`View your ${count} ${item.breed||item.title} in My Stable`);stableAction.append(ownedLink);}actions.append(stableAction);
+      const stableAction=text('div','','horse-stable-action');stableAction.append(button('Add to My Stable',e=>addHorseHere(item,e.currentTarget)));const count=horseCounts.get(String(item.id))||0;if(count){const ownedLink=button(`${count} in My Stable`,()=>{location.assign(new URL('stable/?horse='+encodeURIComponent(item.id),document.baseURI).href);});ownedLink.className='horse-stable-count';ownedLink.setAttribute('aria-label',`View your ${count} ${item.breed||item.title} in My Stable`);stableAction.append(ownedLink);}actions.append(stableAction);
       const wish=button(state(item).wishlist?'★ Wishlisted':'☆ Wishlist',e=>toggle(item,'wishlist',e.currentTarget));wish.setAttribute('aria-pressed',String(!!state(item).wishlist));wish.disabled=!ready||pending.has(key(item));actions.append(wish);
+      const favorite=button(state(item).favorite?'♥ Favorited':'♡ Favorite',e=>toggle(item,'favorite',e.currentTarget));favorite.setAttribute('aria-pressed',String(!!state(item).favorite));favorite.disabled=!ready||pending.has(key(item));actions.append(favorite);
     }else{
       for(const [field,label] of [['owned','✓ I own this'],['wishlist','☆ Wishlist'],['favorite','♡ Favorite']]){
         const b=button(label,e=>toggle(item,field,e.currentTarget)); const selected=!!state(item)[field];
@@ -205,7 +208,7 @@
     const flags=[...document.querySelectorAll('#state-filters input:checked')].map(n=>n.value);
     syncSortChoices();
     const rules=[...document.querySelectorAll('.sort-rule')].map(n=>({field:n.querySelector('.sort-field').value,dir:n.querySelector('.sort-dir').value}));
-    const filtered=items.filter(i=>(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && ((!category||i.category===category)&&(!subtype||itemType(i)===subtype)) && (!breed || i.kind==='horse' && i.section===breed) && (!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value)) && (!($('area-filter')?.value) || shopsFor(i).some(value=>areaForShop(value)===$('area-filter').value)) && (!shop || hasShop(i,shop)) && (!flags.length || (i.kind!=='horse' && flags.some(f=>state(i)[f]))) && Number.isFinite(searchRank(i,q))).sort((a,b)=>(window.HMItemStatus?.compare(a,b)||0)||(q?(searchRank(a,q)-searchRank(b,q)):0)||compare(a,b,rules));
+    const filtered=items.filter(i=>(view!=='collection' || (i.kind!=='horse' && state(i)[active])) && (view==='collection' || !active || i.category===active) && ((!category||i.category===category)&&(!subtype||itemType(i)===subtype)) && (!breed || i.kind==='horse' && i.section===breed) && (!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value)) && (!($('area-filter')?.value) || shopsFor(i).some(value=>areaForShop(value)===$('area-filter').value)) && (!shop || hasShop(i,shop)) && (!flags.length || flags.some(f=>state(i)[f])) && Number.isFinite(searchRank(i,q))).sort((a,b)=>(window.HMItemStatus?.compare(a,b)||0)||(q?(searchRank(a,q)-searchRank(b,q)):0)||compare(a,b,rules));
     $('database-grid').replaceChildren(...filtered.slice(0,visibleLimit).map(card));
     $('catalog-load-more')?.remove();
     if(filtered.length>visibleLimit){const more=button(`Load 60 more (${filtered.length-visibleLimit} remaining)`,()=>{visibleLimit+=60;render(false);});more.id='catalog-load-more';$('database-grid').after(more);}
@@ -273,7 +276,7 @@
   function updateDBShops(){
     const main=$('category-filter')?.value||'',sub=$('subcategory-filter')?.value||'',breed=$('breed-filter')?.value||'',search=($('search')?.value||'').trim().toLowerCase();
     const flags=[...document.querySelectorAll('#state-filters input:checked')].map(n=>n.value);
-    const matching=categoryPool().filter(i=>(!main||i.category===main)&&(!sub||itemType(i)===sub)&&(!breed||i.section===breed)&&(!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value))&&(!flags.length||i.kind!=='horse'&&flags.some(f=>state(i)[f]))&&Number.isFinite(searchRank(i,search)));
+    const matching=categoryPool().filter(i=>(!main||i.category===main)&&(!sub||itemType(i)===sub)&&(!breed||i.section===breed)&&(!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value))&&(!flags.length||flags.some(f=>state(i)[f]))&&Number.isFinite(searchRank(i,search)));
     const area=$('area-filter');const previousArea=area?.value||'';const areas=[...new Set(matching.flatMap(i=>shopsFor(i).map(areaForShop)).filter(Boolean))].sort((a,b)=>a.localeCompare(b));options(area,areas,'All areas');if(area&&areas.includes(previousArea))area.value=previousArea;
     const shop=$('shop-filter');if(!shop)return;const previous=shop.value;
     const entries=matching.flatMap(shopsFor).filter(value=>!area?.value||areaForShop(value)===area.value);const shops=[...new Map(entries.map(value=>[shopKey(value),value])).values()].sort((a,b)=>a.localeCompare(b));
