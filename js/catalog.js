@@ -82,15 +82,24 @@
     }
     return Infinity;
   }
-  function state(item){return states.get(String(item.id)) || {};}
+  let horseWishlist=new Set();
+  function state(item){return item.kind==='horse'?{wishlist:horseWishlist.has(String(item.id))}:states.get(String(item.id)) || {};}
   async function loadStates(){
-    states=new Map(); if(!user)return;
+    states=new Map();horseWishlist=new Set(); if(!user)return;
+    const wished=await supabaseClient.from('user_horse_wishlist').select('horse_id').eq('user_id',user.id);
+    if(!wished.error)horseWishlist=new Set((wished.data||[]).map(r=>String(r.horse_id)));
     const {data,error}=await supabaseClient.from('user_items').select('item_id,owned,wishlist,favorite').eq('user_id',user.id);
     if(error)throw Error('Could not load your saved item states. '+error.message);
     for(const row of data)states.set(String(row.item_id),row);
   }
   async function toggle(item,field,control){
     if(!requireAccount())return;
+    if(item.kind==='horse'){
+      if(pending.has(key(item)))return;pending.add(key(item));control.disabled=true;
+      try{const exists=horseWishlist.has(String(item.id));const result=exists?await supabaseClient.from('user_horse_wishlist').delete().eq('user_id',user.id).eq('horse_id',item.id):await supabaseClient.from('user_horse_wishlist').insert({user_id:user.id,horse_id:item.id});if(result.error)throw result.error;
+        if(exists)horseWishlist.delete(String(item.id));else horseWishlist.add(String(item.id));message(exists?'Removed from horse wishlist.':'Added to horse wishlist.');
+      }catch(e){message('Could not save horse wishlist: '+e.message);}finally{pending.delete(key(item));render(false);}return;
+    }
     if(pending.has(key(item)))return;
     pending.add(key(item));
     document.querySelectorAll('[data-item-key]').forEach(n=>{if(n.dataset.itemKey===key(item))n.querySelectorAll('button').forEach(b=>b.disabled=true);});
@@ -172,6 +181,7 @@
     const actions=text('div','','item-actions');
     if(item.kind==='horse'){
       actions.append(button('Add to My Stable',e=>addHorseHere(item,e.currentTarget)));
+      const wish=button(state(item).wishlist?'★ Wishlisted':'☆ Wishlist',e=>toggle(item,'wishlist',e.currentTarget));wish.setAttribute('aria-pressed',String(!!state(item).wishlist));wish.disabled=!ready||pending.has(key(item));actions.append(wish);
     }else{
       for(const [field,label] of [['owned','✓ I own this'],['wishlist','☆ Wishlist'],['favorite','♡ Favorite']]){
         const b=button(label,e=>toggle(item,field,e.currentTarget)); const selected=!!state(item)[field];

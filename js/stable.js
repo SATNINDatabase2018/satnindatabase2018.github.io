@@ -5,10 +5,11 @@
   const el=(tag,value='',cls='')=>{const n=document.createElement(tag);n.textContent=value;if(cls)n.className=cls;return n;};
   const button=(label,action)=>{const b=el('button',label);b.type='button';b.addEventListener('click',action);return b;};
   let user=null, catalog=[], horseCatalog=[], horses=[], outfits=[], outfitsReady=false;
+  let wishIds=new Set(),stableTab='owned';
   function message(s){$('stable-message').textContent=s;}
   async function json(path){if(window.HMCatalogData)return window.HMCatalogData.load(path);const r=await fetch(path);if(!r.ok)throw Error('Could not load '+path);return r.json();}
   const getItem=k=>catalog.find(i=>`item:${i.id}`===k);
-  const horseSide=i=>i && !['Clothes','Player Accessories'].includes(i.category);
+  const horseSide=i=>i && !['Clothes','Player Accessories','Hairstyles'].includes(i.category);
   function photo(item,title){
     const box=el('div','','catalog-image');
     if(/^https?:\/\//i.test(item?.image||'')){const img=document.createElement('img');img.src=item.image;img.alt=title;img.loading='lazy';img.addEventListener('error',()=>box.replaceChildren(el('span','Image unavailable')),{once:true});box.append(img);}
@@ -23,6 +24,8 @@
     outfitsReady=!results[1].error;
     outfits=outfitsReady?(results[1].data||[]).filter(o=>o.outfit_type!=='player'):[];
     if(!outfitsReady)message('Your horses loaded, but saved outfits could not load: '+results[1].error.message);
+    const wishes=await supabaseClient.from('user_horse_wishlist').select('horse_id').eq('user_id',user.id);
+    if(wishes.error)message('Horse wishlist could not load: '+wishes.error.message);else wishIds=new Set((wishes.data||[]).map(r=>String(r.horse_id)));
     render();
   }
   function outfitPreview(outfit){
@@ -132,7 +135,19 @@
       return direction*result||String(a.name||'').localeCompare(String(b.name||''),undefined,{numeric:true,sensitivity:'base'})||String(a.id).localeCompare(String(b.id));
     });
   }
-  function render(){const grid=$('stable-grid');grid.replaceChildren(...sortedHorses().map(horseCard));if(horses.length&&!grid.children.length)grid.append(el('p','No horses match your search.'));if(!horses.length)grid.append(el('p','Your stable is empty. Add your first horse above or from the database.'));}
+  function wishlistCard(h){
+    const card=el('article','','item-card stable-horse-card');card.append(photo(h,h.title||h.breed),el('h3',h.breed||h.title),el('p',h.coat||''));
+    const places=h.shop||h.location;if(places)card.append(el('p',places));if(h.sc!==null&&h.sc!==undefined&&h.sc!=='')card.append(el('p','SC '+h.sc));
+    card.append(button('Add to My Stable',async e=>{const name=await HMDialog.prompt('What is your horse’s name?');if(!name?.trim())return;const b=e.currentTarget;b.disabled=true;try{const {error}=await supabaseClient.from('user_horses').insert({user_id:user.id,horse_id:h.id,name:name.trim(),nickname:null});if(error)throw error;await load();message(name.trim()+' added to your stable.');}catch(error){message(error.message);}finally{b.disabled=false;}}),button('Remove from Wishlist',async e=>{e.currentTarget.disabled=true;try{const {error}=await supabaseClient.from('user_horse_wishlist').delete().eq('user_id',user.id).eq('horse_id',h.id);if(error)throw error;wishIds.delete(String(h.id));render();}catch(error){message(error.message);e.currentTarget.disabled=false;}}));return card;
+  }
+  function render(){
+    const grid=$('stable-grid');
+    if(stableTab==='wishlist'){
+      const q=($('stable-search')?.value||'').trim().toLowerCase(),dir=$('stable-sort-direction')?.value==='desc'?-1:1;
+      const wanted=horseCatalog.filter(h=>wishIds.has(String(h.id))&&`${h.title||''} ${h.breed||''} ${h.coat||''}`.toLowerCase().includes(q)).sort((a,b)=>dir*String(a.breed||a.title).localeCompare(String(b.breed||b.title),undefined,{numeric:true,sensitivity:'base'})||dir*String(a.coat||'').localeCompare(String(b.coat||'')));
+      grid.replaceChildren(...wanted.map(wishlistCard));if(!wanted.length)grid.append(el('p',wishIds.size?'No wishlisted horses match your search.':'Your horse wishlist is empty. Add horses using Wishlist in the database.'));
+    }else{grid.replaceChildren(...sortedHorses().map(horseCard));if(horses.length&&!grid.children.length)grid.append(el('p','No horses match your search.'));if(!horses.length)grid.append(el('p','Your stable is empty. Add your first horse above or from the database.'));}
+  }
   function picker(){
     $('horse-options').replaceChildren(...horseCatalog.slice().sort((a,b)=>(window.HMItemStatus?.compare(a,b)||0)||a.breed.localeCompare(b.breed)).map(h=>{
       const c=el('article','','item-card');c.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(h));c.append(photo(h,h.breed),el('h3',h.breed),el('p',h.coat||''),button('Add to Stable',async e=>{
@@ -143,6 +158,10 @@
     }));
   }
   async function start(){
+    for(const [id,tab]of [['stable-owned-tab','owned'],['stable-wishlist-tab','wishlist']])$(id)?.addEventListener('click',()=>{
+      stableTab=tab;for(const other of ['stable-owned-tab','stable-wishlist-tab'])$(other).setAttribute('aria-pressed',String(other===id));
+      const level=$('stable-sort')?.querySelector('option[value="level"]');if(level)level.disabled=tab==='wishlist';if(tab==='wishlist'&&$('stable-sort').value==='level')$('stable-sort').value='breed';render();
+    });
     $('stable-search')?.addEventListener('input',render);
     ['stable-sort','stable-sort-direction'].forEach(id=>$(id)?.addEventListener('change',render));
     if(window.HMFeatureAccess)await window.HMFeatureAccess;
