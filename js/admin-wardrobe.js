@@ -37,7 +37,7 @@ window.HMAdminWardrobe=(()=>{
   function preview(item,anchor){
     hideHover();if(!item)return;hover=el('div','','wardrobe-hover-card');
     if(window.HMCatalog?.createCard)hover.append(HMCatalog.createCard(item));else hover.append(el('strong',itemName(item)));
-    hover.querySelectorAll('.saved-status-owned,.saved-status-favorite').forEach(n=>n.remove());if(favorites.has(String(item.id))){const star=el('span','★','wardrobe-favorite-indicator');star.setAttribute('role','img');star.setAttribute('aria-label','Favorite');hover.append(star);}hover.setAttribute('role','tooltip');hover.setAttribute('aria-label','Item preview');hover.addEventListener('mouseenter',()=>clearTimeout(hoverTimer));hover.addEventListener('mouseleave',scheduleHide);hover.addEventListener('focusin',()=>clearTimeout(hoverTimer));hover.addEventListener('focusout',scheduleHide);document.body.append(hover);const r=anchor.getBoundingClientRect(),width=Math.min(230,innerWidth-24);hover.style.width=width+'px';hover.style.left=Math.max(12,Math.min(r.right+10,innerWidth-width-12))+'px';hover.style.top=Math.max(12,Math.min(r.top,innerHeight-hover.offsetHeight-12))+'px';
+    hover.querySelectorAll('.saved-status-owned,.saved-status-favorite').forEach(n=>n.remove());if(favorites.has(String(item.id))){const star=el('span','★','wardrobe-favorite-indicator');star.setAttribute('role','img');star.setAttribute('aria-label','Favorite');hover.append(star);}hover.setAttribute('role','tooltip');hover.setAttribute('aria-label','Item preview');document.body.append(hover);const r=anchor.getBoundingClientRect(),width=Math.min(230,innerWidth-24);hover.style.width=width+'px';hover.style.left=Math.max(12,Math.min(r.right+10,innerWidth-width-12))+'px';hover.style.top=Math.max(12,Math.min(r.top,innerHeight-hover.offsetHeight-12))+'px';
   }
   function pagePreview(group,page,anchor){
     hideHover();const spec=groups[group],entries=Object.entries(state.locations).filter(([id,p])=>p.group===group&&p.page===page&&available(id));
@@ -65,7 +65,7 @@ window.HMAdminWardrobe=(()=>{
     return star;
   }
   function withFavorite(tile,item,unsorted=false){if(!item)return tile;const frame=el('div','',unsorted?'wardrobe-unsorted-cell':'wardrobe-cell');frame.append(tile,favoriteControl(item));return frame;}
-  function hoverable(node,item){node.addEventListener('mouseenter',()=>preview(item,node));node.addEventListener('mouseleave',scheduleHide);node.addEventListener('focus',()=>preview(item,node));node.addEventListener('blur',scheduleHide);}
+  function hoverable(node,item){node.addEventListener('mouseenter',()=>preview(item,node));node.addEventListener('mouseleave',hideHover);node.addEventListener('focus',()=>preview(item,node));node.addEventListener('blur',hideHover);}
   function match(item){return !query||[item.title,item.color,item.category,item.section,item.shop].filter(Boolean).join(' ').toLowerCase().includes(query.toLowerCase());}
   async function place(id,group,page,cell){
     if(!available(id)||groupFor(catalog.get(id))!==group||!validPosition({group,page,cell}))return false;
