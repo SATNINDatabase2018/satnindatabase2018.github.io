@@ -232,7 +232,7 @@
     const excludedFlags=[...document.querySelectorAll('#hidden-state-filters input:checked')].map(n=>n.value);
     syncSortChoices();
     const rules=[...document.querySelectorAll('.sort-rule')].map(n=>({field:n.querySelector('.sort-field').value,dir:n.querySelector('.sort-dir').value}));
-    const filtered=items.filter(i=>!excludedFlags.some(f=>state(i)[f])&&(view!=='collection' || collectionMatch(i)) && (view==='collection' || !active || i.category===active) && (matchesValues(chosenCategories,i.category)&&matchesValues(chosenTypes,itemType(i))) && (!breed || i.kind==='horse' && i.section===breed) && (!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value)) && (!chosenAreas.length || shopsFor(i).some(value=>chosenAreas.includes(areaForShop(value)))) && (!chosenShops.length || chosenShops.some(value=>hasShop(i,value))) && (!flags.length || flags.some(f=>state(i)[f])) && Number.isFinite(searchRank(i,q))).sort((a,b)=>(window.HMItemStatus?.compare(a,b)||0)||(q?(searchRank(a,q)-searchRank(b,q)):0)||compare(a,b,rules));
+    const filtered=items.filter(i=>!excludedFlags.some(f=>state(i)[f])&&(view!=='collection' || collectionMatch(i)) && (view==='collection' || !active || i.category===active) && (matchesValues(chosenCategories,i.category)&&matchesValues(chosenTypes,itemType(i))) && (!breed || i.kind==='horse' && i.section===breed) && (!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value)) && (!chosenAreas.length || areasForItem(i).some(area=>chosenAreas.includes(area))) && (!chosenShops.length || chosenShops.some(value=>hasShop(i,value))) && (!flags.length || flags.some(f=>state(i)[f])) && Number.isFinite(searchRank(i,q))).sort((a,b)=>(window.HMItemStatus?.compare(a,b)||0)||(q?(searchRank(a,q)-searchRank(b,q)):0)||compare(a,b,rules));
     $('database-grid').replaceChildren(...filtered.slice(0,visibleLimit).map(card));
     $('catalog-load-more')?.remove();
     if(filtered.length>visibleLimit){const more=button(`Load 60 more (${filtered.length-visibleLimit} remaining)`,()=>{visibleLimit+=60;render(false);});more.id='catalog-load-more';$('database-grid').after(more);}
@@ -278,13 +278,15 @@
   }
   function hasShop(item,shop){return shopsFor(item).some(value=>shopKey(value)===shopKey(shop));}
   function areaForShop(value){
-    const shop=String(value||'').trim();if(!shop)return '';
+    const shop=String(value||'').trim();if(!shop)return view==='database'?'Unavailable / other / unknown':'';
     const prefix=shop.split(/\s+[—–-]\s+/)[0];
+    if(view==='database'){if(/^(?:events?(?:\b|:)|special events?\b|seasonal\s*\/\s*event shop)/i.test(prefix))return 'Events';if(/^(?:not available(?: anymore)?|unavailable|unknown|not verified|other(?:\s*\/\s*unspecified(?: area)?)?|unspecified(?: area)?)$/i.test(prefix))return 'Unavailable / other / unknown';}
     if(/^(Jorvik City|Governor['’]s Fall|Aideen['’]s Plaza|Pier 13)/i.test(prefix))return 'Jorvik City';
     if(/^(Fort|Ford) Pinta/i.test(prefix))return 'Fort Pinta';
     for(const name of ['Moorland','Firgrove','Valedale','Silverglade Village','Silverglade Winery','Jarlaheim','Jorvik Stables','New Hillcrest','South Hoof Peninsula','Cape West Fishing Village','Crescent Moon Village','Goldspur Farm','Valley of the Hidden Dinosaur'])if(prefix.toLowerCase().startsWith(name.toLowerCase()))return name;
-    return /\s[—–-]\s/.test(shop)?prefix:'Other / unspecified area';
+    return /\s[—–-]\s/.test(shop)?prefix:(view==='database'?'Unavailable / other / unknown':'Other / unspecified area');
   }
+  function areasForItem(item){const shops=shopsFor(item);return shops.length?[...new Set(shops.map(areaForShop))]:view==='database'?['Unavailable / other / unknown']:[];}
   function clearBrowseFilters(){
     $('search').value='';document.querySelectorAll('#state-filters input, #hidden-state-filters input').forEach(n=>n.checked=false);
     if($('area-filter'))$('area-filter').value='';$('shop-filter').value='';
@@ -304,7 +306,7 @@
     const flags=[...document.querySelectorAll('#state-filters input:checked')].map(n=>n.value);
     const excludedFlags=[...document.querySelectorAll('#hidden-state-filters input:checked')].map(n=>n.value);
     const matching=categoryPool().filter(i=>!excludedFlags.some(f=>state(i)[f])&&matchesValues(chosen,i.category)&&matchesValues(chosenTypes,itemType(i))&&(!breed||i.section===breed)&&(!($('generation-filter')?.value)||generationNumber(i.generation)===Number($('generation-filter').value))&&(!flags.length||flags.some(f=>state(i)[f]))&&Number.isFinite(searchRank(i,search)));
-    const area=$('area-filter');const previousAreas=filterValues('area-filter');const areas=[...new Set(matching.flatMap(i=>shopsFor(i).map(areaForShop)).filter(Boolean))].sort((a,b)=>a.localeCompare(b));options(area,areas,'All areas');if(area){for(const option of area.options)option.selected=previousAreas.includes(option.value);if(!previousAreas.length&&!area.multiple)area.value='';}
+    const area=$('area-filter');const previousAreas=filterValues('area-filter');const areas=[...new Set(matching.flatMap(areasForItem).filter(Boolean))].sort((a,b)=>a.localeCompare(b));options(area,areas,'All areas');if(area){for(const option of area.options)option.selected=previousAreas.includes(option.value);if(!previousAreas.length&&!area.multiple)area.value='';}
     const shop=$('shop-filter');if(!shop)return;const previousShops=filterValues('shop-filter');
     const pickedAreas=filterValues('area-filter');const entries=matching.flatMap(shopsFor).filter(value=>!pickedAreas.length||pickedAreas.includes(areaForShop(value)));const shops=[...new Map(entries.map(value=>[shopKey(value),value])).values()].sort((a,b)=>a.localeCompare(b));
     options(shop,shops,'All sites / shops');for(const option of shop.options)option.selected=previousShops.some(value=>shopKey(value)===shopKey(option.value));
