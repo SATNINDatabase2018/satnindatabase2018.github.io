@@ -319,7 +319,7 @@ window.HMOutfitWorkspace = {
     }
     function sheet(kind,outfit=selected(),interactive=true){
       const panel=text('section','',`character-sheet ${kind}-sheet`);
-      const left=kind==='horse'?['Bridle','Saddle','Blanket','Horseshoes']:['Hairstyle','Hat','Top','Gloves'];
+      const left=kind==='horse'?['Bridle','Saddle','Blanket','Horseshoes']:['Hat','Hairstyle','Top','Gloves'];
       const right=kind==='horse'?['Mane Decoration','Tail Decoration','Leg Wraps']:['Player Accessories','Pants','Shoes'];
       const dock=kind==='horse'?['Saddle Bag','Pet']:[];
       const slots=[...left,...right,...dock];

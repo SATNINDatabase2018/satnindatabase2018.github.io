@@ -1,0 +1,2 @@
+/* Player outfit top row: Hat — Hairstyle — Player accessory. */
+.player-sheet .gear-stage{grid-template-areas:"hat hair accessories" "top portrait gloves" "pants portrait shoes"}
