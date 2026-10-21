@@ -3,3 +3,14 @@ body[data-view="outfits"] .gear-slot-removable:has(.outfit-item-status){padding-
 
 /* Database-style badges: vertical, partly outside the left edge. */
 body[data-view="outfits"] .gear-slot-removable:has(.outfit-item-status){padding-bottom:0;overflow:visible}.outfit-item-status{top:40px;bottom:auto;left:-11px;right:auto;flex-direction:column;justify-content:flex-start;gap:4px}.outfit-item-status button.outfit-status-symbol{width:22px;height:22px;min-height:22px;border-radius:50%;font-size:14px;border:1px solid var(--border);box-shadow:0 1px 4px #0003}.outfit-browse-sorting{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0;align-items:end}.outfit-browse-sorting label{flex:1 1 180px;font-size:12px;color:var(--text)}.outfit-browse-sorting select{display:block;width:100%;margin-top:5px}.outfit-overview .stat-group{min-width:0}.outfit-overview .stat-group dd{white-space:nowrap}
+
+/* Vector symbols have a consistent optical centre and stronger selected colours. */
+body[data-view="outfits"] .outfit-item-status>button.outfit-status-symbol{display:flex;align-items:center;justify-content:center;box-sizing:border-box;padding:0!important;line-height:0;border-width:1px;background:var(--card);color:var(--muted);opacity:1}
+.outfit-status-symbol>svg{display:block;flex:0 0 14px;width:14px;height:14px;margin:0;padding:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;overflow:visible;pointer-events:none}
+body[data-view="outfits"] .outfit-item-status>button[aria-pressed="true"]{border:2px solid currentColor;box-shadow:0 0 0 1px var(--card),0 1px 4px #0004;opacity:1!important}
+.outfit-item-status>button[aria-pressed="true"][data-status="favorite"]>svg,.outfit-item-status>button[aria-pressed="true"][data-status="wishlist"]>svg{fill:currentColor;stroke-width:1.5}
+body[data-view="outfits"] .has-outfit-status:not(.is-uncertain){background:var(--outfit-status-background)!important;border-color:var(--outfit-status-border)!important}
+body[data-view="outfits"] .gear-slot-removable.has-outfit-status:not(.is-uncertain)>.gear-slot-choice,body[data-view="outfits"] .has-outfit-status:not(.is-uncertain)>.catalog-image{background:transparent!important}
+body[data-view="outfits"] .outfit-item-status>button[aria-pressed="true"][data-status="owned"]{background:var(--owned-card,var(--green-light))!important;color:var(--owned-ink,var(--green-dark))!important}
+body[data-view="outfits"] .outfit-item-status>button[aria-pressed="true"][data-status="wishlist"]{background:var(--wishlist-card,var(--green-light))!important;color:var(--wishlist-ink,var(--green-dark))!important}
+body[data-view="outfits"] .outfit-item-status>button[aria-pressed="true"][data-status="favorite"]{background:var(--favorite-card,var(--green-light))!important;color:var(--favorite-ink,var(--green-dark))!important}

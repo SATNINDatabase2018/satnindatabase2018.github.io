@@ -227,11 +227,17 @@ window.HMOutfitWorkspace = {
       dialog.addEventListener('close',()=>{dialog.remove();const target=[...root.querySelectorAll('.gear-slot')].find(n=>n.dataset.slot===s);target?.focus();});
       document.body.append(dialog);render();dialog.showModal();search.focus();
     }
+    function statusIcon(field){
+      const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',({owned:'M5 12l4 4L19 6',wishlist:'M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9Z',favorite:'M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z'})[field]);svg.append(path);return svg;
+    }
+    function colourOutfitItem(node,item){
+      const saved=itemStates.get(String(item.id))||{},statuses=['owned','wishlist','favorite'].filter(field=>saved[field]);if(!statuses.length)return;node.classList.add('has-outfit-status');const stops=statuses.map((field,n)=>'var(--'+field+'-card) '+n*100/statuses.length+'%, var(--'+field+'-card) '+(n+1)*100/statuses.length+'%').join(', ');node.style.setProperty('--outfit-status-background','linear-gradient(120deg, '+stops+')');node.style.setProperty('--outfit-status-border','var(--'+statuses[0]+'-ink)');
+    }
     function itemStatusControls(item){
       const id=String(item.id),saved=itemStates.get(id)||{},bar=text('div','','outfit-item-status');bar.setAttribute('role','group');bar.setAttribute('aria-label','Collection status for '+item.title);
       for(const [field,symbol,label]of [['owned','✓','I own this'],['wishlist','☆','Wishlist'],['favorite','♡','Favorite']]){
         if(field==='wishlist'&&saved.owned)continue;
-        const control=button(symbol,async event=>{
+        const control=button('',async event=>{
           event.preventDefault();event.stopPropagation();if(!user){requireAccount?.();return;}if(statusPending.has(id)||!ownedReady||field==='owned'&&saved.owned)return;
           statusPending.add(id);bar.querySelectorAll('button').forEach(b=>b.disabled=true);
           const before=itemStates.get(id)||{},next={owned:!!before.owned,wishlist:!!before.wishlist,favorite:!!before.favorite};next[field]=field==='owned'?true:!before[field];
@@ -241,7 +247,7 @@ window.HMOutfitWorkspace = {
             if(field==='owned')await window.HMAdminWardrobe?.ownedChanged(item,value.owned);if(field==='favorite')window.HMAdminWardrobe?.favoriteChanged(item,value.favorite);
             notice='Collection updated.';
           }catch(e){notice='Could not update item: '+e.message;}finally{statusPending.delete(id);draw();browse();}
-        });control.className='outfit-status-symbol';control.dataset.status=field;control.setAttribute('aria-pressed',String(!!saved[field]));control.setAttribute('aria-label',label+(saved[field]?' (selected)':''));control.title=field==='owned'&&saved.owned?'Owned':(saved[field]?'Remove from ':'')+label;control.disabled=!user||!ownedReady||statusPending.has(id)||(field==='owned'&&!!saved.owned);bar.append(control);
+        });control.append(statusIcon(field));control.className='outfit-status-symbol';control.dataset.status=field;control.setAttribute('aria-pressed',String(!!saved[field]));control.setAttribute('aria-label',label+(saved[field]?' (selected)':''));control.title=field==='owned'&&saved.owned?'Owned':(saved[field]?'Remove from ':'')+label;control.disabled=!user||!ownedReady||statusPending.has(id)||(field==='owned'&&!!saved.owned);bar.append(control);
       }return bar;
     }
     let itemPreview=null;
@@ -262,11 +268,11 @@ window.HMOutfitWorkspace = {
     }
     function slotButton(s,outfit=selected(),interactive=true){
       const item=resolve(outfit.slots[s]);const b=interactive?button('',()=>{if(item&&isStudio)showWardrobeLocation(item);else changeSlot(s);}):text('div');b.className='gear-slot';b.dataset.slot=s;b.classList.toggle('is-filled',!!item);b.classList.toggle('is-uncertain',!!item&&!!window.HMItemStatus?.isUncertain(item));b.setAttribute('aria-label',`${s}: ${item?.title||'Empty'}${interactive?(item&&isStudio?'. View wardrobe location':'. Choose item'):''}`);
-      if(item&&isStudio){b.addEventListener('mouseenter',()=>showItemPreview(item,b));b.addEventListener('mouseleave',hideItemPreview);b.addEventListener('focus',()=>showItemPreview(item,b));b.addEventListener('blur',hideItemPreview);}
+      if(item&&isStudio){colourOutfitItem(b,item);b.addEventListener('mouseenter',()=>showItemPreview(item,b));b.addEventListener('mouseleave',hideItemPreview);b.addEventListener('focus',()=>showItemPreview(item,b));b.addEventListener('blur',hideItemPreview);}
       b.append(text('span',s,'slot-label'));if(item)b.append(image(item));else b.append(text('span','+','slot-plus'));
       b.append(text('span',item ? item.title+(item.color?' — '+item.color:'') : (outfit.slots[s]?'Item unavailable':'Choose item'),'slot-title'));
       if(interactive&&outfit.slots[s]){
-        const frame=text('div','','gear-slot gear-slot-removable');frame.dataset.slot=s;frame.classList.toggle('is-filled',!!item);frame.classList.toggle('is-uncertain',!!item&&!!window.HMItemStatus?.isUncertain(item));frame.tabIndex=-1;
+        const frame=text('div','','gear-slot gear-slot-removable');frame.dataset.slot=s;frame.classList.toggle('is-filled',!!item);frame.classList.toggle('is-uncertain',!!item&&!!window.HMItemStatus?.isUncertain(item));frame.tabIndex=-1;if(item&&isStudio)colourOutfitItem(frame,item);
         b.className='gear-slot-choice';b.removeAttribute('data-slot');
         const remove=button('×',event=>{event.preventDefault();event.stopPropagation();delete outfit.slots[s];autoType(outfit);outfit.dirty=true;notice=s+' removed. Click Save outfit to save this change.';update();browse();});remove.className='remove-slot-item';remove.title='Remove '+(item?(item.title+(item.color?' — '+item.color:'')):s);remove.setAttribute('aria-label','Remove '+(item?(item.title+(item.color?' — '+item.color:'')):s)+' from '+s);frame.append(b,remove);if(item&&isStudio){const change=button('Change item',event=>{event.preventDefault();event.stopPropagation();hideItemPreview();changeSlot(s);});change.className='outfit-change-item';frame.append(change,itemStatusControls(item));}return frame;
       }
