@@ -6,3 +6,6 @@ body #stable-grid.custom-catalog-columns>.item-card>.catalog-image{box-sizing:bo
 body :is(#database-grid,#stable-grid).custom-catalog-columns>.item-card>.catalog-card-visual .catalog-image>img,
 body #stable-grid.custom-catalog-columns>.item-card>.catalog-image>img{box-sizing:border-box;position:absolute;inset:0;display:block;width:100%!important;height:100%!important;min-width:0!important;max-width:none!important;min-height:0!important;max-height:none!important;margin:0!important;padding:6px!important;object-fit:contain!important;object-position:center}
 body #database-grid.custom-catalog-columns .horse-catalog-card .spirit-picture-button{box-sizing:border-box;display:block;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:1 / 1;margin:0;padding:0}
+/* Compact, left-aligned column control with a wider, low-profile picker. */
+body .catalog-column-control{justify-content:flex-start;align-items:center;gap:6px;margin:6px 0 9px;font-size:11px;line-height:1.2}
+body .catalog-column-control select{box-sizing:border-box;flex:0 0 132px;width:132px;min-width:132px;max-width:132px;height:25px;min-height:25px;margin:0;padding:3px 8px;font-size:11px;line-height:1.2;border-radius:7px}
