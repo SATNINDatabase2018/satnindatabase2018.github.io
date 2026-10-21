@@ -14,3 +14,5 @@ body[data-view="outfits"] .gear-slot-removable.has-outfit-status:not(.is-uncerta
 body[data-view="outfits"] .outfit-item-status>button[aria-pressed="true"][data-status="owned"]{background:var(--owned-card,var(--green-light))!important;color:var(--owned-ink,var(--green-dark))!important}
 body[data-view="outfits"] .outfit-item-status>button[aria-pressed="true"][data-status="wishlist"]{background:var(--wishlist-card,var(--green-light))!important;color:var(--wishlist-ink,var(--green-dark))!important}
 body[data-view="outfits"] .outfit-item-status>button[aria-pressed="true"][data-status="favorite"]{background:var(--favorite-card,var(--green-light))!important;color:var(--favorite-ink,var(--green-dark))!important}
+
+.outfit-hover-location{padding:10px 12px;border-top:1px solid var(--border);color:var(--text);background:var(--card);font-size:12px;line-height:1.4}.outfit-hover-location p{margin:5px 0 0;font-size:11px;overflow-wrap:anywhere}
