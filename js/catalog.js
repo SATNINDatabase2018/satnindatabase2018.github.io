@@ -301,7 +301,7 @@
     if(!show && $('breed-filter'))$('breed-filter').value='';
   }
   function activate(value){
-    active=value;
+    active=value;window.dispatchEvent(new Event('hm-navigation'));
     const tabs=[...document.querySelectorAll('[role="tab"]')];
     tabs.forEach(b=>{b.setAttribute('aria-selected',String(b.dataset.value===value)); b.tabIndex=b.dataset.value===value?0:-1;});
     const tab=tabs.find(b=>b.dataset.value===value); $('tab-heading').textContent=tab.textContent;

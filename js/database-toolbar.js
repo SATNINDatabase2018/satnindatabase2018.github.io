@@ -6,6 +6,7 @@
   const bar=document.createElement('div');bar.className='database-mini-toolbar';bar.hidden=true;bar.setAttribute('role','region');bar.setAttribute('aria-label',stable?'Quick stable search and sorting':'Quick catalogue search, filters and sorting');
   const query=document.createElement('input');query.type='search';query.placeholder=stable?'Search your horses…':'Search the database…';query.setAttribute('aria-label',stable?'Quick horse search':'Quick catalogue search');bar.append(query);
   query.addEventListener('input',()=>{search.value=query.value;search.dispatchEvent(new Event('input',{bubbles:true}));});
+  const expand=document.createElement('button');expand.type='button';expand.className='database-mini-expand';expand.textContent='Filters & sorting';expand.setAttribute('aria-expanded','false');expand.addEventListener('click',()=>{const open=bar.classList.toggle('mobile-expanded');expand.setAttribute('aria-expanded',String(open));if(!open)bar.querySelectorAll('details[open]').forEach(d=>d.open=false);});bar.append(expand);
   const controls=[];
   const controlSpecs=stable?[['stable-sort','Sort horses'],['stable-sort-direction','Order']]:[['category-filter','Category'],['subcategory-filter','Item type'],['breed-filter','Breed'],['generation-filter','Generation'],['area-filter','Area'],['shop-filter','Site / shop'],['.sort-field','Sort by'],['.sort-dir','Direction']];
   for(const [id,label]of controlSpecs){
@@ -22,7 +23,7 @@
     for(const {id,select,multi,node}of controls){const source=id.startsWith('.')?document.querySelector(id):document.getElementById(id);if(multi){node.hidden=!source||!!source.closest('[hidden]');continue;}select.hidden=!source||!!source.closest('[hidden]');if(!source)continue;const signature=source.innerHTML;if(select.innerHTML!==signature)select.innerHTML=signature;select.value=source.value;if(id==='subcategory-filter')select.setAttribute('aria-label','Quick '+(source.getAttribute('aria-label')||'Item type'));}
   }
   function schedule(){if(!queued){queued=true;requestAnimationFrame(sync);}}
-  function position(){const bottom=header.getBoundingClientRect().bottom;document.documentElement.style.setProperty('--catalog-header-bottom',bottom+'px');bar.hidden=!!panel.closest('[hidden]')||panel.getBoundingClientRect().bottom>bottom;}
+  function position(){const bottom=header.getBoundingClientRect().bottom;document.documentElement.style.setProperty('--catalog-header-bottom',bottom+'px');bar.hidden=!!panel.closest('[hidden]')||panel.getBoundingClientRect().bottom>bottom;if(bar.hidden){bar.querySelectorAll('details[open]').forEach(d=>d.open=false);}}
   new MutationObserver(schedule).observe(panel,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden']});
   panel.addEventListener('change',schedule);panel.addEventListener('input',schedule);new MutationObserver(()=>{position();schedule();}).observe(document.getElementById('feature-content')||panel,{attributes:true,attributeFilter:['hidden']});search.addEventListener('input',schedule);
   window.addEventListener('scroll',position,{passive:true});window.addEventListener('resize',position);new ResizeObserver(position).observe(header);sync();position();

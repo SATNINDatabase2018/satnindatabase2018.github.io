@@ -170,7 +170,7 @@
   }
   async function start(){
     for(const [id,tab]of [['stable-owned-tab','owned'],['stable-wishlist-tab','wishlist']])$(id)?.addEventListener('click',()=>{
-      stableTab=tab;history.replaceState(null,'',location.pathname+location.search+'#'+tab);for(const other of ['stable-owned-tab','stable-wishlist-tab'])$(other).setAttribute('aria-pressed',String(other===id));
+      stableTab=tab;history.replaceState(null,'',location.pathname+location.search+'#'+tab);window.dispatchEvent(new Event('hm-navigation'));for(const other of ['stable-owned-tab','stable-wishlist-tab'])$(other).setAttribute('aria-pressed',String(other===id));
       const level=$('stable-sort')?.querySelector('option[value="level"]');if(level)level.disabled=tab==='wishlist';if(tab==='wishlist'&&$('stable-sort').value==='level')$('stable-sort').value='breed';render();
     });
     function routeTab(){const hash=location.hash.slice(1);if(hash==='owned'||hash==='wishlist')$(hash==='wishlist'?'stable-wishlist-tab':'stable-owned-tab')?.click();}

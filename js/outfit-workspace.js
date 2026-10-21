@@ -244,14 +244,31 @@ window.HMOutfitWorkspace = {
         });control.className='outfit-status-symbol';control.dataset.status=field;control.setAttribute('aria-pressed',String(!!saved[field]));control.setAttribute('aria-label',label+(saved[field]?' (selected)':''));control.title=field==='owned'&&saved.owned?'Owned':(saved[field]?'Remove from ':'')+label;control.disabled=!user||!ownedReady||statusPending.has(id)||(field==='owned'&&!!saved.owned);bar.append(control);
       }return bar;
     }
+    let itemPreview=null;
+    function hideItemPreview(){itemPreview?.remove();itemPreview=null;}
+    function showItemPreview(item,anchor){
+      if(!matchMedia('(hover:hover) and (pointer:fine)').matches)return;hideItemPreview();const box=text('aside','','outfit-item-preview');itemPreview=box;box.setAttribute('role','tooltip');if(window.HMCatalog?.createCard)box.append(HMCatalog.createCard(item));else box.append(image(item),text('strong',item.title));document.body.append(box);const r=anchor.getBoundingClientRect(),width=Math.min(270,innerWidth-24);box.style.width=width+'px';box.style.left=Math.max(12,Math.min(r.right+8,innerWidth-width-12))+'px';box.style.top=Math.max(12,Math.min(r.top,innerHeight-box.offsetHeight-12))+'px';
+    }
+    window.addEventListener('scroll',hideItemPreview,true);window.addEventListener('resize',hideItemPreview);
+    async function showWardrobeLocation(item){
+      hideItemPreview();if(!user){requireAccount?.();return;}const dialog=document.createElement('dialog');dialog.className='outfit-wardrobe-location';dialog.setAttribute('aria-label','Wardrobe location for '+item.title);const body=text('div','Loading your wardrobe…');dialog.append(button('Close',()=>dialog.close()),text('h2',item.title),body);dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});dialog.addEventListener('close',()=>dialog.remove());document.body.append(dialog);dialog.showModal();
+      const names={clothes:'Clothes',gear:'Horse gear',pets:'Pets'},eligible=['Clothes','Player Accessories','Equipment','Horse Decorations','Pets'].includes(item.category);
+      if(!eligible){body.textContent='Hairstyles do not have an in-game wardrobe storage slot.';return;}
+      if(!itemStates.get(String(item.id))?.owned){body.textContent='This item is not marked as owned. Mark it “I own this” to organise it in My Wardrobe.';return;}
+      try{const {data,error}=await supabaseClient.from('hm_admin_wardrobe').select('layout').eq('user_id',user.id).maybeSingle();if(error)throw error;const layout=data?.layout,pos=layout?.locations?.[String(item.id)];body.replaceChildren();
+        if(pos){const columns=pos.group==='pets'?8:12,title=layout.titles?.[pos.group]?.[pos.page];body.append(text('p',(names[pos.group]||pos.group)+' → Page '+pos.page+(title?' · '+title:'')),text('p','Row '+(Math.floor(pos.cell/columns)+1)+', column '+(pos.cell%columns+1)));}else body.append(text('p','This item is in Unsorted items.'));
+        const link=text('a','Show in My Wardrobe','button');link.href='collection/?wardrobeItem='+encodeURIComponent(item.id)+'#wardrobe';body.append(link);
+      }catch{body.textContent='Your wardrobe location could not load. Please try again.';}
+    }
     function slotButton(s,outfit=selected(),interactive=true){
-      const item=resolve(outfit.slots[s]);const b=interactive?button('',()=>changeSlot(s)):text('div');b.className='gear-slot';b.dataset.slot=s;b.classList.toggle('is-filled',!!item);b.classList.toggle('is-uncertain',!!item&&!!window.HMItemStatus?.isUncertain(item));b.setAttribute('aria-label',`${s}: ${item?.title||'Empty'}${interactive?'. Choose item':''}`);
+      const item=resolve(outfit.slots[s]);const b=interactive?button('',()=>{if(item&&isStudio)showWardrobeLocation(item);else changeSlot(s);}):text('div');b.className='gear-slot';b.dataset.slot=s;b.classList.toggle('is-filled',!!item);b.classList.toggle('is-uncertain',!!item&&!!window.HMItemStatus?.isUncertain(item));b.setAttribute('aria-label',`${s}: ${item?.title||'Empty'}${interactive?(item&&isStudio?'. View wardrobe location':'. Choose item'):''}`);
+      if(item&&isStudio){b.addEventListener('mouseenter',()=>showItemPreview(item,b));b.addEventListener('mouseleave',hideItemPreview);b.addEventListener('focus',()=>showItemPreview(item,b));b.addEventListener('blur',hideItemPreview);}
       b.append(text('span',s,'slot-label'));if(item)b.append(image(item));else b.append(text('span','+','slot-plus'));
       b.append(text('span',item ? item.title+(item.color?' — '+item.color:'') : (outfit.slots[s]?'Item unavailable':'Choose item'),'slot-title'));
       if(interactive&&outfit.slots[s]){
         const frame=text('div','','gear-slot gear-slot-removable');frame.dataset.slot=s;frame.classList.toggle('is-filled',!!item);frame.classList.toggle('is-uncertain',!!item&&!!window.HMItemStatus?.isUncertain(item));frame.tabIndex=-1;
         b.className='gear-slot-choice';b.removeAttribute('data-slot');
-        const remove=button('×',event=>{event.preventDefault();event.stopPropagation();delete outfit.slots[s];autoType(outfit);outfit.dirty=true;notice=s+' removed. Click Save outfit to save this change.';update();browse();});remove.className='remove-slot-item';remove.title='Remove '+(item?(item.title+(item.color?' — '+item.color:'')):s);remove.setAttribute('aria-label','Remove '+(item?(item.title+(item.color?' — '+item.color:'')):s)+' from '+s);frame.append(b,remove);if(item&&isStudio)frame.append(itemStatusControls(item));return frame;
+        const remove=button('×',event=>{event.preventDefault();event.stopPropagation();delete outfit.slots[s];autoType(outfit);outfit.dirty=true;notice=s+' removed. Click Save outfit to save this change.';update();browse();});remove.className='remove-slot-item';remove.title='Remove '+(item?(item.title+(item.color?' — '+item.color:'')):s);remove.setAttribute('aria-label','Remove '+(item?(item.title+(item.color?' — '+item.color:'')):s)+' from '+s);frame.append(b,remove);if(item&&isStudio){const change=button('Change item',event=>{event.preventDefault();event.stopPropagation();hideItemPreview();changeSlot(s);});change.className='outfit-change-item';frame.append(change,itemStatusControls(item));}return frame;
       }
       return b;
     }

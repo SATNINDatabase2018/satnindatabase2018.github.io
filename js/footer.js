@@ -27,7 +27,7 @@
       for(const [path,name,entries]of [['stable/','My Stable',[['My Horses','owned'],['Wishlist','wishlist']]],['collection/','My Collection',[['Everything','everything'],['Owned','owned'],['Wishlist','wishlist'],['Favorites','favorite'],['Wardrobe (My Storage)','wardrobe']]]]){
         const original=[...nav.querySelectorAll('a')].find(a=>a.getAttribute('href')===path);if(!original||original.closest('.header-page-menu'))continue;
         const menu=text('details','','guides-menu header-page-menu'),summary=text('summary',''),links=text('div','','guides-menu-links');const mainLink=text('a',name,'header-page-link');mainLink.href=path;mainLink.addEventListener('click',e=>{e.stopPropagation();menu.open=false;});summary.setAttribute('aria-label',name+' menu');summary.append(mainLink);menu.append(summary,links);original.replaceWith(menu);
-        for(const [label,hash]of entries){const a=text('a',label);a.href=path+'#'+hash;if(hash==='wardrobe'){a.hidden=true;supabaseClient.auth.getUser().then(({data,error})=>{a.hidden=!!error||!data?.user;}).catch(()=>{});}a.addEventListener('click',()=>menu.open=false);links.append(a);}
+        for(const [label,hash]of entries){const a=text('a','');a.href=path+'#'+hash;const icon=text('span',({owned:'✓',wishlist:'☆',favorite:'♡',everything:'✦',wardrobe:'▦'})[hash]||'✓','guide-link-icon');icon.setAttribute('aria-hidden','true');const copy=text('span','','guide-link-copy');copy.append(text('strong',label),text('small',({everything:'All your saved items',owned:path==='stable/'?'Visit your horses':'Items you own',wishlist:'Things you would like',favorite:'Your favorite items',wardrobe:'Find your items in storage'})[hash]));a.append(icon,copy);if(hash==='wardrobe'){a.hidden=true;supabaseClient.auth.getUser().then(({data,error})=>{a.hidden=!!error||!data?.user;}).catch(()=>{});}a.addEventListener('click',()=>menu.open=false);links.append(a);}
       }
       for(const menu of nav.querySelectorAll('.guides-menu')){
         if(menu.dataset.hoverReady)continue;menu.dataset.hoverReady='true';let timer;
@@ -37,10 +37,12 @@
     }
     const pageName=path=>path.replace(/\/index\.html$/,'/').replace(/\/$/,'').split('/').pop()||'';const current=pageName(location.pathname);
     header.querySelectorAll('nav a').forEach(a=>{
-      const url=new URL(a.href,location.href);const matches=pageName(url.pathname)===current&&(!url.hash||url.hash===location.hash)&&!(current==='login'&&location.hash==='#signup'&&!url.hash);
+      const url=new URL(a.href,location.href);const target=pageName(url.pathname),hash=location.hash||(current==='stable'?'#owned':current==='collection'?'#everything':'');const matches=target===current&&(!url.hash||url.hash===hash)&&!(current==='login'&&hash==='#signup'&&!url.hash);
       if(matches)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
     });
+    for(const menu of header.querySelectorAll('.guides-menu')){const on=!!menu.querySelector('a[aria-current="page"]');menu.classList.toggle('is-current',on);if(on)menu.querySelector('summary').setAttribute('aria-current','page');else menu.querySelector('summary').removeAttribute('aria-current');}
   }
+  window.addEventListener('hm-navigation',updateHeader);
   window.addEventListener('hashchange',updateHeader);
   function mountNewsBanner(){
     const header=document.querySelector('body>header');
