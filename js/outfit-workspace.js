@@ -33,7 +33,7 @@ window.HMOutfitWorkspace = {
       const groups={player:[],horse:[]};let unresolved=0;
       for(const k of Object.values(slots||{})){
         const i=resolve(k);if(!i){unresolved++;continue;}
-        if(['Pets','Hairstyles'].includes(i.category))continue; // Companions are displayed, not counted as equipment bonuses.
+        if(['Pets','Hairstyles'].includes(i.category)||i.category==='Player Accessories'&&statFields.every(([f])=>i[f]===null||i[f]===undefined||String(i[f]).trim()===''))continue; // Companions are displayed, not counted as equipment bonuses.
         groups[['Clothes','Player Accessories','Hairstyles'].includes(i.category)?'player':'horse'].push(i);
       }
       return {groups,unresolved};
@@ -50,9 +50,9 @@ window.HMOutfitWorkspace = {
           const values=list.map(i=>number(i[field]));
           const known=values.filter(v=>v!==null);const sum=known.reduce((a,b)=>a+b,0);total+=sum;
           const incomplete=values.some(v=>v===null)||unresolved>0;missing ||=incomplete;
-          if(!incomplete)dl.append(text('dt',label),text('dd',String(sum)));
+          dl.append(text('dt',label),text('dd',String(sum)+(incomplete?' + ?':'')));
         }
-        if(!missing)dl.append(text('dt','Combined'),text('dd',String(total)));if(dl.childElementCount){section.append(dl);wrap.append(section);}
+        dl.append(text('dt','Combined'),text('dd',String(total)+(missing?' + ?':'')));if(dl.childElementCount){section.append(dl);if(missing)section.append(text('p','? = missing or unverified stats.','stat-note'));wrap.append(section);}
       }
       wrap.append(text('p','Equipment bonuses only. Base skills, horse level, training and care are not included. ','stat-note'));return wrap;
     }
@@ -229,7 +229,7 @@ window.HMOutfitWorkspace = {
     }
     function itemStatusControls(item){
       const id=String(item.id),saved=itemStates.get(id)||{},bar=text('div','','outfit-item-status');bar.setAttribute('role','group');bar.setAttribute('aria-label','Collection status for '+item.title);
-      for(const [field,symbol,label]of [['favorite','♡','Favorite'],['wishlist','☆','Wishlist'],['owned','✓','I own this']]){
+      for(const [field,symbol,label]of [['owned','✓','I own this'],['wishlist','☆','Wishlist'],['favorite','♡','Favorite']]){
         if(field==='wishlist'&&saved.owned)continue;
         const control=button(symbol,async event=>{
           event.preventDefault();event.stopPropagation();if(!user){requireAccount?.();return;}if(statusPending.has(id)||!ownedReady||field==='owned'&&saved.owned)return;
@@ -422,21 +422,36 @@ window.HMOutfitWorkspace = {
       const width=Math.min(460,innerWidth-24),r=anchor.getBoundingClientRect();preview.style.width=width+'px';layout.style.zoom=String(Math.min(.65,(width-28)/(d.outfit_type==='set'?700:440)));preview.style.left=Math.max(12,Math.min(r.right+10,innerWidth-width-12))+'px';preview.style.top=Math.max(12,Math.min(r.top,innerHeight-preview.offsetHeight-12))+'px';
     }
     window.addEventListener('scroll',hideBrowsePreview,true);window.addEventListener('resize',hideBrowsePreview);
+    let browseSort='name',browseDirection='asc';
+    const sortKey=storeKey+':browse-sort';try{const saved=JSON.parse(localStorage.getItem(sortKey)||'null');if(saved?.field)browseSort=saved.field;if(['asc','desc'].includes(saved?.direction))browseDirection=saved.direction;}catch{}
+    function outfitMetric(d,field){
+      if(field==='items')return {value:Object.keys(scopedSlots(d)).length,incomplete:false};
+      const result=stats(scopedSlots(d)),groups=field==='player'?['player']:field==='horse'?['horse']:['player','horse'];let value=0,incomplete=result.unresolved>0;
+      for(const group of groups){const spec=group==='player'?statFields.slice(0,4):statFields.slice(4);for(const item of result.groups[group])for(const [key]of spec){if(!['combined','player','horse'].includes(field)&&key!==field)continue;const n=number(item[key]);if(n===null)incomplete=true;else value+=n;}}
+      return {value,incomplete};
+    }
+    function compareOutfits(a,b){const sign=browseDirection==='desc'?-1:1;const names=(a.name||'').localeCompare(b.name||'',undefined,{numeric:true,sensitivity:'base'});if(browseSort==='name')return sign*names;if(browseSort==='type')return sign*outfitTypes[a.outfit_type].localeCompare(outfitTypes[b.outfit_type])||names;const x=outfitMetric(a,browseSort),y=outfitMetric(b,browseSort);return Number(x.incomplete)-Number(y.incomplete)||sign*(x.value-y.value)||names;}
+    function mountBrowseSort(){const host=document.getElementById('saved-outfits');if(!host)return;const controls=text('div','','outfit-browse-sorting'),field=document.createElement('select'),direction=document.createElement('select');field.setAttribute('aria-label','Sort outfits by');direction.setAttribute('aria-label','Outfit sort direction');const choices=[['name','Name'],['combined','Combined stats'],['player','Player outfit stats'],['horse','Horse equipment stats'],['type','Outfit type'],['items','Number of items'],...statFields];
+      for(const [value,label]of choices)field.add(new Option(label,value));if(!choices.some(([value])=>value===browseSort))browseSort='name';field.value=browseSort;direction.add(new Option('Ascending / A–Z','asc'));direction.add(new Option('Descending / Z–A','desc'));direction.value=browseDirection;
+      const fieldLabel=text('label','Sort outfits '),directionLabel=text('label','Order ');fieldLabel.append(field);directionLabel.append(direction);controls.append(fieldLabel,directionLabel);host.before(controls);
+      function save(){try{localStorage.setItem(sortKey,JSON.stringify({field:browseSort,direction:browseDirection}));}catch{}browse();}
+      field.addEventListener('change',()=>{browseSort=field.value;browseDirection=['name','type'].includes(browseSort)?'asc':'desc';direction.value=browseDirection;save();});direction.addEventListener('change',()=>{browseDirection=direction.value;save();});
+    }
     function browse(){
       const host=document.getElementById('saved-outfits');if(!host)return;
       hideBrowsePreview();const q=(document.getElementById('outfit-search')?.value||'').toLowerCase();host.replaceChildren();
-      const all=Object.values(drafts).filter(d=>d.name.toLowerCase().includes(q));
+      const all=Object.values(drafts).filter(d=>d.name.toLowerCase().includes(q)).sort(compareOutfits);
       for(const d of all){
         const card=text('article','','outfit-overview');const title=text('h3',d.name);title.tabIndex=0;title.addEventListener('mouseenter',()=>previewOutfit(d,title));title.addEventListener('mouseleave',hideBrowsePreview);title.addEventListener('focus',()=>previewOutfit(d,title));title.addEventListener('blur',hideBrowsePreview);card.append(title,text('p',d.dirty?'Unsaved changes':'Saved to your account'));
         card.append(text('p',outfitTypes[d.outfit_type]));const h=d.outfit_type==='player'?null:horseInfo(d.horse_instance_id);if(h)card.append(image(h),text('p',h.title));
-        const thumbs=text('div','','outfit-thumbnails');for(const k of Object.values(scopedSlots(d))){const i=resolve(k);if(i)thumbs.append(image(i));}card.append(thumbs,statTable(scopedSlots(d),d.outfit_type));
+        const thumbs=text('div','','outfit-thumbnails');for(const k of Object.values(scopedSlots(d))){const i=resolve(k);if(i)thumbs.append(image(i));}card.append(thumbs,statTable(scopedSlots(d),'set'));
         card.append(button('Share outfit',()=>shareOutfit(d)),button('Open outfit',()=>{current=d.id;update();root.scrollIntoView?.({behavior:'smooth',block:'start'});}),button('Delete',()=>remove(d.id)));host.append(card);
       }
       if(!all.length)host.append(text('p','No outfits match your search.'));
     }
     // Keep drafts and saved outfits visible together; each card clearly marks unsaved work.
     document.getElementById('outfit-search')?.addEventListener('input',browse);
-    persist();draw();browse();
+    mountBrowseSort();persist();draw();browse();
     return {get slots(){return scopedSlots(selected());},add,count,openMenu,refreshHorses,stats:statTable};
   }
 };
