@@ -13,7 +13,7 @@ window.HMOutfitWorkspace = {
     const catalog=new Map(items.map(i=>[key(i),i]));
     const storeKey=`hm2018:outfits:v2:${user?.id||'guest'}`;
     let rows=[], horses=[], drafts={}, current='', busy=false;
-    let ownedIds=new Set(),ownedReady=false;
+    let ownedIds=new Set(),ownedReady=false;const itemStates=new Map(),statusPending=new Set();
     const uid=()=>crypto.randomUUID();
     let notice='';
     const resolve=k=>catalog.get(k);
@@ -70,13 +70,13 @@ window.HMOutfitWorkspace = {
       const results=await Promise.all([
         supabaseClient.from('hm_saved_outfits').select('id,name,slots,horse_instance_id,outfit_type').eq('user_id',user.id).order('created_at',{ascending:false}),
         supabaseClient.from('user_horses').select('*').eq('user_id',user.id),
-        supabaseClient.from('user_items').select('item_id').eq('user_id',user.id).eq('owned',true)
+        supabaseClient.from('user_items').select('item_id,owned,wishlist,favorite').eq('user_id',user.id)
       ]);
       if(results[0].error)notice='Saved outfits could not load. Run OUTFITS_V2_SETUP.sql if needed. '+results[0].error.message;
       else rows=results[0].data||[];
       if(results[1].error)notice+=' Your stable could not load: '+results[1].error.message;
       else horses=results[1].data||[];
-      if(!results[2].error){ownedIds=new Set((results[2].data||[]).map(r=>String(r.item_id)));ownedReady=true;}
+      if(!results[2].error){for(const row of results[2].data||[])itemStates.set(String(row.item_id),row);ownedIds=new Set((results[2].data||[]).filter(r=>r.owned).map(r=>String(r.item_id)));ownedReady=true;}
     }
     try{
       const saved=JSON.parse(localStorage.getItem(storeKey)||'null');
@@ -227,6 +227,23 @@ window.HMOutfitWorkspace = {
       dialog.addEventListener('close',()=>{dialog.remove();const target=[...root.querySelectorAll('.gear-slot')].find(n=>n.dataset.slot===s);target?.focus();});
       document.body.append(dialog);render();dialog.showModal();search.focus();
     }
+    function itemStatusControls(item){
+      const id=String(item.id),saved=itemStates.get(id)||{},bar=text('div','','outfit-item-status');bar.setAttribute('role','group');bar.setAttribute('aria-label','Collection status for '+item.title);
+      for(const [field,symbol,label]of [['favorite','♡','Favorite'],['wishlist','☆','Wishlist'],['owned','✓','I own this']]){
+        if(field==='wishlist'&&saved.owned)continue;
+        const control=button(symbol,async event=>{
+          event.preventDefault();event.stopPropagation();if(!user){requireAccount?.();return;}if(statusPending.has(id)||!ownedReady||field==='owned'&&saved.owned)return;
+          statusPending.add(id);bar.querySelectorAll('button').forEach(b=>b.disabled=true);
+          const before=itemStates.get(id)||{},next={owned:!!before.owned,wishlist:!!before.wishlist,favorite:!!before.favorite};next[field]=field==='owned'?true:!before[field];
+          try{const result=itemStates.has(id)?await supabaseClient.from('user_items').update({[field]:next[field]}).eq('user_id',user.id).eq('item_id',item.id).select('item_id,owned,wishlist,favorite'):await supabaseClient.from('user_items').upsert({user_id:user.id,item_id:item.id,...next},{onConflict:'user_id,item_id'}).select('item_id,owned,wishlist,favorite');if(result.error)throw result.error;if(!result.data?.length)throw Error('Item status could not be saved.');
+            const value=result.data[0];itemStates.set(id,value);if(value.owned)ownedIds.add(id);else ownedIds.delete(id);
+            document.dispatchEvent(new CustomEvent('hm-outfit-item-status',{detail:{id,state:value}}));
+            if(field==='owned')await window.HMAdminWardrobe?.ownedChanged(item,value.owned);if(field==='favorite')window.HMAdminWardrobe?.favoriteChanged(item,value.favorite);
+            notice='Collection updated.';
+          }catch(e){notice='Could not update item: '+e.message;}finally{statusPending.delete(id);draw();browse();}
+        });control.className='outfit-status-symbol';control.dataset.status=field;control.setAttribute('aria-pressed',String(!!saved[field]));control.setAttribute('aria-label',label+(saved[field]?' (selected)':''));control.title=field==='owned'&&saved.owned?'Owned':(saved[field]?'Remove from ':'')+label;control.disabled=!user||!ownedReady||statusPending.has(id)||(field==='owned'&&!!saved.owned);bar.append(control);
+      }return bar;
+    }
     function slotButton(s,outfit=selected(),interactive=true){
       const item=resolve(outfit.slots[s]);const b=interactive?button('',()=>changeSlot(s)):text('div');b.className='gear-slot';b.dataset.slot=s;b.classList.toggle('is-filled',!!item);b.classList.toggle('is-uncertain',!!item&&!!window.HMItemStatus?.isUncertain(item));b.setAttribute('aria-label',`${s}: ${item?.title||'Empty'}${interactive?'. Choose item':''}`);
       b.append(text('span',s,'slot-label'));if(item)b.append(image(item));else b.append(text('span','+','slot-plus'));
@@ -234,7 +251,7 @@ window.HMOutfitWorkspace = {
       if(interactive&&outfit.slots[s]){
         const frame=text('div','','gear-slot gear-slot-removable');frame.dataset.slot=s;frame.classList.toggle('is-filled',!!item);frame.classList.toggle('is-uncertain',!!item&&!!window.HMItemStatus?.isUncertain(item));frame.tabIndex=-1;
         b.className='gear-slot-choice';b.removeAttribute('data-slot');
-        const remove=button('×',event=>{event.preventDefault();event.stopPropagation();delete outfit.slots[s];autoType(outfit);outfit.dirty=true;notice=s+' removed. Click Save outfit to save this change.';update();browse();});remove.className='remove-slot-item';remove.title='Remove '+(item?(item.title+(item.color?' — '+item.color:'')):s);remove.setAttribute('aria-label','Remove '+(item?(item.title+(item.color?' — '+item.color:'')):s)+' from '+s);frame.append(b,remove);return frame;
+        const remove=button('×',event=>{event.preventDefault();event.stopPropagation();delete outfit.slots[s];autoType(outfit);outfit.dirty=true;notice=s+' removed. Click Save outfit to save this change.';update();browse();});remove.className='remove-slot-item';remove.title='Remove '+(item?(item.title+(item.color?' — '+item.color:'')):s);remove.setAttribute('aria-label','Remove '+(item?(item.title+(item.color?' — '+item.color:'')):s)+' from '+s);frame.append(b,remove);if(item&&isStudio)frame.append(itemStatusControls(item));return frame;
       }
       return b;
     }

@@ -398,6 +398,7 @@
     }
     if(view!=='outfits')render();
   }
+  document.addEventListener('hm-outfit-item-status',event=>{const {id,state}=event.detail;states.set(String(id),state);if(view!=='outfits')render(false);});
   document.addEventListener('hm-wardrobe-favorite',event=>{const {id,favorite}=event.detail;states.set(String(id),{...(states.get(String(id))||{}),favorite});if(view!=='outfits')render(false);});
   document.addEventListener('hm-wardrobe-updated',()=>{if(view!=='outfits')render(false);});
   start();
