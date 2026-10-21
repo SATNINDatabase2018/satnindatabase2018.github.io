@@ -2,6 +2,8 @@
   const $=id=>document.getElementById(id),text=(tag,value,cls)=>{const n=document.createElement(tag);n.textContent=value;if(cls)n.className=cls;return n;};
   const fields=[['title','Title'],['category','Category'],['section','Item type'],['breed','Horse breed'],['coat','Coat'],['color','Color'],['generation','Generation'],['speciality','Speciality'],['description','Description'],['image','Picture URL (HTTPS)'],['shop','Site / shop'],['level','Level / requirement'],['sc','SC'],['js','JS'],['ride','Riding'],['jump','Jumping'],['command','Command'],['care','Care'],['speed','Speed'],['strength','Strength'],['agility','Agility'],['discipline','Discipline'],['endurance','Endurance'],['availability','Availability / status'],['price_note','Price note'],['is_companion','Runs beside you (pets)']];
   let kind='item',records=[],current=null,dirty=false,busy=false,limit=60;let bulkSelected=new Set();
+  const embedded=new URLSearchParams(location.search).get('embed')==='1'&&window.parent!==window;
+  window.HMAdminEditor={canClose:async()=>{if(busy){message('Wait for the current save to finish.');return false;}return allowDiscard();}};
   const message=value=>{$('admin-message').textContent=value;};
   const name=row=>row.title||[row.breed,row.coat].filter(Boolean).join(' ')||'Untitled';
   async function allowDiscard(){return !dirty||(await HMDialog.confirm('Discard your unsaved changes?'));}
@@ -62,6 +64,7 @@
       const {data,error}=await supabaseClient.rpc('hm_save_catalog_entry',{p_kind:kind,p_id:current?.id??null,p_payload:row,p_deleted:deleted,p_expected_revision:current?._revision||0});
       if(error)throw error;const saved=Array.isArray(data)?data[0]:data;if(!saved)throw Error('No saved entry returned. Refresh before retrying.');
       current={...saved.payload,id:Number(saved.entry_id),_revision:Number(saved.revision),_deleted:saved.deleted};dirty=false;
+      if(embedded)window.parent.postMessage({type:'hm-catalog-saved',kind,record:current},location.origin);
       // Update locally even if a subsequent refresh fails; the server save succeeded.
       records=records.filter(r=>String(r.id)!==String(current.id));records.push(current);
       message(deleted?'Entry removed from the public database.':'Saved. Visitors will see the change when they refresh the database.');
@@ -106,6 +109,7 @@
       const result=await supabaseClient.rpc('hm_is_admin');if(result.error)throw result.error;
       if(result.data!==true){$('admin-access').textContent='This page is available to the database administrator only.';return;}
       $('admin-access').hidden=true;$('admin-workspace').hidden=false;
+      const requested=new URLSearchParams(location.search),requestedKind=requested.get('kind'),requestedId=requested.get('id');if(['item','horse'].includes(requestedKind)){kind=requestedKind;$('admin-kind').value=kind;}
       for(const [key,label]of fields){
         const wrapper=text('label',label);let input;
         if(key==='is_companion'){input=document.createElement('select');input.add(new Option('No — stays in the saddle bag','false'));input.add(new Option('Yes — companion','true'));}
@@ -123,7 +127,7 @@
       $('admin-more').addEventListener('click',()=>{limit+=60;renderList();});
       $('admin-export').addEventListener('click',async()=>{try{const data=await HMCatalogData.records(kind);const blob=new Blob([JSON.stringify(data.map(({_revision,_deleted,...row})=>row),null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=kind==='horse'?'horses.json':'database.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch(e){message(e.message);}});
       window.addEventListener('beforeunload',e=>{if(dirty||busy){e.preventDefault();e.returnValue='';}});
-      setupBulk();await reload();open();
+      setupBulk();await reload();if(requestedId){const record=records.find(row=>String(row.id)===requestedId);if(record){await open(record);$('admin-form').scrollIntoView({block:'start'});}else{message('This record could not be found. Search the catalogue or choose another record.');}}else open();
     }catch(e){$('admin-access').textContent='Admin tools could not load: '+e.message+'. Complete the Supabase setup, then refresh.';message(e.message);}
   }
   start();

@@ -5,7 +5,7 @@
   const view = document.body.dataset.view;
   const categories = [['','Everything'],['Hairstyles','Hairstyles'],['Clothes','Player Clothes'],['Player Accessories','Player Accessories'],['Equipment','Horse Equipment'],['Horses','Horses'],['Horse Decorations','Horse Decorations'],['Pets','Pets']];
   const fields = [['title','Name'],['sc','SC'],['js','JS'],['ride','Riding'],['jump','Jumping'],['command','Command'],['care','Care'],['speed','Swiftness'],['strength','Strength'],['agility','Agility'],['discipline','Discipline'],['endurance','Endurance']];
-  let items=[], user=null, states=new Map(), active='', workspace=null, ready=false;
+  let items=[], user=null, states=new Map(), active='', workspace=null, ready=false,canEditCatalog=false;
   const pending = new Set();
   let visibleLimit=60;
   let accountLoading=true;
@@ -150,6 +150,12 @@
     if(!matchMedia('(hover:hover) and (pointer:fine)').matches)return;hideCollectionPreview();const popup=text('aside','','collection-item-preview');collectionPreview=popup;popup.setAttribute('role','tooltip');popup.append(card(item,{preview:true}));const location=text('section','','collection-preview-location');location.append(text('strong','My Wardrobe'),text('p',window.HMAdminWardrobe?.locationText(item)||'Wardrobe location unavailable.'));popup.append(location);document.body.append(popup);const r=anchor.getBoundingClientRect(),width=Math.min(280,innerWidth-24);popup.style.width=width+'px';popup.style.left=Math.max(12,Math.min(r.right+8,innerWidth-width-12))+'px';popup.style.top=Math.max(12,Math.min(r.top,innerHeight-popup.offsetHeight-12))+'px';
   }
   window.addEventListener('scroll',hideCollectionPreview,true);window.addEventListener('resize',hideCollectionPreview);
+  function openDataEditor(item){
+    if(!canEditCatalog)return;const dialog=text('dialog','','catalog-admin-popup');dialog.setAttribute('aria-label','Edit '+item.title);const head=text('div','','catalog-admin-popup-heading'),close=button('Close',requestClose),frame=document.createElement('iframe');head.append(text('strong','Edit data · '+item.title),close);frame.title='Data editor for '+item.title;frame.src='admin/?kind='+(item.kind==='horse'?'horse':'item')+'&id='+encodeURIComponent(item.id)+'&embed=1';dialog.append(head,frame);
+    async function requestClose(){let allowed=false;try{const editor=frame.contentWindow?.HMAdminEditor;allowed=editor?await editor.canClose():true;}catch{allowed=await HMDialog.confirm('Close the editor? Unsaved changes may be lost.');}if(allowed)dialog.close();}
+    function saved(event){if(event.origin!==location.origin||event.source!==frame.contentWindow||event.data?.type!=='hm-catalog-saved')return;const row=event.data.record,kind=event.data.kind;if(kind!==(item.kind==='horse'?'horse':'item')||String(row?.id)!==String(item.id))return;const id=key(item);if(row._deleted)items=items.filter(i=>key(i)!==id);else items=items.map(i=>key(i)===id?{...i,...row,kind:item.kind,shop:item.kind==='horse'?row.location??row.shop:row.shop,agility:row.agility??row.agil,discipline:row.discipline??row.disc}:i);render(false);message('Database entry saved.');}
+    dialog.addEventListener('cancel',event=>{event.preventDefault();requestClose();});dialog.addEventListener('click',event=>{if(event.target===dialog)requestClose();});dialog.addEventListener('close',()=>{window.removeEventListener('message',saved);dialog.remove();});window.addEventListener('message',saved);document.body.append(dialog);dialog.showModal();
+  }
   function card(item,{preview=false}={}){
     const card=text('article','','item-card');card.dataset.itemKey=key(item);card.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(item));
     const horse=item.kind==='horse';card.classList.toggle('horse-catalog-card',horse);
@@ -208,6 +214,7 @@
     if(!horse&&state(item).owned){const wardrobeButton=window.HMAdminWardrobe?.locationButton(item);if(wardrobeButton)actions.append(wardrobeButton);}
     const s=slot(item);
     if(s){const count=workspace?.count(item)||0; const b=button(count?`✓ In ${count} outfit${count===1?'':'s'}`:'+ Add to outfit',e=>{if(requireAccount()){if(workspace)workspace.openMenu(item,e.currentTarget);else message('Outfit tools are unavailable. Refresh My Outfits and try again.');}});b.className='outfit-menu-trigger';b.setAttribute('aria-expanded','false');b.setAttribute('aria-haspopup','dialog');actions.append(b);}
+    if(view==='database'&&!preview&&canEditCatalog){const edit=button('✎ Edit data',()=>openDataEditor(item));edit.className='catalog-edit-data';edit.setAttribute('aria-label','Edit data for '+item.title);actions.append(edit);}
     card.append(actions); return card;
   }
   function filterValues(id){const select=$(id);return select?[...(select.selectedOptions||[])].map(o=>o.value).filter(Boolean):[];}
@@ -390,6 +397,7 @@
       user=data?.user||null;
     }catch(e){authAvailable=false;message('Catalog loaded. Account features are temporarily unavailable: '+e.message);}
     finally{accountLoading=false;}
+    if(authAvailable&&user&&view==='database'){try{const {data,error}=await supabaseClient.rpc('hm_is_admin');canEditCatalog=!error&&data===true;}catch{canEditCatalog=false;}}
     if(authAvailable){
       try{await loadStates();ready=true;}catch(e){message(e.message);}
       supabaseClient.auth.onAuthStateChange((event,session)=>{if((session?.user?.id||null)!==(user?.id||null))setTimeout(()=>location.reload(),0);});
