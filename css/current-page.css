@@ -1,0 +1,3 @@
+/* Current page stays visible independently of hover, focus, or disclosure state. */
+body>header nav>a.hm-current-page,body>header nav .account-nav-actions>a.hm-current-page,body>header nav details.guides-menu>summary.hm-current-page,body>header nav .guides-menu-links>a.hm-current-page{background:var(--green-light)!important;color:var(--green-dark)!important;box-shadow:inset 0 0 0 1px var(--green)!important;font-weight:800!important;text-decoration:underline!important;text-underline-offset:3px}
+body>header nav details.guides-menu.hm-current-section>summary>.header-page-link{background:transparent!important;color:var(--green-dark)!important;box-shadow:none!important;font-weight:800!important;text-decoration:underline!important;text-underline-offset:3px}
