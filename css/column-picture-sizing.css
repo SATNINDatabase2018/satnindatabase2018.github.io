@@ -1,0 +1,8 @@
+/* Scale main portraits with their card columns, retaining a constant image inset.
+   Equipment thumbnails, outfit previews and wardrobe grids keep their own sizes. */
+body :is(#database-grid,#stable-grid).custom-catalog-columns>.item-card>.catalog-card-visual{box-sizing:border-box;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important}
+body :is(#database-grid,#stable-grid).custom-catalog-columns>.item-card>.catalog-card-visual .catalog-image,
+body #stable-grid.custom-catalog-columns>.item-card>.catalog-image{box-sizing:border-box;position:relative;display:block!important;width:100%!important;max-width:none!important;height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:1 / 1;margin:0!important;padding:0!important}
+body :is(#database-grid,#stable-grid).custom-catalog-columns>.item-card>.catalog-card-visual .catalog-image>img,
+body #stable-grid.custom-catalog-columns>.item-card>.catalog-image>img{box-sizing:border-box;position:absolute;inset:0;display:block;width:100%!important;height:100%!important;min-width:0!important;max-width:none!important;min-height:0!important;max-height:none!important;margin:0!important;padding:6px!important;object-fit:contain!important;object-position:center}
+body #database-grid.custom-catalog-columns .horse-catalog-card .spirit-picture-button{box-sizing:border-box;display:block;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:1 / 1;margin:0;padding:0}
