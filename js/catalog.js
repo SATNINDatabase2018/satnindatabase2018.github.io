@@ -144,10 +144,17 @@
       await workspace?.refreshHorses();
     }catch(e){message('Could not add horse: '+e.message);}finally{control.disabled=false;control.textContent=old;}
   }
-  function card(item){
+  let collectionPreview=null;
+  function hideCollectionPreview(){collectionPreview?.remove();collectionPreview=null;}
+  function showCollectionPreview(item,anchor){
+    if(!matchMedia('(hover:hover) and (pointer:fine)').matches)return;hideCollectionPreview();const popup=text('aside','','collection-item-preview');collectionPreview=popup;popup.setAttribute('role','tooltip');popup.append(card(item,{preview:true}));const location=text('section','','collection-preview-location');location.append(text('strong','My Wardrobe'),text('p',window.HMAdminWardrobe?.locationText(item)||'Wardrobe location unavailable.'));popup.append(location);document.body.append(popup);const r=anchor.getBoundingClientRect(),width=Math.min(280,innerWidth-24);popup.style.width=width+'px';popup.style.left=Math.max(12,Math.min(r.right+8,innerWidth-width-12))+'px';popup.style.top=Math.max(12,Math.min(r.top,innerHeight-popup.offsetHeight-12))+'px';
+  }
+  window.addEventListener('scroll',hideCollectionPreview,true);window.addEventListener('resize',hideCollectionPreview);
+  function card(item,{preview=false}={}){
     const card=text('article','','item-card');card.dataset.itemKey=key(item);card.classList.toggle('is-uncertain',!!window.HMItemStatus?.isUncertain(item));
     const horse=item.kind==='horse';card.classList.toggle('horse-catalog-card',horse);
     const visual=text('div','','catalog-card-visual');visual.append(image(item));
+    if(view==='collection'&&!preview){visual.tabIndex=0;visual.setAttribute('aria-label','Preview '+item.title);visual.addEventListener('mouseenter',()=>showCollectionPreview(item,visual));visual.addEventListener('mouseleave',hideCollectionPreview);visual.addEventListener('focus',()=>showCollectionPreview(item,visual));visual.addEventListener('blur',hideCollectionPreview);}
     {
       const saved=state(item),statuses=[['owned','✓','I own this'],['wishlist','☆','Wishlist'],['favorite','♡','Favorite']].filter(([field])=>saved[field]);
       if(statuses.length){
