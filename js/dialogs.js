@@ -5,7 +5,7 @@
   const task=()=>new Promise(resolve=>{
    const previous=document.activeElement,d=document.createElement('dialog');d.className='site-dialog';
    const form=document.createElement('form');form.method='dialog';
-   const title=document.createElement('h2');title.id='site-dialog-title';title.textContent=kind==='prompt'?'Enter a name':kind==='confirm'?'Please confirm':"SATNIN’s Database";
+   const title=document.createElement('h2');title.id='site-dialog-title';title.textContent=kind==='prompt'?'Enter a name':kind==='confirm'?'Please confirm':"Database";
    const body=document.createElement('p');body.id='site-dialog-message';body.textContent=message;d.setAttribute('aria-labelledby',title.id);d.setAttribute('aria-describedby',body.id);form.append(title,body);
    let input;if(kind==='prompt'){input=document.createElement('input');input.type='text';input.value=initial;input.maxLength=200;input.setAttribute('aria-label',String(message));form.append(input);}
    const actions=document.createElement('div');actions.className='site-dialog-actions';
