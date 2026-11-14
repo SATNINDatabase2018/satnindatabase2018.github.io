@@ -1,0 +1,32 @@
+name: Clean redundant repository files
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.x'
+
+      - name: Remove verified redundant files
+        run: python scripts/cleanup-repository.py --apply
+
+      - name: Commit cleanup
+        run: |
+          if git diff --quiet; then
+            echo "Nothing to clean."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -u
+          git commit -m "Remove unused legacy website files"
+          git push
