@@ -21,7 +21,7 @@ No new admin account is created. Existing item/horse editing and saved account d
 
 ## Coverage
 
-The first version contains 759 content entries: shared header labels, dropdown labels/descriptions, logo, footer labels and copy, static page text, browser titles, input hints, public-page links/pictures, extra paragraphs, and Spirit/championship locations. Catalogue items and horses keep using the existing data editor; news keeps using its existing editor.
+The first version contains 730 content entries: shared header labels, dropdown labels/descriptions, logo, footer labels and copy, static page text, browser titles, input hints, public-page links/pictures, extra paragraphs, and Spirit/championship locations. Catalogue items and horses keep using the existing data editor.
 
 This is a content editor. It does not edit feature logic, account permissions, game-time calculations, arbitrary HTML/JavaScript/CSS, or another user's private wardrobe/outfits. Changing a guide's explanatory wording does not change scheduling rules. Displayed current/next guide locations do use edited table locations.
 

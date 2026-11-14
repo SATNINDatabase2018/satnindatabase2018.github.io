@@ -1,0 +1,1 @@
+/* News has been retired. No requests or background tasks. */

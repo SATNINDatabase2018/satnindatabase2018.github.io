@@ -1,0 +1,61 @@
+/* Shared site header, footer and announcements. */
+(() => {
+  const HM_NAME = 'Luna Dovegarden (2018 version)';
+  const logoImage=()=> 'assets/satnin-clam-otter-'+(['darkcoffee','tcb'].includes(document.documentElement.dataset.theme)?'coffee':(['light','dark','coffee','forest'].includes(document.documentElement.dataset.theme)?document.documentElement.dataset.theme:'light'))+'.png?v=96'; // Example: assets/logo.png
+  const SITE_NAME = "Database";
+  const text=(tag,value,cls)=>{const n=document.createElement(tag);n.textContent=value;if(cls)n.className=cls;return n;};
+  function updateHeader(){
+    const header=document.querySelector('body>header');if(!header)return;
+    const old=header.querySelector('.header-brand,.logo');
+    if(old){
+      const brand=text('div','','header-brand');const imageLink=text('a','','header-logo-image');imageLink.href='./';imageLink.setAttribute('aria-label',SITE_NAME+' home');
+      const img=document.createElement('img');img.src=logoImage();img.alt='';imageLink.append(img);
+      const words=text('div','','header-wordmark');const title=text('a',SITE_NAME,'logo');title.href='./';const credit=text('span','for 2018 Horse Museum','logo-credit');words.append(title,credit);brand.append(imageLink,words);old.replaceWith(brand);
+    }
+    const nav=header.querySelector('nav');
+    if(nav){const database=nav.querySelector('a[href="database/"]'),outfits=nav.querySelector('a[href="outfits/"]');if(database&&outfits&&database.nextElementSibling!==outfits)database.after(outfits);}
+    if(nav&&!nav.querySelector('.guides-menu')){
+      const menu=text('details','','guides-menu'),summary=text('summary','HM Guides');menu.append(summary);
+      const links=text('div','','guides-menu-links');
+      links.append(text('small','JORVIK GUIDES','guides-caption'));
+      for(const [label,path,icon,description]of [['Spirit timetable','spirit/','◷','Find Spirit’s current location'],['Championships','championships/','⚑','See the next race in UTC'],['Unlocking areas','areas/','⌘','Explore area requirements']]){const a=text('a','');a.href=path;const badge=text('span',icon,'guide-link-icon');badge.setAttribute('aria-hidden','true');const copy=text('span','','guide-link-copy');copy.append(text('strong',label),text('small',description));a.append(badge,copy);links.append(a);}menu.append(links);nav.insertBefore(menu,nav.querySelector('.account-nav-actions'));
+      document.addEventListener('pointerdown',e=>{if(!menu.contains(e.target))menu.open=false;},true);
+      menu.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.open=false;summary.focus();}});
+    }
+    if(nav){
+      for(const [path,name,entries]of [['stable/','My Stable',[['My Horses','owned'],['Wishlist','wishlist']]],['collection/','My Collection',[['Everything','everything'],['Owned','owned'],['Wishlist','wishlist'],['Favorites','favorite'],['Wardrobe (My Storage)','wardrobe']]]]){
+        const original=[...nav.querySelectorAll('a')].find(a=>a.getAttribute('href')===path);if(!original||original.closest('.header-page-menu'))continue;
+        const menu=text('details','','guides-menu header-page-menu'),summary=text('summary',''),links=text('div','','guides-menu-links');const mainLink=text('a',name,'header-page-link');mainLink.href=path;mainLink.addEventListener('click',e=>{e.stopPropagation();menu.open=false;});summary.setAttribute('aria-label',name+' menu');summary.append(mainLink);menu.append(summary,links);original.replaceWith(menu);
+        for(const [label,hash]of entries){const a=text('a','');a.href=path+'#'+hash;const icon=text('span',({owned:'✓',wishlist:'☆',favorite:'♡',everything:'✦',wardrobe:'▦'})[hash]||'✓','guide-link-icon');icon.setAttribute('aria-hidden','true');const copy=text('span','','guide-link-copy');copy.append(text('strong',label),text('small',({everything:'All your saved items',owned:path==='stable/'?'Visit your horses':'Items you own',wishlist:'Things you would like',favorite:'Your favorite items',wardrobe:'Find your items in storage'})[hash]));a.append(icon,copy);if(hash==='wardrobe'){a.hidden=true;supabaseClient.auth.getUser().then(({data,error})=>{a.hidden=!!error||!data?.user;}).catch(()=>{});}a.addEventListener('click',()=>menu.open=false);links.append(a);}
+      }
+      for(const menu of nav.querySelectorAll('.guides-menu')){
+        if(menu.dataset.hoverReady)continue;menu.dataset.hoverReady='true';let timer;
+        menu.addEventListener('mouseenter',()=>{if(matchMedia('(hover:hover)').matches){clearTimeout(timer);menu.open=true;}});menu.addEventListener('mouseleave',()=>{timer=setTimeout(()=>{if(!menu.contains(document.activeElement))menu.open=false;},100);});
+        document.addEventListener('pointerdown',e=>{if(!menu.contains(e.target))menu.open=false;},true);menu.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.open=false;menu.querySelector('summary').focus();}});
+      }
+    }
+    const pageName=path=>path.replace(/\/index\.html$/,'/').replace(/\/$/,'').split('/').pop()||'';const current=pageName(location.pathname);
+    header.querySelectorAll('nav a').forEach(a=>{
+      const url=new URL(a.href,location.href);const target=pageName(url.pathname),hash=location.hash||(current==='stable'?'#owned':current==='collection'?'#everything':'');const matches=target===current&&(!url.hash||url.hash===hash)&&!(current==='login'&&hash==='#signup'&&!url.hash);
+      if(matches)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
+    });
+    for(const menu of header.querySelectorAll('.guides-menu')){const on=!!menu.querySelector('a[aria-current="page"]');menu.classList.toggle('is-current',on);if(on)menu.querySelector('summary').setAttribute('aria-current','page');else menu.querySelector('summary').removeAttribute('aria-current');}
+  }
+  window.addEventListener('hm-navigation',updateHeader);
+  window.addEventListener('hashchange',updateHeader);
+  function mount(){
+    updateHeader();
+    if(document.querySelector('.site-footer'))return;
+    const footer=text('footer','','site-footer');
+    const inner=text('div','','footer-inner');
+    const brand=text('div','','footer-brand');brand.append(text('strong',SITE_NAME),text('p','My database for Horse Museum 2018 Version. I’m SATNIN, and I’ve extracted, compiled and organised the data that makes this database possible.'));
+    const nav=document.createElement('nav');nav.setAttribute('aria-label','Footer navigation');
+    for(const [label,href]of [['How to use','tutorial/'],['About & credits','about/'],['Contact / Discord','contact/'],['Privacy','privacy/']]){const a=text('a',label);a.href=href;nav.append(a);}
+    brand.append(text('p','Some information in my database may be incorrect.'));
+    inner.append(brand,nav);
+    const bottom=text('div','','footer-bottom');bottom.append(text('small',`© ${new Date().getFullYear()} ${SITE_NAME}. Unofficial fan-made archive.`),text('small','Star Stable and its game assets belong to their respective owners. This site is not affiliated with or endorsed by Star Stable Entertainment.'));
+    footer.append(inner,bottom);document.body.append(footer);
+
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});else mount();
+})();

@@ -560,14 +560,6 @@
     "default": "HM Guides"
   },
   {
-    "key": "page-tutorial-0012",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Link text: News & banners",
-    "type": "text",
-    "default": "News & banners"
-  },
-  {
     "key": "page-tutorial-0013",
     "page": "How to use",
     "path": "tutorial/",
@@ -613,7 +605,7 @@
     "path": "tutorial/",
     "label": "Paragraph: , news, and guides without an account. Log in to use My Collection, My Wardrobe, My Stable, and",
     "type": "text",
-    "default": ", news, and guides without an account. Log in to use My Collection, My Wardrobe, My Stable, and My Outfits. Your saved items and wardrobe belong to your account and are available when you log in on another device."
+    "default": " and guides without an account. Log in to use My Collection, My Wardrobe, My Stable, and My Outfits. Your saved items and wardrobe belong to your account and are available when you log in on another device."
   },
   {
     "key": "page-tutorial-0019",
@@ -2040,116 +2032,12 @@
     "default": ". Use the linked time converter to check your local time. Scroll sideways on smaller screens to see every day."
   },
   {
-    "key": "page-tutorial-0197",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "SPAN: 10",
-    "type": "text",
-    "default": "10"
-  },
-  {
-    "key": "page-tutorial-0198",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Heading: News, reactions, and banners",
-    "type": "text",
-    "default": "News, reactions, and banners"
-  },
-  {
-    "key": "page-tutorial-0199",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Paragraph: Open",
-    "type": "text",
-    "default": "Open "
-  },
-  {
-    "key": "page-tutorial-0200",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Link text: News",
-    "type": "text",
-    "default": "News"
-  },
-  {
-    "key": "page-tutorial-0201",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Paragraph: from the footer for From SATNIN announcements, database edits, and the latest automatic website",
-    "type": "text",
-    "default": " from the footer for From SATNIN announcements, database edits, and the latest automatic website-change summary. Filter by update type or click "
-  },
-  {
-    "key": "page-tutorial-0202",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Highlighted text: Show comments",
-    "type": "text",
-    "default": "Show comments"
-  },
-  {
-    "key": "page-tutorial-0203",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Paragraph: . Admins publish news and comments; everyone can read them.",
-    "type": "text",
-    "default": ". Admins publish news and comments; everyone can read them."
-  },
-  {
-    "key": "page-tutorial-0204",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Paragraph: Signed-in users can add emoji reactions. Click an emoji again to remove your reaction. Everyone",
-    "type": "text",
-    "default": "Signed-in users can add emoji reactions. Click an emoji again to remove your reaction. Everyone can see reaction counts."
-  },
-  {
-    "key": "page-tutorial-0205",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Paragraph: The compact banner beneath the header shows the latest From SATNIN announcement across pages. C",
-    "type": "text",
-    "default": "The compact banner beneath the header shows the latest From SATNIN announcement across pages. Click "
-  },
-  {
-    "key": "page-tutorial-0206",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Highlighted text: ×",
-    "type": "text",
-    "default": "×"
-  },
-  {
-    "key": "page-tutorial-0207",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Paragraph: to dismiss that announcement, or",
-    "type": "text",
-    "default": " to dismiss that announcement, or "
-  },
-  {
-    "key": "page-tutorial-0208",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Highlighted text: Never show news banners again",
-    "type": "text",
-    "default": "Never show news banners again"
-  },
-  {
-    "key": "page-tutorial-0209",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Paragraph: to hide future banners too. Signed-in choices are saved to your account across devices; logged-",
-    "type": "text",
-    "default": " to hide future banners too. Signed-in choices are saved to your account across devices; logged-out choices are remembered separately in that browser."
-  },
-  {
     "key": "page-tutorial-0210",
     "page": "How to use",
     "path": "tutorial/",
     "label": "SPAN: 11",
     "type": "text",
-    "default": "11"
+    "default": "10"
   },
   {
     "key": "page-tutorial-0211",
@@ -2392,14 +2280,6 @@
     "default": "tutorial/#guides"
   },
   {
-    "key": "page-tutorial-link-9",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Link destination: News & banners",
-    "type": "url",
-    "default": "tutorial/#news"
-  },
-  {
     "key": "page-tutorial-link-10",
     "page": "How to use",
     "path": "tutorial/",
@@ -2486,14 +2366,6 @@
     "label": "Link destination: Unlocking areas",
     "type": "url",
     "default": "areas/"
-  },
-  {
-    "key": "page-tutorial-link-21",
-    "page": "How to use",
-    "path": "tutorial/",
-    "label": "Link destination: News",
-    "type": "url",
-    "default": "news/"
   },
   {
     "key": "page-tutorial-link-22",
@@ -3584,102 +3456,6 @@
     "default": "Search outfit names…"
   },
   {
-    "key": "page-news-0001",
-    "page": "News",
-    "path": "news/",
-    "label": "Heading: News & updates",
-    "type": "text",
-    "default": "News & updates"
-  },
-  {
-    "key": "page-news-0002",
-    "page": "News",
-    "path": "news/",
-    "label": "Paragraph: What’s new with my database: website improvements, catalogue edits, and messages from me.",
-    "type": "text",
-    "default": "What’s new with my database: website improvements, catalogue edits, and messages from me."
-  },
-  {
-    "key": "page-news-0003",
-    "page": "News",
-    "path": "news/",
-    "label": "Field label: Show",
-    "type": "text",
-    "default": "Show"
-  },
-  {
-    "key": "page-news-0004",
-    "page": "News",
-    "path": "news/",
-    "label": "Button text: Refresh",
-    "type": "text",
-    "default": "Refresh"
-  },
-  {
-    "key": "page-news-0005",
-    "page": "News",
-    "path": "news/",
-    "label": "Heading: Publish news",
-    "type": "text",
-    "default": "Publish news"
-  },
-  {
-    "key": "page-news-0006",
-    "page": "News",
-    "path": "news/",
-    "label": "Field label: Title",
-    "type": "text",
-    "default": "Title"
-  },
-  {
-    "key": "page-news-0007",
-    "page": "News",
-    "path": "news/",
-    "label": "Field label: Message",
-    "type": "text",
-    "default": "Message"
-  },
-  {
-    "key": "page-news-0008",
-    "page": "News",
-    "path": "news/",
-    "label": "Paragraph: Published posts are visible to everyone.",
-    "type": "text",
-    "default": "Published posts are visible to everyone."
-  },
-  {
-    "key": "page-news-0009",
-    "page": "News",
-    "path": "news/",
-    "label": "Button text: Publish post",
-    "type": "text",
-    "default": "Publish post"
-  },
-  {
-    "key": "page-news-0010",
-    "page": "News",
-    "path": "news/",
-    "label": "Button text: Clear",
-    "type": "text",
-    "default": "Clear"
-  },
-  {
-    "key": "page-news-0011",
-    "page": "News",
-    "path": "news/",
-    "label": "Button text: Show older updates",
-    "type": "text",
-    "default": "Show older updates"
-  },
-  {
-    "key": "page-news-browser-title",
-    "page": "News",
-    "path": "news/",
-    "label": "Browser tab title",
-    "type": "text",
-    "default": "News | Database"
-  },
-  {
     "key": "page-login-0001",
     "page": "Login",
     "path": "login/",
@@ -4150,14 +3926,6 @@
     "label": "Ownership and affiliation notice",
     "type": "text",
     "default": "Star Stable and its game assets belong to their respective owners. This site is not affiliated with or endorsed by Star Stable Entertainment."
-  },
-  {
-    "key": "footer-nav-news",
-    "page": "Footer",
-    "path": "./",
-    "label": "Footer link: News",
-    "type": "text",
-    "default": "News"
   },
   {
     "key": "footer-nav-tutorial",
