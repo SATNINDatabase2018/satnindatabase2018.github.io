@@ -66,21 +66,30 @@
   }
   // Exposed for small regression checks; no network or writes.
   window.HMCatalog={compare,number,overallStats,searchRank,shopsFor,hasShop,createCard:card};
+  const searchDocuments=new WeakMap(),searchResults=new WeakMap();
+  let lastSearchInput,lastSearchQuery;
   function searchRank(item,query){
     const normal=value=>String(value??'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[‐‑–—-]/g,' ').replace(/\s+/g,' ').trim();
-    const q=normal(query);if(!q)return 0;
+    if(query!==lastSearchInput){lastSearchInput=query;lastSearchQuery=normal(query);}
+    const q=lastSearchQuery;if(!q)return 0;
+    const previous=searchResults.get(item);if(previous?.query===q)return previous.rank;
+    let groups=searchDocuments.get(item);
+    if(!groups){
     const stats=['ride','jump','command','care','speed','strength','agility','discipline','endurance'].filter(k=>item[k]!==undefined&&item[k]!==null&&item[k]!=='').map(k=>`${k==='speed'&&item.category==='Equipment'?'swiftness speed':k} ${item[k]}`).join(' ');
     const money=[item.sc!=null?`SC ${item.sc} star coins ${item.sc}`:'',item.js!=null?`JS ${item.js} jorvik shillings ${item.js}`:'',item.price_note||''].join(' ');
     const special=[item.speciality,item.specialty,item.is_companion===true?'companion pet':'',isCompanion(item)?'companion pet':'',item.section,item.category,item.generation?`generation ${item.generation}`:'',/pony/i.test(item.breed||'')?'pony':''].filter(Boolean).join(' ');
-    const groups=[[item.title,item.color,item.breed,item.coat,...(item.aliases||[])].filter(Boolean).join(' '),item.description,[item.shop,item.location].filter(Boolean).join(' '),stats,money,special].map(normal);
+    groups=[[item.title,item.color,item.breed,item.coat,...(item.aliases||[])].filter(Boolean).join(' '),item.description,[item.shop,item.location].filter(Boolean).join(' '),stats,money,special].map(normal);
+    searchDocuments.set(item,groups);
+    }
+    const remember=rank=>{searchResults.set(item,{query:q,rank});return rank;};
     for(let tier=0;tier<groups.length;tier++){
       const text=groups[tier];if(!text)continue;
-      if(text===q)return tier*100;
-      if(text.startsWith(q))return tier*100+1;
-      if(text.includes(q))return tier*100+2;
-      if(q.split(' ').every(word=>text.includes(word)))return tier*100+3;
+      if(text===q)return remember(tier*100);
+      if(text.startsWith(q))return remember(tier*100+1);
+      if(text.includes(q))return remember(tier*100+2);
+      if(q.split(' ').every(word=>text.includes(word)))return remember(tier*100+3);
     }
-    return Infinity;
+    return remember(Infinity);
   }
   let horseWishlist=new Set(),horseFavorites=new Set(),horseCounts=new Map();
   function state(item){return item.kind==='horse'?{owned:(horseCounts.get(String(item.id))||0)>0,wishlist:horseWishlist.has(String(item.id)),favorite:horseFavorites.has(String(item.id))}:states.get(String(item.id)) || {};}
@@ -117,7 +126,7 @@
   function image(item){
     const wrap=text('div','', 'catalog-image');
     if(item.image && /^https?:\/\//i.test(item.image)){
-      const img=document.createElement('img'); img.src=item.image; img.alt=item.title; img.loading='lazy';
+      const img=document.createElement('img'); img.src=item.image; img.alt=item.title; img.loading='lazy';img.decoding='async';
       img.addEventListener('error',()=>wrap.replaceChildren(text('span','Image unavailable')),{once:true}); wrap.append(img);
     }else wrap.append(text('span','Image unavailable'));
     return wrap;
@@ -188,7 +197,7 @@
     if(item.color)card.append(text('p','Color: '+item.color,'card-description'));
     if(!horse && item.description)card.append(text('p',item.description,'card-description'));
     if(item.category==='Hairstyles'&&/^https:\/\//i.test(item.general_image||'')){
-      const preview=text('figure','','hairstyle-general-preview'),img=document.createElement('img');img.src=item.general_image;img.alt=item.title+' — general hairstyle preview';img.loading='lazy';preview.append(img,text('figcaption','Hairstyle preview'));card.append(preview);
+      const preview=text('figure','','hairstyle-general-preview'),img=document.createElement('img');img.src=item.general_image;img.alt=item.title+' — general hairstyle preview';img.loading='lazy';img.decoding='async';preview.append(img,text('figcaption','Hairstyle preview'));card.append(preview);
     }
     const places=shopsFor(item);const place=text('div','','card-location');
     if(view==='database'&&places.length){for(const shop of places){const link=button(shop,()=>browseShop(shop));link.className='card-shop-link';place.append(link);}}else place.textContent=places.join(' | ')||'Site / shop not verified';card.append(place);
@@ -224,7 +233,7 @@
     if(view==='collection'){
       let note=$('horse-wishlist-note');if(!note){note=text('p','','stat-note');note.id='horse-wishlist-note';const link=text('a','My Stable');link.href='stable/';note.append(document.createTextNode('Wishlisted horses are in '),link,document.createTextNode(' → Wishlist.'));$('result-count').before(note);}note.hidden=active!=='wishlist';
     }
-    if(reset===true)visibleLimit=60;
+    if(reset!==false)visibleLimit=60;
     if(view==='database'||view==='collection'){updateDBSubcategories();updateDBShops();}
     const chosenCategories=filterValues('category-filter'),chosenAreas=filterValues('area-filter'),chosenTypes=filterValues('subcategory-filter'),chosenShops=filterValues('shop-filter');
     const q=($('search')?.value||'').trim().toLowerCase(),category=$('category-filter')?.value||'',shop=$('shop-filter')?.value||'',breed=$('breed-filter')?.value||'',subtype=$('subcategory-filter')?.value||'';
@@ -364,7 +373,9 @@
       b.addEventListener('keydown',e=>{const all=[...tabs.children];const i=all.indexOf(b);const next=e.key==='ArrowRight'?all[(i+1)%all.length]:e.key==='ArrowLeft'?all[(i-1+all.length)%all.length]:e.key==='Home'?all[0]:e.key==='End'?all.at(-1):null;if(next){e.preventDefault();next.click();next.focus();}});tabs.append(b);
     });
     window.addEventListener('hashchange',()=>{let v;try{v=decodeURIComponent(location.hash.slice(1));}catch{return;}if(choices.some(([x])=>x===v))activate(v);});
-    $('search')?.addEventListener('input',render);
+    let searchTimer;
+    $('search')?.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(()=>render(true),120);});
+    $('search')?.addEventListener('search',()=>{clearTimeout(searchTimer);render(true);});
     $('category-filter')?.addEventListener('change',()=>{
       if(view==='database'){
         const chosen=filterValues('category-filter');active=chosen.length===1?chosen[0]:'';

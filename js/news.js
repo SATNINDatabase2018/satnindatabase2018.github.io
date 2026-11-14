@@ -12,5 +12,5 @@
  $('news-filter').addEventListener('change',()=>{limit=20;render();});$('news-more').addEventListener('click',()=>{limit+=20;render();});$('news-refresh').addEventListener('click',load);$('news-cancel').addEventListener('click',()=>editor());
  $('news-form').addEventListener('submit',async e=>{e.preventDefault();if(busy||!admin)return;busy=true;$('news-publish').disabled=true;try{const {error}=await supabaseClient.rpc('hm_news_save',{p_id:editing?.id||null,p_title:$('news-title').value.trim(),p_body:$('news-body').value.trim(),p_parent_key:parent,p_revision:editing?.revision||0});if(error)throw error;editor();$('news-editor-status').textContent='Published successfully.';await load();}catch(e){$('news-editor-status').textContent='Could not publish: '+e.message;}finally{busy=false;$('news-publish').disabled=false;}});
  async function access(){try{const {data,error}=await supabaseClient.rpc('hm_is_admin');admin=!error&&data===true;}catch{admin=false;}$('news-editor').hidden=!admin;render();}
- supabaseClient.auth.onAuthStateChange(()=>setTimeout(access,0));access();load();setInterval(()=>{if(!document.hidden&&!busy&&!$('news-body').value)load();},60000);
+ supabaseClient.auth.onAuthStateChange(()=>setTimeout(access,0));access();load();setInterval(()=>{if(!document.hidden&&!busy&&!$('news-body').value)load();},300000);
 })();

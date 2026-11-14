@@ -2,7 +2,20 @@
 (() => {
   const baseCache=new Map();let changesPromise;
   async function base(kind){
-    if(!baseCache.has(kind))baseCache.set(kind,(async()=>{const path=kind==='horse'?'data/horses.json':'data/database.json';const r=await fetch(path,{cache:'no-cache'});if(!r.ok)throw Error('Could not load '+path);const data=await r.json();if(!Array.isArray(data))throw Error('Invalid catalogue file.');if(kind==='item'){const extra=await fetch('data/hairstyles.json',{cache:'no-cache'});if(!extra.ok)throw Error('Could not load hairstyles.');data.push(...await extra.json());}return data;})());
+    if(!baseCache.has(kind)){
+      const pending=(async()=>{
+        const paths=kind==='horse'?['data/horses.json']:['data/database.json','data/hairstyles.json'];
+        const parts=await Promise.all(paths.map(async path=>{
+          const response=await fetch(path,{cache:'no-cache'});
+          if(!response.ok)throw Error('Could not load '+path);
+          const rows=await response.json();if(!Array.isArray(rows))throw Error('Invalid catalogue file.');
+          return rows;
+        }));
+        return parts.flat();
+      })();
+      baseCache.set(kind,pending);
+      pending.catch(()=>{if(baseCache.get(kind)===pending)baseCache.delete(kind);});
+    }
     return baseCache.get(kind);
   }
   async function changes(refresh=false){

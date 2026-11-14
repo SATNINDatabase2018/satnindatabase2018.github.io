@@ -10,7 +10,7 @@
   if(location.pathname==='/'||location.pathname==='/index.html'){finished=true;hide();return;}
   const visibleImages=[...document.images].filter(img=>img.loading!=='lazy'||img.getBoundingClientRect().top<innerHeight);
   const imagesReady=visibleImages.every(img=>img.complete);
-  if(pageLoaded&&!pending&&imagesReady&&Date.now()-lastActivity>=500&&Date.now()-started>=1200){finished=true;hide();return;}
+  if(pageLoaded&&!pending&&imagesReady&&Date.now()-lastActivity>=150&&Date.now()-started>=250){finished=true;hide();return;}
   if(Date.now()-started>=20000){finished=true;hide();return;}
   settleTimer=setTimeout(ready,100);
  }

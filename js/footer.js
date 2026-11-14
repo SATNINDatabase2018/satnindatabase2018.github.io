@@ -46,7 +46,7 @@
   function mountNewsBanner(){
     const header=document.querySelector('body>header');
     if(!header||typeof supabaseClient==='undefined'||document.getElementById('satnin-news-banner'))return;
-    let neverKey='',storageKey='',never=false,latest=null,closed=new Set(),loading=false,preferencesReady=false,profile=null,pending=false;
+    let neverKey='',storageKey='',never=false,latest=null,closed=new Set(),loading=false,preferencesReady=false,profile=null,pending=false,lastRefresh=0;
     const banner=text('aside','','satnin-news-banner');banner.id='satnin-news-banner';banner.hidden=true;banner.setAttribute('aria-label','Latest news from SATNIN');
     const copy=text('div','','satnin-news-copy'),label=text('span','From SATNIN','satnin-news-label'),title=text('strong','','satnin-news-title'),body=text('p','','satnin-news-excerpt');
     const link=text('a','Read news →','satnin-news-link');link.href='news/';
@@ -76,7 +76,7 @@
       try{never=localStorage.getItem(neverKey)==='true';closed=new Set(JSON.parse(localStorage.getItem(storageKey)||'[]').map(String));pending=true;show();syncPreferences();}catch{}
     });
     async function refresh(){
-      if(!profile||loading||document.hidden)return;loading=true;const owner=profile;
+      if(!profile||loading||document.hidden||Date.now()-lastRefresh<60000)return;loading=true;lastRefresh=Date.now();const owner=profile;
       try{
         if(owner!=='guest'){
           if(pending)await syncPreferences();
@@ -88,17 +88,17 @@
         const {data,error}=await supabaseClient.from('hm_news').select('id,title,body,created_at').eq('source','admin').is('parent_key',null).order('created_at',{ascending:false}).order('id',{ascending:false}).limit(1);
         if(error||owner!==profile)return;latest=data?.[0]||null;
         if(latest){title.textContent=latest.title||'Latest update';const content=String(latest.body||'').replace(/\s+/g,' ').trim();body.textContent=content.length>280?content.slice(0,277)+'…':content;body.hidden=!content;}show();
-      }catch{}finally{loading=false;if(owner!==profile)refresh();}
+      }catch{}finally{loading=false;if(owner!==profile){lastRefresh=0;refresh();}}
     }
     function useProfile(user){
-      const next=user?.id||'guest';if(profile===next)return;profile=next;latest=null;preferencesReady=false;
+      const next=user?.id||'guest';if(profile===next)return;profile=next;lastRefresh=0;latest=null;preferencesReady=false;
       neverKey='hm2018:hide-all-news-banners:'+next;storageKey='hm2018:dismissed-satnin-news:'+next;never=false;closed=new Set();status.hidden=true;
       try{never=localStorage.getItem(neverKey)==='true';const value=JSON.parse(localStorage.getItem(storageKey)||'[]');if(Array.isArray(value))closed=new Set(value.map(String));}catch{}
       pending=never||closed.size>0;show();refresh();
     }
     supabaseClient.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>useProfile(session?.user),0);});
     supabaseClient.auth.getSession().then(({data})=>{if(profile===null)useProfile(data?.session?.user);}).catch(()=>{if(profile===null)useProfile(null);});
-    setInterval(refresh,60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
+    setInterval(refresh,300000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
     window.addEventListener('online',refresh);
   }
   function mount(){

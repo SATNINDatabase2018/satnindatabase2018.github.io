@@ -1,6 +1,6 @@
 """Generate public website release summaries and a static Pages deployment."""
 from pathlib import Path
-import subprocess,json,datetime,shutil
+import subprocess,json,shutil,re
 ROOT=Path(__file__).resolve().parents[1]
 PATHS=['*.html','js','css','assets','data','scripts/build-news.py','.github/workflows/deploy-pages.yml']
 def git(*args):return subprocess.check_output(['git',*args],cwd=ROOT,text=True).strip()
@@ -27,9 +27,12 @@ if __name__=='__main__':
  if dist.exists():shutil.rmtree(dist)
  dist.mkdir()
  for name in ['js','css','assets','data']:shutil.copytree(ROOT/name,dist/name)
- for p in ROOT.glob('*.html'):shutil.copy2(p,dist/p.name)
+ for p in ROOT.glob('*.html'):
+  if not re.fullmatch(r'index \(\d+\)\.html',p.name):shutil.copy2(p,dist/p.name)
  for p in ROOT.glob('*/index.html'):
   if p.parent.name in ['_site','node_modules']:continue
   (dist/p.parent.name).mkdir(exist_ok=True);shutil.copy2(p,dist/p.parent.name/'index.html')
+ for source in (dist/'data').glob('*.json'):
+  source.write_text(json.dumps(json.loads(source.read_text()),ensure_ascii=False,separators=(',',':'))+'\n')
  (dist/'.nojekyll').touch()
  print(f'Built website with {len(posts)} automatic release summaries. No private account data or commit messages published.')
