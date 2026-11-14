@@ -1,0 +1,6074 @@
+[
+  {
+    "key": "page-home-0001",
+    "page": "Home",
+    "path": "./",
+    "label": "Heading: Database",
+    "type": "text",
+    "default": "\n        Database\n    "
+  },
+  {
+    "key": "page-home-0002",
+    "page": "Home",
+    "path": "./",
+    "label": "Paragraph: Explore clothes, accessories, horse equipment, horses, decorations and pets for Horse Museum 20",
+    "type": "text",
+    "default": "\n        Explore clothes, accessories, horse equipment, horses, decorations and pets for Horse Museum 2018\n    "
+  },
+  {
+    "key": "page-home-0003",
+    "page": "Home",
+    "path": "./",
+    "label": "Link text: Explore Database",
+    "type": "text",
+    "default": "\n        Explore Database\n    "
+  },
+  {
+    "key": "page-home-0004",
+    "page": "Home",
+    "path": "./",
+    "label": "Link text: How to use the website",
+    "type": "text",
+    "default": "How to use the website"
+  },
+  {
+    "key": "page-home-link-0",
+    "page": "Home",
+    "path": "./",
+    "label": "Link destination: Explore Database",
+    "type": "url",
+    "default": "database/"
+  },
+  {
+    "key": "page-home-link-1",
+    "page": "Home",
+    "path": "./",
+    "label": "Link destination: How to use the website",
+    "type": "url",
+    "default": "tutorial/"
+  },
+  {
+    "key": "page-home-extra",
+    "page": "Home",
+    "path": "./",
+    "label": "Additional information (paragraphs)",
+    "type": "paragraphs",
+    "default": ""
+  },
+  {
+    "key": "page-home-browser-title",
+    "page": "Home",
+    "path": "./",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "Database"
+  },
+  {
+    "key": "page-about-0001",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Heading: About & credits",
+    "type": "text",
+    "default": "About & credits"
+  },
+  {
+    "key": "page-about-0002",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Heading: The work behind my database",
+    "type": "text",
+    "default": "The work behind my database"
+  },
+  {
+    "key": "page-about-0003",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Paragraph: I’m SATNIN, and I’ve done the work that makes this database possible: extracting data, compilin",
+    "type": "text",
+    "default": "I’m SATNIN, and I’ve done the work that makes this database possible: extracting data, compiling and organising the records, comparing sources, and bringing the information together for this website. This has taken a lot of time and care, and I’m still working on corrections and missing details."
+  },
+  {
+    "key": "page-about-0004",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Paragraph: If you share or use my compiled database, please credit me as SATNIN. The original game assets ",
+    "type": "text",
+    "default": "If you share or use my compiled database, please credit me as SATNIN. The original game assets and the external resources listed below belong to their respective creators."
+  },
+  {
+    "key": "page-about-0005",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Heading: Sources & credits",
+    "type": "text",
+    "default": "Sources & credits"
+  },
+  {
+    "key": "page-about-0006",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Paragraph: Game names and assets belong to their respective owners. This site is not affiliated with or en",
+    "type": "text",
+    "default": "Game names and assets belong to their respective owners. This site is not affiliated with or endorsed by Star Stable Entertainment."
+  },
+  {
+    "key": "page-about-0007",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Paragraph: Item pictures use",
+    "type": "text",
+    "default": "Item pictures use "
+  },
+  {
+    "key": "page-about-0008",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Link text: Velausc’s SSO Items List",
+    "type": "text",
+    "default": "Velausc’s SSO Items List"
+  },
+  {
+    "key": "page-about-0009",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Paragraph: . Horse pictures and database references include",
+    "type": "text",
+    "default": ". Horse pictures and database references include "
+  },
+  {
+    "key": "page-about-0010",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Link text: Star Stable Database",
+    "type": "text",
+    "default": "Star Stable Database"
+  },
+  {
+    "key": "page-about-0011",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Paragraph: . I’ve also imported data from my compiled archive.",
+    "type": "text",
+    "default": ". I’ve also imported data from my compiled archive."
+  },
+  {
+    "key": "page-about-0012",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Paragraph: Hairstyle information and pictures are sourced from",
+    "type": "text",
+    "default": "Hairstyle information and pictures are sourced from "
+  },
+  {
+    "key": "page-about-0013",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Link text: this Star Stable hairstyles video on YouTube",
+    "type": "text",
+    "default": "this Star Stable hairstyles video on YouTube"
+  },
+  {
+    "key": "page-about-0014",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Paragraph: .",
+    "type": "text",
+    "default": "."
+  },
+  {
+    "key": "page-about-0015",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Paragraph: This database is no longer maintained. You can continue to use it, but please do not contact me",
+    "type": "text",
+    "default": "This database is no longer maintained. You can continue to use it, but please do not contact me about corrections or questions."
+  },
+  {
+    "key": "page-about-link-0",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Link destination: Velausc’s SSO Items List",
+    "type": "url",
+    "default": "https://velausc.github.io/sso-items-list/"
+  },
+  {
+    "key": "page-about-link-1",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Link destination: Star Stable Database",
+    "type": "url",
+    "default": "https://ssodb.bplaced.net/db/en/index.html"
+  },
+  {
+    "key": "page-about-link-2",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Link destination: this Star Stable hairstyles video on YouTube",
+    "type": "url",
+    "default": "https://www.youtube.com/watch?v=IdyDMW3_v08"
+  },
+  {
+    "key": "page-about-extra",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Additional information (paragraphs)",
+    "type": "paragraphs",
+    "default": ""
+  },
+  {
+    "key": "page-about-browser-title",
+    "page": "About & credits",
+    "path": "about/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "About & credits | Database"
+  },
+  {
+    "key": "page-contact-0001",
+    "page": "Contact / Discord",
+    "path": "contact/",
+    "label": "Heading: Contact / Discord",
+    "type": "text",
+    "default": "Contact / Discord"
+  },
+  {
+    "key": "page-contact-0002",
+    "page": "Contact / Discord",
+    "path": "contact/",
+    "label": "Paragraph: I have decided to quit Horse Museum. I won't be adding or editing anything in here. You can sti",
+    "type": "text",
+    "default": "I have decided to quit Horse Museum. I won't be adding or editing anything in here. You can still use the database, but please do not contact me."
+  },
+  {
+    "key": "page-contact-extra",
+    "page": "Contact / Discord",
+    "path": "contact/",
+    "label": "Additional information (paragraphs)",
+    "type": "paragraphs",
+    "default": ""
+  },
+  {
+    "key": "page-contact-browser-title",
+    "page": "Contact / Discord",
+    "path": "contact/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "Contact | Database"
+  },
+  {
+    "key": "page-privacy-0001",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Heading: Privacy",
+    "type": "text",
+    "default": "Privacy"
+  },
+  {
+    "key": "page-privacy-0002",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Heading: Accounts and saved information",
+    "type": "text",
+    "default": "Accounts and saved information"
+  },
+  {
+    "key": "page-privacy-0003",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Paragraph: The public database can be browsed without an account. Account features use Supabase for authen",
+    "type": "text",
+    "default": "The public database can be browsed without an account. Account features use Supabase for authentication and storage. If you create an account, the site uses your email address and any username you provide. Passwords are handled by the authentication provider."
+  },
+  {
+    "key": "page-privacy-0004",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Paragraph: Your account can store collection, wishlist and favourite selections, outfits, and horses you a",
+    "type": "text",
+    "default": "Your account can store collection, wishlist and favourite selections, outfits, and horses you add to your stable, including their names, nicknames, levels and outfit assignments."
+  },
+  {
+    "key": "page-privacy-0005",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Heading: Storage in your browser",
+    "type": "text",
+    "default": "Storage in your browser"
+  },
+  {
+    "key": "page-privacy-0006",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Paragraph: The site stores your selected colour theme and outfit drafts in browser storage. Authentication",
+    "type": "text",
+    "default": "The site stores your selected colour theme and outfit drafts in browser storage. Authentication may also store session information so you can remain signed in. Clearing browser storage can remove local drafts and sign you out; it does not delete saved account data."
+  },
+  {
+    "key": "page-privacy-0007",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Heading: Hosting and external services",
+    "type": "text",
+    "default": "Hosting and external services"
+  },
+  {
+    "key": "page-privacy-0008",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Paragraph: If you choose Continue with Discord, Discord handles your Discord sign-in and shares profile in",
+    "type": "text",
+    "default": "If you choose Continue with Discord, Discord handles your Discord sign-in and shares profile information and your email address with Supabase for authentication. Your Discord password is not given to this website. This option does not request access to your server messages. See "
+  },
+  {
+    "key": "page-privacy-0009",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Link text: Discord’s privacy policy",
+    "type": "text",
+    "default": "Discord’s privacy policy"
+  },
+  {
+    "key": "page-privacy-0010",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Paragraph: .",
+    "type": "text",
+    "default": "."
+  },
+  {
+    "key": "page-privacy-0011",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Paragraph: The website is hosted on GitHub Pages. Authentication and account storage use Supabase. Item pi",
+    "type": "text",
+    "default": "The website is hosted on GitHub Pages. Authentication and account storage use Supabase. Item pictures, horse pictures and the Supabase client script may load from external providers, including GitHub, Star Stable Database and jsDelivr. Your browser sends technical request information to those providers when loading their resources."
+  },
+  {
+    "key": "page-privacy-0012",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Paragraph: See",
+    "type": "text",
+    "default": "See "
+  },
+  {
+    "key": "page-privacy-0013",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Link text: GitHub’s privacy statement",
+    "type": "text",
+    "default": "GitHub’s privacy statement"
+  },
+  {
+    "key": "page-privacy-0014",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Paragraph: and",
+    "type": "text",
+    "default": " and "
+  },
+  {
+    "key": "page-privacy-0015",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Link text: Supabase’s privacy policy",
+    "type": "text",
+    "default": "Supabase’s privacy policy"
+  },
+  {
+    "key": "page-privacy-0016",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Paragraph: for their practices.",
+    "type": "text",
+    "default": " for their practices."
+  },
+  {
+    "key": "page-privacy-0017",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Heading: Questions and account requests",
+    "type": "text",
+    "default": "Questions and account requests"
+  },
+  {
+    "key": "page-privacy-0018",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Paragraph: You can permanently delete your account and saved data from the",
+    "type": "text",
+    "default": "You can permanently delete your account and saved data from the "
+  },
+  {
+    "key": "page-privacy-0019",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Link text: Account page",
+    "type": "text",
+    "default": "Account page"
+  },
+  {
+    "key": "page-privacy-0020",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Paragraph: while logged in. This also clears your outfit drafts in that browser; drafts on other devices m",
+    "type": "text",
+    "default": " while logged in. This also clears your outfit drafts in that browser; drafts on other devices must be cleared there. The database is no longer maintained. Please do not contact me."
+  },
+  {
+    "key": "page-privacy-0021",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Paragraph: This notice describes the features implemented in this website. Last updated: 18 October 2026.",
+    "type": "text",
+    "default": "This notice describes the features implemented in this website. Last updated: 18 October 2026."
+  },
+  {
+    "key": "page-privacy-link-0",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Link destination: Discord’s privacy policy",
+    "type": "url",
+    "default": "https://discord.com/privacy"
+  },
+  {
+    "key": "page-privacy-link-1",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Link destination: GitHub’s privacy statement",
+    "type": "url",
+    "default": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+  },
+  {
+    "key": "page-privacy-link-2",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Link destination: Supabase’s privacy policy",
+    "type": "url",
+    "default": "https://supabase.com/privacy"
+  },
+  {
+    "key": "page-privacy-link-3",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Link destination: Account page",
+    "type": "url",
+    "default": "login/"
+  },
+  {
+    "key": "page-privacy-extra",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Additional information (paragraphs)",
+    "type": "paragraphs",
+    "default": ""
+  },
+  {
+    "key": "page-privacy-browser-title",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "Privacy | Database"
+  },
+  {
+    "key": "page-tutorial-0001",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Heading: How to use my database",
+    "type": "text",
+    "default": "How to use my database"
+  },
+  {
+    "key": "page-tutorial-0002",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Hi, I’m SATNIN! Here’s how to find items, track your collection, and plan your looks for Horse ",
+    "type": "text",
+    "default": "Hi, I’m SATNIN! Here’s how to find items, track your collection, and plan your looks for Horse Museum 2018."
+  },
+  {
+    "key": "page-tutorial-0003",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: Start here",
+    "type": "text",
+    "default": "Start here"
+  },
+  {
+    "key": "page-tutorial-0004",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: Search & filters",
+    "type": "text",
+    "default": "Search & filters"
+  },
+  {
+    "key": "page-tutorial-0005",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: Sorting",
+    "type": "text",
+    "default": "Sorting"
+  },
+  {
+    "key": "page-tutorial-0006",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: My Collection",
+    "type": "text",
+    "default": "My Collection"
+  },
+  {
+    "key": "page-tutorial-0007",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: My Wardrobe",
+    "type": "text",
+    "default": "My Wardrobe"
+  },
+  {
+    "key": "page-tutorial-0008",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: My Stable",
+    "type": "text",
+    "default": "My Stable"
+  },
+  {
+    "key": "page-tutorial-0009",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: My Outfits",
+    "type": "text",
+    "default": "My Outfits"
+  },
+  {
+    "key": "page-tutorial-0010",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: Sharing outfits",
+    "type": "text",
+    "default": "Sharing outfits"
+  },
+  {
+    "key": "page-tutorial-0011",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: HM Guides",
+    "type": "text",
+    "default": "HM Guides"
+  },
+  {
+    "key": "page-tutorial-0012",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: News & banners",
+    "type": "text",
+    "default": "News & banners"
+  },
+  {
+    "key": "page-tutorial-0013",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: Themes & help",
+    "type": "text",
+    "default": "Themes & help"
+  },
+  {
+    "key": "page-tutorial-0014",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "SPAN: 01",
+    "type": "text",
+    "default": "01"
+  },
+  {
+    "key": "page-tutorial-0015",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Heading: Start here",
+    "type": "text",
+    "default": "Start here"
+  },
+  {
+    "key": "page-tutorial-0016",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: You can browse",
+    "type": "text",
+    "default": "You can browse "
+  },
+  {
+    "key": "page-tutorial-0017",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: Database",
+    "type": "text",
+    "default": "Database"
+  },
+  {
+    "key": "page-tutorial-0018",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: , news, and guides without an account. Log in to use My Collection, My Wardrobe, My Stable, and",
+    "type": "text",
+    "default": ", news, and guides without an account. Log in to use My Collection, My Wardrobe, My Stable, and My Outfits. Your saved items and wardrobe belong to your account and are available when you log in on another device."
+  },
+  {
+    "key": "page-tutorial-0019",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Open",
+    "type": "text",
+    "default": "Open "
+  },
+  {
+    "key": "page-tutorial-0020",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: Account",
+    "type": "text",
+    "default": "Account"
+  },
+  {
+    "key": "page-tutorial-0021",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: and choose",
+    "type": "text",
+    "default": " and choose "
+  },
+  {
+    "key": "page-tutorial-0022",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Continue with Discord",
+    "type": "text",
+    "default": "Continue with Discord"
+  },
+  {
+    "key": "page-tutorial-0023",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: , or create an account with your email and a password.",
+    "type": "text",
+    "default": ", or create an account with your email and a password."
+  },
+  {
+    "key": "page-tutorial-0024",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Email confirmation is no longer required for new signups. If signup logs you in, you can start ",
+    "type": "text",
+    "default": "Email confirmation is no longer required for new signups. If signup logs you in, you can start using your account straight away."
+  },
+  {
+    "key": "page-tutorial-0025",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: To add Discord to an existing account, log in first and choose",
+    "type": "text",
+    "default": "To add Discord to an existing account, log in first and choose "
+  },
+  {
+    "key": "page-tutorial-0026",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Link with Discord",
+    "type": "text",
+    "default": "Link with Discord"
+  },
+  {
+    "key": "page-tutorial-0027",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: on the Account page. Linking does not merge two existing accounts.",
+    "type": "text",
+    "default": " on the Account page. Linking does not merge two existing accounts."
+  },
+  {
+    "key": "page-tutorial-0028",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Click",
+    "type": "text",
+    "default": "Click "
+  },
+  {
+    "key": "page-tutorial-0029",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: My Stable",
+    "type": "text",
+    "default": "My Stable"
+  },
+  {
+    "key": "page-tutorial-0030",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: or",
+    "type": "text",
+    "default": " or "
+  },
+  {
+    "key": "page-tutorial-0031",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: My Collection",
+    "type": "text",
+    "default": "My Collection"
+  },
+  {
+    "key": "page-tutorial-0032",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: in the header to open the page. Hover to see their section menus; on a touchscreen, use the arr",
+    "type": "text",
+    "default": " in the header to open the page. Hover to see their section menus; on a touchscreen, use the arrow to open the menu. Personal features require you to log in."
+  },
+  {
+    "key": "page-tutorial-0033",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "SPAN: 02",
+    "type": "text",
+    "default": "02"
+  },
+  {
+    "key": "page-tutorial-0034",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Heading: Find an item or horse",
+    "type": "text",
+    "default": "Find an item or horse"
+  },
+  {
+    "key": "page-tutorial-0035",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Use the Database tabs to browse hairstyles, player clothes, player accessories, horse equipment",
+    "type": "text",
+    "default": "Use the Database tabs to browse hairstyles, player clothes, player accessories, horse equipment, horses, horse decorations, or pets."
+  },
+  {
+    "key": "page-tutorial-0036",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Search names, descriptions, locations, stats, prices, or special features such as pony, cold-to",
+    "type": "text",
+    "default": "Search names, descriptions, locations, stats, prices, or special features such as pony, cold-tolerant, and companion."
+  },
+  {
+    "key": "page-tutorial-0037",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: In Database, you can select multiple",
+    "type": "text",
+    "default": "In Database, you can select multiple "
+  },
+  {
+    "key": "page-tutorial-0038",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Categories",
+    "type": "text",
+    "default": "Categories"
+  },
+  {
+    "key": "page-tutorial-0039",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: ,",
+    "type": "text",
+    "default": ", "
+  },
+  {
+    "key": "page-tutorial-0040",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Item types",
+    "type": "text",
+    "default": "Item types"
+  },
+  {
+    "key": "page-tutorial-0041",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: ,",
+    "type": "text",
+    "default": ", "
+  },
+  {
+    "key": "page-tutorial-0042",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Areas",
+    "type": "text",
+    "default": "Areas"
+  },
+  {
+    "key": "page-tutorial-0043",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: , and",
+    "type": "text",
+    "default": ", and "
+  },
+  {
+    "key": "page-tutorial-0044",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Sites / shops",
+    "type": "text",
+    "default": "Sites / shops"
+  },
+  {
+    "key": "page-tutorial-0045",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: . Choices within one filter match any selected value; different filters work together.",
+    "type": "text",
+    "default": ". Choices within one filter match any selected value; different filters work together."
+  },
+  {
+    "key": "page-tutorial-0046",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: The item-type list follows your selected categories, and the shop list follows your areas. With",
+    "type": "text",
+    "default": "The item-type list follows your selected categories, and the shop list follows your areas. With multiple categories chosen, types from all of them are included. Horses use breeds as their item types."
+  },
+  {
+    "key": "page-tutorial-0047",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: For Hairstyles, the type filter is called",
+    "type": "text",
+    "default": "For Hairstyles, the type filter is called "
+  },
+  {
+    "key": "page-tutorial-0048",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Hairstyle",
+    "type": "text",
+    "default": "Hairstyle"
+  },
+  {
+    "key": "page-tutorial-0049",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: and includes general hairstyle pictures. Individual cards show the colour variant; the descript",
+    "type": "text",
+    "default": " and includes general hairstyle pictures. Individual cards show the colour variant; the description also includes the general picture when available."
+  },
+  {
+    "key": "page-tutorial-0050",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Search results prioritise",
+    "type": "text",
+    "default": "Search results prioritise "
+  },
+  {
+    "key": "page-tutorial-0051",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: name → description → site/shop → stats → price → special features",
+    "type": "text",
+    "default": "name → description → site/shop → stats → price → special features"
+  },
+  {
+    "key": "page-tutorial-0052",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: . Unverified entries stay at the bottom even when searching. Items with several shops can match",
+    "type": "text",
+    "default": ". Unverified entries stay at the bottom even when searching. Items with several shops can match any of their listed locations."
+  },
+  {
+    "key": "page-tutorial-0053",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: My items (match any selected)",
+    "type": "text",
+    "default": "My items (match any selected)"
+  },
+  {
+    "key": "page-tutorial-0054",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: shows items with any selected mark: I own this, Wishlist, or Favorite.",
+    "type": "text",
+    "default": " shows items with any selected mark: I own this, Wishlist, or Favorite. "
+  },
+  {
+    "key": "page-tutorial-0055",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Don’t show (any selected)",
+    "type": "text",
+    "default": "Don’t show (any selected)"
+  },
+  {
+    "key": "page-tutorial-0056",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: excludes items with any selected mark. These filters also work for horses: ownership means you ",
+    "type": "text",
+    "default": " excludes items with any selected mark. These filters also work for horses: ownership means you have that horse in My Stable."
+  },
+  {
+    "key": "page-tutorial-0057",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Use",
+    "type": "text",
+    "default": "Use "
+  },
+  {
+    "key": "page-tutorial-0058",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Load 60 more",
+    "type": "text",
+    "default": "Load 60 more"
+  },
+  {
+    "key": "page-tutorial-0059",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: to expand the results. Marking an item or adding it to an outfit keeps your expanded list open.",
+    "type": "text",
+    "default": " to expand the results. Marking an item or adding it to an outfit keeps your expanded list open."
+  },
+  {
+    "key": "page-tutorial-0060",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "SPAN: 03",
+    "type": "text",
+    "default": "03"
+  },
+  {
+    "key": "page-tutorial-0061",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Heading: Sort the results",
+    "type": "text",
+    "default": "Sort the results"
+  },
+  {
+    "key": "page-tutorial-0062",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Choose a sort field and direction. Use",
+    "type": "text",
+    "default": "Choose a sort field and direction. Use "
+  },
+  {
+    "key": "page-tutorial-0063",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: + Add sorting rule",
+    "type": "text",
+    "default": "+ Add sorting rule"
+  },
+  {
+    "key": "page-tutorial-0064",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: for another rule, such as Item type followed by Name. Search relevance takes priority when sear",
+    "type": "text",
+    "default": " for another rule, such as Item type followed by Name. Search relevance takes priority when searching; sort rules break ties. Otherwise, the first sort rule takes priority."
+  },
+  {
+    "key": "page-tutorial-0065",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Options include name, SC, JS, location, item type, and relevant stats. Equipment’s speed stat i",
+    "type": "text",
+    "default": "Options include name, SC, JS, location, item type, and relevant stats. Equipment’s speed stat is called "
+  },
+  {
+    "key": "page-tutorial-0066",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Swiftness",
+    "type": "text",
+    "default": "Swiftness"
+  },
+  {
+    "key": "page-tutorial-0067",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: .",
+    "type": "text",
+    "default": ". "
+  },
+  {
+    "key": "page-tutorial-0068",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Overall stats (combined)",
+    "type": "text",
+    "default": "Overall stats (combined)"
+  },
+  {
+    "key": "page-tutorial-0069",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: adds the known stats; choose descending for the highest totals first. For Hairstyles, the optio",
+    "type": "text",
+    "default": " adds the known stats; choose descending for the highest totals first. For Hairstyles, the options are Name, SC, Location, Hair color, and Hairstyle."
+  },
+  {
+    "key": "page-tutorial-0070",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: A compact toolbar appears as you scroll through Database, My Collection, and My Stable. Use",
+    "type": "text",
+    "default": "A compact toolbar appears as you scroll through Database, My Collection, and My Stable. Use "
+  },
+  {
+    "key": "page-tutorial-0071",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: All filters & sorts",
+    "type": "text",
+    "default": "All filters & sorts"
+  },
+  {
+    "key": "page-tutorial-0072",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: to return to the main controls and",
+    "type": "text",
+    "default": " to return to the main controls and "
+  },
+  {
+    "key": "page-tutorial-0073",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Reset filters & sorting",
+    "type": "text",
+    "default": "Reset filters & sorting"
+  },
+  {
+    "key": "page-tutorial-0074",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: to start again.",
+    "type": "text",
+    "default": " to start again."
+  },
+  {
+    "key": "page-tutorial-0075",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "SPAN: 04",
+    "type": "text",
+    "default": "04"
+  },
+  {
+    "key": "page-tutorial-0076",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Heading: Keep your collection",
+    "type": "text",
+    "default": "Keep your collection"
+  },
+  {
+    "key": "page-tutorial-0077",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: On an item’s card, click",
+    "type": "text",
+    "default": "On an item’s card, click "
+  },
+  {
+    "key": "page-tutorial-0078",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: I own this",
+    "type": "text",
+    "default": "I own this"
+  },
+  {
+    "key": "page-tutorial-0079",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: ,",
+    "type": "text",
+    "default": ", "
+  },
+  {
+    "key": "page-tutorial-0080",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Wishlist",
+    "type": "text",
+    "default": "Wishlist"
+  },
+  {
+    "key": "page-tutorial-0081",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: , or",
+    "type": "text",
+    "default": ", or "
+  },
+  {
+    "key": "page-tutorial-0082",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Favorite",
+    "type": "text",
+    "default": "Favorite"
+  },
+  {
+    "key": "page-tutorial-0083",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: . Click again to remove the mark. An item can have several marks at once. Badges and theme-matc",
+    "type": "text",
+    "default": ". Click again to remove the mark. An item can have several marks at once. Badges and theme-matched colours help you see its status."
+  },
+  {
+    "key": "page-tutorial-0084",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Open",
+    "type": "text",
+    "default": "Open "
+  },
+  {
+    "key": "page-tutorial-0085",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: My Collection",
+    "type": "text",
+    "default": "My Collection"
+  },
+  {
+    "key": "page-tutorial-0086",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: or use its header dropdown:",
+    "type": "text",
+    "default": " or use its header dropdown:"
+  },
+  {
+    "key": "page-tutorial-0087",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Everything",
+    "type": "text",
+    "default": "Everything"
+  },
+  {
+    "key": "page-tutorial-0088",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: : all your owned, wishlisted, and favorited items together, without duplicates.",
+    "type": "text",
+    "default": ": all your owned, wishlisted, and favorited items together, without duplicates."
+  },
+  {
+    "key": "page-tutorial-0089",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Owned",
+    "type": "text",
+    "default": "Owned"
+  },
+  {
+    "key": "page-tutorial-0090",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: : items marked I own this.",
+    "type": "text",
+    "default": ": items marked I own this."
+  },
+  {
+    "key": "page-tutorial-0091",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Wishlist",
+    "type": "text",
+    "default": "Wishlist"
+  },
+  {
+    "key": "page-tutorial-0092",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: : items you want.",
+    "type": "text",
+    "default": ": items you want."
+  },
+  {
+    "key": "page-tutorial-0093",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Favorites",
+    "type": "text",
+    "default": "Favorites"
+  },
+  {
+    "key": "page-tutorial-0094",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: : your favorite items.",
+    "type": "text",
+    "default": ": your favorite items."
+  },
+  {
+    "key": "page-tutorial-0095",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Wardrobe (My Storage)",
+    "type": "text",
+    "default": "Wardrobe (My Storage)"
+  },
+  {
+    "key": "page-tutorial-0096",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: : your own storage layout.",
+    "type": "text",
+    "default": ": your own storage layout."
+  },
+  {
+    "key": "page-tutorial-0097",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Use the collection’s search and filters to narrow the results. Horses are managed separately in",
+    "type": "text",
+    "default": "Use the collection’s search and filters to narrow the results. Horses are managed separately in "
+  },
+  {
+    "key": "page-tutorial-0098",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: My Stable",
+    "type": "text",
+    "default": "My Stable"
+  },
+  {
+    "key": "page-tutorial-0099",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: , including its Wishlist tab.",
+    "type": "text",
+    "default": ", including its Wishlist tab."
+  },
+  {
+    "key": "page-tutorial-0100",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "SPAN: 05",
+    "type": "text",
+    "default": "05"
+  },
+  {
+    "key": "page-tutorial-0101",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Heading: Find your things with My Wardrobe",
+    "type": "text",
+    "default": "Find your things with My Wardrobe"
+  },
+  {
+    "key": "page-tutorial-0102",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Use",
+    "type": "text",
+    "default": "Use "
+  },
+  {
+    "key": "page-tutorial-0103",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: My Collection → Wardrobe (My Storage)",
+    "type": "text",
+    "default": "My Collection → Wardrobe (My Storage)"
+  },
+  {
+    "key": "page-tutorial-0104",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: to record where your items are stored in the game. Arrange them to match your in-game wardrobe,",
+    "type": "text",
+    "default": " to record where your items are stored in the game. Arrange them to match your in-game wardrobe, then search here when you need to find something. "
+  },
+  {
+    "key": "page-tutorial-0105",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: You arrange the items yourself; the website does not sync with the game.",
+    "type": "text",
+    "default": "You arrange the items yourself; the website does not sync with the game."
+  },
+  {
+    "key": "page-tutorial-0106",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Mark items",
+    "type": "text",
+    "default": "Mark items "
+  },
+  {
+    "key": "page-tutorial-0107",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: I own this",
+    "type": "text",
+    "default": "I own this"
+  },
+  {
+    "key": "page-tutorial-0108",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: in Database. Only owned items can be organised.",
+    "type": "text",
+    "default": " in Database. Only owned items can be organised."
+  },
+  {
+    "key": "page-tutorial-0109",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Choose",
+    "type": "text",
+    "default": "Choose "
+  },
+  {
+    "key": "page-tutorial-0110",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Clothes",
+    "type": "text",
+    "default": "Clothes"
+  },
+  {
+    "key": "page-tutorial-0111",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: for player clothes and accessories,",
+    "type": "text",
+    "default": " for player clothes and accessories, "
+  },
+  {
+    "key": "page-tutorial-0112",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Horse gear",
+    "type": "text",
+    "default": "Horse gear"
+  },
+  {
+    "key": "page-tutorial-0113",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: for equipment and horse decorations, or",
+    "type": "text",
+    "default": " for equipment and horse decorations, or "
+  },
+  {
+    "key": "page-tutorial-0114",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Pets",
+    "type": "text",
+    "default": "Pets"
+  },
+  {
+    "key": "page-tutorial-0115",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: for pets.",
+    "type": "text",
+    "default": " for pets."
+  },
+  {
+    "key": "page-tutorial-0116",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Choose a numbered page. Clothes and Horse gear each have 15 pages; Pets has 7. Use",
+    "type": "text",
+    "default": "Choose a numbered page. Clothes and Horse gear each have 15 pages; Pets has 7. Use "
+  },
+  {
+    "key": "page-tutorial-0117",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Name this page",
+    "type": "text",
+    "default": "Name this page"
+  },
+  {
+    "key": "page-tutorial-0118",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: to add a title while keeping its number.",
+    "type": "text",
+    "default": " to add a title while keeping its number."
+  },
+  {
+    "key": "page-tutorial-0119",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Click one or more items to select them; click a selected item again to deselect it. Click an em",
+    "type": "text",
+    "default": "Click one or more items to select them; click a selected item again to deselect it. Click an empty square to place the selection, or drag a selected item. Multiple items fill free squares from that position, skipping occupied ones. A move is rejected if there is not enough room."
+  },
+  {
+    "key": "page-tutorial-0120",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: To take items out of a page, select them and choose",
+    "type": "text",
+    "default": "To take items out of a page, select them and choose "
+  },
+  {
+    "key": "page-tutorial-0121",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Move to unsorted",
+    "type": "text",
+    "default": "Move to unsorted"
+  },
+  {
+    "key": "page-tutorial-0122",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: , or drag them back to the Unsorted panel. The final square on each page always stays blank.",
+    "type": "text",
+    "default": ", or drag them back to the Unsorted panel. The final square on each page always stays blank."
+  },
+  {
+    "key": "page-tutorial-0123",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Wardrobe search looks across",
+    "type": "text",
+    "default": "Wardrobe search looks across "
+  },
+  {
+    "key": "page-tutorial-0124",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: all categories and pages",
+    "type": "text",
+    "default": "all categories and pages"
+  },
+  {
+    "key": "page-tutorial-0125",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: , including Unsorted. Each result shows its storage page; click it to open that page. Numbered ",
+    "type": "text",
+    "default": ", including Unsorted. Each result shows its storage page; click it to open that page. Numbered buttons also show matching-item counts in the current category while searching."
+  },
+  {
+    "key": "page-tutorial-0126",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Hover over a page number for a preview of its contents. Hover over an item for its card and",
+    "type": "text",
+    "default": "Hover over a page number for a preview of its contents. Hover over an item for its card and "
+  },
+  {
+    "key": "page-tutorial-0127",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: In your outfits",
+    "type": "text",
+    "default": "In your outfits"
+  },
+  {
+    "key": "page-tutorial-0128",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: , listing your saved outfits that contain it. Use",
+    "type": "text",
+    "default": ", listing your saved outfits that contain it. Use "
+  },
+  {
+    "key": "page-tutorial-0129",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Refresh wardrobe",
+    "type": "text",
+    "default": "Refresh wardrobe"
+  },
+  {
+    "key": "page-tutorial-0130",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: to reload your saved layout and outfit list after changes elsewhere.",
+    "type": "text",
+    "default": " to reload your saved layout and outfit list after changes elsewhere."
+  },
+  {
+    "key": "page-tutorial-0131",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: The small star on an item tile lets you favorite or unfavorite it. The star in the hover previe",
+    "type": "text",
+    "default": "The small star on an item tile lets you favorite or unfavorite it. The star in the hover preview only shows its favorite status."
+  },
+  {
+    "key": "page-tutorial-0132",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Your layout saves automatically after successful moves and page renaming. Each account has its ",
+    "type": "text",
+    "default": "Your layout saves automatically after successful moves and page renaming. Each account has its own private wardrobe; other users cannot view or edit it. Removing an item’s owned mark also removes it from your storage layout. Hairstyles are not stored in these wardrobe groups."
+  },
+  {
+    "key": "page-tutorial-0133",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "SPAN: 06",
+    "type": "text",
+    "default": "06"
+  },
+  {
+    "key": "page-tutorial-0134",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Heading: Build your stable",
+    "type": "text",
+    "default": "Build your stable"
+  },
+  {
+    "key": "page-tutorial-0135",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Find a horse in Database, click",
+    "type": "text",
+    "default": "Find a horse in Database, click "
+  },
+  {
+    "key": "page-tutorial-0136",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Add to My Stable",
+    "type": "text",
+    "default": "Add to My Stable"
+  },
+  {
+    "key": "page-tutorial-0137",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: , and give it a name. You can add more than one of the same horse.",
+    "type": "text",
+    "default": ", and give it a name. You can add more than one of the same horse."
+  },
+  {
+    "key": "page-tutorial-0138",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Use",
+    "type": "text",
+    "default": "Use "
+  },
+  {
+    "key": "page-tutorial-0139",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Wishlist",
+    "type": "text",
+    "default": "Wishlist"
+  },
+  {
+    "key": "page-tutorial-0140",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: and",
+    "type": "text",
+    "default": " and "
+  },
+  {
+    "key": "page-tutorial-0141",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Favorite",
+    "type": "text",
+    "default": "Favorite"
+  },
+  {
+    "key": "page-tutorial-0142",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: on horse cards to mark horses you like. The card’s colour shows saved status.",
+    "type": "text",
+    "default": " on horse cards to mark horses you like. The card’s colour shows saved status."
+  },
+  {
+    "key": "page-tutorial-0143",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: When you own a horse, its Database card shows your count beneath the add button. Click that cou",
+    "type": "text",
+    "default": "When you own a horse, its Database card shows your count beneath the add button. Click that count to open My Stable filtered to those horses."
+  },
+  {
+    "key": "page-tutorial-0144",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Open",
+    "type": "text",
+    "default": "Open "
+  },
+  {
+    "key": "page-tutorial-0145",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: My Stable → My Horses",
+    "type": "text",
+    "default": "My Stable → My Horses"
+  },
+  {
+    "key": "page-tutorial-0146",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: to rename horses, set their levels, and attach saved outfits. Click",
+    "type": "text",
+    "default": " to rename horses, set their levels, and attach saved outfits. Click "
+  },
+  {
+    "key": "page-tutorial-0147",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Save outfits",
+    "type": "text",
+    "default": "Save outfits"
+  },
+  {
+    "key": "page-tutorial-0148",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: after changing outfit assignments.",
+    "type": "text",
+    "default": " after changing outfit assignments."
+  },
+  {
+    "key": "page-tutorial-0149",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Choose",
+    "type": "text",
+    "default": "Choose "
+  },
+  {
+    "key": "page-tutorial-0150",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: Wishlist",
+    "type": "text",
+    "default": "Wishlist"
+  },
+  {
+    "key": "page-tutorial-0151",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: to see your wishlisted horses. Search or sort the list to find a horse.",
+    "type": "text",
+    "default": " to see your wishlisted horses. Search or sort the list to find a horse."
+  },
+  {
+    "key": "page-tutorial-0152",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Remove horse",
+    "type": "text",
+    "default": "Remove horse"
+  },
+  {
+    "key": "page-tutorial-0153",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: removes that individual horse from your stable after confirmation. It does not delete the horse",
+    "type": "text",
+    "default": " removes that individual horse from your stable after confirmation. It does not delete the horse from the public database."
+  },
+  {
+    "key": "page-tutorial-0154",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "SPAN: 07",
+    "type": "text",
+    "default": "07"
+  },
+  {
+    "key": "page-tutorial-0155",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Heading: Create and save outfits",
+    "type": "text",
+    "default": "Create and save outfits"
+  },
+  {
+    "key": "page-tutorial-0156",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: In Database, click",
+    "type": "text",
+    "default": "In Database, click "
+  },
+  {
+    "key": "page-tutorial-0157",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Add to outfit",
+    "type": "text",
+    "default": "Add to outfit"
+  },
+  {
+    "key": "page-tutorial-0158",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: . Tick one or more outfits, or create a new outfit, then save your selections.",
+    "type": "text",
+    "default": ". Tick one or more outfits, or create a new outfit, then save your selections."
+  },
+  {
+    "key": "page-tutorial-0159",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Open",
+    "type": "text",
+    "default": "Open "
+  },
+  {
+    "key": "page-tutorial-0160",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: My Outfits",
+    "type": "text",
+    "default": "My Outfits"
+  },
+  {
+    "key": "page-tutorial-0161",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: . Choose an outfit or create a new one, give it a name, and choose horse equipment, a player ou",
+    "type": "text",
+    "default": ". Choose an outfit or create a new one, give it a name, and choose horse equipment, a player outfit, or a combined set."
+  },
+  {
+    "key": "page-tutorial-0162",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Click an outfit slot to pick an item. Search or filter the picker, or use",
+    "type": "text",
+    "default": "Click an outfit slot to pick an item. Search or filter the picker, or use "
+  },
+  {
+    "key": "page-tutorial-0163",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Only items I own",
+    "type": "text",
+    "default": "Only items I own"
+  },
+  {
+    "key": "page-tutorial-0164",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: . The player layout includes a Hairstyle slot beside Hat and a player accessories slot. Horse l",
+    "type": "text",
+    "default": ". The player layout includes a Hairstyle slot beside Hat and a player accessories slot. Horse looks include decorations, saddle bag, and pet slots."
+  },
+  {
+    "key": "page-tutorial-0165",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: Use the",
+    "type": "text",
+    "default": "Use the "
+  },
+  {
+    "key": "page-tutorial-0166",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: ×",
+    "type": "text",
+    "default": "×"
+  },
+  {
+    "key": "page-tutorial-0167",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: on a selected item to remove it individually. Review the stats and click",
+    "type": "text",
+    "default": " on a selected item to remove it individually. Review the stats and click "
+  },
+  {
+    "key": "page-tutorial-0168",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Save outfit",
+    "type": "text",
+    "default": "Save outfit"
+  },
+  {
+    "key": "page-tutorial-0169",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: to save your changes to your account.",
+    "type": "text",
+    "default": " to save your changes to your account."
+  },
+  {
+    "key": "page-tutorial-0170",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Use",
+    "type": "text",
+    "default": "Use "
+  },
+  {
+    "key": "page-tutorial-0171",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Combine outfits",
+    "type": "text",
+    "default": "Combine outfits"
+  },
+  {
+    "key": "page-tutorial-0172",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: to combine horse and player outfits into a new set. In",
+    "type": "text",
+    "default": " to combine horse and player outfits into a new set. In "
+  },
+  {
+    "key": "page-tutorial-0173",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Browse all outfits",
+    "type": "text",
+    "default": "Browse all outfits"
+  },
+  {
+    "key": "page-tutorial-0174",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: , hover over an outfit title to preview its layout and stats, or click",
+    "type": "text",
+    "default": ", hover over an outfit title to preview its layout and stats, or click "
+  },
+  {
+    "key": "page-tutorial-0175",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Open outfit",
+    "type": "text",
+    "default": "Open outfit"
+  },
+  {
+    "key": "page-tutorial-0176",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: to edit it. Unsaved changes are labelled; remember to save them.",
+    "type": "text",
+    "default": " to edit it. Unsaved changes are labelled; remember to save them."
+  },
+  {
+    "key": "page-tutorial-0177",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Outfit previews and totals keep zero stats visible. The totals show equipment bonuses, not your",
+    "type": "text",
+    "default": "Outfit previews and totals keep zero stats visible. The totals show equipment bonuses, not your horse’s level, care, or base skills."
+  },
+  {
+    "key": "page-tutorial-0178",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "SPAN: 08",
+    "type": "text",
+    "default": "08"
+  },
+  {
+    "key": "page-tutorial-0179",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Heading: Share your look",
+    "type": "text",
+    "default": "Share your look"
+  },
+  {
+    "key": "page-tutorial-0180",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Click",
+    "type": "text",
+    "default": "Click "
+  },
+  {
+    "key": "page-tutorial-0181",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Share outfit",
+    "type": "text",
+    "default": "Share outfit"
+  },
+  {
+    "key": "page-tutorial-0182",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: and copy the link. Anyone with that link can view the shared snapshot without logging in. They ",
+    "type": "text",
+    "default": " and copy the link. Anyone with that link can view the shared snapshot without logging in. They cannot edit your account. Later changes or deleting the original outfit do not change an existing snapshot, so share only information you are comfortable showing."
+  },
+  {
+    "key": "page-tutorial-0183",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "SPAN: 09",
+    "type": "text",
+    "default": "09"
+  },
+  {
+    "key": "page-tutorial-0184",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Heading: HM Guides",
+    "type": "text",
+    "default": "HM Guides"
+  },
+  {
+    "key": "page-tutorial-0185",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Open",
+    "type": "text",
+    "default": "Open "
+  },
+  {
+    "key": "page-tutorial-0186",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: HM Guides",
+    "type": "text",
+    "default": "HM Guides"
+  },
+  {
+    "key": "page-tutorial-0187",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: in the header:",
+    "type": "text",
+    "default": " in the header:"
+  },
+  {
+    "key": "page-tutorial-0188",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: Spirit timetable",
+    "type": "text",
+    "default": "Spirit timetable"
+  },
+  {
+    "key": "page-tutorial-0189",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: : the current UTC day, hour, and location are highlighted while Spirit is available. You can al",
+    "type": "text",
+    "default": ": the current UTC day, hour, and location are highlighted while Spirit is available. You can also open it from Spirit’s Database card."
+  },
+  {
+    "key": "page-tutorial-0190",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: Championships",
+    "type": "text",
+    "default": "Championships"
+  },
+  {
+    "key": "page-tutorial-0191",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: : see the next race, its UTC day and time, and a countdown.",
+    "type": "text",
+    "default": ": see the next race, its UTC day and time, and a countdown."
+  },
+  {
+    "key": "page-tutorial-0192",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: Unlocking areas",
+    "type": "text",
+    "default": "Unlocking areas"
+  },
+  {
+    "key": "page-tutorial-0193",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "List item: : read the historical Epona and Kallters requirements.",
+    "type": "text",
+    "default": ": read the historical Epona and Kallters requirements."
+  },
+  {
+    "key": "page-tutorial-0194",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Times are shown in",
+    "type": "text",
+    "default": "Times are shown in "
+  },
+  {
+    "key": "page-tutorial-0195",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: UTC",
+    "type": "text",
+    "default": "UTC"
+  },
+  {
+    "key": "page-tutorial-0196",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: . Use the linked time converter to check your local time. Scroll sideways on smaller screens to",
+    "type": "text",
+    "default": ". Use the linked time converter to check your local time. Scroll sideways on smaller screens to see every day."
+  },
+  {
+    "key": "page-tutorial-0197",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "SPAN: 10",
+    "type": "text",
+    "default": "10"
+  },
+  {
+    "key": "page-tutorial-0198",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Heading: News, reactions, and banners",
+    "type": "text",
+    "default": "News, reactions, and banners"
+  },
+  {
+    "key": "page-tutorial-0199",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Open",
+    "type": "text",
+    "default": "Open "
+  },
+  {
+    "key": "page-tutorial-0200",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: News",
+    "type": "text",
+    "default": "News"
+  },
+  {
+    "key": "page-tutorial-0201",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: from the footer for From SATNIN announcements, database edits, and the latest automatic website",
+    "type": "text",
+    "default": " from the footer for From SATNIN announcements, database edits, and the latest automatic website-change summary. Filter by update type or click "
+  },
+  {
+    "key": "page-tutorial-0202",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Show comments",
+    "type": "text",
+    "default": "Show comments"
+  },
+  {
+    "key": "page-tutorial-0203",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: . Admins publish news and comments; everyone can read them.",
+    "type": "text",
+    "default": ". Admins publish news and comments; everyone can read them."
+  },
+  {
+    "key": "page-tutorial-0204",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Signed-in users can add emoji reactions. Click an emoji again to remove your reaction. Everyone",
+    "type": "text",
+    "default": "Signed-in users can add emoji reactions. Click an emoji again to remove your reaction. Everyone can see reaction counts."
+  },
+  {
+    "key": "page-tutorial-0205",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: The compact banner beneath the header shows the latest From SATNIN announcement across pages. C",
+    "type": "text",
+    "default": "The compact banner beneath the header shows the latest From SATNIN announcement across pages. Click "
+  },
+  {
+    "key": "page-tutorial-0206",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: ×",
+    "type": "text",
+    "default": "×"
+  },
+  {
+    "key": "page-tutorial-0207",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: to dismiss that announcement, or",
+    "type": "text",
+    "default": " to dismiss that announcement, or "
+  },
+  {
+    "key": "page-tutorial-0208",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Never show news banners again",
+    "type": "text",
+    "default": "Never show news banners again"
+  },
+  {
+    "key": "page-tutorial-0209",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: to hide future banners too. Signed-in choices are saved to your account across devices; logged-",
+    "type": "text",
+    "default": " to hide future banners too. Signed-in choices are saved to your account across devices; logged-out choices are remembered separately in that browser."
+  },
+  {
+    "key": "page-tutorial-0210",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "SPAN: 11",
+    "type": "text",
+    "default": "11"
+  },
+  {
+    "key": "page-tutorial-0211",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Heading: Themes, corrections, and help",
+    "type": "text",
+    "default": "Themes, corrections, and help"
+  },
+  {
+    "key": "page-tutorial-0212",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Use the theme selector for",
+    "type": "text",
+    "default": "Use the theme selector for "
+  },
+  {
+    "key": "page-tutorial-0213",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Blossom",
+    "type": "text",
+    "default": "Blossom"
+  },
+  {
+    "key": "page-tutorial-0214",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: ,",
+    "type": "text",
+    "default": ", "
+  },
+  {
+    "key": "page-tutorial-0215",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Night",
+    "type": "text",
+    "default": "Night"
+  },
+  {
+    "key": "page-tutorial-0216",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: ,",
+    "type": "text",
+    "default": ", "
+  },
+  {
+    "key": "page-tutorial-0217",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Coffee",
+    "type": "text",
+    "default": "Coffee"
+  },
+  {
+    "key": "page-tutorial-0218",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: ,",
+    "type": "text",
+    "default": ", "
+  },
+  {
+    "key": "page-tutorial-0219",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Night Forest",
+    "type": "text",
+    "default": "Night Forest"
+  },
+  {
+    "key": "page-tutorial-0220",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: ,",
+    "type": "text",
+    "default": ", "
+  },
+  {
+    "key": "page-tutorial-0221",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: Dark Coffee",
+    "type": "text",
+    "default": "Dark Coffee"
+  },
+  {
+    "key": "page-tutorial-0222",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: , or the Elvis-inspired",
+    "type": "text",
+    "default": ", or the Elvis-inspired "
+  },
+  {
+    "key": "page-tutorial-0223",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Highlighted text: TCB",
+    "type": "text",
+    "default": "TCB"
+  },
+  {
+    "key": "page-tutorial-0224",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: . The browser remembers your choice.",
+    "type": "text",
+    "default": ". The browser remembers your choice."
+  },
+  {
+    "key": "page-tutorial-0225",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: Close item and outfit dialogs with their close button, Escape, or a click outside the menu. War",
+    "type": "text",
+    "default": "Close item and outfit dialogs with their close button, Escape, or a click outside the menu. Wardrobe item previews disappear when you leave the item so you can reach neighboring tiles."
+  },
+  {
+    "key": "page-tutorial-0226",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: I have quit Horse Museum and will no longer add or edit information here. You can still use the",
+    "type": "text",
+    "default": "I have quit Horse Museum and will no longer add or edit information here. You can still use the database, but please do not contact me."
+  },
+  {
+    "key": "page-tutorial-0227",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: Contact / Discord",
+    "type": "text",
+    "default": "Contact / Discord"
+  },
+  {
+    "key": "page-tutorial-0228",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: ·",
+    "type": "text",
+    "default": " · "
+  },
+  {
+    "key": "page-tutorial-0229",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: About & credits",
+    "type": "text",
+    "default": "About & credits"
+  },
+  {
+    "key": "page-tutorial-0230",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Paragraph: ·",
+    "type": "text",
+    "default": " · "
+  },
+  {
+    "key": "page-tutorial-0231",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link text: Privacy",
+    "type": "text",
+    "default": "Privacy"
+  },
+  {
+    "key": "page-tutorial-link-0",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: Start here",
+    "type": "url",
+    "default": "tutorial/#start"
+  },
+  {
+    "key": "page-tutorial-link-1",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: Search & filters",
+    "type": "url",
+    "default": "tutorial/#browse"
+  },
+  {
+    "key": "page-tutorial-link-2",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: Sorting",
+    "type": "url",
+    "default": "tutorial/#sort"
+  },
+  {
+    "key": "page-tutorial-link-3",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: My Collection",
+    "type": "url",
+    "default": "tutorial/#collection"
+  },
+  {
+    "key": "page-tutorial-link-4",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: My Wardrobe",
+    "type": "url",
+    "default": "tutorial/#wardrobe"
+  },
+  {
+    "key": "page-tutorial-link-5",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: My Stable",
+    "type": "url",
+    "default": "tutorial/#stable"
+  },
+  {
+    "key": "page-tutorial-link-6",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: My Outfits",
+    "type": "url",
+    "default": "tutorial/#outfits"
+  },
+  {
+    "key": "page-tutorial-link-7",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: Sharing outfits",
+    "type": "url",
+    "default": "tutorial/#share"
+  },
+  {
+    "key": "page-tutorial-link-8",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: HM Guides",
+    "type": "url",
+    "default": "tutorial/#guides"
+  },
+  {
+    "key": "page-tutorial-link-9",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: News & banners",
+    "type": "url",
+    "default": "tutorial/#news"
+  },
+  {
+    "key": "page-tutorial-link-10",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: Themes & help",
+    "type": "url",
+    "default": "tutorial/#help"
+  },
+  {
+    "key": "page-tutorial-link-11",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: Database",
+    "type": "url",
+    "default": "database/"
+  },
+  {
+    "key": "page-tutorial-link-12",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: Account",
+    "type": "url",
+    "default": "login/"
+  },
+  {
+    "key": "page-tutorial-link-13",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: My Collection",
+    "type": "url",
+    "default": "collection/"
+  },
+  {
+    "key": "page-tutorial-link-14",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: My Collection → Wardrobe (My Storage)",
+    "type": "url",
+    "default": "collection/#wardrobe"
+  },
+  {
+    "key": "page-tutorial-link-15",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: My Stable → My Horses",
+    "type": "url",
+    "default": "stable/#owned"
+  },
+  {
+    "key": "page-tutorial-link-16",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: Wishlist",
+    "type": "url",
+    "default": "stable/#wishlist"
+  },
+  {
+    "key": "page-tutorial-link-17",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: My Outfits",
+    "type": "url",
+    "default": "outfits/"
+  },
+  {
+    "key": "page-tutorial-link-18",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: Spirit timetable",
+    "type": "url",
+    "default": "spirit/"
+  },
+  {
+    "key": "page-tutorial-link-19",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: Championships",
+    "type": "url",
+    "default": "championships/"
+  },
+  {
+    "key": "page-tutorial-link-20",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: Unlocking areas",
+    "type": "url",
+    "default": "areas/"
+  },
+  {
+    "key": "page-tutorial-link-21",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: News",
+    "type": "url",
+    "default": "news/"
+  },
+  {
+    "key": "page-tutorial-link-22",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: Contact / Discord",
+    "type": "url",
+    "default": "contact/"
+  },
+  {
+    "key": "page-tutorial-link-23",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: About & credits",
+    "type": "url",
+    "default": "about/"
+  },
+  {
+    "key": "page-tutorial-link-24",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Link destination: Privacy",
+    "type": "url",
+    "default": "privacy/"
+  },
+  {
+    "key": "page-tutorial-extra",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Additional information (paragraphs)",
+    "type": "paragraphs",
+    "default": ""
+  },
+  {
+    "key": "page-tutorial-browser-title",
+    "page": "How to use",
+    "path": "tutorial/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "How to use | Database"
+  },
+  {
+    "key": "page-areas-0001",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Heading: Unlocking areas",
+    "type": "text",
+    "default": "Unlocking areas"
+  },
+  {
+    "key": "page-areas-0002",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Heading: Unlocking Epona",
+    "type": "text",
+    "default": "Unlocking Epona "
+  },
+  {
+    "key": "page-areas-0003",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "SMALL: 2016–2020",
+    "type": "text",
+    "default": "2016–2020"
+  },
+  {
+    "key": "page-areas-0004",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Paragraph: To receive Herman’s message and begin the Epona entrance quests, you need to meet the level, re",
+    "type": "text",
+    "default": "To receive Herman’s message and begin the Epona entrance quests, you need to meet the level, reputation and quest requirements below."
+  },
+  {
+    "key": "page-areas-0005",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Heading: Level requirement",
+    "type": "text",
+    "default": "Level requirement"
+  },
+  {
+    "key": "page-areas-0006",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Paragraph: You must be at least",
+    "type": "text",
+    "default": "You must be at least "
+  },
+  {
+    "key": "page-areas-0007",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: level 14",
+    "type": "text",
+    "default": "level 14"
+  },
+  {
+    "key": "page-areas-0008",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Paragraph: . The reputation quests take time, so many players reach around level 16 before gaining access.",
+    "type": "text",
+    "default": ". The reputation quests take time, so many players reach around level 16 before gaining access."
+  },
+  {
+    "key": "page-areas-0009",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Heading: Reputation requirements",
+    "type": "text",
+    "default": "Reputation requirements"
+  },
+  {
+    "key": "page-areas-0010",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Paragraph: Reach at least",
+    "type": "text",
+    "default": "Reach at least "
+  },
+  {
+    "key": "page-areas-0011",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Friendly",
+    "type": "text",
+    "default": "Friendly"
+  },
+  {
+    "key": "page-areas-0012",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Paragraph: with each of these factions:",
+    "type": "text",
+    "default": " with each of these factions:"
+  },
+  {
+    "key": "page-areas-0013",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: GED Jarlaheim Office — Ms. Drake",
+    "type": "text",
+    "default": "GED Jarlaheim Office — Ms. Drake"
+  },
+  {
+    "key": "page-areas-0014",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: Jorvik Stables",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "page-areas-0015",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: The Goldspur Family",
+    "type": "text",
+    "default": "The Goldspur Family"
+  },
+  {
+    "key": "page-areas-0016",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: The Jarlasson Family",
+    "type": "text",
+    "default": "The Jarlasson Family"
+  },
+  {
+    "key": "page-areas-0017",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Heading: Required questlines",
+    "type": "text",
+    "default": "Required questlines"
+  },
+  {
+    "key": "page-areas-0018",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Harvest Counties bridge:",
+    "type": "text",
+    "default": "Harvest Counties bridge:"
+  },
+  {
+    "key": "page-areas-0019",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: rebuild the bridge connecting Moorland to the Harvest Counties.",
+    "type": "text",
+    "default": " rebuild the bridge connecting Moorland to the Harvest Counties."
+  },
+  {
+    "key": "page-areas-0020",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Jarlaheim’s mayor:",
+    "type": "text",
+    "default": "Jarlaheim’s mayor:"
+  },
+  {
+    "key": "page-areas-0021",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: help Jack Goldspur resolve the town’s mayoral problems.",
+    "type": "text",
+    "default": " help Jack Goldspur resolve the town’s mayoral problems."
+  },
+  {
+    "key": "page-areas-0022",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Gretchen and the German family:",
+    "type": "text",
+    "default": "Gretchen and the German family:"
+  },
+  {
+    "key": "page-areas-0023",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: find Gretchen around Fort Pinta and Hollow Woods, then progress through her family’s quests.",
+    "type": "text",
+    "default": " find Gretchen around Fort Pinta and Hollow Woods, then progress through her family’s quests."
+  },
+  {
+    "key": "page-areas-0024",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: The summerhouse scam:",
+    "type": "text",
+    "default": "The summerhouse scam:"
+  },
+  {
+    "key": "page-areas-0025",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: complete the “Newcomer” story, helping Helga and her family after Mr. Kembell’s summerhouse sca",
+    "type": "text",
+    "default": " complete the “Newcomer” story, helping Helga and her family after Mr. Kembell’s summerhouse scam."
+  },
+  {
+    "key": "page-areas-0026",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Dino Valley:",
+    "type": "text",
+    "default": "Dino Valley:"
+  },
+  {
+    "key": "page-areas-0027",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: meet Nic Stoneground and help establish his camp in the Valley of the Hidden Dinosaur.",
+    "type": "text",
+    "default": " meet Nic Stoneground and help establish his camp in the Valley of the Hidden Dinosaur."
+  },
+  {
+    "key": "page-areas-0028",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Ms. Drake’s reports:",
+    "type": "text",
+    "default": "Ms. Drake’s reports:"
+  },
+  {
+    "key": "page-areas-0029",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: complete her GED tasks through “A step up in your career?”, then deliver her report to Herman.",
+    "type": "text",
+    "default": " complete her GED tasks through “A step up in your career?”, then deliver her report to Herman."
+  },
+  {
+    "key": "page-areas-0030",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Heading: Entering Epona",
+    "type": "text",
+    "default": "Entering Epona"
+  },
+  {
+    "key": "page-areas-0031",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Herman’s message:",
+    "type": "text",
+    "default": "Herman’s message:"
+  },
+  {
+    "key": "page-areas-0032",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: once all requirements are met, Herman sends an urgent text asking you to meet him at Jorvik Sta",
+    "type": "text",
+    "default": " once all requirements are met, Herman sends an urgent text asking you to meet him at Jorvik Stables."
+  },
+  {
+    "key": "page-areas-0033",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Operation Grim Harvest:",
+    "type": "text",
+    "default": "Operation Grim Harvest:"
+  },
+  {
+    "key": "page-areas-0034",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: Herman explains GED’s expansion plans and asks you to find a way past them.",
+    "type": "text",
+    "default": " Herman explains GED’s expansion plans and asks you to find a way past them."
+  },
+  {
+    "key": "page-areas-0035",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: The compass:",
+    "type": "text",
+    "default": "The compass:"
+  },
+  {
+    "key": "page-areas-0036",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: work with the Goldspur family to obtain a special compass and locate a hidden route.",
+    "type": "text",
+    "default": " work with the Goldspur family to obtain a special compass and locate a hidden route."
+  },
+  {
+    "key": "page-areas-0037",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: The secret path:",
+    "type": "text",
+    "default": "The secret path:"
+  },
+  {
+    "key": "page-areas-0038",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: follow the trail through the Graydew Mountains to reach Epona.",
+    "type": "text",
+    "default": " follow the trail through the Graydew Mountains to reach Epona."
+  },
+  {
+    "key": "page-areas-0039",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Heading: Unlocking the Kallters",
+    "type": "text",
+    "default": "Unlocking the Kallters "
+  },
+  {
+    "key": "page-areas-0040",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "SMALL: 2016–2018",
+    "type": "text",
+    "default": "2016–2018"
+  },
+  {
+    "key": "page-areas-0041",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Paragraph: Meeting the Kallters requires several days of progression in the Valley of the Hidden Dinosaur.",
+    "type": "text",
+    "default": "Meeting the Kallters requires several days of progression in the Valley of the Hidden Dinosaur."
+  },
+  {
+    "key": "page-areas-0042",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Heading: Finding the Kallters",
+    "type": "text",
+    "default": "Finding the Kallters"
+  },
+  {
+    "key": "page-areas-0043",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Enter Dino Valley:",
+    "type": "text",
+    "default": "Enter Dino Valley:"
+  },
+  {
+    "key": "page-areas-0044",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: reach at least level 15 and complete the quests involving Nic Stoneground’s crashed hot-air bal",
+    "type": "text",
+    "default": " reach at least level 15 and complete the quests involving Nic Stoneground’s crashed hot-air balloon to open the valley."
+  },
+  {
+    "key": "page-areas-0045",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Help the expedition:",
+    "type": "text",
+    "default": "Help the expedition:"
+  },
+  {
+    "key": "page-areas-0046",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: continue Nic Stoneground’s and Professor Einstein’s exploration and camp quests over several da",
+    "type": "text",
+    "default": " continue Nic Stoneground’s and Professor Einstein’s exploration and camp quests over several days."
+  },
+  {
+    "key": "page-areas-0047",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Discover the Icengate:",
+    "type": "text",
+    "default": "Discover the Icengate:"
+  },
+  {
+    "key": "page-areas-0048",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: after roughly three days of questing, follow the quest leading along the Hidden Road to the fro",
+    "type": "text",
+    "default": " after roughly three days of questing, follow the quest leading along the Hidden Road to the frozen gate."
+  },
+  {
+    "key": "page-areas-0049",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Meet Nanook and Sedna:",
+    "type": "text",
+    "default": "Meet Nanook and Sedna:"
+  },
+  {
+    "key": "page-areas-0050",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "List item: the Kallters’ outer expedition is waiting outside the Icengate.",
+    "type": "text",
+    "default": " the Kallters’ outer expedition is waiting outside the Icengate."
+  },
+  {
+    "key": "page-areas-0051",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Heading: Building reputation",
+    "type": "text",
+    "default": "Building reputation"
+  },
+  {
+    "key": "page-areas-0052",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Paragraph: After meeting the Kallters, complete their daily tasks to build trust from",
+    "type": "text",
+    "default": "After meeting the Kallters, complete their daily tasks to build trust from "
+  },
+  {
+    "key": "page-areas-0053",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Neutral",
+    "type": "text",
+    "default": "Neutral"
+  },
+  {
+    "key": "page-areas-0054",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Paragraph: towards",
+    "type": "text",
+    "default": " towards "
+  },
+  {
+    "key": "page-areas-0055",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Popular",
+    "type": "text",
+    "default": "Popular"
+  },
+  {
+    "key": "page-areas-0056",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Paragraph: . Tasks include collecting call stones, ice, thistles, ice berries, ice chestnuts and snow weas",
+    "type": "text",
+    "default": ". Tasks include collecting call stones, ice, thistles, ice berries, ice chestnuts and snow weasels."
+  },
+  {
+    "key": "page-areas-0057",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Heading: Rewards",
+    "type": "text",
+    "default": "Rewards"
+  },
+  {
+    "key": "page-areas-0058",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Paragraph: Reaching the required reputation unlocks their exclusive purchases, including the",
+    "type": "text",
+    "default": "Reaching the required reputation unlocks their exclusive purchases, including the "
+  },
+  {
+    "key": "page-areas-0059",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Highlighted text: Generation 1 Fjord horses",
+    "type": "text",
+    "default": "Generation 1 Fjord horses"
+  },
+  {
+    "key": "page-areas-0060",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Paragraph: sold outside the Icengate.",
+    "type": "text",
+    "default": " sold outside the Icengate."
+  },
+  {
+    "key": "page-areas-extra",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Additional information (paragraphs)",
+    "type": "paragraphs",
+    "default": ""
+  },
+  {
+    "key": "page-areas-browser-title",
+    "page": "Unlocking areas",
+    "path": "areas/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "Unlocking areas | Database"
+  },
+  {
+    "key": "page-spirit-0001",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "Heading: Spirit timetable",
+    "type": "text",
+    "default": "Spirit timetable"
+  },
+  {
+    "key": "page-spirit-extra",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "Additional information (paragraphs)",
+    "type": "paragraphs",
+    "default": ""
+  },
+  {
+    "key": "page-spirit-browser-title",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "Spirit timetable | Database"
+  },
+  {
+    "key": "page-championships-0001",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "Heading: Championship Schedule",
+    "type": "text",
+    "default": "Championship Schedule"
+  },
+  {
+    "key": "page-championships-0002",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "Highlighted text: UTC TIME",
+    "type": "text",
+    "default": "UTC TIME"
+  },
+  {
+    "key": "page-championships-0003",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "Paragraph: Swipe or scroll sideways to see every day. Times in this table are UTC.",
+    "type": "text",
+    "default": "Swipe or scroll sideways to see every day. Times in this table are UTC."
+  },
+  {
+    "key": "page-championships-extra",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "Additional information (paragraphs)",
+    "type": "paragraphs",
+    "default": ""
+  },
+  {
+    "key": "page-championships-browser-title",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "Championship Schedule | Database"
+  },
+  {
+    "key": "page-database-0001",
+    "page": "Database",
+    "path": "database/",
+    "label": "Heading: Database",
+    "type": "text",
+    "default": "Database"
+  },
+  {
+    "key": "page-database-0002",
+    "page": "Database",
+    "path": "database/",
+    "label": "Field label: Search the database",
+    "type": "text",
+    "default": "Search the database"
+  },
+  {
+    "key": "page-database-0003",
+    "page": "Database",
+    "path": "database/",
+    "label": "Section title: Filters & sorting",
+    "type": "text",
+    "default": "Filters & sorting"
+  },
+  {
+    "key": "page-database-0004",
+    "page": "Database",
+    "path": "database/",
+    "label": "Field label: Category",
+    "type": "text",
+    "default": "Category"
+  },
+  {
+    "key": "page-database-0005",
+    "page": "Database",
+    "path": "database/",
+    "label": "Field label: Item type",
+    "type": "text",
+    "default": "Item type"
+  },
+  {
+    "key": "page-database-0006",
+    "page": "Database",
+    "path": "database/",
+    "label": "Field label: Horse breed",
+    "type": "text",
+    "default": "Horse breed"
+  },
+  {
+    "key": "page-database-0007",
+    "page": "Database",
+    "path": "database/",
+    "label": "Field label: Generation",
+    "type": "text",
+    "default": "Generation"
+  },
+  {
+    "key": "page-database-0008",
+    "page": "Database",
+    "path": "database/",
+    "label": "Field label: Area",
+    "type": "text",
+    "default": "Area"
+  },
+  {
+    "key": "page-database-0009",
+    "page": "Database",
+    "path": "database/",
+    "label": "Field label: Site / shop",
+    "type": "text",
+    "default": "Site / shop"
+  },
+  {
+    "key": "page-database-0010",
+    "page": "Database",
+    "path": "database/",
+    "label": "Group title: My items (match any selected)",
+    "type": "text",
+    "default": "My items (match any selected)"
+  },
+  {
+    "key": "page-database-0011",
+    "page": "Database",
+    "path": "database/",
+    "label": "Field label: I own this",
+    "type": "text",
+    "default": " I own this"
+  },
+  {
+    "key": "page-database-0012",
+    "page": "Database",
+    "path": "database/",
+    "label": "Field label: Wishlist",
+    "type": "text",
+    "default": " Wishlist"
+  },
+  {
+    "key": "page-database-0013",
+    "page": "Database",
+    "path": "database/",
+    "label": "Field label: Favorite",
+    "type": "text",
+    "default": " Favorite"
+  },
+  {
+    "key": "page-database-0014",
+    "page": "Database",
+    "path": "database/",
+    "label": "Group title: Don’t show (any selected)",
+    "type": "text",
+    "default": "Don’t show (any selected)"
+  },
+  {
+    "key": "page-database-0015",
+    "page": "Database",
+    "path": "database/",
+    "label": "Field label: I own this",
+    "type": "text",
+    "default": " I own this"
+  },
+  {
+    "key": "page-database-0016",
+    "page": "Database",
+    "path": "database/",
+    "label": "Field label: Wishlist",
+    "type": "text",
+    "default": " Wishlist"
+  },
+  {
+    "key": "page-database-0017",
+    "page": "Database",
+    "path": "database/",
+    "label": "Field label: Favorite",
+    "type": "text",
+    "default": " Favorite"
+  },
+  {
+    "key": "page-database-0018",
+    "page": "Database",
+    "path": "database/",
+    "label": "Button text: + Add sorting rule",
+    "type": "text",
+    "default": "+ Add sorting rule"
+  },
+  {
+    "key": "page-database-0019",
+    "page": "Database",
+    "path": "database/",
+    "label": "Button text: Reset filters & sorting",
+    "type": "text",
+    "default": "Reset filters & sorting"
+  },
+  {
+    "key": "page-database-0020",
+    "page": "Database",
+    "path": "database/",
+    "label": "Section title: Build outfits",
+    "type": "text",
+    "default": "Build outfits"
+  },
+  {
+    "key": "page-database-browser-title",
+    "page": "Database",
+    "path": "database/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "Database | Database"
+  },
+  {
+    "key": "page-database-placeholder-0",
+    "page": "Database",
+    "path": "database/",
+    "label": "Input hint: Search names, descriptions or shops…",
+    "type": "text",
+    "default": "Search names, descriptions or shops…"
+  },
+  {
+    "key": "page-collection-0001",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Heading: My Collection",
+    "type": "text",
+    "default": "My Collection"
+  },
+  {
+    "key": "page-collection-0002",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Paragraph: To use this feature, please log in or create an account",
+    "type": "text",
+    "default": "To use this feature, please log in or create an account"
+  },
+  {
+    "key": "page-collection-0003",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Link text: Create account",
+    "type": "text",
+    "default": "Create account"
+  },
+  {
+    "key": "page-collection-0004",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Link text: Log in",
+    "type": "text",
+    "default": "Log in"
+  },
+  {
+    "key": "page-collection-0005",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Field label: Search the database",
+    "type": "text",
+    "default": "Search the database"
+  },
+  {
+    "key": "page-collection-0006",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Section title: Filters & sorting",
+    "type": "text",
+    "default": "Filters & sorting"
+  },
+  {
+    "key": "page-collection-0007",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Field label: Category",
+    "type": "text",
+    "default": "Category"
+  },
+  {
+    "key": "page-collection-0008",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Field label: Item type",
+    "type": "text",
+    "default": "Item type"
+  },
+  {
+    "key": "page-collection-0009",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Field label: Area",
+    "type": "text",
+    "default": "Area"
+  },
+  {
+    "key": "page-collection-0010",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Field label: Site / shop",
+    "type": "text",
+    "default": "Site / shop"
+  },
+  {
+    "key": "page-collection-0011",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Button text: + Add sorting rule",
+    "type": "text",
+    "default": "+ Add sorting rule"
+  },
+  {
+    "key": "page-collection-0012",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Button text: Reset filters & sorting",
+    "type": "text",
+    "default": "Reset filters & sorting"
+  },
+  {
+    "key": "page-collection-0013",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Section title: Build outfits",
+    "type": "text",
+    "default": "Build outfits"
+  },
+  {
+    "key": "page-collection-browser-title",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "My Collection | Database"
+  },
+  {
+    "key": "page-collection-placeholder-0",
+    "page": "My Collection",
+    "path": "collection/",
+    "label": "Input hint: Search names, descriptions or shops…",
+    "type": "text",
+    "default": "Search names, descriptions or shops…"
+  },
+  {
+    "key": "page-stable-0001",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Heading: My Stable",
+    "type": "text",
+    "default": "My Stable"
+  },
+  {
+    "key": "page-stable-0002",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Paragraph: To use this feature, please log in or create an account",
+    "type": "text",
+    "default": "To use this feature, please log in or create an account"
+  },
+  {
+    "key": "page-stable-0003",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Link text: Create account",
+    "type": "text",
+    "default": "Create account"
+  },
+  {
+    "key": "page-stable-0004",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Link text: Log in",
+    "type": "text",
+    "default": "Log in"
+  },
+  {
+    "key": "page-stable-0005",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Paragraph: Choose outfits for each of your horses. The same outfit can be used for several horses.",
+    "type": "text",
+    "default": "Choose outfits for each of your horses. The same outfit can be used for several horses."
+  },
+  {
+    "key": "page-stable-0006",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Button text: + Add Horse",
+    "type": "text",
+    "default": "\n        + Add Horse\n    "
+  },
+  {
+    "key": "page-stable-0007",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Button text: My horses",
+    "type": "text",
+    "default": "My horses"
+  },
+  {
+    "key": "page-stable-0008",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Button text: Wishlist",
+    "type": "text",
+    "default": "Wishlist"
+  },
+  {
+    "key": "page-stable-0009",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Field label: Search horses",
+    "type": "text",
+    "default": "Search horses"
+  },
+  {
+    "key": "page-stable-0010",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Field label: Sort horses",
+    "type": "text",
+    "default": "Sort horses"
+  },
+  {
+    "key": "page-stable-0011",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Field label: Order",
+    "type": "text",
+    "default": "Order"
+  },
+  {
+    "key": "page-stable-0012",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Heading: Choose Horse",
+    "type": "text",
+    "default": "Choose Horse"
+  },
+  {
+    "key": "page-stable-browser-title",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "My Stable | Database"
+  },
+  {
+    "key": "page-stable-placeholder-0",
+    "page": "My Stable",
+    "path": "stable/",
+    "label": "Input hint: Search horse name, breed or coat…",
+    "type": "text",
+    "default": "Search horse name, breed or coat…"
+  },
+  {
+    "key": "page-outfits-0001",
+    "page": "My Outfits",
+    "path": "outfits/",
+    "label": "Heading: My Outfits",
+    "type": "text",
+    "default": "My Outfits"
+  },
+  {
+    "key": "page-outfits-0002",
+    "page": "My Outfits",
+    "path": "outfits/",
+    "label": "Paragraph: To use this feature, please log in or create an account",
+    "type": "text",
+    "default": "To use this feature, please log in or create an account"
+  },
+  {
+    "key": "page-outfits-0003",
+    "page": "My Outfits",
+    "path": "outfits/",
+    "label": "Link text: Create account",
+    "type": "text",
+    "default": "Create account"
+  },
+  {
+    "key": "page-outfits-0004",
+    "page": "My Outfits",
+    "path": "outfits/",
+    "label": "Link text: Log in",
+    "type": "text",
+    "default": "Log in"
+  },
+  {
+    "key": "page-outfits-0005",
+    "page": "My Outfits",
+    "path": "outfits/",
+    "label": "Paragraph: Build outfits as you browse the database, then save them here.",
+    "type": "text",
+    "default": "Build outfits as you browse the database, then save them here."
+  },
+  {
+    "key": "page-outfits-0006",
+    "page": "My Outfits",
+    "path": "outfits/",
+    "label": "Link text: Create an outfit in the database",
+    "type": "text",
+    "default": "Create an outfit in the database"
+  },
+  {
+    "key": "page-outfits-0007",
+    "page": "My Outfits",
+    "path": "outfits/",
+    "label": "Heading: Browse all outfits",
+    "type": "text",
+    "default": "Browse all outfits"
+  },
+  {
+    "key": "page-outfits-0008",
+    "page": "My Outfits",
+    "path": "outfits/",
+    "label": "Field label: Search outfits",
+    "type": "text",
+    "default": "Search outfits"
+  },
+  {
+    "key": "page-outfits-browser-title",
+    "page": "My Outfits",
+    "path": "outfits/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "My Outfits | Database"
+  },
+  {
+    "key": "page-outfits-placeholder-0",
+    "page": "My Outfits",
+    "path": "outfits/",
+    "label": "Input hint: Search outfit names…",
+    "type": "text",
+    "default": "Search outfit names…"
+  },
+  {
+    "key": "page-news-0001",
+    "page": "News",
+    "path": "news/",
+    "label": "Heading: News & updates",
+    "type": "text",
+    "default": "News & updates"
+  },
+  {
+    "key": "page-news-0002",
+    "page": "News",
+    "path": "news/",
+    "label": "Paragraph: What’s new with my database: website improvements, catalogue edits, and messages from me.",
+    "type": "text",
+    "default": "What’s new with my database: website improvements, catalogue edits, and messages from me."
+  },
+  {
+    "key": "page-news-0003",
+    "page": "News",
+    "path": "news/",
+    "label": "Field label: Show",
+    "type": "text",
+    "default": "Show"
+  },
+  {
+    "key": "page-news-0004",
+    "page": "News",
+    "path": "news/",
+    "label": "Button text: Refresh",
+    "type": "text",
+    "default": "Refresh"
+  },
+  {
+    "key": "page-news-0005",
+    "page": "News",
+    "path": "news/",
+    "label": "Heading: Publish news",
+    "type": "text",
+    "default": "Publish news"
+  },
+  {
+    "key": "page-news-0006",
+    "page": "News",
+    "path": "news/",
+    "label": "Field label: Title",
+    "type": "text",
+    "default": "Title"
+  },
+  {
+    "key": "page-news-0007",
+    "page": "News",
+    "path": "news/",
+    "label": "Field label: Message",
+    "type": "text",
+    "default": "Message"
+  },
+  {
+    "key": "page-news-0008",
+    "page": "News",
+    "path": "news/",
+    "label": "Paragraph: Published posts are visible to everyone.",
+    "type": "text",
+    "default": "Published posts are visible to everyone."
+  },
+  {
+    "key": "page-news-0009",
+    "page": "News",
+    "path": "news/",
+    "label": "Button text: Publish post",
+    "type": "text",
+    "default": "Publish post"
+  },
+  {
+    "key": "page-news-0010",
+    "page": "News",
+    "path": "news/",
+    "label": "Button text: Clear",
+    "type": "text",
+    "default": "Clear"
+  },
+  {
+    "key": "page-news-0011",
+    "page": "News",
+    "path": "news/",
+    "label": "Button text: Show older updates",
+    "type": "text",
+    "default": "Show older updates"
+  },
+  {
+    "key": "page-news-browser-title",
+    "page": "News",
+    "path": "news/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "News | Database"
+  },
+  {
+    "key": "page-login-0001",
+    "page": "Login",
+    "path": "login/",
+    "label": "Heading: Account",
+    "type": "text",
+    "default": "Account"
+  },
+  {
+    "key": "page-login-0002",
+    "page": "Login",
+    "path": "login/",
+    "label": "Heading: Continue with Discord",
+    "type": "text",
+    "default": "Continue with Discord"
+  },
+  {
+    "key": "page-login-0003",
+    "page": "Login",
+    "path": "login/",
+    "label": "Paragraph: Use your Discord account to sign up or log in. No separate website password or confirmation ema",
+    "type": "text",
+    "default": "Use your Discord account to sign up or log in. No separate website password or confirmation email needed for this option."
+  },
+  {
+    "key": "page-login-0004",
+    "page": "Login",
+    "path": "login/",
+    "label": "Button text: Continue with Discord",
+    "type": "text",
+    "default": "Continue with Discord"
+  },
+  {
+    "key": "page-login-0005",
+    "page": "Login",
+    "path": "login/",
+    "label": "Paragraph: Already have an account here? Use a Discord account with the same verified email address to hel",
+    "type": "text",
+    "default": "Already have an account here? Use a Discord account with the same verified email address to help keep your saved collection, horses, and outfits together. Different email addresses may create separate accounts."
+  },
+  {
+    "key": "page-login-0006",
+    "page": "Login",
+    "path": "login/",
+    "label": "Heading: Create account",
+    "type": "text",
+    "default": "Create account"
+  },
+  {
+    "key": "page-login-0007",
+    "page": "Login",
+    "path": "login/",
+    "label": "Button text: Create account",
+    "type": "text",
+    "default": "\n            Create account\n        "
+  },
+  {
+    "key": "page-login-0008",
+    "page": "Login",
+    "path": "login/",
+    "label": "Heading: Log in",
+    "type": "text",
+    "default": "Log in"
+  },
+  {
+    "key": "page-login-0009",
+    "page": "Login",
+    "path": "login/",
+    "label": "Button text: Log in",
+    "type": "text",
+    "default": "\n            Log in\n        "
+  },
+  {
+    "key": "page-login-0010",
+    "page": "Login",
+    "path": "login/",
+    "label": "Heading: You are logged in",
+    "type": "text",
+    "default": "You are logged in"
+  },
+  {
+    "key": "page-login-0011",
+    "page": "Login",
+    "path": "login/",
+    "label": "Heading: Discord account",
+    "type": "text",
+    "default": "Discord account"
+  },
+  {
+    "key": "page-login-0012",
+    "page": "Login",
+    "path": "login/",
+    "label": "Paragraph: Link Discord to this account to keep using your saved collection, horses, and outfits when you ",
+    "type": "text",
+    "default": "Link Discord to this account to keep using your saved collection, horses, and outfits when you log in with Discord."
+  },
+  {
+    "key": "page-login-0013",
+    "page": "Login",
+    "path": "login/",
+    "label": "Button text: Link with Discord",
+    "type": "text",
+    "default": "Link with Discord"
+  },
+  {
+    "key": "page-login-0014",
+    "page": "Login",
+    "path": "login/",
+    "label": "Button text: Log out",
+    "type": "text",
+    "default": "\n            Log out\n        "
+  },
+  {
+    "key": "page-login-browser-title",
+    "page": "Login",
+    "path": "login/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "Login | Database"
+  },
+  {
+    "key": "page-login-placeholder-0",
+    "page": "Login",
+    "path": "login/",
+    "label": "Input hint: Username",
+    "type": "text",
+    "default": "Username"
+  },
+  {
+    "key": "page-login-placeholder-1",
+    "page": "Login",
+    "path": "login/",
+    "label": "Input hint: Email",
+    "type": "text",
+    "default": "Email"
+  },
+  {
+    "key": "page-login-placeholder-2",
+    "page": "Login",
+    "path": "login/",
+    "label": "Input hint: Password",
+    "type": "text",
+    "default": "Password"
+  },
+  {
+    "key": "page-login-placeholder-3",
+    "page": "Login",
+    "path": "login/",
+    "label": "Input hint: Email",
+    "type": "text",
+    "default": "Email"
+  },
+  {
+    "key": "page-login-placeholder-4",
+    "page": "Login",
+    "path": "login/",
+    "label": "Input hint: Password",
+    "type": "text",
+    "default": "Password"
+  },
+  {
+    "key": "page-outfit-share-0001",
+    "page": "Shared outfits",
+    "path": "outfit-share/",
+    "label": "Paragraph: Opening shared outfit…",
+    "type": "text",
+    "default": "Opening shared outfit…"
+  },
+  {
+    "key": "page-outfit-share-browser-title",
+    "page": "Shared outfits",
+    "path": "outfit-share/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "Shared outfit | Database"
+  },
+  {
+    "key": "page-admin-0001",
+    "page": "Admin",
+    "path": "admin/",
+    "label": "Heading: Database admin",
+    "type": "text",
+    "default": "Database admin"
+  },
+  {
+    "key": "page-admin-0002",
+    "page": "Admin",
+    "path": "admin/",
+    "label": "Heading: Add item",
+    "type": "text",
+    "default": "Add item"
+  },
+  {
+    "key": "page-admin-browser-title",
+    "page": "Admin",
+    "path": "admin/",
+    "label": "Browser tab title",
+    "type": "text",
+    "default": "Admin | Database"
+  },
+  {
+    "key": "page-admin-placeholder-0",
+    "page": "Admin",
+    "path": "admin/",
+    "label": "Input hint: For example: Fort Pinta — Dance more",
+    "type": "text",
+    "default": "For example: Fort Pinta — Dance more"
+  },
+  {
+    "key": "page-admin-placeholder-1",
+    "page": "Admin",
+    "path": "admin/",
+    "label": "Input hint: Search title, breed, shop or ID…",
+    "type": "text",
+    "default": "Search title, breed, shop or ID…"
+  },
+  {
+    "key": "shared-site-name",
+    "page": "Header",
+    "path": "./",
+    "label": "Website name",
+    "type": "text",
+    "default": "Database"
+  },
+  {
+    "key": "shared-site-credit",
+    "page": "Header",
+    "path": "./",
+    "label": "Header subtitle",
+    "type": "text",
+    "default": "for 2018 Horse Museum"
+  },
+  {
+    "key": "shared-guides-title",
+    "page": "Header",
+    "path": "./",
+    "label": "Guides menu title",
+    "type": "text",
+    "default": "HM Guides"
+  },
+  {
+    "key": "nav-database",
+    "page": "Header",
+    "path": "./",
+    "label": "Database",
+    "type": "text",
+    "default": "Database"
+  },
+  {
+    "key": "nav-outfits",
+    "page": "Header",
+    "path": "./",
+    "label": "My Outfits",
+    "type": "text",
+    "default": "My Outfits"
+  },
+  {
+    "key": "nav-stable",
+    "page": "Header",
+    "path": "./",
+    "label": "My Stable",
+    "type": "text",
+    "default": "My Stable"
+  },
+  {
+    "key": "nav-collection",
+    "page": "Header",
+    "path": "./",
+    "label": "My Collection",
+    "type": "text",
+    "default": "My Collection"
+  },
+  {
+    "key": "nav-stable-owned",
+    "page": "Header",
+    "path": "./",
+    "label": "stable menu: My Horses",
+    "type": "text",
+    "default": "My Horses"
+  },
+  {
+    "key": "nav-stable-owned-description",
+    "page": "Header",
+    "path": "./",
+    "label": "stable menu description: My Horses",
+    "type": "text",
+    "default": "Visit your horses"
+  },
+  {
+    "key": "nav-stable-wishlist",
+    "page": "Header",
+    "path": "./",
+    "label": "stable menu: Wishlist",
+    "type": "text",
+    "default": "Wishlist"
+  },
+  {
+    "key": "nav-stable-wishlist-description",
+    "page": "Header",
+    "path": "./",
+    "label": "stable menu description: Wishlist",
+    "type": "text",
+    "default": "Things you would like"
+  },
+  {
+    "key": "nav-collection-everything",
+    "page": "Header",
+    "path": "./",
+    "label": "collection menu: Everything",
+    "type": "text",
+    "default": "Everything"
+  },
+  {
+    "key": "nav-collection-everything-description",
+    "page": "Header",
+    "path": "./",
+    "label": "collection menu description: Everything",
+    "type": "text",
+    "default": "All your saved items"
+  },
+  {
+    "key": "nav-collection-owned",
+    "page": "Header",
+    "path": "./",
+    "label": "collection menu: Owned",
+    "type": "text",
+    "default": "Owned"
+  },
+  {
+    "key": "nav-collection-owned-description",
+    "page": "Header",
+    "path": "./",
+    "label": "collection menu description: Owned",
+    "type": "text",
+    "default": "Items you own"
+  },
+  {
+    "key": "nav-collection-wishlist",
+    "page": "Header",
+    "path": "./",
+    "label": "collection menu: Wishlist",
+    "type": "text",
+    "default": "Wishlist"
+  },
+  {
+    "key": "nav-collection-wishlist-description",
+    "page": "Header",
+    "path": "./",
+    "label": "collection menu description: Wishlist",
+    "type": "text",
+    "default": "Things you would like"
+  },
+  {
+    "key": "nav-collection-favorite",
+    "page": "Header",
+    "path": "./",
+    "label": "collection menu: Favorites",
+    "type": "text",
+    "default": "Favorites"
+  },
+  {
+    "key": "nav-collection-favorite-description",
+    "page": "Header",
+    "path": "./",
+    "label": "collection menu description: Favorites",
+    "type": "text",
+    "default": "Your favorite items"
+  },
+  {
+    "key": "nav-collection-wardrobe",
+    "page": "Header",
+    "path": "./",
+    "label": "collection menu: Wardrobe (My Storage)",
+    "type": "text",
+    "default": "Wardrobe (My Storage)"
+  },
+  {
+    "key": "nav-collection-wardrobe-description",
+    "page": "Header",
+    "path": "./",
+    "label": "collection menu description: Wardrobe (My Storage)",
+    "type": "text",
+    "default": "Find your items in storage"
+  },
+  {
+    "key": "nav-spirit",
+    "page": "Header",
+    "path": "./",
+    "label": "Guide: Spirit timetable",
+    "type": "text",
+    "default": "Spirit timetable"
+  },
+  {
+    "key": "nav-spirit-description",
+    "page": "Header",
+    "path": "./",
+    "label": "Guide description: Spirit timetable",
+    "type": "text",
+    "default": "Find Spirit’s current location"
+  },
+  {
+    "key": "nav-championships",
+    "page": "Header",
+    "path": "./",
+    "label": "Guide: Championships",
+    "type": "text",
+    "default": "Championships"
+  },
+  {
+    "key": "nav-championships-description",
+    "page": "Header",
+    "path": "./",
+    "label": "Guide description: Championships",
+    "type": "text",
+    "default": "See the next race in UTC"
+  },
+  {
+    "key": "nav-areas",
+    "page": "Header",
+    "path": "./",
+    "label": "Guide: Unlocking areas",
+    "type": "text",
+    "default": "Unlocking areas"
+  },
+  {
+    "key": "nav-areas-description",
+    "page": "Header",
+    "path": "./",
+    "label": "Guide description: Unlocking areas",
+    "type": "text",
+    "default": "Explore area requirements"
+  },
+  {
+    "key": "footer-copy-0",
+    "page": "Footer",
+    "path": "./",
+    "label": "Footer website name",
+    "type": "text",
+    "default": "Database"
+  },
+  {
+    "key": "footer-copy-1",
+    "page": "Footer",
+    "path": "./",
+    "label": "About the database",
+    "type": "text",
+    "default": "My database for Horse Museum 2018 Version. I’m SATNIN, and I’ve extracted, compiled and organised the data that makes this database possible."
+  },
+  {
+    "key": "footer-copy-2",
+    "page": "Footer",
+    "path": "./",
+    "label": "Accuracy note",
+    "type": "text",
+    "default": "Some information in my database may be incorrect."
+  },
+  {
+    "key": "footer-copy-3",
+    "page": "Footer",
+    "path": "./",
+    "label": "Copyright line (use {year} for the current year)",
+    "type": "text",
+    "default": "© {year} Database. Unofficial fan-made archive."
+  },
+  {
+    "key": "footer-copy-4",
+    "page": "Footer",
+    "path": "./",
+    "label": "Ownership and affiliation notice",
+    "type": "text",
+    "default": "Star Stable and its game assets belong to their respective owners. This site is not affiliated with or endorsed by Star Stable Entertainment."
+  },
+  {
+    "key": "footer-nav-news",
+    "page": "Footer",
+    "path": "./",
+    "label": "Footer link: News",
+    "type": "text",
+    "default": "News"
+  },
+  {
+    "key": "footer-nav-tutorial",
+    "page": "Footer",
+    "path": "./",
+    "label": "Footer link: How to use",
+    "type": "text",
+    "default": "How to use"
+  },
+  {
+    "key": "footer-nav-about",
+    "page": "Footer",
+    "path": "./",
+    "label": "Footer link: About & credits",
+    "type": "text",
+    "default": "About & credits"
+  },
+  {
+    "key": "footer-nav-contact",
+    "page": "Footer",
+    "path": "./",
+    "label": "Footer link: Contact / Discord",
+    "type": "text",
+    "default": "Contact / Discord"
+  },
+  {
+    "key": "footer-nav-privacy",
+    "page": "Footer",
+    "path": "./",
+    "label": "Footer link: Privacy",
+    "type": "text",
+    "default": "Privacy"
+  },
+  {
+    "key": "spirit-heading",
+    "page": "Spirit timetable",
+    "path": "./",
+    "label": "Timetable heading",
+    "type": "text",
+    "default": "Spirit’s schedule"
+  },
+  {
+    "key": "spirit-timezone",
+    "page": "Spirit timetable",
+    "path": "./",
+    "label": "Timezone heading",
+    "type": "text",
+    "default": "UTC TIME"
+  },
+  {
+    "key": "spirit-scroll",
+    "page": "Spirit timetable",
+    "path": "./",
+    "label": "Scrolling hint",
+    "type": "text",
+    "default": "Swipe or scroll sideways to see each day."
+  },
+  {
+    "key": "spirit-location-0-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 AM · Monday",
+    "type": "text",
+    "default": "South Hoof Peninsula"
+  },
+  {
+    "key": "spirit-location-0-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 AM · Tuesday",
+    "type": "text",
+    "default": "Forgotten Fields"
+  },
+  {
+    "key": "spirit-location-0-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 AM · Wednesday",
+    "type": "text",
+    "default": "Hollow Woods"
+  },
+  {
+    "key": "spirit-location-0-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 AM · Thursday",
+    "type": "text",
+    "default": "Everwind Fields"
+  },
+  {
+    "key": "spirit-location-0-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 AM · Friday",
+    "type": "text",
+    "default": "Forgotten Fields"
+  },
+  {
+    "key": "spirit-location-0-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 AM · Saturday",
+    "type": "text",
+    "default": "Golden Hills Valley"
+  },
+  {
+    "key": "spirit-location-0-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 AM · Sunday",
+    "type": "text",
+    "default": "Everwind Fields"
+  },
+  {
+    "key": "spirit-location-1-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 AM · Monday",
+    "type": "text",
+    "default": "Sunfield Farm"
+  },
+  {
+    "key": "spirit-location-1-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 AM · Tuesday",
+    "type": "text",
+    "default": "South Hoof Peninsula"
+  },
+  {
+    "key": "spirit-location-1-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 AM · Wednesday",
+    "type": "text",
+    "default": "Everwind Fields"
+  },
+  {
+    "key": "spirit-location-1-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 AM · Thursday",
+    "type": "text",
+    "default": "Dew’s Farm, Epona"
+  },
+  {
+    "key": "spirit-location-1-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 AM · Friday",
+    "type": "text",
+    "default": "Valedale Lake"
+  },
+  {
+    "key": "spirit-location-1-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 AM · Saturday",
+    "type": "text",
+    "default": "Seahorse Point"
+  },
+  {
+    "key": "spirit-location-1-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 AM · Sunday",
+    "type": "text",
+    "default": "Everwind Fields"
+  },
+  {
+    "key": "spirit-location-2-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "10:00 AM · Monday",
+    "type": "text",
+    "default": "Stormgarden"
+  },
+  {
+    "key": "spirit-location-2-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "10:00 AM · Tuesday",
+    "type": "text",
+    "default": "Everwind Fields"
+  },
+  {
+    "key": "spirit-location-2-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "10:00 AM · Wednesday",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "key": "spirit-location-2-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "10:00 AM · Thursday",
+    "type": "text",
+    "default": "Everwind Fields"
+  },
+  {
+    "key": "spirit-location-2-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "10:00 AM · Friday",
+    "type": "text",
+    "default": "South Hoof Peninsula"
+  },
+  {
+    "key": "spirit-location-2-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "10:00 AM · Saturday",
+    "type": "text",
+    "default": "Golden Hills Valley"
+  },
+  {
+    "key": "spirit-location-2-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "10:00 AM · Sunday",
+    "type": "text",
+    "default": "Forgotten Fields"
+  },
+  {
+    "key": "spirit-location-3-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "11:00 AM · Monday",
+    "type": "text",
+    "default": "Everwind Fields"
+  },
+  {
+    "key": "spirit-location-3-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "11:00 AM · Tuesday",
+    "type": "text",
+    "default": "Silverglade Acres, near Marley"
+  },
+  {
+    "key": "spirit-location-3-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "11:00 AM · Wednesday",
+    "type": "text",
+    "default": "Dew’s Farm, Epona"
+  },
+  {
+    "key": "spirit-location-3-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "11:00 AM · Thursday",
+    "type": "text",
+    "default": "South Hoof Peninsula"
+  },
+  {
+    "key": "spirit-location-3-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "11:00 AM · Friday",
+    "type": "text",
+    "default": "Golden Hills Valley"
+  },
+  {
+    "key": "spirit-location-3-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "11:00 AM · Saturday",
+    "type": "text",
+    "default": "Everwind Fields"
+  },
+  {
+    "key": "spirit-location-3-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "11:00 AM · Sunday",
+    "type": "text",
+    "default": "Sunfield Farm"
+  },
+  {
+    "key": "spirit-location-4-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "12:00 PM · Monday",
+    "type": "text",
+    "default": "Hollow Woods"
+  },
+  {
+    "key": "spirit-location-4-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "12:00 PM · Tuesday",
+    "type": "text",
+    "default": "Golden Hills Valley"
+  },
+  {
+    "key": "spirit-location-4-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "12:00 PM · Wednesday",
+    "type": "text",
+    "default": "South Hoof Peninsula"
+  },
+  {
+    "key": "spirit-location-4-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "12:00 PM · Thursday",
+    "type": "text",
+    "default": "Dew’s Farm, Epona"
+  },
+  {
+    "key": "spirit-location-4-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "12:00 PM · Friday",
+    "type": "text",
+    "default": "Greendale"
+  },
+  {
+    "key": "spirit-location-4-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "12:00 PM · Saturday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "spirit-location-4-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "12:00 PM · Sunday",
+    "type": "text",
+    "default": "Valedale Lake"
+  },
+  {
+    "key": "spirit-location-5-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "1:00 PM · Monday",
+    "type": "text",
+    "default": "Cauldron, Epona"
+  },
+  {
+    "key": "spirit-location-5-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "1:00 PM · Tuesday",
+    "type": "text",
+    "default": "Sunfield Farm"
+  },
+  {
+    "key": "spirit-location-5-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "1:00 PM · Wednesday",
+    "type": "text",
+    "default": "Hollow Woods"
+  },
+  {
+    "key": "spirit-location-5-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "1:00 PM · Thursday",
+    "type": "text",
+    "default": "South Hoof Peninsula"
+  },
+  {
+    "key": "spirit-location-5-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "1:00 PM · Friday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "spirit-location-5-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "1:00 PM · Saturday",
+    "type": "text",
+    "default": "Golden Fields"
+  },
+  {
+    "key": "spirit-location-5-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "1:00 PM · Sunday",
+    "type": "text",
+    "default": "South Hoof Peninsula"
+  },
+  {
+    "key": "spirit-location-6-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "2:00 PM · Monday",
+    "type": "text",
+    "default": "Forgotten Fields"
+  },
+  {
+    "key": "spirit-location-6-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "2:00 PM · Tuesday",
+    "type": "text",
+    "default": "Forgotten Fields"
+  },
+  {
+    "key": "spirit-location-6-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "2:00 PM · Wednesday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "spirit-location-6-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "2:00 PM · Thursday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "spirit-location-6-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "2:00 PM · Friday",
+    "type": "text",
+    "default": "Seahorse Point"
+  },
+  {
+    "key": "spirit-location-6-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "2:00 PM · Saturday",
+    "type": "text",
+    "default": "Goldspur"
+  },
+  {
+    "key": "spirit-location-6-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "2:00 PM · Sunday",
+    "type": "text",
+    "default": "Everwind Fields"
+  },
+  {
+    "key": "spirit-location-7-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "3:00 PM · Monday",
+    "type": "text",
+    "default": "Everwind Fields"
+  },
+  {
+    "key": "spirit-location-7-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "3:00 PM · Tuesday",
+    "type": "text",
+    "default": "Goldspur"
+  },
+  {
+    "key": "spirit-location-7-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "3:00 PM · Wednesday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "spirit-location-7-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "3:00 PM · Thursday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "spirit-location-7-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "3:00 PM · Friday",
+    "type": "text",
+    "default": "Sunfield Farm"
+  },
+  {
+    "key": "spirit-location-7-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "3:00 PM · Saturday",
+    "type": "text",
+    "default": "South Hoof Peninsula"
+  },
+  {
+    "key": "spirit-location-7-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "3:00 PM · Sunday",
+    "type": "text",
+    "default": "Golden Hills Valley"
+  },
+  {
+    "key": "spirit-location-8-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "4:00 PM · Monday",
+    "type": "text",
+    "default": "Seahorse Point"
+  },
+  {
+    "key": "spirit-location-8-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "4:00 PM · Tuesday",
+    "type": "text",
+    "default": "South Hoof Peninsula"
+  },
+  {
+    "key": "spirit-location-8-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "4:00 PM · Wednesday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "spirit-location-8-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "4:00 PM · Thursday",
+    "type": "text",
+    "default": "Forgotten Fields"
+  },
+  {
+    "key": "spirit-location-8-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "4:00 PM · Friday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "spirit-location-8-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "4:00 PM · Saturday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "spirit-location-8-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "4:00 PM · Sunday",
+    "type": "text",
+    "default": "Golden Fields"
+  },
+  {
+    "key": "spirit-location-9-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "5:00 PM · Monday",
+    "type": "text",
+    "default": "Greendale"
+  },
+  {
+    "key": "spirit-location-9-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "5:00 PM · Tuesday",
+    "type": "text",
+    "default": "Seahorse Point"
+  },
+  {
+    "key": "spirit-location-9-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "5:00 PM · Wednesday",
+    "type": "text",
+    "default": "South Hoof Peninsula"
+  },
+  {
+    "key": "spirit-location-9-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "5:00 PM · Thursday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "spirit-location-9-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "5:00 PM · Friday",
+    "type": "text",
+    "default": "South Hoof Peninsula"
+  },
+  {
+    "key": "spirit-location-9-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "5:00 PM · Saturday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "spirit-location-9-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "5:00 PM · Sunday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "spirit-location-10-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "6:00 PM · Monday",
+    "type": "text",
+    "default": "Valedale Lake"
+  },
+  {
+    "key": "spirit-location-10-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "6:00 PM · Tuesday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "spirit-location-10-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "6:00 PM · Wednesday",
+    "type": "text",
+    "default": "Seahorse Point"
+  },
+  {
+    "key": "spirit-location-10-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "6:00 PM · Thursday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "spirit-location-10-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "6:00 PM · Friday",
+    "type": "text",
+    "default": "Golden Hills Valley"
+  },
+  {
+    "key": "spirit-location-10-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "6:00 PM · Saturday",
+    "type": "text",
+    "default": "Nilmer’s Highland"
+  },
+  {
+    "key": "spirit-location-10-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "6:00 PM · Sunday",
+    "type": "text",
+    "default": "South Hoof Peninsula"
+  },
+  {
+    "key": "spirit-location-11-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "7:00 PM · Monday",
+    "type": "text",
+    "default": "Seahorse Point"
+  },
+  {
+    "key": "spirit-location-11-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "7:00 PM · Tuesday",
+    "type": "text",
+    "default": "Nilmer’s Highland"
+  },
+  {
+    "key": "spirit-location-11-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "7:00 PM · Wednesday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "spirit-location-11-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "7:00 PM · Thursday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "spirit-location-11-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "7:00 PM · Friday",
+    "type": "text",
+    "default": "Dew’s Farm, Epona"
+  },
+  {
+    "key": "spirit-location-11-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "7:00 PM · Saturday",
+    "type": "text",
+    "default": "Stormgarden"
+  },
+  {
+    "key": "spirit-location-11-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "7:00 PM · Sunday",
+    "type": "text",
+    "default": "Forgotten Fields"
+  },
+  {
+    "key": "spirit-location-12-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 PM · Monday",
+    "type": "text",
+    "default": "Everwind Fields"
+  },
+  {
+    "key": "spirit-location-12-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 PM · Tuesday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "spirit-location-12-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 PM · Wednesday",
+    "type": "text",
+    "default": "Nilmer’s Highland"
+  },
+  {
+    "key": "spirit-location-12-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 PM · Thursday",
+    "type": "text",
+    "default": "Dew’s Farm, Epona"
+  },
+  {
+    "key": "spirit-location-12-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 PM · Friday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "spirit-location-12-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 PM · Saturday",
+    "type": "text",
+    "default": "Silverglade Acres, near Marley"
+  },
+  {
+    "key": "spirit-location-12-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "8:00 PM · Sunday",
+    "type": "text",
+    "default": "Dew’s Farm, Epona"
+  },
+  {
+    "key": "spirit-location-13-1",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 PM · Monday",
+    "type": "text",
+    "default": "Nilmer’s Highland"
+  },
+  {
+    "key": "spirit-location-13-2",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 PM · Tuesday",
+    "type": "text",
+    "default": "Everwind Fields"
+  },
+  {
+    "key": "spirit-location-13-3",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 PM · Wednesday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "spirit-location-13-4",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 PM · Thursday",
+    "type": "text",
+    "default": "Dew’s Farm, Epona"
+  },
+  {
+    "key": "spirit-location-13-5",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 PM · Friday",
+    "type": "text",
+    "default": "Riding Hall"
+  },
+  {
+    "key": "spirit-location-13-6",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 PM · Saturday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "spirit-location-13-7",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "9:00 PM · Sunday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "spirit-availability-note",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "Availability note",
+    "type": "text",
+    "default": "Spirit is unavailable from 21:00 UTC until 08:00 UTC the following morning."
+  },
+  {
+    "key": "champ-location-6-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "06:00 · Monday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-6-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "06:00 · Tuesday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-6-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "06:00 · Wednesday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-6-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "06:00 · Thursday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-6-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "06:00 · Friday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-6-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "06:00 · Saturday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-6-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "06:00 · Sunday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-7-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "07:00 · Monday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-7-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "07:00 · Tuesday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-7-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "07:00 · Wednesday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-7-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "07:00 · Thursday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-7-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "07:00 · Friday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-7-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "07:00 · Saturday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-7-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "07:00 · Sunday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-8-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "08:00 · Monday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "champ-location-8-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "08:00 · Tuesday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-8-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "08:00 · Wednesday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-8-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "08:00 · Thursday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-8-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "08:00 · Friday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-8-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "08:00 · Saturday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-8-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "08:00 · Sunday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-9-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "09:00 · Monday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-9-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "09:00 · Tuesday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "champ-location-9-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "09:00 · Wednesday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-9-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "09:00 · Thursday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-9-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "09:00 · Friday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-9-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "09:00 · Saturday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-9-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "09:00 · Sunday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-10-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "10:00 · Monday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-10-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "10:00 · Tuesday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-10-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "10:00 · Wednesday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "champ-location-10-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "10:00 · Thursday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-10-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "10:00 · Friday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-10-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "10:00 · Saturday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-10-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "10:00 · Sunday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-11-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "11:00 · Monday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-11-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "11:00 · Tuesday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-11-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "11:00 · Wednesday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-11-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "11:00 · Thursday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "champ-location-11-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "11:00 · Friday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-11-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "11:00 · Saturday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-11-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "11:00 · Sunday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-12-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "12:00 · Monday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-12-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "12:00 · Tuesday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-12-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "12:00 · Wednesday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-12-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "12:00 · Thursday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-12-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "12:00 · Friday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "champ-location-12-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "12:00 · Saturday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-12-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "12:00 · Sunday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-13-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "13:00 · Monday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-13-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "13:00 · Tuesday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-13-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "13:00 · Wednesday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-13-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "13:00 · Thursday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-13-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "13:00 · Friday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-13-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "13:00 · Saturday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "champ-location-13-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "13:00 · Sunday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-14-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "14:00 · Monday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-14-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "14:00 · Tuesday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-14-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "14:00 · Wednesday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-14-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "14:00 · Thursday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-14-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "14:00 · Friday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-14-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "14:00 · Saturday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-14-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "14:00 · Sunday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "champ-location-15-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "15:00 · Monday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-15-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "15:00 · Tuesday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-15-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "15:00 · Wednesday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-15-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "15:00 · Thursday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-15-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "15:00 · Friday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-15-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "15:00 · Saturday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-15-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "15:00 · Sunday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-16-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "16:00 · Monday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-16-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "16:00 · Tuesday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-16-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "16:00 · Wednesday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-16-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "16:00 · Thursday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-16-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "16:00 · Friday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-16-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "16:00 · Saturday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-16-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "16:00 · Sunday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-17-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "17:00 · Monday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "champ-location-17-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "17:00 · Tuesday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-17-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "17:00 · Wednesday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-17-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "17:00 · Thursday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-17-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "17:00 · Friday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-17-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "17:00 · Saturday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-17-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "17:00 · Sunday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-18-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "18:00 · Monday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-18-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "18:00 · Tuesday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "champ-location-18-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "18:00 · Wednesday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-18-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "18:00 · Thursday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-18-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "18:00 · Friday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-18-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "18:00 · Saturday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-18-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "18:00 · Sunday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-19-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "19:00 · Monday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-19-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "19:00 · Tuesday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-19-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "19:00 · Wednesday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "champ-location-19-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "19:00 · Thursday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-19-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "19:00 · Friday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-19-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "19:00 · Saturday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-19-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "19:00 · Sunday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-20-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "20:00 · Monday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-20-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "20:00 · Tuesday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-20-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "20:00 · Wednesday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-20-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "20:00 · Thursday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "champ-location-20-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "20:00 · Friday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-20-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "20:00 · Saturday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-20-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "20:00 · Sunday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-21-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "21:00 · Monday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-21-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "21:00 · Tuesday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-21-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "21:00 · Wednesday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-21-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "21:00 · Thursday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-21-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "21:00 · Friday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "champ-location-21-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "21:00 · Saturday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-21-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "21:00 · Sunday",
+    "type": "text",
+    "default": "Firgrove"
+  },
+  {
+    "key": "champ-location-22-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "22:00 · Monday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-22-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "22:00 · Tuesday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-22-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "22:00 · Wednesday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-22-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "22:00 · Thursday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-22-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "22:00 · Friday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-22-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "22:00 · Saturday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "champ-location-22-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "22:00 · Sunday",
+    "type": "text",
+    "default": "Valedale"
+  },
+  {
+    "key": "champ-location-23-0",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "23:00 · Monday",
+    "type": "text",
+    "default": "New Hillcrest"
+  },
+  {
+    "key": "champ-location-23-1",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "23:00 · Tuesday",
+    "type": "text",
+    "default": "Silverglade"
+  },
+  {
+    "key": "champ-location-23-2",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "23:00 · Wednesday",
+    "type": "text",
+    "default": "Pony"
+  },
+  {
+    "key": "champ-location-23-3",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "23:00 · Thursday",
+    "type": "text",
+    "default": "Jorvik Stables"
+  },
+  {
+    "key": "champ-location-23-4",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "23:00 · Friday",
+    "type": "text",
+    "default": "Goldenhills"
+  },
+  {
+    "key": "champ-location-23-5",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "23:00 · Saturday",
+    "type": "text",
+    "default": "Fort Pinta"
+  },
+  {
+    "key": "champ-location-23-6",
+    "page": "Championships",
+    "path": "championships/",
+    "label": "23:00 · Sunday",
+    "type": "text",
+    "default": "Moorland"
+  },
+  {
+    "key": "spirit-note-intro",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "Note intro",
+    "type": "text",
+    "default": "The timetable uses "
+  },
+  {
+    "key": "spirit-note-timezone",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "Note timezone",
+    "type": "text",
+    "default": "UTC (Coordinated Universal Time)"
+  },
+  {
+    "key": "spirit-note-middle",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "Note middle",
+    "type": "text",
+    "default": ". Use the "
+  },
+  {
+    "key": "spirit-converter-label",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "Converter label",
+    "type": "text",
+    "default": "UTC Time Converter ↗"
+  },
+  {
+    "key": "spirit-note-end",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "Note end",
+    "type": "text",
+    "default": " to convert these times to your local timezone."
+  },
+  {
+    "key": "spirit-converter-url",
+    "page": "Spirit timetable",
+    "path": "spirit/",
+    "label": "Converter url",
+    "type": "url",
+    "default": "https://www.utctime.net/"
+  },
+  {
+    "key": "shared-site-logo",
+    "page": "Header",
+    "path": "./",
+    "label": "Website logo URL (restore original for theme logos)",
+    "type": "url",
+    "default": "assets/satnin-clam-otter-light.png?v=96"
+  }
+]

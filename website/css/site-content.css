@@ -1,0 +1,19 @@
+.site-content-controls{position:fixed;right:16px;bottom:16px;z-index:1200;display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 14px;background:var(--card,var(--bg,#fff8f2));color:var(--text,#342e2a);border:1px solid var(--border,#d2bfae);border-radius:14px;box-shadow:0 4px 20px #0003;font-size:13px;max-width:calc(100vw - 32px)}
+.site-content-controls button,.site-content-controls a{font:inherit}
+.site-content-editing [data-site-key]{outline:1px dashed var(--green,#805438);outline-offset:2px;cursor:pointer}
+.site-content-editing [data-site-key]:hover{outline:2px solid var(--green,#805438);background:color-mix(in srgb,var(--green,#805438) 14%,transparent)}
+.site-content-extra p{white-space:pre-wrap}
+.site-content-dialog{width:min(760px,calc(100vw - 32px));max-height:85vh;overflow:auto;box-sizing:border-box;padding:24px;border-radius:18px;border:1px solid var(--border,#d2bfae);background:var(--card,var(--bg,#fff8f2));color:var(--text,#342e2a)}
+.site-content-dialog::backdrop{background:#0007;backdrop-filter:blur(3px)}
+.site-content-dialog textarea{display:block;box-sizing:border-box;width:100%;margin:8px 0;resize:vertical;font:inherit;line-height:1.5;min-height:80px;background:var(--input-bg,var(--bg,#fff8f2));color:inherit;border:1px solid var(--border,#d2bfae);border-radius:8px;padding:10px}
+.site-content-context,.site-content-hint{font-size:13px;opacity:.8;overflow-wrap:anywhere}
+.site-content-actions,.site-content-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.site-content-toolbar select,.site-content-toolbar input{flex:1 1 180px;min-width:0}
+#site-content-panel{margin:20px 0;padding:18px;border:1px solid var(--border,#d2bfae);border-radius:12px}
+#site-content-panel>summary{font-weight:700;cursor:pointer}
+.site-content-list{max-height:60vh;overflow:auto;display:grid;gap:8px}
+.site-content-entry{text-align:left!important;display:grid!important;gap:5px;width:100%;white-space:normal!important;overflow-wrap:anywhere}
+.site-content-entry small{font-weight:400;white-space:pre-wrap}
+@media(max-width:600px){.site-content-controls{bottom:8px;right:8px;padding:7px 10px;font-size:12px}.site-content-dialog{padding:16px}.site-content-actions button{flex:1 1 140px}}
+
+.site-content-custom{white-space:pre-wrap}
