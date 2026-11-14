@@ -17,3 +17,5 @@
 @media(max-width:600px){.site-content-controls{bottom:8px;right:8px;padding:7px 10px;font-size:12px}.site-content-dialog{padding:16px}.site-content-actions button{flex:1 1 140px}}
 
 .site-content-custom{white-space:pre-wrap}
+
+header nav .admin-edit-shortcut{font:inherit;font-size:14px;line-height:1.2;padding:8px 12px;border-radius:10px;cursor:pointer}

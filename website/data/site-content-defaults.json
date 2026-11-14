@@ -5838,5 +5838,13 @@
     "label": "Website logo URL (restore original for theme logos)",
     "type": "url",
     "default": "assets/satnin-clam-otter-light.png?v=96"
+  },
+  {
+    "key": "page-privacy-activity-185",
+    "page": "Privacy",
+    "path": "privacy/",
+    "label": "Account activity notice",
+    "type": "text",
+    "default": "When you are signed in, the website records your latest activity time and a general page name, such as Database or My Collection, for account administration. Only administrators can view these records. Activity updates are limited to once every five minutes; this feature does not store a page history, search terms, item details, or IP addresses."
   }
 ]

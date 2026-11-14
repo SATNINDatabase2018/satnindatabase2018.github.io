@@ -49,11 +49,11 @@
     const all=[];
     for(let start=0;;start+=1000){
       const {data,error}=await supabaseClient.from('hm_site_content').select('key,value,revision').order('key').range(start,start+999);
-      if(error){loadError='Site content storage is unavailable. Run the supplied SQL setup, then refresh this page.';return false;}
+      if(error){loadError='Site content storage is unavailable. Run the supplied SQL setup, then refresh this page.';document.dispatchEvent(new CustomEvent('hm-site-content-refreshed'));return false;}
       all.push(...(data||[]));if(!data||data.length<1000)break;
     }
-    rows.clear();for(const row of all)rows.set(row.key,row);loadError='';ready=true;apply();return true;
-    }catch{loadError='Could not reach site content storage. Please retry using Refresh content.';return false;}
+    rows.clear();for(const row of all)rows.set(row.key,row);loadError='';ready=true;apply();document.dispatchEvent(new CustomEvent('hm-site-content-refreshed'));return true;
+    }catch{loadError='Could not reach site content storage. Please retry using Refresh content.';document.dispatchEvent(new CustomEvent('hm-site-content-refreshed'));return false;}
   }
   async function definitions(){
     if(!manifest){const r=await fetch('data/site-content-defaults.json',{cache:'no-cache'});if(!r.ok)throw Error('Could not load the list of editable content.');manifest=await r.json();}
@@ -105,10 +105,10 @@
     const toolbar=el('div','','site-content-toolbar');toolbar.append(page,search,action('Refresh content',async()=>{await refresh();status.textContent=loadError||'Content refreshed.';render();}));host.append(status,toolbar,count,list);
     let defs;try{defs=await definitions();}catch(e){status.textContent=e.message;return;}
     page.append(new Option('All pages and shared sections',''),...[...new Set(defs.map(d=>d.page))].map(p=>new Option(p,p)));
-    function render(){const q=search.value.trim().toLowerCase();const matches=defs.filter(d=>(!page.value||d.page===page.value)&&[d.label,d.page,rows.get(d.key)?.value??d.default].join(' ').toLowerCase().includes(q));
+    function render(){status.textContent=loadError||'Choose a page, then select the content to edit.';const q=search.value.trim().toLowerCase();const matches=defs.filter(d=>(!page.value||d.page===page.value)&&[d.label,d.page,rows.get(d.key)?.value??d.default].join(' ').toLowerCase().includes(q));
       count.textContent=matches.length+' editable entries'+(matches.length>100?' · Showing the first 100; choose a page or search to narrow the list.':'');list.replaceChildren();for(const def of matches.slice(0,100)){const b=action('',()=>openEditor(def.key));b.className='site-content-entry';b.append(el('strong',def.page+' · '+def.label),el('small',String(rows.get(def.key)?.value??def.default).slice(0,180)||'(empty)'));b.disabled=!ready;list.append(b);}
     }
-    search.addEventListener('input',render);page.addEventListener('change',render);document.addEventListener('hm-site-content-saved',render);render();
+    search.addEventListener('input',render);page.addEventListener('change',render);document.addEventListener('hm-site-content-saved',render);document.addEventListener('hm-site-content-refreshed',render);render();
   }
   async function access(){
     const current=++generation;let allowed=false;try{allowed=await verifyAdmin();}catch{}if(current!==generation)return;admin=allowed;
@@ -128,10 +128,16 @@
       const node=event.target.closest('[data-site-key],[data-site-extra]');if(!node)return;
       event.preventDefault();event.stopImmediatePropagation();openEditor(node.dataset.siteKey||node.dataset.siteExtra);
     },true);
-    await refresh();await access();
+    await access();await refresh();
+    window.addEventListener('hashchange',()=>{if(admin&&location.hash==='#site-content-panel'&&$('site-content-panel')){$('site-content-panel').hidden=false;$('site-content-panel').open=true;$('site-content-panel').scrollIntoView({block:'start'});}});
     supabaseClient.auth.onAuthStateChange(()=>{setTimeout(access,0);});
     if(location.hash==='#site-content-panel'&&$('site-content-panel'))$('site-content-panel').open=true;
   }
-  window.HMSiteContent={refresh,openEditor,safeURL};
+  async function toggleEditing(){
+    if(!admin)await access();if(!admin){alert('Sign in as an administrator and leave visitor-preview mode to edit website content.');return;}
+    if(!ready)await refresh();if(!ready){alert(loadError||'The site content editor is not ready.');return;}
+    const button=document.querySelector('#site-content-controls button');if(button)button.click();
+  }
+  window.HMSiteContent={refresh,openEditor,safeURL,toggleEditing};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
